@@ -579,7 +579,7 @@ In order to avoid strangely named parts, it's best to do this after all actors h
 
 Section: Clothing
 
-The framework contains two different extensions for handling clothing. These build on the same principles and are compatible with each other, but for simplicity's sake it's  best to stick to one type of clothing for a story. Garments implements layered clothing that can be individually manipulated by the player. Outfits is a simpler clothing system, where dressing and undressing takes place between-scenese. This is less flexible, but easier to work with and allows for having reactions to what the player is wearing.
+The framework contains two different extensions for handling clothing. These build on the same principles but are not compatible with each other. Garments implements layered clothing that can be individually manipulated by the player. Outfits is a simpler clothing system, where dressing and undressing takes place between-scenese. This is less flexible, but easier to work with and allows for having reactions to what the player is wearing.
 
 Section: Other Action Extensions
 

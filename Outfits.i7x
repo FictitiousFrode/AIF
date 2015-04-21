@@ -1,15 +1,19 @@
 Version 3 of Outfits by Fictitious Frode begins here.
-Include Version 3 of Body Parts by Fictitious Frode.
+
 "Outfits are a special form of clothing, that covers everything and blocks all other garments."
+Include Version 3 of Body Parts by Fictitious Frode.
 
 [Outfits are a special form of clothing, that covers everything and blocks all other garments.
 Description of persons and body parts should check for which outfit is being worn, and tailor the description thereafter.]
+
+Book 1 - Kinds
+
 An outfit is a kind of coverable.
 An outfit is always wearable. 
 
-Book 1 - Actions
+Book 2 - Actions
 
-Part 1.1 - Dressing
+Part 2.1 - Dressing
 
 [Make sure that the actor is not already wearing an outfit.]
 Check an actor wearing an outfit (This is the outfit not replaced rule):
@@ -34,14 +38,14 @@ When play begins (this is the initial outfits rule):
 			Now every body part that is part of P underlies O;
 			Now the decency of P is the decency of O;
 
-Part 1.2 - Undressing
+Part 2.2 - Undressing
 
 [Update the underlaying relation when removing outfit.
 This rule is not named, as removing it might cause malfunctions.]
 Carry out an actor taking off an outfit (called cloth):
 	Now the cloth is not underlaid by anything;
 
-Part 1.3 - Stripping
+Part 2.3 - Stripping
 
 [Remove everything worn by the actor, in correct order.]
 Carry out an actor stripping while the actor is wearing outfit (this is the stripping removes every outfit rule):
@@ -50,13 +54,13 @@ Carry out an actor stripping while the actor is wearing outfit (this is the stri
 		If the actor is wearing the cloth, say "Failed in taking off [cloth]." instead;
 		Else say "([cloth] removed.)";
 
-Part 1.4 - Inventory
+Part 2.4 - Inventory
 
 [When the player takes inventory, we want to also report what the player is wearing]
 Report taking inventory (this is the list player outfit rule):
 	If the player is wearing outfit, say "[We] [are] wearing [a list of outfits worn by the player]."
 
-Part 1.5 - Outfit Descriptions
+Part 2.5 - Outfit Descriptions
 
 [Provides easy description of an outfit based on who is wearing it, with the values stored in a table.]
 Table of Worn Outfit Descriptions
@@ -108,7 +112,7 @@ Before examining a body part (called BP):
 			If BP is body part entry and there is no outfit entry:
 				Say "[description entry]" instead;
 
-Part 1.6 - Worn Outfit Reactions
+Part 2.6 - Worn Outfit Reactions
 
 [This allows us to have people in a room react to our outfit (or lack of one) when we enter.
 A blank outfit means no outfit.]
@@ -131,7 +135,7 @@ Report going to a room (called R) (This is the worn outfit reaction rule):
 
 The worn outfit reaction rule is listed last in the report going rulebook.
 				
-Part 1.7 - Responsive Crowds
+Part 2.7 - Responsive Crowds
 
 [A responsive crowd is a kind of backdrop (it can be placed in multiple rooms), and if the player enters a room containing a responsive crowd, a response apropriate to the outfit worn by the player is printed. A blank outfit means no outfit, while a blank crowd is the default reponse for any crowd not given a specific response.]
 
@@ -180,7 +184,7 @@ This extensions relies on the coverable from the Body Parts extension, and adds 
 
 Chapter: Using this Extension
 
-This extension requires Body Parts, and is compatible with Garments, but I would recommend only using one method in a story for simplicity's sake.
+This extension requires Body Parts, and is incompatible with Garments as a person wearing garments instead of an outfit will be assumed to be naked.
 
 This extension provides outfits, which are an alternative to dressing people in garments. An outfit will cover everything on a person, blocks any other coverables (such as garments) from being worn, and will replace any garments already worn. There is also a framework built around descriptions of persons and body parts when an outfit is worn. Outfits are mainly intended to be changed behind-the-scenes, and not by player interaction. This should preferably be done by specifying that the actor puts on the outfit; if the outfit is just stated as worn then the initial outfits rule should be followed in order to recalculate coverage. This is automatically performed at the start of the story. Example A shows how to create an outfit.
 

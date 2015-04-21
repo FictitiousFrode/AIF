@@ -1,6 +1,7 @@
 Version 3 of Garments by Fictitious Frode begins here.
-Include Version 3 of Body Parts by Fictitious Frode.
+
 "Garments represents clothing. Transparent garments gives full vision (through the visible definition) to anything underneath."
+Include Version 3 of Body Parts by Fictitious Frode.
 
 [This part is inspired by example 242 of the Inform manual, but modifed and expanded greatly.
 Garments represents clothing. Transparent garments gives full vision (through the visible definition, earlier) to anything underneath.
@@ -339,7 +340,7 @@ This extensions relies on the coverable from the Body Parts extension, and adds 
 
 Chapter: Using this Extension
 
-This extension requires Body Parts, and is compatible with Outfits, but I would recommend only using one method in a story for simplicity's sake. It is inspired by example 242 of the Inform manual, but modifed and expanded greatly.
+This extension requires Body Parts, and is incompatible with Outfits. It is inspired by example 242 of the Inform manual, but modifed and expanded greatly.
 
 This extension provides garment to represent clothing, various rules to govern taking then on and off, and a set of predefined garments. None of these are automatically added, but provide templates for the author to expand upon. See Example A for how to define a jacket worn by a person 
 
