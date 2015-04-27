@@ -232,27 +232,27 @@ Part 2.1 - Dressing
 Check an actor wearing something when a garment which overlies the noun is worn by the actor (This is the dressing in order rule):
 	If the actor is the player:
 		While the player wears a garment (called the impediment) which overlies the noun:
-			Say "(first removing [the impediment])[command clarification break]";
+			Say "(first removing [the impediment])[command clarification break]" (A);
 			Silently try taking off the impediment;
 			If the player is wearing the impediment, rule fails;
 	Else:
 		Let blockers be the list of garments worn by the actor which overlies the noun;
-		Say "[If the player is the actor][We][else][Actor][end if] [cannot] [wear] [noun], [regarding the actor][they] [are] wearing [blockers]." (A) instead ;
+		Say "[If the player is the actor][We][else][Actor][end if] [cannot] [wear] [noun], [regarding the actor][they] [are] wearing [blockers]." (B) instead ;
 
 [Make sure the actor isn't wearing something incompatible with what's being put on.]
 Check an actor wearing something when a garment which is incompatible with the noun is worn by the actor (This is the no conflicting garment rule):
 	If the actor is the player:
 		While the player wears a garment (called the impediment) which is incompatible with the noun:
-			Say "(first removing [the impediment])[command clarification break]";
+			Say "(first removing [the impediment])[command clarification break]" (A);
 			Silently try taking off the impediment;
 			If the player is wearing the impediment, rule fails;
 	Else:
 		Let blockers be the list of garments worn by the actor which are incompatible with the noun;
-		Say "[If the player is the actor][We][else][Actor][end if] [cannot] [wear] [noun], [regarding the actor][they] [are] wearing [blockers]" (A) instead;
+		Say "[If the player is the actor][We][else][Actor][end if] [cannot] [wear] [noun], [regarding the actor][they] [are] wearing [blockers]" (B) instead;
 
 [Update the underlaying relation.
 This rule is not named, as removing it will completely bork things.]
-Carry out an actor wearing a garment:
+Carry out an actor wearing a garment (this is the garment wearing rule):
 	Repeat with hidden item running through things worn by the actor:
 		If the noun overlies the hidden item, now the hidden item underlies the noun;
 	Repeat with hidden item running through body parts that are part of the actor:
@@ -274,7 +274,7 @@ Part 2.2 - Undressing
 [Make sure that garments that are covered can't be taken off.]
 Check an actor taking off something which underlies something which is worn by the actor (This is the player undressing in order rule):
 	While the noun underlies something (called the impediment) which is worn by the actor:
-		Say "(first removing [the impediment])[command clarification break]";
+		Say "(first removing [the impediment])[command clarification break]" (A);
 		Silently try the actor taking off the impediment;
 		If the noun underlies the impediment, rule fails.
 
@@ -290,7 +290,7 @@ Carry out an actor taking off a garment:
 The standard report taking off rule response (A) is  "[We] [take] off [the noun], and [are] [now][if actor is wearing a garment] wearing [a list of visible garments worn by the actor][else] completely nude."
 The standard report taking off rule response (B) is "[The actor] [take] off [the noun], and [are] [now][if actor is wearing a garment] wearing [a list of visible garments worn by the actor][else] completely nude."]
 Report an actor taking off a garment (This is the report garment undressing rule):
-	Say "[If the player is the actor][We][else][Actor][end if] [are] [are] [now][if actor is wearing a garment] wearing [a list of visible garments worn by the actor][else] completely nude."
+	Say "[If the player is the actor][We][else][Actor][end if] [are] [are] [now][if actor is wearing a garment] wearing [a list of visible garments worn by the actor][else] completely nude." (A);
 
 The report garment undressing rule is listed last in the report taking off rules.
 
@@ -300,22 +300,22 @@ Part 2.3 - Stripping
 Carry out an actor stripping while the actor is wearing garments (this is the stripping removes every garment rule):
 	While the actor is wearing something accessible (called cloth):
 		Silently try the actor taking off the cloth;
-		If the actor is wearing the cloth, say "Failed in taking off [cloth]." instead;
+		If the actor is wearing the cloth, say "Failed in taking off [cloth]." (A) instead;
 
 Part 2.4 - Inventory
 
 [When the player takes inventory, we want to also report what the player is wearing]
 
 Report taking inventory (this is the list player garments rule):
-	If the player is wearing garments, say "[We] [are] wearing [a list of visible garments worn by the player]."
+	If the player is wearing garments, say "[We] [are] wearing [a list of visible garments worn by the player]." (A);
 [Instead of taking inventory:
 	say "[if the player carries something][We]['re] carrying [the list of things carried by the player][else][We]['re] empty-handed[end if][if the player wears something]. [We] [are] wearing [a list of visible garments worn by the player][end if]."]
 
 Part 2.5 - Looking under
 
 Instead of looking under something which is worn by the player:
-	If something (called the underwear) underlies the noun, say "[We] [peek] at [the underwear]. Yup, still there.";
-	Otherwise say "Just [us] in there."
+	If something (called the underwear) underlies the noun, say "[We] [peek] at [the underwear]. Yup, still there." (A);
+	Otherwise say "Just [us] in there." (B);
 
 Part 2.6 - Examining
 
@@ -328,7 +328,7 @@ Rule for deciding the concealed possessions of a person:
 
 [This provides the player with a list of the garments he can see another person wearing when examining them.]
 Report examining a person (called target) wearing garments (This is the list visible garment rule):
-	Say  "[Target] [are] wearing [the list of visible garments worn by target].";
+	Say  "[Target] [are] wearing [the list of visible garments worn by target]." (A);
 
 The list visible garment rule is listed last in the report examining rules.
 
@@ -417,18 +417,20 @@ Feedback of all varieties is welcome, but constructive criticism and discussion 
 
 Example: * Garments - Enabling garments
 
+*:
 	Soandso is a person.
-
 	A leather jacket is a jacket worn by Soandso.
 	The description of leather jacket is "Would you buy this fine leather jacket?"
 
 Example: ** Persuasion - Making every character respond to commands to take on/off garments
 
+*:
 	Persuasion rule for asking a person to try wearing a garment: persuasion succeeds.
 	Persuasion rule for asking a person to try taking off a garment: persuasion succeeds.
 
 Example: *** Creating New Garments - A fictitious piece of clothing that goes under socks.
 
+*:
 	A pair of undersocks is a kind of garment.
 	The plural of undersocks is pairs of undersocks. They are plural-named.
 	The description of a pair of undersocks is usually "This is just made up."

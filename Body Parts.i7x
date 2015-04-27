@@ -224,7 +224,10 @@ In short, declare the player (with gender) before invoking body part creation.
 
 Section: Decency
 
-Decency is a measure of how much "skin" a person is showing off, and is automatically calculated whenever a person takes off or puts on a piece of clothing (that follows the framework standards). This part of the framework does not do any checking for decency, but leaves that in the hand of the story author. Example B shows one way to use decency.
+Decency is a measure of how much "skin" a person is showing off, and is automatically calculated whenever a person takes off or puts on a piece of clothing (that follows the framework standards). This part of the framework does not do any checking for decency, but leaves that in the hand of the story author. This can be used to stop the player moving around like this:
+
+*:
+	Instead of going somewhere while indecent, say "You can't go anywhere looking like that!"
 
 The framework defines five levels of decency, of which four are in use. In ascending order, they are indecent, immodest, casual, formal and undefined. Undefined is a special case; it is the default decency for a person and any person with undefined as decency will have their decency calculated at start-up. This means that story authors can skip this calculation by manually defining (hopefully the correct) decency of a person in order to save time at start-up.
 
@@ -253,7 +256,7 @@ The following body parts are available:
 Section: Visibility
 
 The framework does not concern itself with blocking vision of covered body parts, as most body parts are obviously present even when covered by clothing. Instead, the author should take into account visibility when describing the body parts. Visible means any piece that is worn outmost, or is covered by a transparent piece. (Transparencey only goes one layer deep), while accessible means that the piece is worn outmost.
-Example C shows how to make variable descriptions based on what is visible, and Example D shows how to block vision of covered body parts.
+Example B shows how to make variable descriptions based on what is visible, and Example C shows how to block vision of covered body parts.
 
 Note: The frameworks for outfits will do a lot of this.
 
@@ -275,7 +278,7 @@ Body parts also get some attributes that are intended for use with later extensi
 
 Section: Creating New Body Parts
 
-Adding a new kind of body part is very easy; Example E shows how feet are defined in the framework. The main work in adding new body parts is defining which parts of clothing fit over them; this is covered in the extensions for clothing / garments.
+Adding a new kind of body part is very easy; Example D shows how feet are defined in the framework. The main work in adding new body parts is defining which parts of clothing fit over them; this is covered in the extensions for clothing / garments.
 
 Section: Version History
 
@@ -301,25 +304,27 @@ Feedback of all varieties is welcome, but constructive criticism and discussion 
 
 Example: * Body Parts - Enabling body parts
 
-	Soandso is a person.
+*:
+	The Library is a room,
+	Anna is a woman in the Library.
 	A head is part of every person.
 	A pair of feet is a part of every woman.
 
-	The description of Soandso's head is "A pretty plain head."
-
-Example: * Decency - Stop the player going anywere when indecent:
-
-	Instead of going somewhere while indecent, say "You can't go anywhere looking like that!"
+	The description of Anna's head is "A pretty plain head."
+	
+	Test me with "x Anna's head / x feet / x your head."
 
 Example: * Visibility 1 - Description of a body part, taking into account if it is covered:
 
-	Soandso is a person.
+	The Library is a room,
+	Anna is a woman in the Library.
 	A pair of feet is a part of every person.
 
-	The description of Soandso's feet is "[if soandso's feet are visible]A pair of hairy feet.[else]The feet are covered by [list of visible coverables covering soandso's feet]."
+	The description of Anna's feet is "[if Anna's feet are visible]A pair of hairy feet.[else]The feet are covered by [list of visible coverables covering Anna's feet]."
 
 Example: ** Visibility 2 - Stopping the player from examining a covered body part:
 
+*:
 	Check examining a body part that is not visible (this is the block covered body parts rule):
 		Say "[We] [cannot] [see] that."(A) instead;
 

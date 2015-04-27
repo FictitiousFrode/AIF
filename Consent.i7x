@@ -1,6 +1,7 @@
 Version 1 of Consent by Fictitious Frode begins here.
-Include Version 1 of Body Parts by Fictitious Frode.
+
 "This extension provides the framework for seeking consent from actors before performing actions that affect them."
+Include Version 1 of Body Parts by Fictitious Frode.
 
 Part 1 - Consent Rules
 
@@ -23,8 +24,8 @@ This is the consent seeking rule:
 			Stop the action;
 
 [In order to let Inform know that actions are consensual, we need to actually make an action consensual. In order to not surprise the author, we do this to a new action that will never be used.]
-Dummy-action-consenting is an action applying to nothing.
-Dummy-action-consenting is consensual.
+Dummy-consenting-action is an action applying to nothing.
+Dummy-consenting-action is consensual.
 
 Consent ends here.
 
@@ -52,6 +53,8 @@ It's also possible to define consent more finely grained:
 *:
 	Touching a person is consensual.
 
+This can be as detailed as needed, including references to scenes and specific things.
+
 Section: Granting consent
 
 Consent is granted in a similar way that persuasion is defined (see §12.4 for details), using the Consent rulebook. Consent can be given or denied both for specific actions and/or persons, or in a broader sense with the terms someone and something. Example A shows how to give a specific consent; for a very general rule (that undoes everything we try to accomplish here, and as such is only good for testing or as an example) we could use the following:
@@ -75,7 +78,7 @@ Chapter: Technical Notes
 The default failure message can be altered by altering the consent seeking rule response (A), detailed in §14.11:
 
 *:
-	The consent seeking rule response (A) is  "That would be rude."
+	The consent seeking rule response (A) is "That would be rude."
 
 If you want other actors to perform actions on the player, make sure to give these consent as well; this is not done automatically out of fear of messing up actions with two nouns.
 
@@ -93,8 +96,9 @@ The author of the framework can be reached in the following ways:
 
 Feedback of all varieties is welcome, but constructive criticism and discussion is the most appreciated, along with reports of bugs and other issues. For support I would appreciate using public communication, so that other may learn from the request as well.
 
-Example:  ** Consent - Kissing three different persons with different consent.
+Example: ** Consent - Kissing three different persons with different consent.
 
+	*: "Consensual Kissing"
 	The Library is a room.
 	Rachel is a woman in the Library. [Rachel allows kissing]
 	Annie is a woman in the Library. [Annie disallows kissing, with a custom failure message.]

@@ -24,10 +24,10 @@ Check an actor wearing an outfit (This is the outfit not replaced rule):
 [Will try to remove anything worn by the actor, to allow the outfit to be put on.
 Update the underlaying relation for body parts when putting on an outfit.
 This rule is not named, as removing it might cause malfunctions.]
-Carry out an actor wearing an outfit (called cloth):
+Carry out an actor wearing an outfit (called cloth) (this is the outfit wearing rule):
 	While the actor is wearing coverable:
 		Try the actor stripping;
-		If the actor is wearing a coverable, say "Failed taking off [list of coverables worn by actor]." instead;
+		If the actor is wearing a coverable, say "Failed taking off [list of coverables worn by actor]." (A) instead;
 	Now every body part that is part of the actor underlies the cloth;
 
 When play begins (this is the initial outfits rule):
@@ -51,8 +51,8 @@ Part 2.3 - Stripping
 Carry out an actor stripping while the actor is wearing outfit (this is the stripping removes every outfit rule):
 	While the actor is wearing an outfit (called cloth):
 		Silently try the actor taking off the cloth;
-		If the actor is wearing the cloth, say "Failed in taking off [cloth]." instead;
-		Else say "([cloth] removed.)";
+		If the actor is wearing the cloth, say "Failed in taking off [cloth]." (A) instead;
+		Else say "([cloth] removed.)" (B);
 
 Part 2.4 - Inventory
 
@@ -88,7 +88,7 @@ Report examining a person (called target) (This is the describe outfit rule):
 	If described is false:
 		If default description is "" and target is not wearing nothing:
 			If the noun is the player, say "[We] [are] wearing [cloth]: [Description of cloth]";
-			Else say  "[Target] [are] wearing [cloth]: [Description of cloth]";
+			Else say "[Target] [are] wearing [cloth]: [Description of cloth]";
 		Else:
 			Say "[Default description]";
 
@@ -244,6 +244,7 @@ Feedback of all varieties is welcome, but constructive criticism and discussion 
 
 Example: * Basic Outfits - Creating and putting on outfits
 
+*:
 	The Library is a room.
 	Soandso is a person in the Library.
 	A pair of feet is a part of every person.
@@ -257,12 +258,14 @@ Example: * Basic Outfits - Creating and putting on outfits
 
 Example: * Persuasion - Making every character respond to commands to take on/off garments, and strip.
 
+*:
 	Persuasion rule for asking a person to try wearing a garment: persuasion succeeds.
 	Persuasion rule for asking a person to try taking off a garment: persuasion succeeds.
 	Persuasion rule for asking a person to try stripping: persuasion succeeds.
 
 Example: * Outfit Descriptions 1 - Two descriptions of feet, one general and one for a particular outfit.
 
+*:
 	The Library is a room.
 	Soandso is a person in the Library. 
 	A pair of feet is a part of every person.
@@ -279,6 +282,7 @@ Example: * Outfit Descriptions 1 - Two descriptions of feet, one general and one
 
 Example: * Outfit Descriptions 2 - Two descriptions of the plain outfit, one general and for a particular person.
 
+*:
 	The Library is a room.
 	Soandso is a person in the Library.
 	A pair of feet is a part of every person.
@@ -295,6 +299,7 @@ Example: * Outfit Descriptions 2 - Two descriptions of the plain outfit, one gen
 
 Example: ** Reactions - Setting up reactions from other actors based on your outfits.
 
+*:
 	The Bedroom is a room. The Library is east of the bedroom.
 	The mother is a woman in the library.
 
@@ -306,6 +311,7 @@ Example: ** Reactions - Setting up reactions from other actors based on your out
 
 Example: ** Responsive Crowds - Setting up reactions from crowds.
 
+*:
 	The Lobby is a room. The Bar is east of the Lobby.
 	A rowdy crowd is a responsive crowd in bar.
 	
