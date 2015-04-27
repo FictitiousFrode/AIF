@@ -4,13 +4,11 @@ Version 1 of Ropework by Fictitious Frode begins here.
 
 Book 1 - Rope
 
-A rope is a kind of thing.
-
-[Attachment is the relation that governs what rope is fastened to.]
-Attachment relates things to each other in groups. The verb to be stuck to means the attachment relation.
-
 Part 1.1 - Definitions
 
+A rope is a kind of thing.
+[Attachment is the relation that governs what rope is fastened to.]
+Attachment relates things to each other in groups. The verb to be stuck to means the attachment relation.
 [Defining what can be attached]
 A thing can be attachable. A thing is usually not attachable.
 
@@ -95,8 +93,8 @@ Book 2.1 - Tying
 
 [Tying is defined in the standard rules, but blocked by default. We disable the block, and instead check that only rope can be tied to anchors.]
 The block tying rule is not listed in the check tying it to rulebook.
-Understand "Tie  [something attachable] to [rope]" as tying it to.
-Understand "Tie  [something attachable] to [rope]" as tying it to (with nouns reversed).
+Understand "Tie [something attachable] to [rope]" as tying it to.
+Understand "Tie [rope] to [something attachable]" as tying it to (with nouns reversed).
 To loop is a verb.
 To knot is a verb.
 [Instead of tying a rope to something:
@@ -104,45 +102,46 @@ To knot is a verb.
 
 Check an actor tying something to something (this is the check tying rope rule):
 [Before tying something to a rope:]
-	If the noun is stuck to the second noun, say "[The noun] and [the second noun] [regarding the noun][are] already tied together." (A) instead;
-	If the second noun is not free, say "[The second noun] [have] no ends free." (B) instead;
+	If the noun is stuck to the second noun, say "[The list of things stuck to the second noun] [are] already tied together." (A) instead;
+	If the second noun is not free, say "[The second noun] [have] no free ends." (B) instead;
 	If the noun is not attachable, say "[if the actor is the player][We][else][The Actor][end if] [cannot] realistically tie anything to [the noun]." (C) instead.
 
-Carry out tying it to (this is the carry out tying rope rule):
-	now the noun is stuck to the second noun;
+[The action itself is just updating the attachment relation.]
+Carry out an actor tying something to something (this is the carry out tying rope rule):
+	Now the noun is stuck to the second noun;
 
-Report tying it to (this is the report tying rope rule):
-	say "[if the actor is the player][We][else][The Actor][end if] [loop] [the second noun] around [the noun] and [knot] firmly." (A);
+Report an actor tying something to something (this is the report tying rope rule):
+	Say "[if the actor is the player][We][else][The Actor][end if] [loop] [the second noun] around [the noun] and [knot] firmly." (A);
 
-[TODO: Improve these]
-Instead of tying something to a non-rope tied thing:
-	let the coil be a random rope stuck to the second noun;
-	try tying the noun to the coil.
+[These improve out understanding of what the player means.]
+Instead of an actor tying something to a non-rope tied thing (this is the append to rope rule):
+	Let the coil be a random rope stuck to the second noun;
+	Try the actor tying the noun to the coil.
 
-Instead of tying a non-rope tied thing to something:
-	let the coil be a random rope stuck to the noun;
-	try tying the second noun to the coil.
+Instead of an actor tying a non-rope tied thing to something (this is the append rope rule):
+	Let the coil be a random rope stuck to the noun;
+	Try the actor tying the second noun to the coil.
 
-Instead of tying a free non-rope thing to a free non-rope thing:
-	if the player carries a free rope (called the coil):
-		try tying the noun to the coil;
-		if the noun is stuck to the coil and the coil is free:
-			try tying the second noun to the coil;
-	otherwise:
-		say "You lack the requisite spare rope."
+Instead of an actor tying a free non-rope thing to a free non-rope thing:
+	If the actor carries a free rope (called the coil):
+		Try the actor tying the noun to the coil;
+		If the noun is stuck to the coil and the coil is free, try the actor tying the second noun to the coil;
+	Otherwise:
+		Say "[if the actor is the player][We][else][The Actor][end if] [lack] the requisite spare rope."
 
 Book 2.2 - Untying
 
+[We need a new action to reverse the tying action.]
 Untying it from is an action applying to two things.
-Understand "untie [something] from [something]" and "untie [something]" as untying  it from.
+Understand "untie [something] from [something]" and "untie [something]" as untying it from.
 
 Rule for supplying a missing second noun while untying something from:
-	if the number of secondary things stuck to the noun is 0, say "[The noun] is already entirely free." instead;
-	if the noun is a rope:
-		if the number of touchable non-rope things which are stuck to the noun > 1:
-			say "You'll have to say which thing you want to untie [the noun] from.";
-			rule fails;
-		otherwise:
+	If the number of secondary things stuck to the noun is 0, say "[The noun] [are not] attached to anything." instead;
+	If the noun is a rope:
+		If the number of touchable non-rope things which are stuck to the noun > 1:
+			Say "You'll have to say which thing you want to untie [the noun] from.";
+			Rule fails;
+		Otherwise:
 			if the number of touchable non-rope things stuck to the noun is 0, say "You can't reach [the random non-rope thing stuck to the noun]." instead;
 			let the tied object be a random touchable non-rope thing which is stuck to the noun;
 			say "(from [the tied object])[line break]";
@@ -269,60 +268,59 @@ Feedback of all varieties is welcome, but constructive criticism and discussion 
 
 Example: ** Learning the Ropes - A short example of ropes in action.
 
-Use full-length room descriptions.
+	Use full-length room descriptions.
 
-The Fallow Field is a room. "The very land is gloomy, the earth plowed into untended rows that yield no fruit, shadowed by the castle to the north. A chasm, no doubt the product of some upheaval of the earth, opens before your feet.". An oak stump is fixed in place in the Field. "From an oak stump, a few hopeful shoots grow."
+	The Fallow Field is a room. "The very land is gloomy, the earth plowed into untended rows that yield no fruit, shadowed by the castle to the north. A chasm, no doubt the product of some upheaval of the earth, opens before your feet.". An oak stump is fixed in place in the Field. "From an oak stump, a few hopeful shoots grow."
 
-A hempen rope is a rope in the field. It is stuck to the oak stump and the wooden chest. The stump is attachable. The description of hempen rope is "It's a rope made of hemp."
+	A hempen rope is a rope in the field. It is stuck to the oak stump and the wooden chest. The stump is attachable. The description of hempen rope is "It's a rope made of hemp."
 
-The Chasm is below the Field. "Your person is most uncomfortably pressed on every side by the closeness of the walls; to which you may add as a further inconvenience, that the irregularity of the floor making it difficult to walk upright." An iron key is in the Chasm. "An iron key nestles in the cleft of earth, its age indicated by its implausibly great size."
+	The Chasm is below the Field. "Your person is most uncomfortably pressed on every side by the closeness of the walls; to which you may add as a further inconvenience, that the irregularity of the floor making it difficult to walk upright." An iron key is in the Chasm. "An iron key nestles in the cleft of earth, its age indicated by its implausibly great size."
 
-The wooden chest is an attachable closed openable container in the Chasm. The description of the wooden chest is "A handsome, solid case not long committed to its dank enclosure, or it would long since have rotted." Rule for printing the name of the wooden chest when the chest is not handled: say "deadweight". Understand "dead" or "weight" or "deadweight" as the chest. Before pulling the wooden chest: now the chest is handled.
+	The wooden chest is an attachable closed openable container in the Chasm. The description of the wooden chest is "A handsome, solid case not long committed to its dank enclosure, or it would long since have rotted." Rule for printing the name of the wooden chest when the chest is not handled: say "deadweight". Understand "dead" or "weight" or "deadweight" as the chest. Before pulling the wooden chest: now the chest is handled.
 
-In the chest is a heavy dagger. The description of the dagger is "Set with red jewels and of a wicked aspect."
+	In the chest is a heavy dagger. The description of the dagger is "Set with red jewels and of a wicked aspect."
 
-Before going down from the Field when the player is not stuck to something anchored:
-	say "You don't quite dare simply leap into the darkness without some anchor." instead.
+	Before going down from the Field when the player is not stuck to something anchored:
+		say "You don't quite dare simply leap into the darkness without some anchor." instead.
 
-Before going down from the Field:
-	let anchor be a random anchored thing which is stuck to the player;
-	say "You lower yourself gingerly, hoping that [the anchor] holds your weight..."
+	Before going down from the Field:
+		let anchor be a random anchored thing which is stuck to the player;
+		say "You lower yourself gingerly, hoping that [the anchor] holds your weight..."
 
-Before going up from the Chasm:
-	if the player cannot touch a rope which is stuck to an anchored thing which is in the Field, say "And how, precisely, do you mean to do that?" instead.
+	Before going up from the Chasm:
+		if the player cannot touch a rope which is stuck to an anchored thing which is in the Field, say "And how, precisely, do you mean to do that?" instead.
 
-The Castle Hall is north of the Field. "All is desolate: the great hall has no roof, nor is there any glass in the windows. A staircase without banister ascends inside the wall to a musician's gallery without song."
+	The Castle Hall is north of the Field. "All is desolate: the great hall has no roof, nor is there any glass in the windows. A staircase without banister ascends inside the wall to a musician's gallery without song."
 
-The Musician's Gallery is above the Castle Hall. "Of its former cheery aspect only this remains to the Gallery: that chevrons of red and yellow are painted on the wall. But as these are streaked with rain and grime, the banister pulled away, the roof open to the sky, and the corners made a nesting place for birds, the consolation thereby afforded is but slight."
+	The Musician's Gallery is above the Castle Hall. "Of its former cheery aspect only this remains to the Gallery: that chevrons of red and yellow are painted on the wall. But as these are streaked with rain and grime, the banister pulled away, the roof open to the sky, and the corners made a nesting place for birds, the consolation thereby afforded is but slight."
 
-The pointed door is north of the Musician's Gallery and south of the Sinister Attic. It is a closed locked openable door. "A pointed door of particularly grim and uninviting aspect leads north." The pointed door is lockable and attachable. The description of the pointed door is "A door coming to a gothic point and fitted with iron fittings of great strength. The handle looks particularly well-attached." The iron key unlocks the pointed door.
+	The pointed door is north of the Musician's Gallery and south of the Sinister Attic. It is a closed locked openable door. "A pointed door of particularly grim and uninviting aspect leads north." The pointed door is lockable and attachable. The description of the pointed door is "A door coming to a gothic point and fitted with iron fittings of great strength. The handle looks particularly well-attached." The iron key unlocks the pointed door.
 
-A rule for reaching inside the Musician's Gallery:
-	allow access.
+	A rule for reaching inside the Musician's Gallery:
+		allow access.
 
-A rule for reaching inside the Sinister Attic:
-	allow access.
+	A rule for reaching inside the Sinister Attic:
+		allow access.
 
-Instead of opening the pointed door for the first time:
-	say "When you rattle at the door, there arises from beyond a terrible shrill noise as though something beyond exults in its imminent release."
+	Instead of opening the pointed door for the first time:
+		say "When you rattle at the door, there arises from beyond a terrible shrill noise as though something beyond exults in its imminent release."
 
-After opening the trapped pointed door when the player can see the pointed door:
-	say "Thousands of bats fly from the pointed door, attacking you!";
-	end the story.
+	After opening the trapped pointed door when the player can see the pointed door:
+		say "Thousands of bats fly from the pointed door, attacking you!";
+		end the story.
 
-After opening the pointed door when the player cannot see the pointed door: now the pointed door is untrapped; continue the action.
+	After opening the pointed door when the player cannot see the pointed door: now the pointed door is untrapped; continue the action.
 
-The pointed door can be trapped or untrapped. The pointed door is trapped.
+	The pointed door can be trapped or untrapped. The pointed door is trapped.
 
-Before pulling the pointed door: try opening the pointed door instead.
+	Before pulling the pointed door: try opening the pointed door instead.
 
-The player is attachable.
+	The player is attachable.
 
-After going to the sinister attic:
-	say "You have arrived at the goal of your quest!";
-	end the story finally.
+	After going to the sinister attic:
+		say "You have arrived at the goal of your quest!";
+		end the story finally.
 
-Test me with "x rope / pull rope / get chest / untie rope from chest / tie rope to me / down / get key / up / untie rope from stump / north / up / unlock pointed door with key / open it / tie rope to door / down / pull rope / up / north".
+	Test me with "x rope / pull rope / get chest / untie rope from chest / tie rope to me / down / get key / up / untie rope from stump / north / up / unlock pointed door with key / open it / tie rope to door / down / pull rope / up / north".
 
-Test death with "x rope / pull rope / get chest / untie rope from chest / tie rope to me / down / get key / up / untie rope from stump / north / up / unlock pointed door with key / open it / g"
-
+	Test death with "x rope / pull rope / get chest / untie rope from chest / tie rope to me / down / get key / up / untie rope from stump / north / up / unlock pointed door with key / open it / g"
