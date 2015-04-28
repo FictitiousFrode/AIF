@@ -19,7 +19,6 @@ The extensions in the framework provides:
  * Two different forms of clothing, depending on what the story needs.
  * The actions kissing, licking, biting, touching, rubbing, pinching and 
    masturbation, and the all important fucking including the use of toys.
- * Optional support for bondage, spanking and gagging.
 
  Installation
 ==============
@@ -54,9 +53,9 @@ properly experience an adult erotic story.
  * Erotic Story Actions provides the necessary actions writing a story-style, 
    where each action performed is a "complete" action, similar to how ADRIFT
    games usually operate.
- * Kinky Story Actions is meant to complement Erotic Story Actions with actions
-   required for BDSM-inspired gameplay. This includes support for bondage,
-   spanking and gagging.
+ * Kinky Story Actions an upcoming extension that is meant to complement Erotic
+   Story Actions with actions required for BDSM-inspired gameplay. This 
+   includes support for bondage, spanking and gagging.
  * Sexual Simulation System is a future part of the framework that will 
    provide a more TADS-like experience, with arousal and lasting penetration.
 
@@ -75,13 +74,14 @@ necessary to directly include.
  * Consent provides a method for "obtaining consent" from actors before 
    performing actions involving them, and printing custom failure message
    when consent is denied.
+ * Ropework enables the use of rope in various forms.
 
  What is New?
 ==============
 
 This is meant as an overview, please see individual extensions for details.
 
-  2015-04-XX:
+  2015-04-28:
  -------------
   The proper version 1 release of the framework. Changes include:
    * Sexual Actions renamed to Erotic Story Actions to better reflect the
@@ -96,7 +96,7 @@ This is meant as an overview, please see individual extensions for details.
    * Bug-fixes all around.
    * Improved documentation, especially in Erotic Story Actions, which includes
      a short example adventure.
-   * Early public beta for the Kinky Story Actions.
+   * Early public beta for Ropework.
 
   2015-03-25:
  -------------
