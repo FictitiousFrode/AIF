@@ -589,7 +589,193 @@ The Sexual Simulator System is an extension that provides a different approach t
 
 Chapter: Expanded Tutorial: Writing Erotic Stories
 
-TODO
+Writing an AIF game is a great undertaking but also a rewarding experience. The Inside Erin newsletter has a variety of very good articles on the subject, available here:
+
+	http://newsletter.aifcommunity.org/index.php?id=writing.html
+
+This part of the documentation does not take aim to replace or supplant these excellent sources, but instead focuses on how to implement some of the essential tricks using this Inform and this framework. This assumes that the reader is somewhat familiar with basic Inform syntax, but will not assume any expertise.
+
+Section: Setting and Characters
+
+The first part of writing a new story, is to come up with an interesting setting, and the characters and plot to go with it. Perhaps the most important thing to note here is that over-ambition is the real project-killer: Don't start with a concept you can't finish. For your first story, try to keep it small, especially in the amount of characters the player should be allowed to interact with. The AIF community has a long (and proud?) history of fan-fiction; the community evolved out of the newsgroup alt.games.xtrek, devoted to adult fan-fiction involving Star Trek characters. Writing a fan-fiction story has the advantage of providing both setting and characters, and can give ideas for puzzles and events that can unfold in the story.
+
+Once you have a basic idea of the story you're wanting to write, it's time to get started on the writing. Just don't get too attached to your initial concept, as it is likely to change as you develop the story. It's therefore best to focus the initial energy on parts that will remain, or are reusable. I would recommend starting with writing descriptions of the characters you decided upon and their notable body parts, as well as descriptions of the notable locations.
+
+Section: Locations and Items
+
+The only thing that is absolutely required in an Inform story is a location or room, but a story with just an empty room with no description is the very definition of a boring story. In order to give the player immersion in the story, it's important with good descriptions of locations. Note that "good" does not always mean "long"; a good room description should list what is obvious from a quick look around the room without going into excessive detail. The big question then quickly becomes, how much detail is enough, and when is the detail excessive? Any object that is mentioned in the room description should have a description, as well as some objects that a player would expect to be present. Most of these would be implemented as backdrops to avoid the player doing crazy stuff, and they will try it. There are two related issues I would like to point out here: It's important to avoid pointing out key objects too blatantly. From this it follows that it's also important to keep a somewhat equal level of detail across the story.
+
+Another big question, is how many rooms should the story have. Not every place you can think of needs to be implemented as a seperate room, many connecting rooms such as hallways can be skipped past by the use of a "Before going..." rule. This gives the player the impression that world is larger than what you have actually implemented, but saves you the trouble of writing up boring rooms with no purpose, and the player from walking through rooms that serve no other purpose than to make the world seem large. Similarly, you can block off a described area by the use of an "Instead of going..." rule. Below is a very short example of this:
+
+*:
+	The Library is a room. "You are standing in the school's library, which is lined with seemingly endless shelves filled with books. A large door leads south to the hallway, and a closet is to the east."
+	Some bookshelves is backdrop in the library. The description is "These sturdy shelves are filled with books of all sorts." Understand "shelves / shelf" as bookshelves.
+	Instead of going east in the library, say "You have no reason to go hide in the closet."
+	Before going south in the library, say "You pass through the door into the hallway, and follow it back to your classroom."
+	Your Classroom is a room. "Your classroom is filled with empty desks and chairs. A door leads west to the hallway."
+	South of Library is west of Your Classroom.
+	Before going west in Your Classroom, say "You wander around the hallways and make your way to the library."
+	Test me with "e / s / w."
+
+Perhaps the most important part of writing up the world in this way, is to take the time to test it out. Go exploring in your own world, poke at everything mentioned in the text and see what you manage to "break". It's also time to start giving some thought to what puzzles would fit in, and where the clues and puzzle items would fit in naturally.
+
+Section: Events and Scenes
+
+So far we've been mostly concerned with the physical world, but a story is also a collection of events that the author wants the player to experience. Some stories are more linear in the order these events happen, while others allow them to happen in the order the player stumbles upon them. Inform has an entire concepted dedicated to structuring the story, which is called scenes. Chapter 10 of the documentation deals with this, and I would recommend reading through it now.
+
+One of the most obvious uses of scenes, is to clearly delimit the sex scenes that are going to be a part of the story. This allows us to clearly define how and when it starts, and write rules and responses that only take place during the correct scene. It's also very handy to use these to keep track of which puzzles have been completed.
+
+Section: Clothing and Character Descriptions
+
+By now, you hopefully have an idea of how your story will look like, and how it will unfold. So let's get back to the meat of the work, writing descriptions. Earlier on it was suggested to start writing descriptions, now well show how easy those are to enter into the story. Personally, I like to create all the characters at the very start of the story file along with a small note of their role, sort of like a Dramatis Personae for a play. Then each person gets their own part later on to flesh out details. 
+
+Clothing is another issue, and the descriptions of characters and parts should take into account what the character is currently wearing. The framework offers two options for clothing; Outfits has built in support for descriptions based on what the actor is wearing so instead we will focus on the more advanced Garments extension where descriptions has to be varied manually. This can be achieved by several different methods, as we will shortly see.
+
+What follows is an excerpt from Example J (there's a lot of content cut here), showing how to create and describe body parts with the framework. Exactly which body parts that should be used is a matter of personal opinion, but the parts used should be a pretty normal selection. The most important part is to create the parts after the characters and the player has been defined, to avoid them getting strange names. Normally you would stick to one method for describing characters and parts, but here we will use different methods to illustrate different techniques. I make no promises on the quality of the text here.
+
+:*
+	Include Body Parts by Fictitious Frode. [This isn't needed if you're importing any of the extensions relying on it]
+	Include Garments by Fictitious Frode. [This includes Body Parts.]
+
+	[Create the characters here, with quick reference of their role]
+	Tyler is a man. The player is Tyler.
+	Helena is a woman. [A swedish blonde airhead, with kinky tendencies.]
+
+	Observation Lounge is a room. "This large room is well decorated, and you can almost forget that the large mirrors on the wall most likely conceals cameras or live observeres."
+
+	A pair of feet is a part of every person.
+	A mouth is a part of every person.
+	Some hair is a part of every person.
+	An ass is a part of every person.
+	A chest is a part of every man.
+	A penis is a part of every man.
+	A pair of breasts is a part of every woman.
+	A vagina is a part of every woman.
+	
+	[We start with a basic description of the clothing and the person.]
+	A pair of sneakers is a pair of shoes worn by Helena. The description is "It's Helena's sneakers. There's nothing special about them."
+	A lacy black thong is a pair of panties worn by Helena. The description is "[If black thong is worn by Helena]The lacy black thong fits Helena's curves snuggly.[else]It's Helena's lacy black thong. It still looks hot, even if she isn't wearing it."
+	A lacy black bra is a bra worn by Helena.
+	A cut-off denim shorts is a pair of trousers worn by Helena. The description is "[If denim shorts is worn by Helena]Helena is wearing a pair of cut-off shorts that really show off her perky buttocks and long legs.[else]It's Helena's pair of cut-off shorts. They don't look like much when she's not wearing them."
+	[For her blouse, we want to give a rather complex description, so we split the description off into a Saying rule:]
+	A white low-cut blouse is a shirt worn by Helena. The description is "[Helena's shirt description]"
+	
+	To say Helena's shirt description:
+		If white blouse is worn by Helena:
+			Say "Helena is wearing a white blouse that is cut low to show off her ample cleavage";
+	[This will run the sentence on, as it didn't end in punctuation.]
+			If Helena is wearing black lacy bra, say ", and the frilly edges of a black bra";
+			Say ".";
+		Else:
+			Say "It's Helena's white blouse. It doesn't look like much when she's not wearing it.";	
+
+	[We want her appearance in the room to represent what she is wearing.]
+	Helena is in Observation Lounge. "A beautiful woman with long curly blonde hair is here[if white blouse is worn by Helena], the name-tag pinned to her low-cut blouse proclaiming her name to be 'Helena'[end if]."
+	The description of Helena is "Helena is another member of the ray experiment, and you don't really know much about her. She seems friendly enough, always with a coy smile on her face."
+	[The framework will automatically append a list of what she is currently wearing, so we don't need to do it. We could describe the general shape of her body though, and call attention to particular body parts, and then it would be proper to mention how they are covered.]
+
+	The description of Helena's pair of feet is "[If sneakers is worn by Helena]Helena's feet are covered by her sneakers.[else]Helena has exquisite feet. She must take good care of them."
+	The description of Helena's pair of legs is "Helena's legs are smooth, and just the right amount of tanned."
+	The description of Helena's mouth is "Helena has lucious red lips."
+	The description of Helena's hair is "Helena has shoulder-length blonde hair."
+	The description of Helena's ass is "[If denim shorts is worn by Helena]Helena's bottom looks very perky in her short-shorts.[else if black thong is worn by Helena]The lacy black thong does not do much to cover up Helena's lovely buttocks.[else]Helena notices you staring at her naked behind, and shakes it for you."
+	The description of Helena's pair of breasts is "[Helena's Breasts Description]".
+	The description of Helena's vagina is "[If denim shorts is worn by Helena]You can't get a good look at that through her short-shorts.[else if black thong is worn by Helena]The lacy black thong just about covers Helena's vagina, leaving just enough to your imagination.[else]Helena's vagina has a small landing strip, point the way to the juicy goodness."
+
+	To say Helena's Breasts Description:
+		If white blouse is worn by Helena:
+			Say "Helena's breasts is covered by a white blouse that is cut low to show off her ample cleavage";
+			If Helena is wearing black lacy bra, say ", and the frilly edges of a black bra";
+			Say ".";
+		Else if Helena is wearing black lacy bra:
+			Say "A lacy black bra accentuates Helena's firm breasts.";
+		Else:
+			Say "Helena's breasts are perky and firm.";
+
+That was quite a bit of text, so let's have a short recap of what he just accomplished. We start by including the necessary extensions, and define the characters. Every story needs atleast one room, so we make one, that could really do with some more furnishing. Then it's time to declare which body parts we will be working with, this needs to be done after we define the characters but before we start describing them. Finally, it's time to start on the real work of describing the character. The clothing is first, note how we can just say that what type of garment it is and who is wearing it. The Garments extension takes care of the rest of the layering. For most of the clothing pieces we alternate description based on if Helena is wearing them or not. There is a limit to how complex you can make the statements inside a say command, so for the shirt we demonstrate another way of making complex descriptions: Moving it into a seperate "say" rule. There's nothing stopping you doing this to every description.
+
+We describe the character in a similar fashion, and it's important to note how the initial appearance differs from the description. The initial appearance is printed when the player looks in the room, and should not be too long. Similarly, the description of the character should focus on who the character is and not go into too much detail of how the character looks, but it should call attention to body parts the player might want to investigate more. For a much simpler approach to clothing, take a look at the Outfits extension.
+
+Something else to take note of: Characters do not drop the clothing they take off, but depending on persuasion rules the player might get other characters to give away their clothing. This means that for stories with multiple characters, enterprising player might manage to get the "wrong" characters to wear clothing, so you might want to take steps to ensure this doesn't happen or take this into account in the descriptions.
+
+Section: Sexy Stuff
+
+So far, all we've done is to allow the player to explore and look at things, but if the player actually tries the action provided by the framework... Well, the framework does print default messages, so no action will go unanswered, but we have a lot of responses to write. First though, we need to allow the actions to take place at all, as the Consent extension defaults to blocking the actions. We'll again use parts of Example J to showcase one way of using Consent, by linking it to a scene. The following has two scenes; one that begins when the story begins, and our erotic scene that takes over 5 turns later. It also shows how to to timed messages in Inform.
+
+*:
+	Introduction begins when play begins.
+	Introduction ends when the time since introduction began is 5 minutes.
+	When introduction begins:
+		First warning occurs in 1 minutes from now;
+		Second warning occurs in 3 minutes from now;
+
+	At the time when first warning occurs:
+		Say "A voice comes in over the speakers: 'Experiment commences in 3 minutes.'"
+
+	At the time when second warning occurs:
+		Say "A voice comes in over the speakers again: 'Experiment commences in 1 minute. Take your places.'"
+
+	Experiment begins when introduction ends.
+	When experiment begins:
+		Say "A voice comes in over the speakers again: 'Experiment commences now.' You wait for some sort of sound from the ray, but no other sound comes. Instead, something flickers in the eyes of the other test subjects."
+
+We can then tie a consent rule to this scene. It could be as generic as "Consent rule for doing something during experiment: Consent given.", which would allow anything to anyone during the scene. Normally though, we would want more granular control of how consent is granted, so that's what this example will do. The framework has divided the actions into a few distinct groupings that can be used to simplify consent; we should also customize the failure message when consent is denied.
+
+*:
+	Consent rule for being erotic during experiment: Consent given.
+	Consent rule for being sexual during experiment: Consent given.
+	Consent rule for being penetrating during experiment: Consent given.
+	Consent rule for being rough during experiment: Consent given.
+	
+	Persuasion rule for asking a person to try being erotic during experiment: persuasion succeeds.
+	Persuasion rule for asking a person to try being sexual during experiment: persuasion succeeds.
+	Persuasion rule for asking a person to try being rough during experiment: persuasion succeeds.
+	Persuasion rule for asking a person to try being penetrating during experiment: persuasion succeeds.
+
+	Taking off is being erotic.
+	Wearing is being erotic.
+
+By defining that wearing and taking off are erotic actions, we can allow the player to control these actions but without letting the character give away their clothing, avoiding the dilemma discussed earlier. Another risk of too-permissive persuasion rules, is that the player can start ordering other characters around the map. Another issue that might come up, but isn't a factor in a one-room story like this, is the player moving around while naked. Luckily the Body Parts extension has a solution for this, by declaring a decency for every character. This makes indecent movent quite easy to stop:
+
+*:
+	Instead of an actor going when indecent: Say "You can't move around like that!"
+	Instead of an actor going when immodest: Say "You can't move around like that!"
+
+Section: Switching It Up
+
+So far, we haven't actually started on the meat of the story, writing the responses to all these actions we have enabled. Besides the fucking action (and masturbation, which is blocked by default), we have 6 actions that can be done to 7 different body parts, for a whopping 42+ action descriptions. Considering that we might want the other character to do these same actions back on the player, we can double this. Luckily, some actions are blocked off by the framework. By default, only 3 body parts are lickable (for the licking and biting actions) and rubbable (for the rub and pinch actions). This leaves us with something like this:
+
+	Feet: Kiss, Touch
+	Legs: Kiss, Touch
+	Mouth: Kiss, Lick, Bite, Touch
+	Hair: Kiss, Touch
+	Ass: Kiss, Touch, Rub, Pinch, Fuck
+	Breasts: Kiss, Lick, Bite, Touch, Rub, Pinch
+	Vagina: Kiss, Lick, Bite, Touch, Rub, Pinch, Fuck
+
+Or grouped the other way:
+
+	Kissing: Feet, Legs, Mouth, Hair, Ass, Breasts, Vagina
+	Licking: Mouth, Breasts, Vagina
+	Biting: Mouth, Breasts, Vagina
+	Touching: Feet, Legs, Mouth, Hair, Ass, Breasts, Vagina
+	Rubbing: Ass, Breasts, Vagina
+	Pinching: Ass, Breasts, Vagina
+	Fucking: Ass, Vagina
+
+That's a total of 28 possible actions, which is a bit more manageable, especially considering that some of these would be rather short. This can be lowered further if we disallow the rough actions. There are several approaches on how to write these action descriptions, and I recommend looking at both the guides mentioned earlier and how other games do it. Usually responses are divided into to groupings; the major actions suck as fucking and interacting with the interesting body parts, and these gets the most attention. It's important to not completely neglect the minor actions though, but this isn't where your energy is best spent.
+
+Technically there's also several different ways to change the response of an action, but the two main methods available to a story author is by use of the AFTER and INSTEAD rules. As the name implies, they differ in when they activate; AFTER rules are only fired if the action is successfull, while INSTEAD rules trigger before the action is attempted. In general, you should use AFTER for successfull actions, and INSTEAD for when the action should be stopped with a specialized message. What follows is a small excerpt of the action descriptions from Example J in an attempt to show this in action.
+
+	Instead of kissing Helena's feet when sneakers are worn by Helena, say "Her shoes are in the way."
+	After kissing Helena's feet, say "You gently kiss her feet."
+	After touching Helena's feet, say "You fondle Helena's feet[if sneakers are worn by Helena] through her shoes[end if]."
+
+For a final twist, we might want to swap messages when a command is repeated. This can eithe be done by using [one of] inside a text, as described in §5.7 - Text with random alternatives. For longer, more complex alternatives, it's better to use the tecniques described in §7.16 - Repeated Actions, an example of which is shown below. Note that the action described can be either specific or general.
+
+	After waiting for the first time, say "Time passes slowly..."
+	After waiting for third time, say "Getting impatient, are we?"
+	After waiting for more than 5 times, say "Look, nobody here's getting any younger, so shall we get on with it?"
 
 Example J contains a complete mini-adventure that highlights how this extension can be used to create an erotic story.
 
@@ -625,6 +811,7 @@ Feedback of all varieties is welcome, but constructive criticism and discussion 
 
 Example: * Kissing - Altering the response of the kissing action.
 
+*:
 	The Bedroom is a room.
 	Annie is a woman in the bedroom.
 	Persuasion rule for asking Annie to try kissing something: persuasion succeeds.
@@ -637,6 +824,7 @@ Example: * Kissing - Altering the response of the kissing action.
 
 Example: * Licking - Making feet lickable, and altering the response for licking them.
 
+*:
 	The Bedroom is a room.
 	Annie is a woman in the bedroom.
 	A pair of feet is usually lickable.
@@ -650,6 +838,7 @@ Example: * Licking - Making feet lickable, and altering the response for licking
 
 Example: * Biting - Making feet lickable, and altering the response for biting them.
 
+*:
 	The Bedroom is a room.
 	Annie is a woman in the bedroom.
 	A pair of feet is usually lickable.
@@ -663,6 +852,7 @@ Example: * Biting - Making feet lickable, and altering the response for biting t
 
 Example: * Touching - Altering the response of the touching action.
 
+*:
 	The Bedroom is a room.
 	Annie is a woman in the bedroom.
 	A pair of feet is a part of every person.
@@ -675,6 +865,7 @@ Example: * Touching - Altering the response of the touching action.
 
 Example: * Rubbing - Altering the response of the rubbing action.
 
+*:
 	The Bedroom is a room.
 	Annie is a woman in the bedroom.
 	A pair of feet is a part of every person.
@@ -687,6 +878,7 @@ Example: * Rubbing - Altering the response of the rubbing action.
 
 Example: * Pinching - Altering the response of the pinching action.
 
+*:
 	The Bedroom is a room.
 	Annie is a woman in the bedroom.
 	A pair of feet is a part of every person.
@@ -710,6 +902,7 @@ Example: * Masturbating - Altering the response of the masturbating action
 
 Example: ** Fucking - Altering the response of the fucking action:
 
+*:
 	The Bedroom is a room.
 	Tyler is a man. The player is Tyler.
 	Annie is a woman in the bedroom.
@@ -725,6 +918,7 @@ Example: ** Fucking - Altering the response of the fucking action:
 
 Example:  ** Consent - Kissing three different persons with different consent.
 
+*:
 	The Library is a room.
 	Rachel is a woman in the Library. [Rachel allows kissing]
 	Annie is a woman in the Library. [Annie disallows kissing, with a custom failure message.]
@@ -737,3 +931,251 @@ Example:  ** Consent - Kissing three different persons with different consent.
 	Consent denied for kissing Annie: Say "Annie doesn't want that." instead;
 	
 	Test consent with "kiss Rachel / kiss annie / kiss sarah."
+
+Example: *** The Experiment - A sample AIF story
+
+This is a small example of how easy it can be to write an AIF using the framework. As this is just a sample game, the I make no claims to the quality of the writing. The story is organized to my personal preferences, but this is not a necessity. Another caution; this story does not have any custom text for asking the other actor to do anything, this is something a proper story would have. This includes interacting with both the players and her own body parts.
+
+
+	*: "The Experiment"
+	
+	Volume 0 - Setup
+
+	[The first task is to properly set up the story and it's cast. We also make some shortcuts to say style changes.]
+
+	When play begins, say "When your friend Derek asked for volunteers to test his latest inhibitor-suppression ray, you would have been crazy to refuse.[br]
+	Derek has just shown you into the observation lounge, where the other test subject is waiting."
+
+	Book - Imports
+
+	Include Erotic Story Actions by Fictitious Frode.
+	Include Garments by Fictitious Frode.
+
+	Book - Text
+	
+	To say /p: say paragraph break.
+	To say br: say line break.
+	To say i -- beginning say_i -- running on: (- style underline; -).
+	To say /i -- ending say_i -- running on: (- style roman; -). 
+	To say b -- beginning say_b -- running on: (- style bold; -). 
+	To say /b -- ending say_b -- running on: (- style roman; -). 
+
+	To prompt for keypress:
+		Say "[[]Press any key...[]][br]";
+		Wait for any key.
+
+	Book 4 - Cast
+
+	Tyler is a man. The player is Tyler.
+	Helena is a woman.
+
+	Volume 1 - Locations
+
+	[The next part is to create the world, and any puzzle elements. As this is just a sample story, the world we define is very small, and not very detailed. A proper story would need more furnishings to flesh out the room, such as furniture and decorations.]
+
+	Observation Lounge is a room. "This large room is well decorated, and you can almost forget that the large mirrors on the wall most likely conceals cameras or live observeres."
+
+	Volume 2 - Puzzles and Items
+
+	A big red button is a device in Observation Lounge. It is fixed in place.  "A big red button marked 'ABORT' is attached to one wall."
+
+	Volume 3 - Events
+
+	[A story should also be segmented into scenes. For our sample, we need a introduction, the play part, and an optional aftermath.]
+
+	Introduction is a scene.
+	Experiment is a scene.
+	Aftermath is a scene.
+
+
+	Part 1 - Introduction
+
+	[The introduction starts when the story begins, and lasts for 5 turns. This also illustrates how to set up timed prompts.]
+
+	Introduction begins when play begins.
+	Introduction ends when the time since introduction began is 5 minutes.
+	When introduction begins:
+		First warning occurs in 1 minutes from now;
+		Second warning occurs in 3 minutes from now;
+
+	At the time when first warning occurs:
+		Say "A voice comes in over the speakers: 'Experiment commences in 3 minutes.'"
+
+	At the time when second warning occurs:
+		Say "A voice comes in over the speakers again: 'Experiment commences in 1 minute. Take your places.'"
+
+	Part 2 - Experiment
+
+	[The experiment itself begins when introduction ends, and ends when someone uses the big red button. Note that the big red button should probably have some more improved working and text.]
+
+	Experiment begins when introduction ends.
+	Experiment ends when the big red button is switched on.
+	When experiment begins:
+		Say "A voice comes in over the speakers again: 'Experiment commences now.' You wait for some sort of sound from the ray, but no other sound comes. Instead, something flickers in the eyes of the other test subjects."
+
+	Part 3 - Aftermath
+
+	Aftermath begins when experiment ends.
+	When aftermath begins:
+		Say "As you hit the button there is no noticeable effect, but something still feels different."
+
+	Volume 4 - Characters
+
+	[Finally, it's time to start on the characters proper. We first define which body parts we need.]
+
+	A pair of feet is a part of every person.
+	A pair of legs is a part of every person.
+	A mouth is a part of every person.
+	Some hair is a part of every person.
+	An ass is a part of every person.
+
+	A chest is a part of every man.
+	A penis is a part of every man.
+
+	A pair of breasts is a part of every woman.
+	A vagina is a part of every woman.
+
+	Part 1 - Tyler
+
+	[A proper story would have some descriptions of the player, but for now we just rely on the default body part descriptions.]
+
+	Part 2 - Helena
+
+	[We start with a basic description of the clothing and the person.]
+
+	A pair of sneakers is a pair of shoes worn by Helena. The description is "It's Helena's sneakers. There's nothing special about them."
+	A lacy black thong is a pair of panties worn by Helena. The description is "[If black thong is worn by Helena]The lacy black thong fits Helena's curves snuggly.[else]It's Helena's lacy black thong. It still looks hot, even if she isn't wearing it."
+	A lacy black bra is a bra worn by Helena.
+	A cut-off denim shorts is a pair of trousers worn by Helena. The description is "[If denim shorts is worn by Helena]Helena is wearing a pair of cut-off shorts that really show off her perky buttocks and long legs.[else]It's Helena's pair of cut-off shorts. They don't look like much when she's not wearing them."
+
+	[For her blouse, we want to give a rather complex description, so we split the description off into a Saying rule:]
+
+	A white low-cut blouse is a shirt worn by Helena. The description is "[Helena's shirt description]".
+
+	To say Helena's shirt description:
+		If white blouse is worn by Helena:
+			Say "Helena is wearing a white blouse that is cut low to show off her ample cleavage";
+			[This will run the sentence on, as it didn't end in punctuation.]
+			If Helena is wearing black lacy bra, say ", and the frilly edges of a black bra";
+			Say ".";
+		Else:
+			Say "It's Helena's white blouse. It doesn't look like much when she's not wearing it.";
+
+	[We want her appearance in the room to represent what she is wearing.]
+
+	Helena is in Observation Lounge. "A beautiful woman with long curly blonde hair is here[if white blouse is worn by Helena], the name-tag pinned to her low-cut blouse proclaiming her name to be 'Helena'[end if]."
+
+	Chapter 1 - Descriptions
+
+	[The framework will automatically append a list of what she is currently wearing, so we don't need to do it. We could describe the general shape of her body though, and call attention to particular body parts, and then it would be proper to mention how they are covered.]
+
+	The description of Helena is "Helena is another member of the ray experiment, and you don't really know much about her. She seems friendly enough, always with a coy smile on her face."
+
+	The description of Helena's pair of feet is "[If sneakers is worn by Helena]Helena's feet are covered by her sneakers.[else]Helena has exquisite feet. She must take good care of them."
+	The description of Helena's pair of legs is "Helena's legs are smooth, and just the right amount of tanned."
+	The description of Helena's mouth is "Helena has lucious red lips."
+	The description of Helena's hair is "Helena has shoulder-length blonde hair."
+	The description of Helena's ass is "[If denim shorts is worn by Helena]Helena's bottom looks very perky in her short-shorts.[else if black thong is worn by Helena]The lacy black thong does not do much to cover up Helena's lovely buttocks.[else]Helena notices you staring at her naked behind, and shakes it for you."
+	The description of Helena's pair of breasts is "[Helena's Breasts Description]".
+	The description of Helena's vagina is "[If denim shorts is worn by Helena]You can't get a good look at that through her short-shorts.[else if black thong is worn by Helena]The lacy black thong just about covers Helena's vagina, leaving just enough to your imagination.[else]Helena's vagina has a small landing strip, point the way to the juicy goodness."
+
+	To say Helena's Breasts Description:
+		If white blouse is worn by Helena:
+			Say "Helena's breasts is covered by a white blouse that is cut low to show off her ample cleavage";
+			If Helena is wearing black lacy bra, say ", and the frilly edges of a black bra";
+			Say ".";
+		Else if Helena is wearing black lacy bra:
+			Say "A lacy black bra accentuates Helena's firm breasts.";
+		Else:
+			Say "Helena's breasts are perky and firm.";
+
+	Chapter 2 - Conversation
+
+	[Normally, the player would want to engage the other actors in conversation.]
+
+	Chapter 3 - Interaction
+
+	[Finally, the meat of the story. The first part is to define consent and persuasion. This can be done as detailed or broadly as desired, but it's probably easiest to use the defined groupings and the scenes we defined earlier.]
+
+	Consent rule for being erotic during experiment: Consent given.
+	Consent rule for being sexual during experiment: Consent given.
+	Consent rule for being penetrating during experiment: Consent given.
+	Consent rule for being rough during experiment: Consent given.
+	
+	Persuasion rule for asking a person to try being erotic during experiment: persuasion succeeds.
+	Persuasion rule for asking a person to try being sexual during experiment: persuasion succeeds.
+	Persuasion rule for asking a person to try being rough during experiment: persuasion succeeds.
+	Persuasion rule for asking a person to try being penetrating during experiment: persuasion succeeds.
+	
+	Consent denied for being erotic: Say "She pulls away as you try, so you stop." instead;
+	Consent denied for being sexual: Say "You don't think she would appreciate that." instead;
+	Consent denied for being rough: Say "That seems a little harsh." instead;
+	Consent denied for being penetrating: Say "Surely, that's not proper." instead;
+
+	[By defining taking off and wearing as erotic, they are also covered by the consent and persuasion rules we just defined.]
+
+	Taking off is being erotic.
+	Wearing is being erotic.
+
+	[For the actual actions, it's probably best to group them by the body part they affect, although it's perfectly reasonable to group them by action as well.]
+
+	Section - Feet
+
+	[Kiss, Touch]
+	Instead of kissing Helena's feet when sneakers are worn by Helena, say "Her shoes are in the way."
+	After kissing Helena's feet, say "You gently kiss her feet."
+	After touching Helena's feet, say "You fondle Helena's feet[if sneakers are worn by Helena] through her shoes[end if]."
+
+	Section - Legs
+
+	[Kiss, Touch]
+	After kissing Helena's legs, say "You gently kiss her legs."
+	After touching Helena's legs, say "You let your hands gently slide over her smooth legs."
+
+	Section - Mouth
+
+	[Kiss, Lick, Bite, Touch]
+	After kissing Helena's mouth, say "You lean in and gently kiss her on the lips."
+	After licking Helena's mouth, say "You lean in to kiss her, and instead playfully lick her lips."
+	After biting Helena's mouth, say "As you kiss Helena, you playfully bite down on her lips, gently."
+	After touching Helena's mouth, say "You softly place your finger on Helena's mouth. She smiles at you."
+
+	Section - Hair
+
+	[Kiss, Touch]
+	Instead of kissing Helena's hair, say "You lean in to kiss her hair, but change your mind when you smell the amount of hairspray she's been using."
+	After touching Helena's hair, say "You let your fingers run through her hair. She seems to like it."
+
+	Section - Ass
+
+	[Kiss, Touch, Rub, Pinch, Fuck]
+	Instead of kissing Helena's ass when Helena's ass is covered by something , say "[The list of visible things covering Helena's ass] [are] in the way."
+	After kissing Helena's ass, say "You kiss Helena's cute buttcheeks."
+	After rubbing Helena's ass, say "You softly massage Helena's ass[if Helena's ass is covered by something] through [the list of visible things covering Helena's ass][end if]."
+	After pinching Helena's ass, say "Helena squeals as you pinch her ass[if Helena's ass is covered by something] through [the list of visible things covering Helena's ass][end if]."
+	After fucking Helena's ass with your penis, say "You pull Helena's legs up, and steer your stiff shaft towards her rear opening,and gently press it inside of her."
+
+	Section - Breasts
+
+	[Kiss, Lick, Bite, Touch, Rub, Pinch]
+	Instead of kissing Helena's pair of breasts when Helena's pair of breasts is covered by something, say "[The list of visible things covering Helena's pair of breasts] [are] in the way."
+	After kissing Helena's pair of breasts, say "Helena moans as your lips gently play with her bare breasts."
+	Instead of licking Helena's pair of breasts when Helena's pair of breasts is covered by something , say "[The list of visible things covering Helena's pair of breasts] [are] in the way."
+	After licking Helena's pair of breasts, say "Your tounge runs over Helena's exposed nipples, making her moan in pleasure."
+	Instead of biting Helena's pair of breasts when Helena's pair of breasts is covered by something , say "[The list of visible things covering Helena's pair of breasts] [are] in the way."
+	After biting Helena's pair of breasts, say "Helena gasps as your naughtily bite down on her nipples."
+	After pinching Helena's pair of breasts, say "Helena squeals as you pinch her breasts[if Helena's pair of breasts is covered by something] through [the list of visible things covering Helena's pair of breasts][end if]."
+
+	Section - Vagina
+
+	[Kiss, Lick, Bite, Touch, Rub, Pinch, Fuck]
+	Instead of kissing Helena's vagina when Helena's vagina is covered by something, say "[The list of visible things covering Helena's vagina] [are] in the way."
+	After kissing Helena's vagina, say "You softly kiss her lower lips."
+	Instead of licking Helena's vagina when Helena's vagina is covered by something, say "[The list of visible things covering Helena's vagina] [are] in the way."
+	After licking Helena's vagina, say "Helena moans and squirms in pleasure as your tongue goes to work on her womanly parts."
+	Instead of biting Helena's vagina when Helena's vagina is covered by something, say "[The list of visible things covering Helena's vagina] [are] in the way."
+	After biting Helena's vagina, say "While eating Helena out, you decide to take a heftier bite. She squeals as you softly bite down on her womanly parts."
+	After touching Helena's vagina, say "[if Helena's vagina is covered by something]You slide your fingers under [the list of visible things covering Helena's vagina] and let them[else]You let your fingers[end if] gently slide over her smooth pussy."
+	After rubbing Helena's vagina, say "[if Helena's vagina is covered by something]You slide your fingers under [the list of visible things covering Helena's vagina] and [else]You [end if] rub her pussy as she moans with pleasure."
+	After pinching Helena's vagina, say "[if Helena's vagina is covered by something]You slide your fingers under [the list of visible things covering Helena's vagina] and [else]You [end if] pinches her lips. She jerks with surprise."
+	After fucking Helena's vagina with your penis, say "You gently steer your throbbing manhood towards Helena's waiting moist cave. You both moan and shiver with pleasure as it slides into her."
