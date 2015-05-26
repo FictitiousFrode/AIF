@@ -57,7 +57,7 @@ This can be as detailed as needed, including references to scenes and specific t
 
 Section: Granting consent
 
-Consent is granted in a similar way that persuasion is defined (see ง12.4 for details), using the Consent rulebook. Consent can be given or denied both for specific actions and/or persons, or in a broader sense with the terms someone and something. Example A shows how to give a specific consent; for a very general rule (that undoes everything we try to accomplish here, and as such is only good for testing or as an example) we could use the following:
+Consent is granted in a similar way that persuasion is defined (see ยง12.4 for details), using the Consent rulebook. Consent can be given or denied both for specific actions and/or persons, or in a broader sense with the terms someone and something. Example A shows how to give a specific consent; for a very general rule (that undoes everything we try to accomplish here, and as such is only good for testing or as an example) we could use the following:
 
 *:
 	Consent rule for an actor doing something to someone: Consent given.
@@ -71,11 +71,11 @@ Only actions that are defined to require consent (see above) will be checked, bu
 
 Section: Failure messages
 
-Actions stopped due to denied consent is handled similarly to failed persuasion (see ง12.5 for details), using the Consent denied for rulebook. Example A shows how to give a specific failure message. It's important to use the "instead" keyword here, otherwise the default failure message will be printed as well.
+Actions stopped due to denied consent is handled similarly to failed persuasion (see ยง12.5 for details), using the Consent denied for rulebook. Example A shows how to give a specific failure message. It's important to use the "instead" keyword here, otherwise the default failure message will be printed as well.
 
 Chapter: Technical Notes
 
-The default failure message can be altered by altering the consent seeking rule response (A), detailed in ง14.11:
+The default failure message can be altered by altering the consent seeking rule response (A), detailed in ยง14.11:
 
 *:
 	The consent seeking rule response (A) is "That would be rude."

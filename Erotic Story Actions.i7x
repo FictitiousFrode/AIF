@@ -771,7 +771,7 @@ Technically there's also several different ways to change the response of an act
 	After kissing Helena's feet, say "You gently kiss her feet."
 	After touching Helena's feet, say "You fondle Helena's feet[if sneakers are worn by Helena] through her shoes[end if]."
 
-For a final twist, we might want to swap messages when a command is repeated. This can eithe be done by using [one of] inside a text, as described in ง5.7 - Text with random alternatives. For longer, more complex alternatives, it's better to use the tecniques described in ง7.16 - Repeated Actions, an example of which is shown below. Note that the action described can be either specific or general.
+For a final twist, we might want to swap messages when a command is repeated. This can eithe be done by using [one of] inside a text, as described in ยง5.7 - Text with random alternatives. For longer, more complex alternatives, it's better to use the tecniques described in ยง7.16 - Repeated Actions, an example of which is shown below. Note that the action described can be either specific or general.
 
 	After waiting for the first time, say "Time passes slowly..."
 	After waiting for third time, say "Getting impatient, are we?"
