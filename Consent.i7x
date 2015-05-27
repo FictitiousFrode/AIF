@@ -24,8 +24,8 @@ This is the consent seeking rule:
 			Stop the action;
 
 [In order to let Inform know that actions are consensual, we need to actually make an action consensual. In order to not surprise the author, we do this to a new action that will never be used.]
-Dummy-action-consenting is an action applying to nothing.
-Dummy-action-consenting is consensual.
+Dummy-consenting-action is an action applying to nothing.
+Dummy-consenting-action is consensual.
 
 Consent ends here.
 
