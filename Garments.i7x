@@ -313,7 +313,7 @@ Report taking inventory (this is the list player garments rule):
 
 Part 2.5 - Looking under
 
-Instead of looking under something which is worn by the player:
+Instead of looking under something which is worn by the player (This is the peeking under garment rule):
 	If something (called the underwear) underlies the noun, say "[We] [peek] at [the underwear]. Yup, still there." (A);
 	Otherwise say "Just [us] in there." (B);
 
@@ -394,12 +394,13 @@ Release 2 (v0.4):
 
 	No code changes, but documentation improved.
 
-Release 3 (v1.0): 
-
+Release 3
+  (v1.0): 
 	Added hats and glasses.
 	Fixed so that multiples of the same kind can't be worn together. Whoopsie.
 	Improved action reporting.
 	Fixed initial wearing of garments.
+  (v1.0.1): Bug fixes.
 
 Section: Planned expansion
 
