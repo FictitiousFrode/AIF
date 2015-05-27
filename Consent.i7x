@@ -24,8 +24,8 @@ This is the consent seeking rule:
 			Stop the action;
 
 [In order to let Inform know that actions are consensual, we need to actually make an action consensual. In order to not surprise the author, we do this to a new action that will never be used.]
-Dummy-consenting-action is an action applying to nothing.
-Dummy-consenting-action is consensual.
+Dummy-action-consenting is an action applying to nothing.
+Dummy-action-consenting is consensual.
 
 Consent ends here.
 
@@ -57,7 +57,7 @@ This can be as detailed as needed, including references to scenes and specific t
 
 Section: Granting consent
 
-Consent is granted in a similar way that persuasion is defined (see §12.4 for details), using the Consent rulebook. Consent can be given or denied both for specific actions and/or persons, or in a broader sense with the terms someone and something. Example A shows how to give a specific consent; for a very general rule (that undoes everything we try to accomplish here, and as such is only good for testing or as an example) we could use the following:
+Consent is granted in a similar way that persuasion is defined (see 12.4 for details), using the Consent rulebook. Consent can be given or denied both for specific actions and/or persons, or in a broader sense with the terms someone and something. Example A shows how to give a specific consent; for a very general rule (that undoes everything we try to accomplish here, and as such is only good for testing or as an example) we could use the following:
 
 *:
 	Consent rule for an actor doing something to someone: Consent given.
@@ -71,11 +71,11 @@ Only actions that are defined to require consent (see above) will be checked, bu
 
 Section: Failure messages
 
-Actions stopped due to denied consent is handled similarly to failed persuasion (see §12.5 for details), using the Consent denied for rulebook. Example A shows how to give a specific failure message. It's important to use the "instead" keyword here, otherwise the default failure message will be printed as well.
+Actions stopped due to denied consent is handled similarly to failed persuasion (see 12.5 for details), using the Consent denied for rulebook. Example A shows how to give a specific failure message. It's important to use the "instead" keyword here, otherwise the default failure message will be printed as well.
 
 Chapter: Technical Notes
 
-The default failure message can be altered by altering the consent seeking rule response (A), detailed in §14.11:
+The default failure message can be altered by altering the consent seeking rule response (A), detailed in 14.11:
 
 *:
 	The consent seeking rule response (A) is "That would be rude."
@@ -84,7 +84,9 @@ If you want other actors to perform actions on the player, make sure to give the
 
 Section: Version History
 
-Release 1 (v1.0): First release
+Release 1:
+	(v1.0): First release
+	(v1.0.1): Bug fixes.
 
 Section: Contact Info
 
