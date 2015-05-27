@@ -771,7 +771,7 @@ Technically there's also several different ways to change the response of an act
 	After kissing Helena's feet, say "You gently kiss her feet."
 	After touching Helena's feet, say "You fondle Helena's feet[if sneakers are worn by Helena] through her shoes[end if]."
 
-For a final twist, we might want to swap messages when a command is repeated. This can eithe be done by using [one of] inside a text, as described in §5.7 - Text with random alternatives. For longer, more complex alternatives, it's better to use the tecniques described in §7.16 - Repeated Actions, an example of which is shown below. Note that the action described can be either specific or general.
+For a final twist, we might want to swap messages when a command is repeated. This can either be done by using [one of] inside a text, as described in 5.7 - Text with random alternatives. For longer, more complex alternatives, it's better to use the techniques described in 7.16 - Repeated Actions, an example of which is shown below. Note that the action described can be either specific or general.
 
 	After waiting for the first time, say "Time passes slowly..."
 	After waiting for third time, say "Getting impatient, are we?"
@@ -789,8 +789,8 @@ For consent, if the "instead" is left off the consent denied for rules, then the
 
 Section: Version History
 
-Release 2 (v1.0):
-
+Release 2
+  (v1.0):
 	Extension renamed from Sexual Actions.
 	Consent framework added.
 	Improved understanding of what the player means.
@@ -798,6 +798,7 @@ Release 2 (v1.0):
 	Checked that body part is rubbable for the rubbing and pinching actions.
 	Added strapon, integrated into the fucking action.
 	Kissing now defaults to a person's mouth, if present.
+  (v1.0.1): Minor documentation fixes.
 
 Section: Contact Info
 
