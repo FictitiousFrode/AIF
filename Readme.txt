@@ -18,7 +18,7 @@ The extensions in the framework provides:
    to how persuasion rules work.
  * Two different forms of clothing, depending on what the story needs.
  * The actions kissing, licking, biting, touching, rubbing, pinching and 
-   masturbation, and the all important fucking including the use of toys.
+   masturbation, and the all important fucking, including the use of toys.
 
  Installation
 ==============
@@ -34,8 +34,8 @@ need one extension each for Actions and clothing. The Part Details section
 below will go into more detail about these, but for your first story I suggest 
 using the following:
 
-	Include Erotic Story Actions by Fictitious Frode.
-	Include Outfits by Fictitious Frode.
+  Include Erotic Story Actions by Fictitious Frode.
+  Include Outfits by Fictitious Frode.
 
 All of the extensions have proper documentation, available from the Extensions
 tab inside Inform. This includes proper instructions on how to activate the
@@ -53,11 +53,9 @@ properly experience an adult erotic story.
  * Erotic Story Actions provides the necessary actions writing a story-style, 
    where each action performed is a "complete" action, similar to how ADRIFT
    games usually operate.
- * Kinky Story Actions an upcoming extension that is meant to complement Erotic
-   Story Actions with actions required for BDSM-inspired gameplay. This 
+ * Kinky Story Actions is an early beta extension that is meant to complement 
+   Erotic Story Actions with actions required for BDSM-inspired gameplay. This
    includes support for bondage, spanking and gagging.
- * Sexual Simulation System is a future part of the framework that will 
-   provide a more TADS-like experience, with arousal and lasting penetration.
 
 The Clothing extensions provide two differing ways of providing clothing for 
 characters in your story:
@@ -67,6 +65,14 @@ characters in your story:
  * Garments is a layered clothing option which allows player to control the
    clothing of actors in detail.
 
+The support extensions provide optional support for authors that want it.
+ * Arousal provides a simplified system for keeping track of and altering
+   the arousal level of actors.
+ * Directionality automatically lists all exits from a room, stating the
+   destination if it is known to the player.
+ * Posturing is a stand-alone extension that allows characters to assume 
+   positions (or postures), along with pre-defined furniture to do so on.
+   
 The Foundation extensions provide basic functionality, and are usually not 
 necessary to directly include.
  * Body Parts provides the titular body parts, but also sets the foundations
@@ -74,20 +80,40 @@ necessary to directly include.
  * Consent provides a method for "obtaining consent" from actors before 
    performing actions involving them, and printing custom failure message
    when consent is denied.
- * Ropework enables the use of rope in various forms.
+ * Ropework enables the use of rope in various forms, and is included by Kinky
+   Story Actions.
 
  What is New?
 ==============
 
 This is meant as an overview, please see individual extensions for details.
 
+  2016-01-26:
+ -------------
+  * Release 6M62 of Inform broke some of the functionality in the framework, 
+    which this release restores. 
+  * The relationships model has been changed. Overlying no longer is the same
+    as covering, but instead is the reversal of the underlying relation. All
+    custom garments must be updated, but it is now easier to refer to blocking
+    garments, by use of the over-/underlying relation.
+  * Directionality is a handy tool, mainly for the author's convenience, to 
+    automatically list exits from rooms, keeping track of which destinations
+    are known to the player.
+  * Some updates on future plans, the previously planned Sexual Simulator 
+    System will be replaced by several smaller extensions that build on Sexual 
+    Actions.
+  * Posturing is the first of these extensions, and is presented in a beta
+    release that's functionally complete, but not yet throughly tested.
+  * Arousal is a the second of these, and provides support for arousal levels
+    and orgasms that are harder to obtain for each one.
+
   2015-04-28:
  -------------
   The proper version 1 release of the framework. Changes include:
    * Sexual Actions renamed to Erotic Story Actions to better reflect the
      style of adventure best supported by the extension. Expanded to include
-	 the "rough" actions of pinching and biting, and strapons are included and
-	 integrated.
+     the "rough" actions of pinching and biting, and strapons are included and
+     integrated.
    * Consent added as a new foundation extension, and integrated with Erotic
      Story Actions.
    * Body Parts and Garments expanded with hair and mouth, and integrated with
@@ -119,11 +145,11 @@ These are some ideas I might develop in the future, but no promises:
  * Garments could do with support for shifting/opening/lifting. Support for a
    "dress" command that puts on a pre-defined set of garments.
  * Outfits might get a cascade system to go with dress/strip commands.
- * Erotic Story Actions is pretty much complete.
+ * Erotic Story Actions to be expanded with Dance, Hug and Tickle.
+ * The previously planned Sexual Simulator System will be replaced by several 
+   smaller extensions that build on Sexual Actions.
+ * Penetrations allows for penetrations that last across player actions.
  * Kinky Story Actions will implement BDSM functionality.
- * Sexual Simulator System will be an alternative to Erotic Story Actions for
-   more immersive simulator-style games. This includes systems for arousal,
-   orgasms, posturing and lasting penetration.
  * Cutscenes, to implement CYOA-like functionality.
 
  Contact Info

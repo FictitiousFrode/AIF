@@ -1,4 +1,4 @@
-Version 1 of Ropework by Fictitious Frode begins here.
+Version 2/150126 of Ropework by Fictitious Frode begins here.
 
 "Makes rope available, that can be used to tie things. This is based on example 228, but modified and cleaned up."
 
@@ -7,6 +7,7 @@ Book 1 - Rope
 Part 1.1 - Definitions
 
 A rope is a kind of thing.
+The specification of rope is "A rope is a magical thing in IF, and can be used to 'tie' attachable items together, which could possible hinder movement. It's also possible to pull on it, to see if the other end is movable."
 [Attachment is the relation that governs what rope is fastened to.]
 Attachment relates things to each other in groups. The verb to be stuck to means the attachment relation.
 [Defining what can be attached]
@@ -77,17 +78,18 @@ Report examining a rope (called the cord) when something is stuck to the cord (t
 [Mention that something attached to a rope, is attached to a rope.]
 Report examining something non-rope which is stuck to something secondary (this is the description of roped item rule):
 	Say "[If the noun is the player][We][else][The noun][end if] [are] attached to [the list of secondary things stuck to the noun]." (A);
-
+	
 Book 2 - Actions
 
-[We need to make the rope can be interacted with when it's attached to something in the player's location.]
+[We need to make so the rope can be interacted with when it's attached to something in the player's location. This allows the rope to effectively be in several locations at once.]
 After deciding the scope of the player:
 	If something stuck to a rope (called the coil) is in the location, place the coil in scope.
 
+[If the rope is attached to something we can see and touch, we can also touch the rope.]
 A reaching inside rule:
 	If the noun is a rope:
-		Let the anchor be a random visible thing stuck to the noun;
-		If the anchor is touchable, allow access.
+		Repeat with the anchor running through the list of visible thing stuck to the noun:
+			If the anchor is touchable, allow access.
 
 Book 2.1 - Tying
 
@@ -97,8 +99,6 @@ Understand "Tie [something attachable] to [rope]" as tying it to.
 Understand "Tie [rope] to [something attachable]" as tying it to (with nouns reversed).
 To loop is a verb.
 To knot is a verb.
-[Instead of tying a rope to something:
-	try tying the second noun to the noun.]
 
 Check an actor tying something to something (this is the check tying rope rule):
 [Before tying something to a rope:]
@@ -244,19 +244,50 @@ Ropework ends here.
 
 ---- DOCUMENTATION ----
 
-Chapter: Using this Extension
+Chapter - Using this Extension
 
-TODO
+Rope is an incredibly powerful tool in an Interactive Fiction game, as the player can use it to many various effects. This extension enables the use of a generic "rope", which can be used to attach various objects.
 
-Chapter: Technical Notes
+Section - Definitions
 
-TODO
+The extension introduced a few terms to control how rope is handled:
 
-Section: Version History
+	Attachable: A property of things to determine wether rope can be attached to it.
+	Attachment relation: Controls which items are currently bound together with rope.
+	Free/Tied: A thing is free if nothing is attached to it, and tied if it has something (including the rope) attached to it. A rope on the other hand is free if has less than two things stuck to it (i.e., it has a free end).
+	Anchored: A thing that can't be pulled. Determined by the things fixed in place property (which is assumed by the scenery type). Also handles sub-parts of anchored things.
+	Draggable: A thing that can be pulled along with the player, the reverse of anchored (excluding the player and items carried by the player).
+	Non-rope: Any thing that isn't rope.
 
-TODO
+Section - Tying
 
-Section: Contact Info
+Tying something to a rope is as simple as "Tie [something attachable] to [rope]", and it also supports the reverse. Similarly, "untie [something] from [something]" and "untie [something]" tries to untie the thing from the rope.
+
+Section - Pulling and Dragging
+
+Rope can be pulled on, which wil move non-anchored items towards the player. If the rope is attached to the player, and the player tries to move somewhere, any non-anchored items will be pulled along with the player. Anchored items will block the action however, both pulling and player movement.
+
+Chapter - Technical Notes
+
+This extension is heavily based on example 228, but modified and cleaned up. 
+
+*Important*: There is one critical bug (which is inherited from the official example); using the 'ACTIONS' command will *completely* break handling of rope.
+
+*Also Important*: Rope is a very tricky thing in IF, so it needs to be tested throughly to avoid letting the player perform unwanted actions.
+
+Chapter - Integration with Other Parts of the Framework
+
+Ropework is a standalone extension, but Kinky Story Actions makes use of it to enable bondage.
+
+Section - Version History
+
+Release 2 (v1.1)
+
+	Improvements and optimizations to the code.
+	Integration with body parts
+	Improved documentation all around.
+
+Section - Contact Info
 
 The author of the framework can be reached in the following ways:
 

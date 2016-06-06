@@ -1,17 +1,17 @@
-Version 2 of Erotic Story Actions by Fictitious Frode begins here.
+Version 3/150126 of Erotic Story Actions by Fictitious Frode begins here.
 
-"Enables the sexual actions kissing, licking, touching, rubbing, masturbating and fucking."
-Include Version 3 of Body Parts by Fictitious Frode.
-Include Version 1 of Consent by Fictitious Frode.
+"Enables the following erotic and sexual actions: kissing, licking, biting, touching, rubbing, pinching, hugging, tickling, masturbating, dancing (with) and fucking."
+
+Include Version 4 of Body Parts by Fictitious Frode.
 
 Book 1 - Paraphernalia
 
-[Sex toy is a kind of thing that is by default penetrating (but can be changed to orificial or non-sexual as needed). The fucking action knows to try to use this if neither of the involved parties have anything else to penetrate with.]
-
 A sex toy is a kind of thing.
+The specification of sex toy is "Sex toy is a kind of thing that is by default penetrating (but can be changed to orificial or non-sexual if needed). The fucking action knows to try to use this if neither of the involved parties have anything else to penetrate with."
 A sex toy is usually penetrating.
 
 A strapon is a kind of sex toy.
+The specification of strapon is "A strapon is a wearable sextoy, that when worn will take precedence over carried sex toys in the fucking action."
 A strapon is wearable.
 
 Book 2 - Actions
@@ -21,7 +21,8 @@ Part 2.1 - Kissing
 [Kissing is already covered in the Standard Rules, but it's disabled by default.
 We also  need to do some basic checks on what can be kissed, and provide a default report message.
 If the person kissed has a mouth, we redirect to that.]
-
+The specification of the kissing action is "Possibly because Inform was originally written by an Englishman, attempts at kissing another person are normally blocked as being unrealistic or not seriously meant. So the Standard Rules simply block attempts to kiss people, but the action exists for rules to make exceptions.
+In Erotic Story Actions however, the block kissing rule is unlisted to allow for kissing. In its place are some basic checks that we are not kissing ourself (even in part), and that the target is a person or lickable body part. If possible, kissing a person is redirected to kissing their mouth."
 Understand "Kiss [body part]" as kissing.
 The block kissing rule is not listed in the check kissing rulebook.
 To kiss is a verb.
@@ -33,28 +34,31 @@ Does the player mean kissing something that is part of the player: It is very un
 Section - Check
 
 [Control what can be kissed]
-Check an actor kissing (this is the self kissing rule):
-	If the noun is the actor, Say "Kissing yourself [are not] very productive." (A) instead;
-	If the noun is enclosed by the actor, Say "Kissing parts of yourself [are not] very productive." (B) instead;
-[Instead of licking/sucking a person, try to redirect to their main sex organ.]
-Check an actor kissing someone (this is the implicit kissing rule):
-	If the noun is enclosing a mouth (called target):
-		Try the actor kissing the target instead;
 Check an actor kissing (This is the kissing viability rule):
 	If the noun is not a person and the noun is not a body part:
 		Say "[If the player is the actor][We][else][Actor][end if] [do not] want to kiss that." (A) instead;
 
+Check an actor kissing (this is the self kissing rule):
+	If the noun is the actor, Say "Kissing yourself [are not] very productive." (A) instead;
+	If the noun is enclosed by the actor, Say "Kissing parts of yourself [are not] very productive." (B) instead;
+
+[Instead of kissing a person, try to redirect to their mouth.]
+Check an actor kissing someone (this is the implicit kissing rule):
+	If the noun is enclosing a mouth (called target):
+		Try the actor kissing the target instead;
+
 Section - Default Report
 
 [Default response]
-Report  an actor kissing:
-	Say "[If the player is the actor][We][else][Actor][end if] [kiss] [noun].";
+Report  an actor kissing (this is the default kissing response rule):
+	Say "[If the player is the actor][We][else][Actor][end if] [kiss] [noun]." (A);
 
 Part 2.2 - Oral (Licking/Sucking)
 
 [Licking is a new action]
-Licking is an action applying to one thing.
-The specification of the licking action is "This action is intended for when the actor uses their mouth on something, and responds to commands like LICK ANNA or SUCK BANANA. Attempts to lick oneself in whole or parts is blocked, and by default only works on persons and body parts which are set to be lickable."
+Licking is an action applying to one touchable thing.
+The specification of the licking action is "This action is intended for when the actor uses their mouth on something, and responds to commands like LICK ANNA or SUCK BANANA. 
+Attempts to lick oneself in whole or parts is blocked, and by default only works on persons and body parts which are set to be lickable. If no target is specified, inference will target sexual organs if possible."
 Understand "lick [something]" and "suck [something]" as licking. 
 To lick is a verb.
 
@@ -69,6 +73,7 @@ Section - Check
 Check an actor licking (this is the self licking rule):
 	If the noun is enclosed by actor or the noun is the actor:
 		Say "Licking yourself [are not] very productive." (A) instead;
+
 [Instead of licking/sucking a person, try to redirect to their main sex organ.]
 Check an actor licking someone (this is the implicit licking rule):
 	If the noun is enclosing a vagina (called target):
@@ -76,6 +81,7 @@ Check an actor licking someone (this is the implicit licking rule):
 	If the noun is enclosing a penis (called target):
 		Try the actor licking the target instead;
 	Say "[Regarding the actor][We] [cannot] find anything on [noun] to lick." (A) instead;
+
 [Check that the target is a lickable body part]
 Check an actor licking (this is the licking viability rule):
 	If the noun is not a lickable body part:
@@ -84,14 +90,15 @@ Check an actor licking (this is the licking viability rule):
 Section - Default Report
 
 [Default response]
-Report an actor licking: 
-	Say "[If the player is the actor][We][else][Actor][end if] [lick] [noun].";
+Report an actor licking (this is the default report licking rule): 
+	Say "[If the player is the actor][We][else][Actor][end if] [lick] [noun]." (A);
 
 Part 2.3 - Biting
 
 [Biting is a new action]
-Biting is an action applying to one thing.
-The specification of the biting action is "This action is intended for when the actor bites something, and responds to commands like BITE ANNA or BITE BANANA. Attempts to bite oneself in whole or parts is blocked, and by default only works on persons and body parts which are set to be lickable. Attempts to bite something edible is redirected to eating it instead, and attempts to bite a person tries to redirect to biting their mouth."
+Biting is an action applying to one touchable thing.
+The specification of the biting action is "This action is intended for when the actor bites something, and responds to commands like BITE ANNA or BITE BANANA. Attempts to bite oneself in whole or parts is blocked, and by default only works on persons and body parts which are set to be lickable. 
+Attempts to bite something edible is redirected to eating it instead, and attempts to bite a person tries to redirect to biting their mouth."
 Understand "bite [someone]" and "bite [body part]" as biting.
 Understand "bite [something edible]" as eating.
 To bite is a verb.
@@ -102,27 +109,33 @@ Does the player mean biting something that is part of the player: It is very unl
 
 Section - Check
 
+Check an actor biting something edible (called target) (this is the biting redirect rule):
+	Try the actor eating target instead;
+
 Check an actor biting (this is the self biting rule):
 	If the noun is enclosed by actor or the noun is the actor:
 		Say "Licking yourself [are not] very productive." (A) instead;
+
 Check an actor biting someone (this is the implicit biting rule):
 	If the noun is enclosing a mouth (called target):
 		Try the actor biting the target instead;
+
 Check an actor biting (this is the biting viability rule):
 	If the noun is not a lickable body part:
-		Say "[Regarding the actor][We] [cannot] bite [noun]." (A) instead;
+		Say "[If the player is the actor][We][else][Actor][end if] [cannot] bite [noun]." (A) instead;
 
 Section - Default Report
 
 [Default response]
-Report an actor biting: 
-	Say "[If the player is the actor][We][else][Actor][end if] [bite] [noun].";
+Report an actor biting (this is the default report biting rule):
+	Say "[If the player is the actor][We][else][Actor][end if] [bite] [noun]." (A);
 
 Part 2.4 - Touching/Caressing
 
-[Touching is already covered in the Standard Rules.
-Touching is "passive touching" where the player feels something, while rubbing is "active touching" where the player actively rubs or massages something.
-There is nothing to check or report for touching.]
+[Touching is already covered in the Standard Rules.]
+The specification of the touching action is "Touching is just that, touching something without applying pressure: a touch-sensitive screen or a living creature might react, but a standard push-button or lever will probably not.
+In the Standard Rules there are no check touching rules, since touchability is already a requirement of the noun for the action anyway, and no carry out rules because nothing in the standard Inform world model reacts to a mere touch - though report rules do mean that attempts to touch other people provoke a special reply.
+In Erotic Story Actions however, touching is 'passive' touching where the player softly feels the target, while the related rubbing action is 'active' touching where the player actively massages the target. These is still nothing to check or report though."
 Understand "caress [something]" and "feel [something]" as touching.
 To touch is a verb.
 To caress is a verb.
@@ -138,7 +151,9 @@ Part 2.5 - Rubbing/Fingering
 [Rubbing is already covered in the Standard Rules, but it's disabled by default.
 Rubbing oneself is masturbation, and redirected as such.
 Default checking and reporting covered by the Standard Rules.]
-The specification of the rubbing action is "This action is intended for when the actor uses their hands to rub something, and reponds to commands like RUB ANNA, MASSAGE ANNA'S BREASTS, etc. It only works only body parts that are set to rubbable. Attempts to rub oneself is redirected to masturbation."
+
+The specification of the rubbing action is "The Standard Rules define this action in only a minimal way, blocking it with a check rule which stops it in all cases. It exists so that before or instead rules can be written to make it do interesting things in special cases. (Or to reconstruct the action as something more substantial, unlist the block rule and supply carry out and report rules, together perhaps with some further check rules.)
+For Erotic Story Actions, rubbing is intended for when the actor uses their hands to rub something (as opposed to the softer touch action), and reponds to commands like RUB ANNA, MASSAGE ANNA'S BREASTS, etc. It only works only body parts that are set to rubbable. Attempts to rub oneself is redirected to masturbation."
 The can't rub another person rule is not listed in the check rubbing rulebook.
 Understand "massage [something]", "rub [something]", "finger [something orificial]", "fondle [something]" as rubbing. 
 
@@ -157,6 +172,7 @@ Section - Check
 Check an actor rubbing (this is the self massaging rule):
 	If the noun is enclosed by the actor or the noun is the actor:
 		Try the actor masturbating instead;
+
 Check an actor rubbing (this is the rubbing viability rule):
 	If the noun is not a rubbable body part:
 		Say "[Regarding the actor][We] [cannot] rub [noun]." (A) instead;
@@ -164,7 +180,7 @@ Check an actor rubbing (this is the rubbing viability rule):
 Part 2.6 - Pinching
 
 [Pinching is a new action]
-Pinching is an action applying to one thing.
+Pinching is an action applying to one touchable thing.
 The specification of the pinching action is "This action is intended for when the actor pinches something, and responds to commands like PINCH ANNA or PINCH ANNA'S ASS. Attempts to pinch oneself in whole or parts is blocked."
 Understand "pinch [someone]" and "pinch [body part]" as pinching.
 To pinch is a verb.
@@ -181,8 +197,8 @@ Check an actor pinching (this is the pinching viability rule):
 Section - Default Report
 
 [Default response]
-Report an actor pinching: 
-	Say "[If the player is the actor][We][else][Actor][end if] [pinch] [noun].";
+Report an actor pinching (this is the default report pinching rule):
+	Say "[If the player is the actor][We][else][Actor][end if] [pinch] [noun]." (A);
 
 Part 2.7 - Masturbation
 
@@ -205,18 +221,18 @@ Section - Check
 [Masturbation is disable by default.]
 Check an actor masturbating (this is the no masturbating rule):
 	If the actor is the player:
-		Say "[regarding the player][We] [don't] feel like doing that right [now]." instead;
-	Say "[The actor] [don't] want to do that." instead;
+		Say "[regarding the player][We] [don't] feel like doing that right [now]." (A) instead;
+	Say "[The actor] [don't] want to do that." (B) instead;
 
 Section - Report
 
 [Default responses]
-Report an actor masturbating: 
-	Say "[If the player is the actor][We][else][Actor][end if] [masturbate].";
-Report an actor masturbating with a thing (called T): 
-	Say "[If the player is the actor][We][else][Actor][end if] [masturbate] with [T].";
-Report an actor masturbating to a thing (called T): 
-	Say "[If the player is the actor][We][else][Actor][end if] [masturbate] to [T].";
+Report an actor masturbating (this is the default report masturbating rule):
+	Say "[If the player is the actor][We][else][Actor][end if] [masturbate]." (A);
+Report an actor masturbating with a thing (called T) (this is the default report masturbating with rule):
+	Say "[If the player is the actor][We][else][Actor][end if] [masturbate] with [T]." (A);
+Report an actor masturbating to a thing (called T) (this is the default report masturbating to rule):
+	Say "[If the player is the actor][We][else][Actor][end if] [masturbate] to [T]." (A);
 
 Part 2.8 - Fucking
 
@@ -354,6 +370,7 @@ Report an actor fucking something (called target) with something (called penetra
 
 Chapter - Assfucking
 
+[Release 6M62 broke the redirect we are using, so this doesn't work anymore.
 Assfucking is an action applying to one touchable thing.
 The specification of the assfucking action is "This is just a redirect wrapper for the fucking it with action."
 Understand "assfuck [something]" as assfucking.
@@ -364,10 +381,11 @@ Check an actor assfucking a person (called target):
 Check an actor assfucking an ass (called A):
 	Try the actor fucking A with instead;
 Check an actor assfucking something (called target) (this is the block assfucking rule):
-	If target is not a person, say "[If the player is the actor][We][otherwise][Actor][end if] [cannot] fuck [noun]." (A) instead;
+	If target is not a person, say "[If the player is the actor][We][otherwise][Actor][end if] [cannot] fuck [noun]." (A) instead;]
 
 Chapter - Titfucking
 
+[Release 6M62 broke the redirect we are using, so this doesn't work anymore.
 Titfucking is an action applying to one touchable thing.
 The specification of the titfucking action is "This is just a redirect wrapper for the fucking it with action."
 Understand "titfuck [something]" as titfucking.
@@ -378,11 +396,58 @@ Check an actor titfucking a person (called target):
 Check an actor titfucking a pair of breasts (called B):
 	Try the actor fucking B with instead;
 Check an actor titfucking something (called target) (this is the block titfucking rule):
-	If target is not a person, say "[If the player is the actor][We][otherwise][Actor][end if] [cannot] fuck [noun]." (A) instead;
+	If target is not a person, say "[If the player is the actor][We][otherwise][Actor][end if] [cannot] fuck [noun]." (A) instead;]
 
-Book 3 - Consent
+Part 9 - Hug
 
-Part 3.1 - Consensual Actions
+Hugging is an action applying to one touchable thing.
+The specification of the hugging action is "Shows affection to another character by giving them a hug. Only people can be hugged by default."
+Understand "hug [someone]" as hugging.
+To hug is a verb.
+
+Report an actor pinching (this is the basic report hugging rule):
+	Say "[If the player is the actor][We][else][Actor][end if] [hug] [noun]." (A);
+
+Part 10 - Tickle
+
+Tickling is an action applying to one touchable thing.
+The specification of the tickling action is "Tickling can be done to people or body parts."
+Understand "tickle [someone]" as tickling.
+To tickle is a verb.
+
+Check an actor tickling (this is the tickling viability rule):
+	If the noun is enclosed by the actor or the noun is the actor:
+		Say "[Regarding the actor][We] [cannot] tickle [noun]." (A) instead;
+	If the noun is not a body part and the noun is not a person:
+		Say "[Regarding the actor][We] [cannot] tickle [noun]." (B) instead;
+
+Report an actor tickling (this is the basic report tickling rule):
+	Say "[If the player is the actor][We][else][Actor][end if] [tickle] [noun]." (A);
+
+Part 11 - Dance (/with)
+
+[There are two dance actions, one for solo and for pair.]
+
+Dancing is an action applying to nothing.
+The specification of the dancing action is "Dancing is the act of dancing alone. See 'dancing with' for dancing with a partner.
+On it's own, this action doesn't do anything other than print a basic 'Soandso is dancing' response, but can be used for authors to build upon."
+Understand "dance" as dancing.
+To dance is a verb.
+
+Report an actor dancing (This is the default report dancing rule):
+	Say "[If the player is the actor][We][else][Actor][end if] [dance]." (A);
+
+Dancing with is an action applying to one touchable thing.
+The specification of the dancing action is "Dancing is the act of dancing with a partner. See 'dancing' for dancing alone.
+On it's own, this action just checks that the partner is a person that can be touched, and prints a basic 'Soandso is dancing with partner' response."
+Understand "Dance with [someone]" as dancing with.
+
+Report an actor dancing with (This is the default report dancing with rule):
+	Say "[If the player is the actor][We][else][Actor][end if] [dance] with [noun]." (A);
+
+Book 3 - Integration
+
+Part 3.1 - Consent (for use with Consent by Fictitious Frode)
 
 [This determines which actions should be governed by the consent rules.]
 
@@ -404,7 +469,7 @@ Rubbing a body part is consensual.
 Pinching a person is consensual.
 Pinching a body part is consensual.
 
-Fucking is consensual.
+Fucking something with something is consensual.
 
 Part 3.2 - Action Descriptions
 
@@ -447,15 +512,17 @@ Erotic Story Actions ends here.
 
 This extension provides the necessary actions for creating an erotic story, and a framework for actors to provide consent to these actions.
 
-Chapter: Using this Extension
+Chapter - Using this Extension
 
-Section: Actions
+This action enables a variety of actions (described below), as well as two new kinds of things.
+
+Section - Actions
 
 This extension defines (or enables, for the commands that are defined in the standard rules) the commands, does basic checking, and provides a default reporting rule. Therefore, no other activation is needed than including this extension. However, in order for the player to receive any reasonable input, the story author needs to define a more descriptive outcome for these actions.
 
 Inform offers several ways to do this, described in Chapter 12.2 ("How actions are processed"), but the best way supported by this framework is using the After rulebook. Some things to remember: A kissing B is not the same as B kissing A; and in order to command other actors to perform, persuasion rules must be defined. It's also worth looking at chapter 12.12 for how to make better failure messages.
 
-Section: Paraphernalia
+Section - Paraphernalia
 
 The extension contains two kinds of paraphernalia, that are intended for use with the fucking action:
 
@@ -463,7 +530,7 @@ Sex toy is a kind of thing that is by default penetrating (but can be changed to
 
 A strapon is a special kind of sex toy that can be worn, and will take precedence on use over carried sex toys if it is worn. A small warning; asking a woman who is wearing a strapon to fuck another person, will take precedence to fucking any available orifice, instead of the other person trying to fuck the first woman if possible.
 
-Chapter: The Actions
+Chapter - The Actions
 
 Deciding on exactly which actions are needed is a hard task, as they are often variations on a theme. To start with, I've settled on soft and normal touching and mouth-using, as well as various forms of fucking. Kissing and licking/sucking are the soft and normal actions with the mouth, while touch/caress and rub/finger are the soft and normal touch methods. In the future this might be expanded to rough use, such as pinch and bite.
 
@@ -478,7 +545,15 @@ Deciding on exactly which actions are needed is a hard task, as they are often v
 
 These actions are also classified as either being erotic, being sexual, being rough or being penetrating. The extension does not currently do anything with these classifications, they are provided for the benefit of the author.
 
-Section: Kissing
+Later versions of the framework also introduce some basic interactive actions:
+
+	* Hugging
+	* Tickling
+	* Dancing (with)
+
+All these interact with a person and not body parts.
+
+Section - Kissing
 
 Kissing is a standard actions in Inform that is disabled by default. This expansion enables it, but checks that only persons and body-parts can be kissed, as well as dis-allowing kissing yourself or any of your body parts. If the person kissed has a mouth, the action redirects to kissing that instead. Example A shows kissing in action.
 
@@ -486,7 +561,7 @@ Kissing a person or body part is being erotic, while kissing an indecent body pa
 
 Note: There is currently no check that the noun is not covered.
 
-Section: Licking
+Section - Licking
 
 Licking and sucking is a new action that for simplicity has been combined into the licking action. Licking anything other than persons and body parts is stopped, and licking a person tries to redirect to an attached vagina or penis. Trying to lick oneself (or your own body parts) are stopped, other body parts are checked that they are lickable (a property defined in Volume 1 - Body Parts). This means that the number of lickable objects is very few in practice, and the action that needs to be reported is "licking a body part". Example B shows licking in action.
 
@@ -494,7 +569,7 @@ Licking a person or body part is being erotic, while licking an indecent body pa
 
 Note: There is currently no check that the noun is not covered.
 
-Section: Biting
+Section - Biting
 
 Biting is a new action that works on just persons and body parts that have been marked as lickable. Biting a person will try to redirect to biting their mouth, if they have one. Example C shows licking in action.
 
@@ -502,7 +577,7 @@ Biting a person or body part is being rough, while biting an indecent body part 
 
 Note: There is currently no check that the noun is not covered.
 
-Section: Touching
+Section - Touching
 
 Touching is a standard action in Inform, with a default response that implies the action did not happen. There is no actual blocking of the action though, so a normal after rule will make it work. "Caress" and "Feel" are added as synonyms of touching. Example D shows touching in action.
 
@@ -510,7 +585,7 @@ Touching a person or body part is being erotic, while touching an indecent body 
 
 Note: There is currently no check that the noun is not covered.
 
-Section: Rubbing
+Section - Rubbing
 
 Rubbing is another standard action, that by default does nothing. The framework gives it a default response, and adds massage and fondle as generic synonyms, and fingering an orifice as a specific synonym. Trying to rub yourself is redirected to masturbation. Example E shows rubbing in action.
 
@@ -518,7 +593,7 @@ Rubbing a person or body part is being erotic, while rubbing an indecent body pa
 
 Note: There is currently no check that the noun is not covered.
 
-Section: Pinching
+Section - Pinching
 
 Pinching is a new action that works on just persons and body. Example F shows licking in action.
 
@@ -526,7 +601,7 @@ Pinching a person or body part is being rough, while pinching an indecent body p
 
 Note: There is currently no check that the noun is not covered.
 
-Section: Masturbation
+Section - Masturbation
 
 Masturbation is a new action that is disabled by default. To enable it, disable the "no masturbating" rule. Example G shows masturbation in action.
 
@@ -534,21 +609,51 @@ Masturbation is being sexual.
 
 Note: There is currently no check for what the actor is wearing.
 
-Section: Fucking
+Section - Fucking
 
 Fucking is a new action, and is the real meat of this extension. It's a very complex action, but boils down to putting a penetrating thing into an orificial thing. While the action itself takes two things, support is added for the player to use more generic commands, such as "Fuck person" or "Person fuck me". Orificial and penetrating is a property added to all things by volume 1, which also applies this to certain body parts in the manner expected. This volume also adds a seperate "sex toy" thing, that is penetrating by default, and these will be implicitly used by actors told to fuck.
 
-It requires that atleast one of the participants has something penetrating and the other something orificial (preferably vagina, but it does support custom body parts). The action ensures that the actor is in control of atleast one of the two things involved, and that both things are not covered by clothing or part of the same person. There are also two helper commands for the player, "Assfuck someone" and "titfuck someone"; these redirect to using the fucking it with action if the target person has the requisite body part.
+It requires that atleast one of the participants has something penetrating and the other something orificial (preferably vagina, but it does support custom body parts). The action ensures that the actor is in control of atleast one of the two things involved, and that both things are not covered by clothing or part of the same person. 
+
+There used to be two helper commands for the player, "Assfuck someone" and "titfuck someone"; which redirected to using the fucking it with action if the target person has the requisite body part. Build 6M62 of Inform broke this functionality though.
 
 Fucking is both sexual and penetrating.
 
 Example H shows how to use the fucking action.
 
-Chapter: Integration with Other Parts of the Framework
+Chapter - Integration with Other Parts of the Framework
 
-Erotic Story Actions is just one part of a larger framework, and it's important to understand how it interacts with the other parts. It relies on body parts and consent to provide a solid foundation, and either (or both) of the clothing extensions. It's also possible to expand upon the actions provied by using other Story Action components, or swapping to the Sexual Simulator System for a different experience.
+Erotic Story Actions is just one part of a larger framework, and it's important to understand how it interacts with the other parts. It relies on body parts to provide a solid foundation, and either (or both) of the clothing extensions. It's ready to incorporate the Consent extension.
 
-Section: Consent
+The actions in this extensions can be expanded upon by using the Kinky Story Actions to provide support for BDSM activities such as bondage, spanking and gagging. These two extensions are compatible and do not rely on each other in any way.
+
+Posturing adds support for various postures which can be combined to give custom results for the player, and even block/allow access to body parts.
+
+There is also some forthcoming functionality such as arousal and lasting penetrations, which might get their own extension.
+
+Section - Consent
+
+Consent was previously a requirement, but as of release 3 has been made an optional integration. The following actions will be declared as consensual if Consent is used:
+
+	Kissing a person is consensual.
+	Kissing a body part is consensual.
+
+	Licking a person is consensual.
+	Licking a body part is consensual.
+
+	Biting a person is consensual.
+	Biting a body part is consensual.
+
+	Touching a person is consensual.
+	Touching a body part is consensual.
+
+	Rubbing a person is consensual.
+	Rubbing a body part is consensual.
+
+	Pinching a person is consensual.
+	Pinching a body part is consensual.
+
+	Fucking it with is consensual.
 
 When asking another person in a story to try doing an action, that person's persuasion rules are consulted. These rules are only consulted when that person is the active participant, but for erotic stories we should also check if they are a willing secondary participant. Therefore the consent extension is used to provide a method for persons to consent to the various erotic actions, and a way to customize the messages when lack of consent blocks the action.
 
@@ -561,7 +666,7 @@ Note that a person is distinct from their body parts for these purposes, and you
 	Consent rule for doing something to a thing that is part of Annie: consent given.
 	Consent rule for fucking something with something: consent given.
 
-Section: Body Parts
+Section - Body Parts
 
 Body parts are an integral part of erotic stories, and the Body Part extension provides a range of ready made body parts that can be made part of actors in a story. The Body Part extension has the complete details on this, but the following should add most body parts needed for a normal story:
 
@@ -577,31 +682,29 @@ Body parts are an integral part of erotic stories, and the Body Part extension p
 
 In order to avoid strangely named parts, it's best to do this after all actors have been defined, and the identity of the player has been set. These would then need to be given descriptions for every relevant actor. Example J contains a complete mini-adventure that highlights this.
 
-Section: Clothing
+Section - Clothing
 
 The framework contains two different extensions for handling clothing. These build on the same principles but are not compatible with each other. Garments implements layered clothing that can be individually manipulated by the player. Outfits is a simpler clothing system, where dressing and undressing takes place between-scenese. This is less flexible, but easier to work with and allows for having reactions to what the player is wearing.
 
-Section: Other Action Extensions
+Section - Arousal
 
-The actions in this extensions can be expanded upon by using the Kinky Story Actions to provide support for BDSM activities such as bondage, spanking and gagging. These two extensions are compatible and do not rely on each other in any way.
+The use of arousal in AIF is a contentious issue, so the framework has taken a light approach. Arousal is tucked away in its own extension, which only provides support for various levels and mechanisms to alter and check an actor's level of arousal. See the Arousal extension for more details.
 
-The Sexual Simulator System is an extension that provides a different approach to storytelling, where the player has more control of the details in the encounter. This extension is not yet published.
-
-Chapter: Expanded Tutorial: Writing Erotic Stories
+Chapter - Expanded Tutorial: Writing Erotic Stories
 
 Writing an AIF game is a great undertaking but also a rewarding experience. The Inside Erin newsletter has a variety of very good articles on the subject, available here:
 
 	http://newsletter.aifcommunity.org/index.php?id=writing.html
 
-This part of the documentation does not take aim to replace or supplant these excellent sources, but instead focuses on how to implement some of the essential tricks using this Inform and this framework. This assumes that the reader is somewhat familiar with basic Inform syntax, but will not assume any expertise.
+This part of the documentation does not take aim to replace or supplant these excellent sources, but instead focuses on how to implement some of the essential tricks using Inform and this framework. This assumes that the reader is somewhat familiar with basic Inform syntax, but will not assume any expertise.
 
-Section: Setting and Characters
+Section - Setting and Characters
 
 The first part of writing a new story, is to come up with an interesting setting, and the characters and plot to go with it. Perhaps the most important thing to note here is that over-ambition is the real project-killer: Don't start with a concept you can't finish. For your first story, try to keep it small, especially in the amount of characters the player should be allowed to interact with. The AIF community has a long (and proud?) history of fan-fiction; the community evolved out of the newsgroup alt.games.xtrek, devoted to adult fan-fiction involving Star Trek characters. Writing a fan-fiction story has the advantage of providing both setting and characters, and can give ideas for puzzles and events that can unfold in the story.
 
 Once you have a basic idea of the story you're wanting to write, it's time to get started on the writing. Just don't get too attached to your initial concept, as it is likely to change as you develop the story. It's therefore best to focus the initial energy on parts that will remain, or are reusable. I would recommend starting with writing descriptions of the characters you decided upon and their notable body parts, as well as descriptions of the notable locations.
 
-Section: Locations and Items
+Section - Locations and Items
 
 The only thing that is absolutely required in an Inform story is a location or room, but a story with just an empty room with no description is the very definition of a boring story. In order to give the player immersion in the story, it's important with good descriptions of locations. Note that "good" does not always mean "long"; a good room description should list what is obvious from a quick look around the room without going into excessive detail. The big question then quickly becomes, how much detail is enough, and when is the detail excessive? Any object that is mentioned in the room description should have a description, as well as some objects that a player would expect to be present. Most of these would be implemented as backdrops to avoid the player doing crazy stuff, and they will try it. There are two related issues I would like to point out here: It's important to avoid pointing out key objects too blatantly. From this it follows that it's also important to keep a somewhat equal level of detail across the story.
 
@@ -619,13 +722,13 @@ Another big question, is how many rooms should the story have. Not every place y
 
 Perhaps the most important part of writing up the world in this way, is to take the time to test it out. Go exploring in your own world, poke at everything mentioned in the text and see what you manage to "break". It's also time to start giving some thought to what puzzles would fit in, and where the clues and puzzle items would fit in naturally.
 
-Section: Events and Scenes
+Section - Events and Scenes
 
 So far we've been mostly concerned with the physical world, but a story is also a collection of events that the author wants the player to experience. Some stories are more linear in the order these events happen, while others allow them to happen in the order the player stumbles upon them. Inform has an entire concepted dedicated to structuring the story, which is called scenes. Chapter 10 of the documentation deals with this, and I would recommend reading through it now.
 
 One of the most obvious uses of scenes, is to clearly delimit the sex scenes that are going to be a part of the story. This allows us to clearly define how and when it starts, and write rules and responses that only take place during the correct scene. It's also very handy to use these to keep track of which puzzles have been completed.
 
-Section: Clothing and Character Descriptions
+Section - Clothing and Character Descriptions
 
 By now, you hopefully have an idea of how your story will look like, and how it will unfold. So let's get back to the meat of the work, writing descriptions. Earlier on it was suggested to start writing descriptions, now well show how easy those are to enter into the story. Personally, I like to create all the characters at the very start of the story file along with a small note of their role, sort of like a Dramatis Personae for a play. Then each person gets their own part later on to flesh out details. 
 
@@ -634,6 +737,8 @@ Clothing is another issue, and the descriptions of characters and parts should t
 What follows is an excerpt from Example J (there's a lot of content cut here), showing how to create and describe body parts with the framework. Exactly which body parts that should be used is a matter of personal opinion, but the parts used should be a pretty normal selection. The most important part is to create the parts after the characters and the player has been defined, to avoid them getting strange names. Normally you would stick to one method for describing characters and parts, but here we will use different methods to illustrate different techniques. I make no promises on the quality of the text here.
 
 :*
+	Include Consent by Fictitious Frode. [Enables the Consent framework]
+	Include Erotic Story Actions by Fictitious Frode. [Enables this extension]
 	Include Body Parts by Fictitious Frode. [This isn't needed if you're importing any of the extensions relying on it]
 	Include Garments by Fictitious Frode. [This includes Body Parts.]
 
@@ -698,7 +803,7 @@ We describe the character in a similar fashion, and it's important to note how t
 
 Something else to take note of: Characters do not drop the clothing they take off, but depending on persuasion rules the player might get other characters to give away their clothing. This means that for stories with multiple characters, enterprising player might manage to get the "wrong" characters to wear clothing, so you might want to take steps to ensure this doesn't happen or take this into account in the descriptions.
 
-Section: Sexy Stuff
+Section - Sexy Stuff
 
 So far, all we've done is to allow the player to explore and look at things, but if the player actually tries the action provided by the framework... Well, the framework does print default messages, so no action will go unanswered, but we have a lot of responses to write. First though, we need to allow the actions to take place at all, as the Consent extension defaults to blocking the actions. We'll again use parts of Example J to showcase one way of using Consent, by linking it to a scene. The following has two scenes; one that begins when the story begins, and our erotic scene that takes over 5 turns later. It also shows how to to timed messages in Inform.
 
@@ -741,7 +846,7 @@ By defining that wearing and taking off are erotic actions, we can allow the pla
 	Instead of an actor going when indecent: Say "You can't move around like that!"
 	Instead of an actor going when immodest: Say "You can't move around like that!"
 
-Section: Switching It Up
+Section - Switching It Up
 
 So far, we haven't actually started on the meat of the story, writing the responses to all these actions we have enabled. Besides the fucking action (and masturbation, which is blocked by default), we have 6 actions that can be done to 7 different body parts, for a whopping 42+ action descriptions. Considering that we might want the other character to do these same actions back on the player, we can double this. Luckily, some actions are blocked off by the framework. By default, only 3 body parts are lickable (for the licking and biting actions) and rubbable (for the rub and pinch actions). This leaves us with something like this:
 
@@ -779,7 +884,7 @@ For a final twist, we might want to swap messages when a command is repeated. Th
 
 Example J contains a complete mini-adventure that highlights how this extension can be used to create an erotic story.
 
-Chapter: Technical Notes
+Chapter - Technical Notes
 
 This extension was known as Sexual Actions in it's first release, but that name was changed in this release to better reflect the style of adventure best supported by the extension.
 
@@ -787,7 +892,15 @@ If for some reason the report rulebook is used instead of the after rulebook, yo
 
 For consent, if the "instead" is left off the consent denied for rules, then the default error message will be printed. To expand consent to apply to other actions, specify that the action is consensual.
 
-Section: Version History
+Section - Version History
+
+Release 3 (v1.1):
+
+	Added the actions hugging, tickling and dancing (with).
+	Assfucking and Titfucking are broken with Inform 6M62, and removed.
+	Consent moved to optional requirement.
+	Improved documentation (specification).
+	Fixed eating redirect for biting.
 
 Release 2
   (v1.0):
@@ -800,7 +913,7 @@ Release 2
 	Kissing now defaults to a person's mouth, if present.
   (v1.0.1): Minor documentation fixes.
 
-Section: Contact Info
+Section - Contact Info
 
 The author of the framework can be reached in the following ways:
 
@@ -949,6 +1062,7 @@ This is a small example of how easy it can be to write an AIF using the framewor
 
 	Book - Imports
 
+	Include Consent by Fictitious Frode.
 	Include Erotic Story Actions by Fictitious Frode.
 	Include Garments by Fictitious Frode.
 
@@ -987,7 +1101,6 @@ This is a small example of how easy it can be to write an AIF using the framewor
 	Introduction is a scene.
 	Experiment is a scene.
 	Aftermath is a scene.
-
 
 	Part 1 - Introduction
 
