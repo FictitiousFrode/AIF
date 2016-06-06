@@ -1,7 +1,8 @@
-Version 3 of Outfits by Fictitious Frode begins here.
+Version 4/150126 of Outfits by Fictitious Frode begins here.
 
 "Outfits are a special form of clothing, that covers everything and blocks all other garments."
-Include Version 3 of Body Parts by Fictitious Frode.
+
+Include Version 4 of Body Parts by Fictitious Frode.
 
 [Outfits are a special form of clothing, that covers everything and blocks all other garments.
 Description of persons and body parts should check for which outfit is being worn, and tailor the description thereafter.]
@@ -9,7 +10,13 @@ Description of persons and body parts should check for which outfit is being wor
 Book 1 - Kinds
 
 An outfit is a kind of coverable.
+The specification of outfit is "Outfits are a special form of clothing, that covers everything and blocks all other garments. Description of persons and body parts should check for which outfit is being worn, and tailor the description thereafter. 
+The Outfits extension has built-in functionality to tailor the description of people and body parts based on what outfit is being worn, see the extension documentation for more details."
 An outfit is always wearable. 
+
+[A quick way to get at the person that is wearing an outfit:]
+To decide which person is wearer of (O - outfit):
+	If O is worn by a person (called P), decide on P;
 
 Book 2 - Actions
 
@@ -30,13 +37,19 @@ Carry out an actor wearing an outfit (called cloth) (this is the outfit wearing 
 		If the actor is wearing a coverable, say "Failed taking off [list of coverables worn by actor]." (A) instead;
 	Now every body part that is part of the actor underlies the cloth;
 
+[We update the over-/underlying relation and decency at the start.
+Release 6M62 made it impossible to loop over all persons, so we have to do this small hack instead:]
 When play begins (this is the initial outfits rule):
-	Repeat with current-coverable running through the list of coverables:
+	Repeat with current-coverable running through the list of coverables underlying something:
 		Now current-coverable is not underlaid by anything;
-	Repeat with P running through the list of persons:
-		If P is wearing an outfit (called O):
-			Now every body part that is part of P underlies O;
-			Now the decency of P is the decency of O;
+	Repeat with P running through the list of persons that is not the player:
+		Update garments for P;
+	Update garments for the player;
+
+To update garments for (P - a person):
+	If P is wearing an outfit (called O):
+		Now every body part that is part of P underlies O;
+		Now the decency of P is the decency of O;
 
 Part 2.2 - Undressing
 
@@ -182,13 +195,13 @@ Outfits ends here.
 
 This extensions relies on the coverable from the Body Parts extension, and adds garments as a new kind of coverable.
 
-Chapter: Using this Extension
+Chapter - Using this Extension
 
 This extension requires Body Parts, and is incompatible with Garments as a person wearing garments instead of an outfit will be assumed to be naked.
 
 This extension provides outfits, which are an alternative to dressing people in garments. An outfit will cover everything on a person, blocks any other coverables (such as garments) from being worn, and will replace any garments already worn. There is also a framework built around descriptions of persons and body parts when an outfit is worn. Outfits are mainly intended to be changed behind-the-scenes, and not by player interaction. This should preferably be done by specifying that the actor puts on the outfit; if the outfit is just stated as worn then the initial outfits rule should be followed in order to recalculate coverage. This is automatically performed at the start of the story. Example A shows how to create an outfit.
 
-Section: Dressing, Undressing and Stripping
+Section - Dressing, Undressing and Stripping
 
 When a character puts on an outfit, any body parts will be considered covered. Putting on an outfit will also silently remove any garments that the character was already wearing. However, if the character is already wearing an outfit, then the action is stopped. This might be altered by unlisting the "outfit not replaced rule".
 
@@ -198,13 +211,13 @@ Remember that Inform has a set of persuasion rules that governs what you can ord
 
 If the story changes outfits for actors behind the scenes, this should preferably be done by specifying that the actor puts on the outfit; if the outfit is just stated as worn then the initial outfits rule should be followed in order to recalculate coverage.
 
-Section: Visibility and Descriptions
+Section - Visibility and Descriptions
 
 Wearing an outfit does not automatically stop vision of anything, but all body parts attached to the wearer are considered covered. When examining a person wearing an outfit, the outfit worn and it's description is printed. To stop this, unlist the "describe outfit rule". Descriptions of body parts should be tailored to fit the outfits that a character might wear. This process has been simplified by moving the descriptions into a table called Table of Outfit Bodypart Descriptions. See the example below for details on using this table. Note that a blank (--) entry in the outfit column indicates that the body part is not covered. If no entry is found at all (the person is wearing something not taken into account), the default description of the body part is used instead. This is shown in Example C.
 
 Likewise the Table of Worn Outfit Descriptions gives descriptions of a person based on what outfit they are wearing. A blank (--) entry in the wearer column is the default description of the outfit if worn by anyone that does not have their own entry. If there is no default entry, the title and description of the outfit is printed instead. This is shown in Example D.
 
-Section: Reactions and Responsive Crowds
+Section - Reactions and Responsive Crowds
 
 In order to spice up feedback from NPCs and make the story come more alive, support for reactions based on what the player is wearing has been added.
 
@@ -214,9 +227,20 @@ This only makes defined actors react, but it's also possible to have "invisible 
 
 Both of these tables have an entry for ruling; this can be used to refer to a named rule that triggers when the conditions for printing the text is met. This can be used to award or punish the player as the author sees fit.
 
-Chapter: Technical Notes
+Chapter - Technical Notes
 
-Section: Version History
+Section - Version History
+
+Release 4 (v1.1):
+
+	Fixes compatibility with Inform 6M62
+	The relationships model has been changed, as per the technical notes in Body Parts. Overlying no longer is the same as covering, but instead is the reversal of the underlying.
+	Improved documentation (specification).
+	Added a way to decide the wearer of a outfit.
+
+Release 3 (v1.0)
+
+	No major changes.
 
 Release 2 (v0.6)
 
@@ -228,11 +252,7 @@ Release 2 (v0.6)
 	Improved how reactions and reponses were printed.
 	Updated documentation.
 
-Release 3 (v1.0)
-
-	No major changes.
-
-Section: Contact Info
+Section - Contact Info
 
 The author of the framework can be reached in the following ways:
 

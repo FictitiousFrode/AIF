@@ -33,7 +33,7 @@ Consent ends here.
 
 This extension provides the framework for seeking consent before performing actions that affect them.
 
-Chapter: Using this Extension
+Chapter - Using this Extension
 
 When asking another person in a story to try doing an action, that person's persuasion rules are consulted. These rules are only consulted when that person is the active participant, but for certain actions it is fitting to check if they are a willing secondary participant. This extension is created in order to facilitate such a check, which is a 3 step process:
 
@@ -41,7 +41,7 @@ When asking another person in a story to try doing an action, that person's pers
 	2: Granting consent for a person.
 	3: Customize failure message for when consent is denied
 
-Section: Defining consensual actions
+Section - Defining consensual actions
 
 All actions that are defined as consensual (and only those) will attempt to gain consent from the involved person. Defining which actions are consensual is as easy as stating it, as shown in Example A and below:
 
@@ -55,7 +55,7 @@ It's also possible to define consent more finely grained:
 
 This can be as detailed as needed, including references to scenes and specific things.
 
-Section: Granting consent
+Section - Granting consent
 
 Consent is granted in a similar way that persuasion is defined (see 12.4 for details), using the Consent rulebook. Consent can be given or denied both for specific actions and/or persons, or in a broader sense with the terms someone and something. Example A shows how to give a specific consent; for a very general rule (that undoes everything we try to accomplish here, and as such is only good for testing or as an example) we could use the following:
 
@@ -69,7 +69,7 @@ More likely, we can grant consent for a person while a certain scene is happenin
 
 Only actions that are defined to require consent (see above) will be checked, but it's possible to give consent for actions that are not checked without any errors being raised.
 
-Section: Failure messages
+Section - Failure messages
 
 Actions stopped due to denied consent is handled similarly to failed persuasion (see 12.5 for details), using the Consent denied for rulebook. Example A shows how to give a specific failure message. It's important to use the "instead" keyword here, otherwise the default failure message will be printed as well.
 
@@ -82,13 +82,13 @@ The default failure message can be altered by altering the consent seeking rule 
 
 If you want other actors to perform actions on the player, make sure to give these consent as well; this is not done automatically out of fear of messing up actions with two nouns.
 
-Section: Version History
+Section -  Version History
 
 Release 1:
 	(v1.0): First release
 	(v1.0.1): Bug fixes.
 
-Section: Contact Info
+Section - Contact Info
 
 The author of the framework can be reached in the following ways:
 
