@@ -2,7 +2,10 @@ Version 1 of Erotic Storytelling by Fictitious Frode begins here.
 "A framework for creating Adult Interactive Fiction (AIF), providing the layered clothing, body parts, and the necessary erotic actions. Comes with a discrete arousal system (that is replaceable with numerical arousal), as well as an optional conversation system.
 Still being developed."
 
-Volume 1 - Layered Clothing
+Volume 0 - New Verbs
+
+[These are the new verbs the framework uses; 
+We put this in it's own volume in case anyone needs to rewrite it for compatibility:]
 
 To move is a verb.
 To unbutton is a verb.
@@ -14,9 +17,16 @@ To fasten is a verb.
 To hike is a verb.
 To rip is a verb.
 
+Volume 1 - Layered Clothing
+
+[This volume deals with setting up a system for layered clothing, which includes body parts and garments.
+Note that later volumes will use and expand upon this, i.e. arousal/consent restraints for undressing.]
+
 Book 1.1 - New Kinds and Values
 
-Part 1.1.1 - Coverage & Decency
+[We start by defining the necessary kinds and values we need to make layered clothing work.]
+
+Part 1.1.1 - Coverage
 
 Chapter 1.1.1a - Decency
 
@@ -54,7 +64,8 @@ The thigh area	immodest
 The leg area	casual
 The feet area	immodest
 
-[These are not included by default, but could be:
+[Extension:
+These are not included by default, but could be:
 The neck area	formal
 The wrist area	formal
 The ankle area	formal]
@@ -64,8 +75,7 @@ The body areas of a person is usually {head area, face area, shoulder area, arm 
 
 Chapter 1.1.1c - Body Part
 
-[Status: TODO: Covered descriptions
-Properties that deal with allowing actions are defined together with the actions.]
+[Status: Complete]
 
 A body part is a kind of thing.
 The specification of body part is "A body part represents a part of a person that the player can interact with. While they can be instantiated directly, it's usually better to use one of the templated subclasses.
@@ -80,7 +90,7 @@ A body part has some text called the visible description.
 
 Section - Understanding
 
-A body part has some text called owner's pronoun. The owner's pronoun is usually "her".
+A body part has some text called owner's pronoun. [Note: This will be updated at story start with the initiate erotic storytelling rule to match the person the part belongs to.]
 Understand the owner's pronoun property as describing a body part. 
 
 Does the player mean examining a body part that is part of the player: It is unlikely.
@@ -225,6 +235,13 @@ The specification of clothing layer is "Clothing layer is used together with the
 
 A garment has a clothing layer. A garment is usually normalwear.
 
+Chapter 1.1.2f - Understanding
+
+A garment has some text called wearer's pronoun. [Note: This will be updated at story start with the initiate erotic storytelling rule to match the wearer.]
+Understand the wearer's pronoun property as describing a garment when the garment is worn.
+
+Does the player mean examining a garment that is worn by player: It is unlikely.
+
 Part 1.1.3 - Outfits
 
 [Status: TODO; Concept-stage]
@@ -251,23 +268,39 @@ Book 1.2 - Functionality
 
 Chapter 1.2.0a - Startup Procedures
 
-When play begins (this is the initiate adult framework rule):
+When play begins (this is the initiate erotic storytelling rule):
 	[Set correct pronouns for body parts; the default is her]
 	Repeat with part running through the body parts:
 		If part is part of the player:
 			Now owner's pronoun of part is "my";		
 		Else if part is part of a man:
 			Now owner's pronoun of part is "his";
+	[Set correct pronouns for garments; the default is her]
+	Repeat with cloth running through the garments:
+		Update pronoun for cloth;
 	[Calculate the decency for any undefined persons: Small hack here, as Inform won't let us iterate over all persons anymore.]
-	Repeat with P running through the list of persons that is not the player:
+	Repeat with P running through the persons:
 		If the decency of P is undefined decency, update decency for P;
-	Update decency for player;
 
+To update pronoun for (G - a garment):
+	If G is worn by a person (called P):
+		If P is the player:
+			Now wearer's pronoun of G is "my";		
+		Else P is worn a man:
+			Now wearer's pronoun of G is "his";
+		Else if P is a woman:
+			Now wearer's pronoun of G is "her";
+		Else:
+			Now wearer's pronoun of G is "their";
+	Else:
+		Now wearer's pronoun of G is "their";
+	
 Part 1.2.1 - Determining Decency and Privacy
 
 Chapter 1.2.1a - Determining Decency
 
-[Status: Complete]
+[Status: Complete
+For cover areas and body parts, we calculate the decency; for persons we cache it in a variable.]
 
 Section - Cover Area
 
@@ -298,11 +331,17 @@ To update decency for (P - a person):
 
 Chapter 1.2.1b - Privacy
 
-[Status: TODO]
+[Status: TODO
+We need some way to determine whether a location is private enough to strip in, or do other funky business in.]
 
 Part 1.2.2 - Layering
 
-[Status: Complete]
+[Status: Complete
+This deals with the layering of garments over body parts and each other. This can have three related but different results:
+Covering - Prevent touch
+Conceal - Prevent vision; ie. transparent layers are ignored.
+Blocking - Prevent taking off. This is a special subset of covering.
+There's probably a need for more functions here later on, but as of now all necessary functions are implemented.]
 
 Section - Covering
 
@@ -439,6 +478,9 @@ Definition: A person (called P) is nude if the P is not wearing any garments.]
 
 Part 1.2.3 - Visibility
 
+[Status: Mostly complete
+Deals with determining which items are visible for the player, as well as custom descriptions.]
+
 Chapter 1.2.3a - Concealed Possessions
 
 Rule for deciding the concealed possessions of someone:
@@ -450,10 +492,6 @@ Rule for deciding the concealed possessions of someone:
 		Else:
 			No;
 	No;
-
-[TODO
-To decide which list of garments is the visible clothing on (P - a person):
-To decide which list of body parts is the visible parts on (P - a person):]
 
 Chapter 1.2.3b - Examining Body Parts
 
@@ -500,9 +538,24 @@ Carry out an actor examining (this is the examining garments rule):
 				Say "[unworn description of the noun][line break]";
 				Now examine text printed is true;
 
-Part 1.2.4 - Forcing Clothing
+Chapter 1.2.3d - Determining Visible
 
-[Status: Complete]
+[TODO
+To decide which list of garments is the visible clothing on (P - a person):
+To decide which list of body parts is the visible parts on (P - a person):
+Determine which body parts and garments will be made visible by ripping and shifting
+]
+
+
+Part 1.2.4 - Determining Access (Reaching Through)
+
+[Status: TODO
+Shifted and ripped garments allow the player to access body parts and garments as though part of the layers were not there, but we still want to know if they were present or not.]
+				
+Part 1.2.5 - Forcing Clothing
+
+[Status: Complete
+Sometimes it's necessary to forcefully change the clothing of someone, while still doing some rules maintenance. These are not intended to be used by the player, but rather at scene changes.]
 
 [Forcefully strips a person of all worn things. It ignores all rules such as carrying capacity, but will update decency.
 Use with caution!]
@@ -524,15 +577,17 @@ To force dress (P - a person) in (L - a list of things):
 	Repeat with cloth running through L:
 		If P is not wearing cloth:
 			Now P is wearing cloth;
+		Update pronoun for cloth;
 	Update decency for P;
 
 Book 1.3 - (Un-) Dressing
 
 Part 1.3.1 - Wearing Garments
 
-[We use the standard wearing action, but add some checks and replace the carry out rule.
-Status: Complete.
-See also the consent and arousal sections.]
+[Status: Complete
+We use the standard wearing action, but add some checks and replace the carry out rule.
+See also the consent and arousal sections.
+TODO: Parts of this should be redone when reaching through access is completed.]
 
 Chapter 1.3.1a - Check
 
@@ -561,9 +616,10 @@ Carry out an actor wearing (this is the modified wearing rule):
 
 Part 1.3.2 - Taking Off Garments
 
-[For an actor taking off their own garments, we can use the standard taking off action, but add some checks and replace the carry out rule.
-Status: Complete.
-See also the consent and arousal sections.]
+[Status: Complete.
+For an actor taking off their own garments, we can use the standard taking off action, but add some checks and replace the carry out rule.
+See also the consent and arousal sections.
+TODO: Parts of this should be redone when reaching through access is completed.]
 
 Chapter 1.3.2a - Check
 
@@ -590,9 +646,10 @@ Carry out an actor taking off (this is the modified taking off rule):
 
 Part 1.3.3 - Taking Off Others
 
-[By default, taking clothing that others are wearing is blocked. This is something that should be allowed in certain situations, so we need to make some changes to the standard rules.
-Status: Complete
-See also the consent and arousal sections.]
+[Status: Complete
+By default, taking clothing that others are wearing is blocked. This is something that should be allowed in certain situations, so we need to make some changes to the standard rules.
+See also the consent and arousal sections.
+TODO: Parts of this should be redone when reaching through access is completed.]
 
 Section - Removing Existing Blocks
 
@@ -633,8 +690,9 @@ Carry out an actor taking a garment (called G) (this is the taking garments rule
 
 Part 1.3.4 - Dressing
 
-[Dressing makes an actor put on the clothes listed in their preferred clothing property, first taking any missing clothing and then stripping naked.
-Status: Complete]
+[Status: Complete
+Dressing makes an actor put on the clothes listed in their preferred clothing property, first taking any missing clothing and then stripping naked.
+TODO: Parts of this should be redone when reaching through access is completed.]
 
 Dressing is an action applying to nothing.
 The specification of the dressing action is "Dressing is the act of putting back on the preferred clothing of a person."
@@ -699,7 +757,10 @@ Report an actor dressing (this is the report dressing rule):
 
 Part 1.3.5 - Stripping
 
-[Status: Complete]
+[Status: Complete
+Stripping is just as the name implies the act of stripping out of the currently worn clothes.
+This is done through recursive calls to take off, in the correct order.
+TODO: Parts of this should be redone when reaching through access is completed.]
 
 Stripping is an action applying to nothing or one touchable thing and abbreviable.
 The specification of the stripping action is "Stripping is the act of removing all clothing worn. To accomplish this, all garments are first undressed in descending order of layer, before any other wearables are removed."
@@ -767,6 +828,10 @@ Report an actor stripping (this is the report stripping rule):
 Book 1.4 - Shifting and Ripping
 
 Part 1.4.1 - Shifting
+
+[Status: Complete
+This part implements the shifting ability of garments, as detailed in 1.1.2a
+TODO: Parts of this should be redone when reaching through access is completed.]
 
 Shifting is an action applying to one touchable thing.
 The specification of the shifting action is "Shifting is the act of putting aside a garment in order to gain more favorable access. It is closely related to the shiftyness value of a garment, which indicates what happens when it is shifted, and the unshifting action which reverses the process.
@@ -877,6 +942,10 @@ Report an actor shifting (this is the standard report shifting rule):
 	
 Part 1.4.2 - Unshifting
 
+[Status: Complete
+This part implements the shifting ability of garments, as detailed in 1.1.2a
+TODO: Parts of this should be redone when reaching through access is completed.]
+
 Unshifting is an action applying to one touchable thing.
 The specification of the Unshifting action is "Shifting is the act of putting back a garment that has been put aside in order to gain more favorable access. It is closely related to the shiftyness value of a garment, which indicates what happens when it is shifted, and the shifting action which starts the process.
 
@@ -970,6 +1039,10 @@ Report an actor unshifting (this is the standard report unshifting rule):
 		say "[The actor] [the describe unshifting of the shiftyness of the noun] [the noun]." (B);
 
 Part 1.4.3 - Ripping
+
+[Status: Complete
+This part implements the ripping ability of garments, as detailed in 1.1.2a
+TODO: Parts of this should be redone when reaching through access is completed.]
 
 Ripping is an action applying to one touchable thing.
 The specification of the ripping action is "Ripping is the act of tearing a piece of garment apart. A ripped garment can no longer be shifted, but it can be worn."
