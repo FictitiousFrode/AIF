@@ -1,7 +1,6 @@
 Version 1 of Consent by Fictitious Frode begins here.
 
 "This extension provides the framework for seeking consent from actors before performing actions that affect them."
-Include Version 1 of Body Parts by Fictitious Frode.
 
 Part 1 - Consent Rules
 
