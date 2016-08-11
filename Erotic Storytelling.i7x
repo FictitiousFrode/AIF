@@ -35,10 +35,13 @@ Chapter 1.1.1a - Decency
 A decency is a kind of value. The decencies are indecent, immodest, casual, formal and undefined decency.
 The specification of decency is "Decency is a measure of how much skin a person is showing, and is defined for cover areas and garments. Body parts will inherit the lowest decency of the areas it covers, but this can be 'upgraded' by covering with clothing.
 The decency of a person is a value that will be referenced more often than it's updated, so we cache it and force the actions that will change it to update the cached value using the provided method 'update decency for Person'. Note; It's possible to manually set the decency of a person to a different value than it would be calculated to be; this value would hold untill the next action that recalculates it.
+Rooms also have a decency called the decency threshold; this is compared to the player's decency before going somewhere, or taking off/shifting/ripping garments.
 Currently, the actions wearing, taking off, shifting, unshifting and ripping garments will recalculate the decency of the (former) wearer.
 The undefined decency is not intended to be used, but is needed to signal that the value hasn't been calculated yet."
 
 A person has a decency. The decency of a person is usually the undefined decency.
+
+A room has a decency called the decency threshold. The decency threshold of a room is usually casual.
 
 Chapter 1.1.1b - Cover Areas
 
@@ -316,8 +319,15 @@ To update decency for (P - a person):
 
 Chapter 1.2.1b - Privacy
 
-[Status: TODO
-We need some way to determine whether a location is private enough to strip in, or do other funky business in.]
+[Status: Complete]
+
+Check an actor going (this is the check decency before going rule):
+	If the decency threshold of the room gone to is greater than decency of the actor:
+		If the actor is the player:
+			Say "[We] [can't go] that way dressed like that!" (A);
+		Else if the player can see the actor:
+			Say "[The actor] [can't go] that way dressed like that!" (B);
+		Stop the action;
 
 Part 1.2.2 - Layering
 
@@ -363,7 +373,7 @@ To decide whether (P - a body part) can be touched:
 			Let intersect be the modified covered areas of cloth;
 			Repeat with A running through intersect:
 				If A is not listed in the cover locations of P, remove A from intersect;
-			If the number of entries in intersect is more than 0, decide no;
+			If the number of entries in intersect greater than 0, decide no;
 	Decide yes;
 
 To decide which list of garments is preventing touching of (P - a body part):
@@ -371,11 +381,11 @@ To decide which list of garments is preventing touching of (P - a body part):
 	Let clothing be the list of garments worn by the holder of P;
 	Sort clothing in reverse clothing layer order;
 	Repeat with cloth running through clothing:
-		If cloth is block touching through and clothing layer of cloth is greater than clothing layer of G:
+		If cloth is block touching through:
 			Let intersect be the modified covered areas of cloth;
 			Repeat with A running through intersect:
 				If A is not listed in the cover locations of P, remove A from intersect;
-			If the number of entries in intersect is more than 0:
+			If the number of entries in intersect is greater than 0:
 				Add cloth to preventers, if absent;
 	Decide on preventers;
 
@@ -409,7 +419,7 @@ To decide which list of things is concealed by (G - a garment) for (A - cover ar
 	Repeat with cloth running through clothing:
 		If clothing layer of cloth is less than clothing layer of G:
 			Break; [What remains in clothing are the potentially revealed garments]
-		If clothing layer of cloth is equal to clothing layer of G:
+		If clothing layer of cloth is clothing layer of G:
 			Remove cloth from clothing;
 			Next;
 		If cloth is transparent:
@@ -488,7 +498,7 @@ To decide whether (G - a garment) can be touched:
 			Let intersect be the modified covered areas of cloth;
 			Repeat with A running through intersect:
 				If A is not listed in the modified covered areas of G, remove A from intersect;
-			If the number of entries in intersect is more than 0, decide no;
+			If the number of entries in intersect is greater than 0, decide no;
 	Decide yes;
 
 To decide which list of garments is preventing touching of (G - a garment):
@@ -503,7 +513,7 @@ To decide which list of garments is preventing touching of (G - a garment):
 			Let intersect be the modified covered areas of cloth;
 			Repeat with A running through intersect:
 				If A is not listed in the modified covered areas of G, remove A from intersect;
-			If the number of entries in intersect is more than 0:
+			If the number of entries in intersect is greater than 0:
 				Add cloth to preventers, if absent;
 	Decide on preventers;
 
@@ -523,6 +533,20 @@ To decide whether (G - a garment) can be worn by (P - a person):
 			If the number of entries in intersect is greater than 0, decide no;
 	Decide yes;
 	
+To decide which list of garments is preventing wearing of (G - a garment) by (P - a person):
+	Let preventers be a list of garments;
+	If G is worn by P:
+		Decide on preventers;
+	Let clothing be the list of garments worn by P;
+	Sort clothing in reverse clothing layer order;
+	Repeat with cloth running through clothing:
+		If clothing layer of cloth is greater than clothing layer of G:
+			Let intersect be the modified covered areas of cloth;
+			Repeat with A running through intersect:
+				If A is not listed in the blocked cover areas of G, remove A from intersect;
+			If the number of entries in intersect is greater than 0:
+				Add cloth to preventers, if absent;
+	Decide on preventers;
 
 Section - Taking Off Garments
 
@@ -557,7 +581,7 @@ To decide which list of garments is preventing taking off (G - a garment):
 	Decide on preventers;
 
 [For each cover area removed, check if G is the current concealer, and if it is, add what it conceals]
-To decide which list of things are revealed by taking off (G - a garment):
+To decide which list of things is revealed by taking off (G - a garment):
 	Let revealed be a list of things;
 	If G is not worn or G is transparent: [It doesn't conceal anything, so nothing will be revealed]
 		Decide on revealed;
@@ -572,7 +596,7 @@ To decide which decency is exposed by taking off (G - a garment):
 	Let exposed be the undefined decency;
 	Let revealed be the revealed by taking off G;
 	Repeat with I running through revealed:
-		If I provides the decency property and the decency of I is less than exposed:
+		If I provides the property decency and the decency of I is less than exposed:
 			Now exposed is the decency of I;
 	Decide on exposed;
 
@@ -610,7 +634,7 @@ To decide which list of garments is preventing shifting of (G - a garment):
 	Decide on preventers;
 
 [For each cover area removed, check if G is the current concealer, and if it is, add what it conceals]
-To decide which list of things are revealed by shifting (G - a garment):
+To decide which list of things is revealed by shifting (G - a garment):
 	Let revealed be a list of things;
 	If G is not worn or G is transparent: [It doesn't conceal anything, so nothing will be revealed]
 		Decide on revealed;
@@ -625,7 +649,7 @@ To decide which decency is exposed by shifting (G - a garment):
 	Let exposed be the undefined decency;
 	Let revealed be the revealed by shifting G;
 	Repeat with I running through revealed:
-		If I provides the decency property and the decency of I is less than exposed:
+		If I provides the property decency and the decency of I is less than exposed:
 			Now exposed is the decency of I;
 	Decide on exposed;
 
@@ -663,7 +687,7 @@ To decide which list of garments is preventing ripping of (G - a garment):
 	Decide on preventers;
 
 [For each cover area removed, check if G is the current concealer, and if it is, add what it conceals]
-To decide which list of things are revealed by ripping (G - a garment):
+To decide which list of things is revealed by ripping (G - a garment):
 	Let revealed be a list of things;
 	If G is not worn or G is transparent: [It doesn't conceal anything, so nothing will be revealed]
 		Decide on revealed;
@@ -678,14 +702,9 @@ To decide which decency is exposed by ripping (G - a garment):
 	Let exposed be the undefined decency;
 	Let revealed be the revealed by ripping G;
 	Repeat with I running through revealed:
-		If I provides the decency property and the decency of I is less than exposed:
+		If I provides the property decency and the decency of I is less than exposed:
 			Now exposed is the decency of I;
 	Decide on exposed;
-
-
-
-
-
 
 Chapter 1.2.2e - Definitions
 
@@ -704,9 +723,8 @@ Chapter 1.2.3a - Concealed Possessions
 Rule for deciding the concealed possessions of someone:
 	If the particular possession is discovered, no;
 	If the particular possession is a garment (called G):
-		If G is worn:
-			If G can be seen, no;
-			Else yes;
+		If G can be seen, no;
+		Else yes;
 	No;
 
 Chapter 1.2.3b - Examining Body Parts
@@ -792,8 +810,7 @@ Part 1.3.1 - Wearing Garments
 
 [Status: Complete
 We use the standard wearing action, but add some checks and replace the carry out rule.
-See also the consent and arousal sections.
-TODO: Parts of this should be redone when reaching through access is completed.]
+See also the consent and arousal sections.]
 
 Chapter 1.3.1a - Check
 
@@ -802,6 +819,7 @@ Check an actor wearing something (This is the check wearing garments rule):
 	If the noun is a garment (called G):
 		If G can be worn by the actor:
 			Continue the action;
+		Let B be the preventing wearing of G by the actor;
 		If the player is the actor:
 			Say "[We] [can't] wear [noun] on top of [B]." (A);
 		If the player can see the actor and the action is not silent:
@@ -823,8 +841,7 @@ Part 1.3.2 - Taking Off Garments
 
 [Status: Complete.
 For an actor taking off their own garments, we can use the standard taking off action, but add some checks and replace the carry out rule.
-See also the consent and arousal sections.
-TODO: Parts of this should be redone when reaching through access is completed.]
+See also the consent and arousal sections.]
 
 Chapter 1.3.2a - Check
 
@@ -840,6 +857,16 @@ Check an actor taking off something (this is the can't take off covered items ru
 			Say "[The actor] [can't] wear [noun] on top of [blockers]." (B);
 		Stop the action;
 
+Check an actor taking off something (this is the can't take off in public rule):
+	Let L be the location of the actor;
+	If noun is a garment (called G):
+		If the decency threshold of L is greater than exposed by taking off G:
+			If the player is the actor:
+				Say "It [are] too public for [us] to take that off here." (A);
+			Else if the player can see the actor:
+				Say "It [are] too public for [the actor] to take that off here." (B);
+			Stop the action;
+
 Chapter 1.3.2b - Carry Out
 
 The modified taking off rule substitutes for the standard taking off rule.
@@ -854,8 +881,7 @@ Part 1.3.3 - Taking Off Others
 
 [Status: Complete
 By default, taking clothing that others are wearing is blocked. This is something that should be allowed in certain situations, so we need to make some changes to the standard rules.
-See also the consent and arousal sections.
-TODO: Parts of this should be redone when reaching through access is completed.]
+See also the consent and arousal sections.]
 
 Section - Removing Existing Blocks
 
@@ -886,6 +912,7 @@ Section - Implementing Taking
 
 Check an actor taking a garment (this is the can't take covered items rule):
 	Follow the can't take off covered items rule;
+	Follow the can't take off in public rule;
 
 The taking garments rule is listed first in the carry out taking rulebook.
 Carry out an actor taking a garment (called G) (this is the taking garments rule):
@@ -897,8 +924,7 @@ Carry out an actor taking a garment (called G) (this is the taking garments rule
 Part 1.3.4 - Dressing
 
 [Status: Complete
-Dressing makes an actor put on the clothes listed in their preferred clothing property, first taking any missing clothing and then stripping naked.
-TODO: Parts of this should be redone when reaching through access is completed.]
+Dressing makes an actor put on the clothes listed in their preferred clothing property, first taking any missing clothing and then stripping naked.]
 
 Dressing is an action applying to nothing.
 The specification of the dressing action is "Dressing is the act of putting back on the preferred clothing of a person."
@@ -965,8 +991,7 @@ Part 1.3.5 - Stripping
 
 [Status: Complete
 Stripping is just as the name implies the act of stripping out of the currently worn clothes.
-This is done through recursive calls to take off, in the correct order.
-TODO: Parts of this should be redone when reaching through access is completed.]
+This is done through recursive calls to take off, in the correct order.]
 
 Stripping is an action applying to nothing or one touchable thing and abbreviable.
 The specification of the stripping action is "Stripping is the act of removing all clothing worn. To accomplish this, all garments are first undressed in descending order of layer, before any other wearables are removed."
@@ -1036,8 +1061,7 @@ Book 1.4 - Shifting and Ripping
 Part 1.4.1 - Shifting
 
 [Status: Complete
-This part implements the shifting ability of garments, as detailed in 1.1.2a
-TODO: Parts of this should be redone when reaching through access is completed.]
+This part implements the shifting ability of garments, as detailed in 1.1.2a]
 
 Shifting is an action applying to one touchable thing.
 The specification of the shifting action is "Shifting is the act of putting aside a garment in order to gain more favorable access. It is closely related to the shiftyness value of a garment, which indicates what happens when it is shifted, and the unshifting action which reverses the process.
@@ -1118,6 +1142,16 @@ Check an actor shifting (this is the can't shift covered items rule):
 			Say "[The actor] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (B);
 		Stop the action;
 
+Check an actor shifting (this is the can't shift in public rule):
+	Let L be the location of the actor;
+	If noun is a garment (called G):
+		If the decency threshold of L is greater than exposed by shifting G:
+			If the player is the actor:
+				Say "It [are] too public for [us] to do that here." (A);
+			Else if the player can see the actor:
+				Say "It [are] too public for [the actor] to do that here." (B);
+			Stop the action;
+
 Chapter 1.4.1c - Carry Out
 		
 Carry out an actor shifting (this is the standard shifting rule):
@@ -1126,32 +1160,27 @@ Carry out an actor shifting (this is the standard shifting rule):
 
 Chapter 1.4.1d - Report
 
-[TODO Remake this opening rule to list any garments and body parts that were not previously visible
-Report an actor shifting (this is the reveal any newly visible body parts rule):
-	if the actor is the player and
-		the noun is an opaque container and
-		the first thing held by the noun is not nothing and
-		the noun does not enclose the actor:
-		if the action is not silent:
-			if the actor is the player:
-				say "[We] [open] [the noun], revealing " (A);
-				list the contents of the noun, as a sentence, tersely, not listing
-					concealed items;
-				say ".";
-		stop the action.
-]
-
 Report an actor shifting (this is the standard report shifting rule):
-	If the actor is the player:
-		If the action is not silent, say "[We] [the describe shifting of the shiftyness of the noun] [the noun]." (A);
-	Else if the player can see the actor:
-		say "[The actor] [the describe shifting of the shiftyness of the noun] [the noun]." (B);
+	If the noun is a garment:
+		Let exposed be the revealed by shifting the noun;
+		If the actor is the player:
+			Say "[We] [the describe shifting of the shiftyness of the noun] [the noun], revealing [exposed]." (A);
+		Else if the player can see the actor:
+			Say "[The actor] [the describe shifting of the shiftyness of the noun] [the noun], revealing [exposed]." (B);
+		Else if the player can see the noun:
+			Say "[The noun] [are] [the describe shifting of the shiftyness of the noun], revealing [exposed]." (C);
+	Else:
+		If the actor is the player:
+			Say "[We] [the describe shifting of the shiftyness of the noun] [the noun]." (D);
+		Else if the player can see the actor:
+			Say "[The actor] [the describe shifting of the shiftyness of the noun] [the noun]." (E);
+		Else if the player can see the noun:
+			Say "[The noun] [are] [the describe shifting of the shiftyness of the noun]." (F);
 	
 Part 1.4.2 - Unshifting
 
 [Status: Complete
-This part implements the shifting ability of garments, as detailed in 1.1.2a
-TODO: Parts of this should be redone when reaching through access is completed.]
+This part implements the shifting ability of garments, as detailed in 1.1.2a]
 
 Unshifting is an action applying to one touchable thing.
 The specification of the Unshifting action is "Shifting is the act of putting back a garment that has been put aside in order to gain more favorable access. It is closely related to the shiftyness value of a garment, which indicates what happens when it is shifted, and the shifting action which starts the process.
@@ -1225,32 +1254,16 @@ Carry out an actor unshifting (this is the standard unshifting rule):
 
 Chapter 1.4.2d - Report
 
-[TODO Remake this opening rule to list any garments and body parts that are no longer visible
-Report an actor unshifting (this is the reveal any newly visible body parts rule):
-	if the actor is the player and
-		the noun is an opaque container and
-		the first thing held by the noun is not nothing and
-		the noun does not enclose the actor:
-		if the action is not silent:
-			if the actor is the player:
-				say "[We] [open] [the noun], revealing " (A);
-				list the contents of the noun, as a sentence, tersely, not listing
-					concealed items;
-				say ".";
-		stop the action.
-]
-
 Report an actor unshifting (this is the standard report unshifting rule):
 	If the actor is the player:
-		If the action is not silent, say "[We] [the describe unshifting of the shiftyness of the noun] [the noun]." (A);
+		Say "[We] [the describe unshifting of the shiftyness of the noun] [the noun]." (A);
 	Else if the player can see the actor:
 		say "[The actor] [the describe unshifting of the shiftyness of the noun] [the noun]." (B);
 
 Part 1.4.3 - Ripping
 
 [Status: Complete
-This part implements the ripping ability of garments, as detailed in 1.1.2a
-TODO: Parts of this should be redone when reaching through access is completed.]
+This part implements the ripping ability of garments, as detailed in 1.1.2a]
 
 Ripping is an action applying to one touchable thing.
 The specification of the ripping action is "Ripping is the act of tearing a piece of garment apart. A ripped garment can no longer be shifted, but it can be worn."
@@ -1261,6 +1274,17 @@ Understand "rip --/open/off/up [garment]" as ripping.
 Understand "tear --/open/off/up [garment]" as ripping.
 
 Chapter 1.4.2b - Check
+
+Check an actor ripping (this is the can't rip covered items rule):
+	If noun is a garment (called G):
+		If G can be ripped:
+			Continue the action;
+		Let blockers be the preventing ripping of G;
+		If the player is the actor:
+			Say "[We] [can't] [rip] apart [noun] when it's covered by [blockers]." (A);
+		If the player can see the actor and the action is not silent:
+			Say "[The actor] [can't] [rip] apart [noun] when it's covered by [blockers]." (B);
+		Stop the action;
 
 Check an actor ripping (this is the can only rip rippable items rule):
 	If the noun provides the property rippable and the noun is rippable:
@@ -1279,50 +1303,52 @@ Check an actor shifting (this is the can only rip once rule):
 			Say "[regarding the noun][They're] already ripped apart." (B);
 		Stop the action;
 
+Check an actor ripping (this is the can't rip in public rule):
+	Let L be the location of the actor;
+	If noun is a garment (called G):
+		If the decency threshold of L is greater than exposed by ripping G:
+			If the player is the actor:
+				Say "It [are] too public for [us] to do that here." (A);
+			Else if the player can see the actor:
+				Say "It [are] too public for [the actor] to do that here." (B);
+			Stop the action;
+
 Chapter 1.4.2c - Carry Out
 
 Carry out an actor ripping (this is the standard ripping rule):
-	Now the noun is ripped;
+	If the noun provides the property ripped, now the noun is ripped;
 	Update decency for the holder of noun;
 
 Carry out an actor ripping (this is the ripping replaces shifting rule):
-	If the noun is shifted, now the noun is unshifted;
+	If the noun provides the property shifted and the noun is shifted, now the noun is unshifted;
 
 Chapter 1.4.2d - Report
 
-[TODO Remake this opening rule to list any garments and body parts that are now visible
-Report an actor ripping (this is the reveal any newly visible body parts rule):
-	if the actor is the player and
-		the noun is an opaque container and
-		the first thing held by the noun is not nothing and
-		the noun does not enclose the actor:
-		if the action is not silent:
-			if the actor is the player:
-				say "[We] [open] [the noun], revealing " (A);
-				list the contents of the noun, as a sentence, tersely, not listing
-					concealed items;
-				say ".";
-		stop the action.
-]
-
 Report an actor ripping (this is the standard report ripping rule):
-	If the actor is the player:
-		If the action is not silent, say "[We] [rip] apart [the noun]." (A);
-	Else if the player can see the actor:
-		say "[The actor] [rip] apart [the noun]." (B);
-	Otherwise:
-		say "[The noun] [are] ripped apart." (C);
+	If the noun is a garment:
+		Let exposed be the revealed by shifting the noun;
+		If the actor is the player:
+			Say "[We] [rip] apart [the noun], revealing [exposed]." (A);
+		Else if the player can see the actor:
+			Say "[The actor] [rip] apart [the noun], revealing [exposed]." (B);
+		Else if the player can see the noun:
+			Say "[The noun] [are] ripped apart, revealing [exposed]." (C);
+	Else:
+		If the actor is the player:
+			Say "[We] [rip] apart [the noun]." (D);
+		Else if the player can see the actor:
+			Say "[The actor] [the describe shifting of the shiftyness of the noun] [the noun]." (E);
+		Else if the player can see the noun:
+			Say "[The noun] [are] ripped apart." (F);
 
-Volume 3 - Actors
+Volume 2 - Actors
 
-
-
-Book 3.1 - Describing
+Book 2.1 - Describing
 
 [This part deals with describing both the player and other actors.]
 Report examining someone: say "[The noun] is [if the noun is wearing something]wearing [a list of unconcealed things worn by the noun] and [end if]carrying [a list of unconcealed things carried by the noun]."
 
-Part 3.1.1 - Examining People
+Part 2.1.1 - Examining People
 
 [NOTE: List of text we want printed:
 	Introduction - activity
@@ -1341,9 +1367,9 @@ Carry out an actor examining (this is the examining people rule):
 				Now examine text printed is true;]
 
 
-Book 3.2 - Responsiveness
+Book 2.2 - Responsiveness
 
-Part 3.2.2 - Remembering Past Actions
+Part 2.2.2 - Remembering Past Actions
 
 [
 Lovers
@@ -1354,45 +1380,55 @@ Current Action
 A person has a person called previous interactor.
 A person has a stored action called the previous interaction.
 
-Book 3.2 - Conversation
+Book 2.3 - Conversation
 
+Book 2.4 - Arousal
 
-Book 3.5 - Arousal
-
-Book 3.6 - Consent
-
-Book 3.4 - Privacy & Decency
+Book 2.5 - Consent
 
 
 
-Volume 2 - Erotic Actions
 
-Book 2.1 - Concepts
+Volume 3 - Erotic Actions
+
+Book 3.1 - Concepts
 
 
-Book 2.2 - Standard Actions
 
-Chapter 2.2.1 - Kissing
 
-Chapter 2.2.2 - Touching
+Book 3.2 - Body Part Actions
 
-Chapter 2.2.3 - Rubbing
+Chapter 3.2.1 - Kissing
 
-Book 2.3 - New Actions
+[Modify standard action]
 
-Chapter 2.3.1 - Licking
+Chapter 3.2.2 - Touching
+
+[Modify standard action]
+
+Chapter 3.2.3 - Rubbing
+
+[Modify standard action]
+
+Chapter 3.2.4 - Licking
 
 [Biting
 Pinching
+Fucking
+]
+
+Book 3.3 - Person Actions
+
+[
 Hugging
 Tickling
 Dancing
 Masturbation
-Fucking
 	Tits
 	Ass
 	Finger
 ]
+
 
 
 
