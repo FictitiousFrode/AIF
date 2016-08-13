@@ -7,6 +7,8 @@ Volume 0 - New Verbs
 [These are the new verbs the framework uses; 
 We put this in it's own volume in case anyone needs to rewrite it for compatibility:]
 
+Section - Dressing Related Verbs
+
 To move is a verb.
 To unbutton is a verb.
 To button is a verb.
@@ -16,6 +18,13 @@ To unfasten is a verb.
 To fasten is a verb.
 To hike is a verb.
 To rip is a verb.
+
+Section - Actions Related Verbs
+
+To continue is a verb.
+To kiss is a verb.
+To hug is a verb.
+
 
 Volume 1 - Layered Clothing
 
@@ -729,8 +738,6 @@ Rule for deciding the concealed possessions of someone:
 
 Chapter 1.2.3b - Examining Body Parts
 
-[The description of a body part is usually "[if concealers of body part is empty]"]
-
 The examining body parts rule is listed after the standard examining rule in the carry out examining rulebook.
 Carry out an actor examining (this is the examining body parts rule):
 	If noun is a body part:
@@ -1377,8 +1384,6 @@ Current Lover
 Current Action
 ]
 
-A person has a person called previous interactor.
-A person has a stored action called the previous interaction.
 
 Book 2.3 - Conversation
 
@@ -1393,41 +1398,319 @@ Volume 3 - Erotic Actions
 
 Book 3.1 - Concepts
 
+Part 3.1.1 - Action Memory
 
+A person has a stored action called the previous interaction.
 
 
 Book 3.2 - Body Part Actions
 
-Chapter 3.2.1 - Kissing
+
+
+Part 3.2.1 - Touching
 
 [Modify standard action]
 
-Chapter 3.2.2 - Touching
+Part 3.2.2 - Rubbing
 
-[Modify standard action]
+Part 3.2.3 - Tickling
 
-Chapter 3.2.3 - Rubbing
-
-[Modify standard action]
-
-Chapter 3.2.4 - Licking
-
-[Biting
-Pinching
-Fucking
+[Status: Reimplementation complete, new functionality is partial.
+Tickling is a new action. It takes into account that only other people can be tickled, decency and consent/arousal, and handle action memory and reporting.
 ]
+
+Tickling is an action applying to one touchable thing.
+The specification of the tickling action is "Tease another person by tickling their body parts."
+
+Part 3.2.4 - Slapping/Spanking
+
+Part 3.2.5 - Pinching
+
+Part 3.2.6 - Licking
+
+Part 3.2.7 - Biting
+
+Part 3.2.8 - Fucking It With
 
 Book 3.3 - Person Actions
 
+[These actions only take another person as the noun, but some redirect if used on body parts.]
+
+Part 3.3.1 - Kissing
+
+[Status: Reimplementation complete, new functionality is partial.
+Kissing is already covered in the Standard Rules, but it's disabled by default.
+We replace the blocks with our own checks, taking into account that only other people can be kissed, decency and consent/arousal, and handle action memory and reporting.]
+
+The specification of the kissing action is "Possibly because Inform was originally written by an Englishman, attempts at kissing another person are normally blocked as being unrealistic or not seriously meant. So the Standard Rules simply block attempts to kiss people, but the action exists for rules to make exceptions.
+Erotic Storytelling replaces the existing checks that block kissing, replacing them with checks to see that only other people can be kissed, and attempts to kiss body parts are redirected to licking that part."
+
+Chapter 3.3.1a - Understanding and Remembering
+
+Understand "kiss [body part]" as kissing.
+
+Does the player mean kissing a person: It is likely.
+Does the player mean kissing the player: It is very unlikely.
+Does the player mean kissing something that is part of the player: It is very unlikely.
+
+The kissing decency is a decency that varies. The kissing decency is usually casual.
+
+The kissing action has a truth state called continuation (matched as continuing).
+
+Setting action variables for kissing:
+	If previous interaction of the actor is the current action:
+		Now the continuation is true;
+	Else:
+		Now the continuation is false;
+
+Chapter 3.3.1b - Check
+
+The self kissing rule substitutes for the kissing yourself rule.
+Check an actor kissing (this is the self kissing rule):
+	If the noun is the actor:
+		If the actor is the player:
+			say "[We] [don't] get much from that." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [don't] get much from that." (B);
+		Stop the action;
+
+The control what can be kissed rule substitutes for the block kissing rule.
+Check an actor kissing (This is the control what can be kissed rule):
+	If the noun is a body part:
+		Try the actor licking the target instead;
+	If the noun is not a person:
+		If the actor is the player:
+			Say "[We] [don't] want to kiss that." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [don't] want to kiss that." (B);
+		Stop the action;
+
+Check an actor kissing (this is the kissing decency rule):
+	Let L be the location of the actor;
+	If the decency threshold of L is greater than the kissing decency:
+		If the player is the actor:
+			Say "It [are] too public for [us] to kiss here." (A);
+		Else if the player can see the actor:
+			Say "It [are] too public for [the actor] to kiss here." (B);
+		Stop the action;
+
+[TODO: Add check on arousal/consent, acceptable lover]
+
+Chapter 3.3.1c - Carry Out
+
+[TODO: Pseudocode not fully implemented yet
+Carry out an actor kissing (this is the stimulate by kissing rule):
+	Stimulate the actor with the kissing stimulation of the actor;
+	Stimulate the noun with the kissing stimulation of the noun;
+]
+
+Carry out an actor kissing (this is the kissing memory rule):
+	Now the previous interaction of the actor is the current action;
+	Now the previous interaction of the noun is the current action;
+
+Chapter 3.3.1d - Reporting
+
+[Default response]
+Report  an actor kissing (this is the report kissing rule):
+	If the player is the actor:
+		If continuation:
+			Say "[We] [continue] to kiss [the noun]." (A);
+		Else:
+			Say "[We] [kiss] [the noun]." (B);
+	Else if the player can see the actor:
+		If continuation:
+			Say "[The actor] [continue] to kiss [the noun]" (C);
+		Else:
+			Say "[The actor] [kiss] [the noun]" (D);
+	Else if the player can see the noun:
+		If continuation:
+			Say "[The actor] [continue] to be kissed." (E);
+		Else:
+			Say "[The actor] [are] kissed." (F);
+
+Part 3.3.2 - Hugging
+
+[Status: Reimplementation complete, new functionality is partial.
+Hugging is a new action. It takes into account that only other people can be hugged, decency and consent/arousal, and handle action memory and reporting.]
+
+Hugging is an action applying to one touchable thing.
+The specification of the hugging action is "Shows affection to another person by giving them a hug. Only other people can be hugged, hugging a body part redirects to touching."
+
+Chapter 3.3.2a - Understanding and Remembering
+
+Understand "hug [something]" as hugging.
+
+Does the player mean hugging a person: It is likely.
+Does the player mean hugging the player: It is very unlikely.
+Does the player mean hugging something that is part of the player: It is very unlikely.
+
+The hugging decency is a decency that varies. The hugging decency is usually formal.
+
+The hugging action has a truth state called continuation (matched as continuing).
+
+Setting action variables for hugging:
+	If previous interaction of the actor is the current action:
+		Now the continuation is true;
+	Else:
+		Now the continuation is false;
+
+Chapter 3.3.2b - Check
+
+Check an actor hugging (this is the self hugging rule):
+	If the noun is the actor:
+		If the actor is the player:
+			say "[We] [don't] get much from that." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [don't] get much from that." (B);
+		Stop the action;
+
+Check an actor hugging (This is the control what can be hugged rule):
+	If the noun is a body part:
+		Try the actor touching the target instead;
+	If the noun is not a person:
+		If the actor is the player:
+			Say "[We] [don't] want to hug that." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [don't] want to hug that." (B);
+		Stop the action;
+
+Check an actor hugging (this is the hugging decency rule):
+	Let L be the location of the actor;
+	If the decency threshold of L is greater than the hugging decency:
+		If the player is the actor:
+			Say "It [are] too public for [us] to kiss here." (A);
+		Else if the player can see the actor:
+			Say "It [are] too public for [the actor] to kiss here." (B);
+		Stop the action;
+
+[TODO: Add check on arousal/consent, acceptable lover]
+
+Chapter 3.3.2c - Carry Out
+
+[TODO: Pseudocode not fully implemented yet
+Carry out an actor hugging (this is the stimulate by hugging rule):
+	Stimulate the actor with the hugging stimulation of the actor;
+	Stimulate the noun with the hugging stimulation of the noun;
+]
+
+Carry out an actor hugging (this is the hugging memory rule):
+	Now the previous interaction of the actor is the current action;
+	Now the previous interaction of the noun is the current action;
+
+Chapter 3.3.2d - Reporting
+
+[Default response]
+Report  an actor hugging (this is the report hugging rule):
+	If the player is the actor:
+		If continuation:
+			Say "[We] [continue] to hug [the noun]." (A);
+		Else:
+			Say "[We] [hug] [the noun]." (B);
+	Else if the player can see the actor:
+		If continuation:
+			Say "[The actor] [continue] to hug [the noun]" (C);
+		Else:
+			Say "[The actor] [hug] [the noun]" (D);
+	Else if the player can see the noun:
+		If continuation:
+			Say "[The actor] [continue] to be hugged." (E);
+		Else:
+			Say "[The actor] [are] hugged." (F);
+
+Part 3.3.3 - Dancing With
+
+[Status: Reimplementation complete, new functionality is partial.
+Dancing with is a new action. It takes into account that only other people can be danced with, decency and consent/arousal, and handle action memory and reporting.]
+
+Dancing with is an action applying to one touchable thing.
+The specification of the dancing with action is "Dancing with is the act of dancing with a someone, including dancing with yourself."
+
+Chapter 3.3.4a - Understanding and Remembering
+
+Understand "dance" as dancing with.
+Understand "dance with [something]" as dancing with.
+
+Does the player mean dancing with a person: It is likely.
+Does the player mean dancing with the player: It is very unlikely.
+Does the player mean dancing with something that is part of the something: It is very unlikely.
+
+The dancing decency is a decency that varies. The dancing decency is usually formal.
+
+The dacning with action has a truth state called continuation (matched as continuing).
+
+Setting action variables for dancing:
+	If previous interaction of the actor is the current action:
+		Now the continuation is true;
+	Else:
+		Now the continuation is false;
+
+Rule for supplying a missing noun while dancing with (this is the dancing alone):
+	Now the noun is the person asked;
+
+Chapter 3.3.1b - Check
+
+Check an actor dancing with (This is the control what can be danced with rule):
+	If the noun is not a person:
+		If the actor is the player:
+			Say "[We] [don't] want to hug that." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [don't] want to hug that." (B);
+		Stop the action;
+
+Check an actor dancing with (this is the dancing with decency rule):
+	Let L be the location of the actor;
+	If the decency threshold of L is greater than the dancing decency:
+		If the player is the actor:
+			Say "It [are] too public for [us] to kiss here." (A);
+		Else if the player can see the actor:
+			Say "It [are] too public for [the actor] to kiss here." (B);
+		Stop the action;
+
+[TODO: Add check on arousal/consent, acceptable lover]
+
+Chapter 3.3.1c - Carry Out
+
+[TODO: Pseudocode not fully implemented yet
+Carry out an actor dancing with (this is the stimulate by dancing rule):
+	Stimulate the actor with the dancing stimulation of the actor;
+	Stimulate the noun with the dancing stimulation of the noun;
+]
+
+Carry out an actor dancing (this is the dancing memory rule):
+	Now the previous interaction of the actor is the current action;
+	Now the previous interaction of the noun is the current action;
+
+Chapter 3.3.1d - Reporting
+
+[Default response]
+Report  an actor dancing with (this is the report dancing rule):
+	If the player is the actor:
+		If continuation:
+			Say "[We] [continue] to dance with [the noun]." (A);
+		Else:
+			Say "[We] [dance] with [the noun]." (B);
+	Else if the player can see the actor:
+		If continuation:
+			Say "[The actor] [continue] to dance with [the noun]" (C);
+		Else:
+			Say "[The actor] [dance] with [the noun]" (D);
+	Else if the player can see the noun:
+		If continuation:
+			Say "[The actor] [continue] to be danced with." (E);
+		Else:
+			Say "[The actor] [are] danced with." (F);
+
+Part 3.3.5 - Fucking
+
 [
-Hugging
-Tickling
-Dancing
-Masturbation
 	Tits
 	Ass
 	Finger
 ]
+
+Part 3.3.6 - Masturbating
+
+
 
 
 
