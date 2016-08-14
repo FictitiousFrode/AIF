@@ -22,6 +22,7 @@ To rip is a verb.
 Section - Actions Related Verbs
 
 To lick is a verb.
+To bite is a verb.
 To kiss is a verb.
 To hug is a verb.
 To dance is a verb.
@@ -48,7 +49,7 @@ Rooms also have a decency called the decency threshold; this is compared to the 
 Currently, the actions wearing, taking off, shifting, unshifting and ripping garments will recalculate the decency of the (former) wearer.
 The undefined decency is not intended to be used, but is needed to signal that the value hasn't been calculated yet."
 
-A person has a decency. The decency of a person is usually the undefined decency.
+A person has a decency called the current decency. The current decency of a person is usually the undefined decency.
 
 A room has a decency called the decency threshold. The decency threshold of a room is usually casual.
 
@@ -61,7 +62,7 @@ The specification of cover area is "Cover areas are the distinct, non-overlappin
 A body part or garment is considered to be visible if atleast one of it's cover areas is not covered. Visibility of garments are handled by the concealed possessions rulebok, while body parts are obviously present even when covered and as such are handled by descriptions instead. See body parts for more details."
 
 Table of Coverage
-Cover Area	decency
+Cover Area	Uncovered Decency (decency)
 The head area	formal
 The face area	formal
 The shoulder area	casual
@@ -116,7 +117,7 @@ The specification of garment is "A garment is something a person can wear over t
 Garments are quite complex, with several distinct sub-features: Some garments can be shiftable in various ways, or even be ripped apart. Transparency determines whether it blocks vision, and they can allow or block touching through. Clothing size is provided to allow garments to only be wearable by matching persons."
 
 A garment is always wearable.
-A garment has a decency. The decency of a garment is usually casual.
+A garment has a decency called cloth decency. The cloth decency of a garment is usually casual.
 A garment can be transparent or opaque. A garment is usually opaque. [Determines visibility to underlying parts]
 A garment can be allow touching through or block touching through. A garment is usually block touching through.
 [NOTE: allow or block reaching (to access what is under) is replaced by shiftyness]
@@ -277,7 +278,7 @@ When play begins (this is the initiate erotic storytelling rule):
 		Update pronoun for cloth;
 	[Calculate the decency for any undefined persons: Small hack here, as Inform won't let us iterate over all persons anymore.]
 	Repeat with P running through the persons:
-		If the decency of P is undefined decency, update decency for P;
+		If the current decency of P is undefined decency, update decency for P;
 
 To update pronoun for (G - a garment):
 	If G is worn by a person (called P):
@@ -304,7 +305,7 @@ Section - Cover Area
 To decide which decency is the decency of (C - a cover area):
 	Repeat with N running from 1 to the number of rows in the Table of Coverage:
 		Choose row N in the Table of Coverage;
-		If C is the Cover Area entry, decide on the decency entry;
+		If C is the Cover Area entry, decide on the uncovered decency entry;
 
 Section - Body Part
 
@@ -317,21 +318,21 @@ To decide which decency is the base decency of (P - a body part):
 Section - Person
 
 To update decency for (P - a person):
-	Now the decency of P is undefined decency;
+	Now the current decency of P is undefined decency;
 	Repeat with area running through the body areas of P:
 		Let considered be undefined decency;
-		Repeat with garment running through the garments worn by P:
-			If garment is visible and garment is opaque and area is listed in the body areas of P:
-				Let considered be the decency of garment;
+		Repeat with G running through the garments worn by P:
+			If G is visible and G is opaque and area is listed in the body areas of P:
+				Let considered be the cloth decency of G;
 		If considered is undefined decency, let considered be the decency of area;
-		If considered is less than the decency of P, now the decency of P is considered;
+		If considered is less than the current decency of P, now the current decency of P is considered;
 
 Chapter 1.2.1b - Privacy
 
 [Status: Complete]
 
 Check an actor going (this is the check decency before going rule):
-	If the decency threshold of the room gone to is greater than decency of the actor:
+	If the decency threshold of the room gone to is greater than current decency of the actor:
 		If the actor is the player:
 			Say "[We] [can't go] that way dressed like that!" (A);
 		Else if the player can see the actor:
@@ -398,6 +399,16 @@ To decide which list of garments is preventing touching of (P - a body part):
 				Add cloth to preventers, if absent;
 	Decide on preventers;
 
+To decide whether (P - a body part) is accessible:
+	Let clothing be the list of garments worn by the holder of P;
+	Sort clothing in reverse clothing layer order;
+	Repeat with cloth running through clothing:
+		Let intersect be the blocked cover areas of cloth;
+		Repeat with A running through intersect:
+			If A is not listed in the cover locations of P, remove A from intersect;
+		If the number of entries in intersect is greater than 0, decide no;
+	Decide yes;
+
 Chapter 1.2.2c - Cover Areas
 
 To decide whether (A - cover area) can be seen for (P - a person):
@@ -408,13 +419,12 @@ To decide whether (A - cover area) can be seen for (P - a person):
 			Decide no;
 	Decide yes;
 
-
 To decide which decency is exposed by (A - cover area) on (P - a person):
 	Let clothing be the list of garments worn by P;
 	Sort clothing in reverse clothing layer order;
 	Repeat with cloth running through clothing:
 		If cloth is opaque and A is listed in the modified covered areas of cloth:
-			Decide on the decency of cloth;
+			Decide on the cloth decency of cloth;
 	Decide on the decency of A;
 
 [Determine what would be revealed if G was removed from a cover area]
@@ -605,8 +615,8 @@ To decide which decency is exposed by taking off (G - a garment):
 	Let exposed be the undefined decency;
 	Let revealed be the revealed by taking off G;
 	Repeat with I running through revealed:
-		If I provides the property decency and the decency of I is less than exposed:
-			Now exposed is the decency of I;
+		If I provides the property cloth decency and the cloth decency of I is less than exposed:
+			Now exposed is the cloth decency of I;
 	Decide on exposed;
 
 Section - Shifting Garments
@@ -658,8 +668,8 @@ To decide which decency is exposed by shifting (G - a garment):
 	Let exposed be the undefined decency;
 	Let revealed be the revealed by shifting G;
 	Repeat with I running through revealed:
-		If I provides the property decency and the decency of I is less than exposed:
-			Now exposed is the decency of I;
+		If I provides the property cloth decency and the cloth decency of I is less than exposed:
+			Now exposed is the cloth decency of I;
 	Decide on exposed;
 
 Section - Ripping Garments
@@ -711,8 +721,8 @@ To decide which decency is exposed by ripping (G - a garment):
 	Let exposed be the undefined decency;
 	Let revealed be the revealed by ripping G;
 	Repeat with I running through revealed:
-		If I provides the property decency and the decency of I is less than exposed:
-			Now exposed is the decency of I;
+		If I provides the property cloth decency and the cloth decency of I is less than exposed:
+			Now exposed is the cloth decency of I;
 	Decide on exposed;
 
 Chapter 1.2.2e - Definitions
@@ -1398,23 +1408,171 @@ Volume 3 - Erotic Actions
 
 Book 3.1 - Concepts
 
+A body part can be touchable or untouchable. A body part is usually untouchable.
+A body part can be rubbable or unrubbable. A body part is usually unrubbable.
+A body part can be ticklable or unticklable. A body part is usually unticklable.
+A body part can be spankable or unspankable. A body part is usually unspankable.
+A body part can be pinchable or unpinchable. A body part is usually unpinchable.
+A body part can be lickable or unlickable. A body part is usually unlickable.
+A body part can be biteable or unbiteable. A body part is usually unbiteable.
 
+A body part can be penetrating. A body part is usually not penetrating.
+A body part can be orificial. A body part is usually not orificial.
 
 Book 3.2 - Body Part Actions
 
-
+[These are the actions that target body parts; attempts to target a player are either redirected or blocked.]
 
 Part 3.2.1 - Touching
 
-[Modify standard action]
+[Status: Reimplementation complete, new functionality is partial.
+Touching is already covered in the Standard Rules, but it doesn't do much. We add some checks for touching people and body parts, and because we don't allow touching people directly we can keep the standard reports.]
+
+The specification of the touching action is "Touching is just that, touching something without applying pressure: a touch-sensitive screen or a living creature might react, but a standard push-button or lever will probably not.
+In the Standard Rules there are no check touching rules, since touchability is already a requirement of the noun for the action anyway, and no carry out rules because nothing in the standard Inform world model reacts to a mere touch - though report rules do mean that attempts to touch other people provoke a special reply.
+In Erotic Storytelling however, touching is 'passive' touching where the player softly feels the target, while the related rubbing action is 'active' touching where the player actively massages the target."
+
+Chapter 3.2.1a - Understanding
+
+Understand "caress [something]" and "feel [something]" as touching.
+
+Does the player mean touching a body part: It is likely.
+Does the player mean touching a person: It is unlikely.
+Does the player mean touching the player: It is very unlikely.
+Does the player mean touching something that is part of the player: It is very unlikely.
+
+The touching decency is initially immodest.
+
+Chapter 3.2.1b - Check
+
+Check an actor touching (this is the touching specificity rule):
+	If the noun is a person:
+		If the actor is the player:
+			Say "[We] [have] to be more specific about what to touch." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[We] [have] to be more specific about what [the actor] should touch." (B);
+		Stop the action;
+
+Check an actor touching (This is the control what can be touched rule):
+	If the noun is a body part:
+		If the noun does not provide the property touchable and the noun is not touchable:
+			If the actor is the player:
+				Say "[We] [can't] touch that." (A);
+			Else if the player can see the actor and the action is not silent:
+				Say "[The actor] [can't] touch that." (B);
+			Stop the action;
+
+Check an actor touching (this is the touching reachability rule):
+	If the noun is a body part or noun is a garment:
+		If noun can be touched:
+			Continue the action;
+		Else:
+			If the player is the actor:
+				Say "[We] [can't] reach that." (A);
+			Else if the player can see the actor:
+				Say "[The actor] [can't] reach that." (B);
+			Stop the action;
+
+Check an actor touching (this is the touching decency rule):
+	Let L be the location of the actor;
+	If the noun is a person or the noun is part of a person:
+		If the decency threshold of L is greater than the touching decency:
+			If the player is the actor:
+				Say "It [are] too public for [us] to touch that here." (A);
+			Else if the player can see the actor:
+				Say "It [are] too public for [the actor] to touch that here." (B);
+			Stop the action;
+
+[TODO: Add check on arousal/consent, acceptable lover
+Check an actor touching (this is the touching consent rule):
+	If the noun is a person or is enclosed by a person:
+]
+
+Chapter 3.3.2c - Carry Out
+
+[TODO: Pseudocode not fully implemented yet
+Carry out an actor touching (this is the stimulate by touching rule):
+	Stimulate the actor with the touching stimulation of the actor;
+	Stimulate the noun with the touching stimulation of the noun;
+]
 
 Part 3.2.2 - Rubbing
+
+[Status: Reimplementation complete, new functionality is partial.
+Rubbing is already covered in the Standard Rules, but it's disabled by default. We add some checks for rubbing people and body parts, and we can keep the standard reports.]
+
+The specification of the rubbing action is "The Standard Rules define this action in only a minimal way, blocking it with a check rule which stops it in all cases. It exists so that before or instead rules can be written to make it do interesting things in special cases. (Or to reconstruct the action as something more substantial, unlist the block rule and supply carry out and report rules, together perhaps with some further check rules.)
+For Erotic Story Actions, rubbing is intended for when the actor uses their hands to rub something (as opposed to the softer touch action), and reponds to commands like RUB ANNA, MASSAGE ANNA'S BREASTS, etc. It only works only body parts that are set to rubbable."
+
+Chapter 3.2.2a - Understanding
+
+Understand "massage [something]", "rub [something]", "fondle [something]" as rubbing. 
+
+Does the player mean rubbing a body part: It is likely.
+Does the player mean rubbing a person: It is unlikely.
+Does the player mean rubbing the player: It is very unlikely.
+Does the player mean rubbing something that is part of the player: It is very unlikely.
+
+The rubbing decency is initially immodest.
+
+Chapter 3.3.2b - Check
+
+The rubbing specificity rule is listed instead of the can't rub another person rule in the check rubbing rulebook.
+Check an actor rubbing (this is the rubbing specificity rule):
+	If the noun is a person:
+		If the actor is the player:
+			Say "[We] [have] to be more specific about what to rub." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[We] [have] to be more specific about what [the actor] should rub." (B);
+		Stop the action;
+
+Check an actor rubbing (This is the control what can be rubbed rule):
+	If the noun is a body part:
+		If the noun does not provide the property rubbable and the noun is not rubbable:
+			If the actor is the player:
+				Say "[We] [can't] rub that." (A);
+			Else if the player can see the actor and the action is not silent:
+				Say "[The actor] [can't] rub that." (B);
+			Stop the action;
+
+Check an actor rubbing (this is the rubbing reachability rule):
+	If the noun is a body part or noun is a garment:
+		If noun can be touched:
+			Continue the action;
+		Else:
+			If the player is the actor:
+				Say "[We] [can't] reach that." (A);
+			Else if the player can see the actor:
+				Say "[The actor] [can't] reach that." (B);
+			Stop the action;
+
+Check an actor rubbing (this is the rubbing decency rule):
+	Let L be the location of the actor;
+	If the noun is a person or the noun is part of a person:
+		If the decency threshold of L is greater than the rubbing decency:
+			If the player is the actor:
+				Say "It [are] too public for [us] to rub that here." (A);
+			Else if the player can see the actor:
+				Say "It [are] too public for [the actor] to rub that here." (B);
+			Stop the action;
+
+[TODO: Add check on arousal/consent, acceptable lover
+Check an actor rubbing (this is the rubbing consent rule):
+	If the noun is a person or is enclosed by a person:
+]
+
+Chapter 3.2.3c - Carry Out
+
+[TODO: Pseudocode not fully implemented yet
+Carry out an actor rubbing (this is the stimulate by rubbing rule):
+	Stimulate the actor with the rubbing stimulation of the actor;
+	Stimulate the noun with the rubbing stimulation of the noun;
+]
 
 Part 3.2.3 - Tickling
 
 [Status: Reimplementation complete, new functionality is partial.
-Tickling is a new action. It takes into account that only other people can be tickled, decency and consent/arousal, and handle reporting.
-]
+Tickling is a new action. It takes into account that only other people's body parts can be tickled, decency and consent/arousal, and handle reporting.]
 
 Tickling is an action applying to one touchable thing.
 The specification of the tickling action is "Tease another person by tickling their body parts."
@@ -1426,14 +1584,12 @@ Part 3.2.5 - Pinching
 Part 3.2.6 - Licking
 
 [Status: Reimplementation complete, new functionality is partial.
-Hugging is a new action. It takes into account that only other people can be hugged, decency and consent/arousal, and handle reporting.]
+Licking is a new action, used only on body parts but attempts to redirect from persons. It handles decency, access.]
 
 Licking is an action applying to one touchable thing.
 The specification of the licking action is "This action is intended for when the actor uses their mouth on a body part. Trying to lick a person will try to find a better part of that person to lick."
 
 Chapter 3.2.6a - Understanding
-
-A body part can be lickable or unlickable. A body part is usually unlickable.
 
 Understand "lick [something]" and "suck [something]" as licking. 
 
@@ -1441,6 +1597,8 @@ Does the player mean licking something lickable: It is very likely.
 Does the player mean licking a person: It is likely.
 Does the player mean licking the player: It is very unlikely.
 Does the player mean licking something that is part of the player: It is very unlikely.
+
+The licking decency is initially immodest.
 
 Chapter 3.2.6b - Check
 
@@ -1452,7 +1610,7 @@ Check an actor licking (this is the self licking rule):
 			Say "[The actor] [don't] get much from that." (B);
 		Stop the action;
 
-Check an actor licking (This is the licking redirect rule):
+Check an actor licking (This is the licking specificity rule):
 	If the noun is a person:
 		If the noun is enclosing a vagina (called target):
 			Try the actor licking the target instead;
@@ -1473,16 +1631,27 @@ Check an actor licking (This is the control what can be licked rule):
 			Say "[The actor] [can't] lick that." (B);
 		Stop the action;
 
+Check an actor licking (this is the licking reachability rule):
+	If the noun is a body part:
+		If noun is accessible:
+			Continue the action;
+		Else:
+			If the player is the actor:
+				Say "[We] [can't] reach that." (A);
+			Else if the player can see the actor:
+				Say "[The actor] [can't] reach that." (B);
+			Stop the action;
+
 Check an actor licking (this is the licking decency rule):
 	Let L be the location of the actor;
-	If the decency threshold of L is greater than indecent: [TODO: Remake this into a variable]
+	If the decency threshold of L is greater than the licking decency:
 		If the player is the actor:
 			Say "It [are] too public for [us] to lick [noun] here." (A);
 		Else if the player can see the actor:
 			Say "It [are] too public for [the actor] to lick [noun] here." (B);
 		Stop the action;
 
-Chapter 3.3.2c - Carry Out
+Chapter 3.2.6c - Carry Out
 
 [TODO: Pseudocode not fully implemented yet
 Carry out an actor licking (this is the stimulate by licking rule):
@@ -1490,10 +1659,10 @@ Carry out an actor licking (this is the stimulate by licking rule):
 	Stimulate the noun with the licking stimulation of the noun;
 ]
 
-Chapter 3.3.2d - Reporting
+Chapter 3.2.6d - Reporting
 
 [Default response]
-Report  an actor licking (this is the report licking rule):
+Report an actor licking (this is the report licking rule):
 	If the player is the actor:
 		Say "[We] [lick] [the noun]." (A);
 	Else if the player can see the actor:
@@ -1502,6 +1671,90 @@ Report  an actor licking (this is the report licking rule):
 		Say "[The actor] [are] licked." (C);
 
 Part 3.2.7 - Biting
+
+[Status: Reimplementation complete, new functionality is partial.
+Biting is a new action, used only on body parts, but attempts to bit something edible is eating. It handles decency, access.]
+
+Biting is an action applying to one touchable thing.
+The specification of the biting action is "This action is intended for when the actor bites on something. Attempts to bite something edible redirects to eating."
+
+Chapter 3.2.7a - Understanding
+
+Understand "bite [something]", "gnaw [something]" and "chomp [something]" as biting. 
+
+Does the player mean biting something biteable: It is very likely.
+Does the player mean biting the player: It is very unlikely.
+Does the player mean biting something that is part of the player: It is very unlikely.
+
+The biting decency is initially indecent.
+
+Chapter 3.2.7b - Check
+
+Check an actor biting (this is the self biting rule):
+	If the noun is the actor or the noun is enclosed by the actor:
+		If the actor is the player:
+			say "[We] [don't] get much from that." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [don't] get much from that." (B);
+		Stop the action;
+
+Check an actor biting (This is the biting specificity rule):
+	If the noun is edible:
+		Try the actor eating the noun instead;
+	Else if the noun is a person:
+		If the actor is the player:
+			Say "[We] [have] to be more specific about what to bite." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[We] [have] to be more specific about what [the actor] should bite." (B);
+		Stop the action;
+
+Check an actor biting (This is the control what can be bitten rule):
+	If the noun does not provide the property biteable and the noun is not biteable:
+		If the actor is the player:
+			Say "[We] [can't] bite that." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [can't] bite that." (B);
+		Stop the action;
+
+Check an actor biting (this is the biting reachability rule):
+	If the noun is a body part:
+		If noun is accessible:
+			Continue the action;
+		Else:
+			If the player is the actor:
+				Say "[We] [can't] reach that." (A);
+			Else if the player can see the actor:
+				Say "[The actor] [can't] reach that." (B);
+			Stop the action;
+
+Check an actor biting (this is the biting decency rule):
+	Let L be the location of the actor;
+	If the noun is a body part:
+		If the decency threshold of L is greater than the biting decency:
+			If the player is the actor:
+				Say "It [are] too public for [us] to bite [noun] here." (A);
+			Else if the player can see the actor:
+				Say "It [are] too public for [the actor] to bite [noun] here." (B);
+			Stop the action;
+
+Chapter 3.2.7c - Carry Out
+
+[TODO: Pseudocode not fully implemented yet
+Carry out an actor biting (this is the stimulate by licking rule):
+	Stimulate the actor with the biting stimulation of the actor;
+	Stimulate the noun with the biting stimulation of the noun;
+]
+
+Chapter 3.2.7d - Reporting
+
+[Default response]
+Report an actor biting (this is the report biting rule):
+	If the player is the actor:
+		Say "[We] [bite] [the noun]." (A);
+	Else if the player can see the actor:
+		Say "[The actor] [bite] [the noun]" (B);
+	Else if the player can see the noun:
+		Say "[The actor] [are] bitten." (C);
 
 Part 3.2.8 - Fucking It With
 
@@ -1525,6 +1778,8 @@ Understand "kiss [body part]" as kissing.
 Does the player mean kissing a person: It is likely.
 Does the player mean kissing the player: It is very unlikely.
 Does the player mean kissing something that is part of the player: It is very unlikely.
+
+The kissing decency is initially casual.
 
 Chapter 3.3.1b - Check
 
@@ -1550,7 +1805,7 @@ Check an actor kissing (This is the control kissed target rule):
 
 Check an actor kissing (this is the kissing decency rule):
 	Let L be the location of the actor;
-	If the decency threshold of L is greater than casual: [TODO: Remake this into a variable]
+	If the decency threshold of L is greater than the kissing decency:
 		If the player is the actor:
 			Say "It [are] too public for [us] to kiss here." (A);
 		Else if the player can see the actor:
@@ -1570,7 +1825,7 @@ Carry out an actor kissing (this is the stimulate by kissing rule):
 Chapter 3.3.1d - Reporting
 
 [Default response]
-Report  an actor kissing (this is the report kissing rule):
+Report an actor kissing (this is the report kissing rule):
 	If the player is the actor:
 		Say "[We] [kiss] [the noun]." (A);
 	Else if the player can see the actor:
@@ -1594,7 +1849,7 @@ Does the player mean hugging a person: It is likely.
 Does the player mean hugging the player: It is very unlikely.
 Does the player mean hugging something that is part of the player: It is very unlikely.
 
-[The hugging decency is a decency that varies. The hugging decency is formal.]
+The hugging decency is initially formal.
 
 Chapter 3.3.2b - Check
 
@@ -1618,7 +1873,7 @@ Check an actor hugging (This is the control what can be hugged rule):
 
 Check an actor hugging (this is the hugging decency rule):
 	Let L be the location of the actor;
-	If the decency threshold of L is greater than formal: [TODO: Remake this into a variable]
+	If the decency threshold of L is greater than the hugging decency:
 		If the player is the actor:
 			Say "It [are] too public for [us] to kiss here." (A);
 		Else if the player can see the actor:
@@ -1638,7 +1893,7 @@ Carry out an actor hugging (this is the stimulate by hugging rule):
 Chapter 3.3.2d - Reporting
 
 [Default response]
-Report  an actor hugging (this is the report hugging rule):
+Report an actor hugging (this is the report hugging rule):
 	If the player is the actor:
 		Say "[We] [hug] [the noun]." (A);
 	Else if the player can see the actor:
@@ -1663,6 +1918,8 @@ Does the player mean dancing a person: It is likely.
 Does the player mean dancing the player: It is very unlikely.
 Does the player mean dancing something that is part of something: It is very unlikely.
 
+The dancing decency is initially formal.
+
 Rule for supplying a missing noun while dancing (this is the dancing alone rule):
 	Now the noun is the person asked;
 
@@ -1678,7 +1935,7 @@ Check an actor dancing (This is the control what can be danced with rule):
 
 Check an actor dancing (this is the dancing decency rule):
 	Let L be the location of the actor;
-	If the decency threshold of L is greater than formal: [TODO: Remake this into a variable]
+	If the decency threshold of L is greater than formal:
 		If the player is the actor:
 			Say "It [are] too public for [us] to kiss here." (A);
 		Else if the player can see the actor:
@@ -1698,7 +1955,7 @@ Carry out an actor dancing (this is the stimulate by dancing rule):
 Chapter 3.3.1d - Reporting
 
 [Default response]
-Report  an actor dancing (this is the report dancing rule):
+Report an actor dancing (this is the report dancing rule):
 	If the player is the actor:
 		Say "[We] [dance] with [the noun]." (A);
 	Else if the player can see the actor:
@@ -1839,7 +2096,8 @@ A pair of panties is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of panties is pairs of panties.
 Understand "underwear", "undie", "undies" as pair of panties.
 The specification of pair of panties is "Panties (for both sexes, despite the name) cover the crotch. They can be moved aside and ripped apart, and are usually indecent normalwear."
-A pair of panties is usually underwear and indecent.
+A pair of panties is usually underwear.
+The cloth decency of pair of panties is usually indecent.
 A pair of panties is usually allow touching through.
 The cover areas of a pair of panties is usually {crotch area}.
 A pair of panties is usually shiftable. The shiftyness of a pair of panties is usually moveable. The shifting revealed cover areas of pair of panties is usually {crotch area}.
@@ -1847,27 +2105,31 @@ A pair of panties is usually rippable. The ripping revealed cover areas of pair 
 
 A bra is a kind of garment.
 The specification of bra is "Bras are usually indecent underwear, and go on the upper torso/back."
-A bra is usually indecent and underwear.
+A bra is usually underwear.
+The cloth decency of a bra is usually indecent.
 A bra is usually allow touching through.
 The cover areas of a pair of panties is usually {upper torso area, upper back area}.
 
 An undershirt is a kind of garment.
 The specification of undershirt is "An undershirt is a shirt that's meant to go under a normal shirt, covering just the torso (front/back). It's usually immodest underwear. It can be ripped to expose the upper torso area."
-An undershirt is usually immodest and underwear.
+An undershirt is usually underwear.
+The cloth decency of an undershirt is usually immodest.
 An undershirt is usually allow touching through.
 The cover areas of an undershirt is usually {upper torso area, lower torso area, upper back area, lower back area}.
 An undershirt is usually rippable. The ripping revealed cover areas of an undershirt is usually a {upper torso area}.
 
 A swimsuit is a kind of garment.
 The specification of swimsuit is "A swimsuit is immodest underwear that covers the upper torso, lower back/torso and crotch. It doesn't necessarily have to be for swimming; teddies and similar underwear can also use the same template. It can usually be moved aside to expose upper torso."
-A swimsuit is usually immodest and underwear.
+A swimsuit is usually underwear.
+The cloth decency of a swimsuit is usually immodest.
 A swimsuit is usually allow touching through.
 The cover areas of a swimsuit is usually {upper torso area, lower torso area, lower back area, crotch area}.
 A swimsuit is usually shiftable. The shiftyness of a swimsuit is usually moveable. The shifting revealed cover areas of a swimsuit is usually a {upper torso area}.
 
 A bodysuit is a kind of garment.
 The specification of bodysuit is "A bodysuit is a special form of indecent underwear that covers most of a person, only leaving the hands and head/face uncovered."
-A bodysuit is usually indecent and underwear.
+A bodysuit is usually underwear.
+The cloth decency of a bodysuit is usually indecent.
 The cover areas of a bodysuit is usually {shoulder area, arm area, upper torso area, upper back area, lower torso area, lower back area, crotch area, thigh area, leg area, feet area}.
 
 [TODO: Move to documentation, needs to be custom implemented, usually based on undershirt or swimsuit.
@@ -1875,7 +2137,8 @@ The specification of corset is "A corset is a (usually rigid) underwear that's u
 
 A mask is a kind of garment.
 The specification of mask is "A mask covers a persons face and head, and is usually immodest. This is a piece of garment that should be used with care, as it will block access to a person's mouth."
-A mask is usually immodest and underwear.
+A mask is usually underwear.
+The cloth decency of a mask is usually immodest.
 The cover areas of a mask is usually {face area, head area}.
 
 Chapter 5.1.2b - Normalwear
@@ -1885,14 +2148,16 @@ Chapter 5.1.2b - Normalwear
 A pair of socks is a kind of garment.
 The specification of pair of socks is "Socks cover the feet, and is usually formal and normalwear (in order to match stockings and pantyhose)."
 They are usually plural-named. The indefinite article is usually "a". The plural of socks is pairs of socks.
-A pair of socks is usually normalwear and formal.
+A pair of socks is usually normalwear.
+The cloth decency of a pair of socks is usually formal.
 A pair of socks is usually allow touching through.
 The cover areas of a pair of socks is usually {feet area}.
 
 A pair of stockings is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of stockings is pairs of stockings.
 The specification of pair of stockings is "Stockings covers feet, legs and thighs, and does not fit over anything. It is not compatible with pantyhose (which also covers the crotch). They are usually formal."
-A pair of stockings is usually normalwear and formal.
+A pair of stockings is usually normalwear.
+The cloth decency of a pair of stockings is usually formal.
 A pair of stockings is usually allow touching through.
 The cover areas of a pair of stockings is usually {feet area, leg area, thigh area}.
 A pair of panties is usually rippable. The ripping revealed cover areas of a pair of panties is usually {thigh area}.
@@ -1900,14 +2165,16 @@ A pair of panties is usually rippable. The ripping revealed cover areas of a pai
 A pair of pantyhose is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of pantyhose is pairs of pantyhose.
 The specification of pair of pantyhose is "Pantyhose is similar to stockings, but also covers the crotch, which means they both have to be normalwear to fit over panties. It is usually formal, and can be ripped to expose the crotch."
-A pair of pantyhose is usually formal and normalwear.
+A pair of pantyhose is usually normalwear.
+The cloth decency of a pair of pantyhose is usually formal.
 A pair of pantyhose is usually allow touching through.
 The cover areas of a pair of pantyhose is usually {feet area, leg area, thigh area, crotch area}.
 A pair of pantyhose is usually rippable. The ripping revealed cover areas of a pair of pantyhose is usually {crotch area}.
 
 A shirt is a kind of garment.
 The specification of shirt is "Shirt covers the entire back and torso, as well as shoulders and arms. It is usually casual and normalwear."
-A shirt is usually casual and normalwear.
+A shirt is usually normalwear.
+The cloth decency of shirt is usually casual.
 The cover areas of a shirt is usually {shoulder area, arm area, upper torso area, lower torso area, upper back area, lower back area}.
 A shirt is usually default cover blocking.
 A shirt is usually shiftable. The shiftyness of a shirt is usually buttonable. The shifting revealed cover areas of a shirt is usually {shoulder area, upper torso area, lower torso area}.
@@ -1916,12 +2183,16 @@ A shirt is usually rippable. The ripping revealed cover areas of a shirt is usua
 A dress is a kind of garment.
 The specification of a dress is "A dress covers the entire torso (front and back), as well as the arms/shoulders and thighs/legs. It is usually formal and normalwear. This means a sweater can be worn over it, but not a shirt under it. To swap this around, state that it is overwear instead. By default a dress can be unbuttoned to access the upper torso; to change this to make it raisable to access the crotch see the definition of minidress (you might also want to change default cover blocking).
 Note; Dresses go under boots, which might cause some issues."
+A dress is usually normalwear.
+The cloth decency of dress is usually casual.
 The cover areas of a dress is usually {shoulder area, arm area, upper torso area, lower torso area, upper back area, lower back area, crotch area, thigh area, leg area}.
 A dress is usually default cover blocking.
 A dress is usually shiftable. The shiftyness of a dress is usually buttonable. The shifting revealed cover areas of a dress is usually {shoulder area, upper torso area, lower torso area}.
 
 A minidress is a kind of garment.
 The specification of a minidress is "A minidress is a short dress that doesn't cover the legs; see dress for more details. It's usually casual and normalwear. It's can usually be raised to gain access to the crotch."
+A minidress is usually normalwear.
+The cloth decency of minidress is usually immodest.
 The cover areas of a minidress is usually {shoulder area, arm area, upper torso area, lower torso area, upper back area, lower back area, crotch area, thigh area}.
 A minidress is usually shiftable. The shiftyness of a dress is usually raisable. The shifting revealed cover areas of a dress is usually {crotch area, thigh area}.
 
@@ -1929,7 +2200,8 @@ A pair of glasses is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of glasses is pairs of glasses.
 Understand "goggles", "eyewear" as pair of glasses.
 The specification of pair of glasses is "Glasses go on the face, and are usually formal normalwear. Because of this, they will block direct access and view to face parts (such as the mouth); this is usually not a problem as kissing redirects to the person."
-A pair of glasses is usually formal and normalwear.
+A pair of glasses is usually normalwear.
+The cloth decency of pair of glasses is usually formal.
 The cover areas of a pair of glasses is usually {face area}.
 
 Chapter 5.1.2c - Overwear
@@ -1940,6 +2212,8 @@ A pair of trousers is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of trousers is pairs of trousers.
 Understand "pants", "jeans", "pair of pants/jeans" as pair of trousers.
 The specification of pair of trousers is "Trousers (or pants/jeans) are casual clothes worn over the legs/thighs and crotch. They can usually be unzipped to allow access to the crotch."
+A pair of trousers is usually overwear.
+The cloth decency of pair of trousers is usually casual.
 The cover areas of a pair of trousers is usually {leg area, thigh area, crotch area}.
 A pair of trousers is usually default cover blocking.
 A pair of trousers is usually shiftable. The shiftyness of a pair of trousers is usually zipable. The shifting revealed cover areas of a pair of trousers is usually {crotch area}.
@@ -1947,24 +2221,32 @@ A pair of trousers is usually shiftable. The shiftyness of a pair of trousers is
 A pair of shorts is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of shorts is pairs of shorts.
 The specification of pair of shorts is "Shorts are (as the name implies) short pants that don't cover the legs. As such they are casual overwear that cover the thighs and crotch. They can usually be unzipped to allow access to the crotch."
+A pair of shorts is usually overwear.
+The cloth decency of pair of shorts is usually casual.
 The cover areas of a pair of shorts is usually {thigh area, crotch area}.
 A pair of shorts is usually default cover blocking.
 A pair of shorts is usually shiftable. The shiftyness of a pair of shorts is usually zipable. The shifting revealed cover areas of a pair of shorts is usually {crotch area}.
 
 A skirt is a kind of garment.
 The specification of skirt is "A skirt is usually a casual overwear that covers the crotch and thighs, and can easily be made longer by changing the default cover areas. It's usually liftable to expose everything."
+A skirt is usually overwear.
+The cloth decency of skirt is usually casual.
 The cover areas of a skirt is usually {thigh area, crotch area}.
 A skirt is usually shiftable. The shiftyness of a skirt is usually raisable. The shifting revealed cover areas of a skirt is usually a {thigh area, crotch area}.
 
 A sweater is a kind of garment.
 The specification of a sweater is "A sweater is a casual overwear that covers the entire upper body and arms. It can be pulled up to expose the upper and lower torso."
+A sweater is usually overwear.
+The cloth decency of sweater is usually casual.
 The cover areas of a sweater is usually {shoulder area, arm area, upper torso area, lower torso area, upper back area, lower back area}.
 A sweater is usually default cover blocking.
-A sweater is usually shiftable. The shiftyness of a skirt is usually raisable. The shifting revealed cover areas of a skirt is usually a {upper torso area, lower torso area}.
+A sweater is usually shiftable. The shiftyness of a sweater is usually raisable. The shifting revealed cover areas of a sweater is usually a {upper torso area, lower torso area}.
 
 A suit is a kind of garment.
 The specification of a suit is "A suit is really a combination of a sweater-jacket and pants. It's usually formal overwear, and covers the back of the torso (it's assumed to be open to the chest), arms, legs/thighs and crotch. It can be unzipped to access the crotch."
 The cover areas of a suit is usually {arm area, shoulder area, upper back area, lower back area, leg area, thigh area, crotch area}.
+A suit is usually overwear.
+The cloth decency of suit is usually casual.
 A suit is usually default cover blocking.
 A suit is usually shiftable. The shiftyness of a suit is usually zipable. The shifting revealed cover areas of a suit is usually {crotch area}.
 
@@ -1975,38 +2257,45 @@ Chapter 5.1.2d - Outerwear
 A pair of shoes is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of shoes is pairs of shoes.
 The specification of pair of shoes is "Shoes are formal outerwear worn on the feet."
-A pair of shoes is usually formal and outerwear.
+A pair of shoes is usually outerwear.
+The cloth decency of pair of shorts is usually formal.
 The cover areas of a pair of glasses is usually {feet area}.
 
 A pair of boots is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of boots is pairs of boots.
 The specification of pair of boots is "Boots are formal outerwear like shoes, but are higher and cover both feet and legs.
 Note; take care to use boots with dresses, as they technically go on the outside of a long dress."
-A pair of boots is usually formal and outerwear.
+A pair of boots is usually outerwear.
+The cloth decency of pair of boots is usually formal.
 The cover areas of a pair of glasses is usually {feet area, leg area}.
 
 A hat is a kind of garment.
 The specification of hat is "A hat goes on the head, and is usually formal outerwear. Because a hat covers the head area, it will block direct view of hair."
-A hat is usually formal and outerwear.
+A hat is usually outerwear.
+The cloth decency of a hat is usually formal.
 The cover areas of a hat is usually {head area}.
 
 A jacket is a kind of garment.
 The specification of jacket is "A jacket is usually formal outerwear that is worn over the torso. It can be unbuttoned to expose the front."
 The cover areas of a jacket is usually {arm area, shoulder area, upper torso area, lower torso area, upper back area, lower back area}.
-A jacket is usually formal and outerwear.
+A jacket is usually outerwear.
+The cloth decency of jacket is usually formal.
 A jacket is usually default cover blocking.
 A jacket is usually shiftable. The shiftyness of a jacket is usually buttonable. The shifting revealed cover areas of a jacket is usually {upper torso area, lower torso area}.
 
 A coat is a kind of garment.
 The specification of coat is "A coat a longer version of a jacket, that also covers the thighs and crotch. It can be unbuttoned to expose the front and thighs/crotch."
 The cover areas of a coat is usually {arm area, shoulder area, upper torso area, lower torso area, upper back area, lower back area, crotch area, thigh area}.
-A coat is usually formal and outerwear.
+A coat is usually outerwear.
+The cloth decency of coat is usually formal.
 A coat is usually default cover blocking.
 A coat is usually shiftable. The shiftyness of a coat is usually buttonable. The shifting revealed cover areas of a coat is usually {shoulder area, upper torso area, lower torso area, crotch area, thigh area}.
 
 A pair of gloves is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of gloves is pairs of gloves.
 The specification of pair of gloves is "Gloves are formal outerwear that go over the hands."
+A pair of gloves is usually outerwear.
+The cloth decency of pair of gloves is usually formal.
 The cover areas of a pair of gloves is usually {hand area}.
 
 
