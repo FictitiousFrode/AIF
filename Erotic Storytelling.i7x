@@ -23,6 +23,9 @@ Section - Actions Related Verbs
 
 To lick is a verb.
 To bite is a verb.
+To tickle is a verb.
+To spank is a verb.
+
 To kiss is a verb.
 To hug is a verb.
 To dance is a verb.
@@ -1408,16 +1411,33 @@ Volume 3 - Erotic Actions
 
 Book 3.1 - Concepts
 
+Part 3.2.1
+
+Chapter 3.2.1a - Action Control Attributes
+
+[The following attributes are specified to control which things the correspondingly named action is applicable to.
+These can be applied to other things than body part if wanted, and access to garments are supported.]
+
 A body part can be touchable or untouchable. A body part is usually untouchable.
 A body part can be rubbable or unrubbable. A body part is usually unrubbable.
-A body part can be ticklable or unticklable. A body part is usually unticklable.
+A body part can be tickleable or untickleable. A body part is usually untickleable.
 A body part can be spankable or unspankable. A body part is usually unspankable.
 A body part can be pinchable or unpinchable. A body part is usually unpinchable.
 A body part can be lickable or unlickable. A body part is usually unlickable.
 A body part can be biteable or unbiteable. A body part is usually unbiteable.
 
+Chapter 3.2.1b - Sexual Attributes
+
 A body part can be penetrating. A body part is usually not penetrating.
 A body part can be orificial. A body part is usually not orificial.
+
+Part 3.2.2 - Erectable
+
+Chapter 3.2.2a - Property
+
+[A body part has a an arousal called the erection threshold.
+Definition: A thing is erectable if it provides the property erection threshold and the erection threshold is not the default value of number.]
+
 
 Book 3.2 - Body Part Actions
 
@@ -1454,8 +1474,10 @@ Check an actor touching (this is the touching specificity rule):
 		Stop the action;
 
 Check an actor touching (This is the control what can be touched rule):
-	If the noun is a body part:
-		If the noun does not provide the property touchable and the noun is not touchable:
+	If the noun is a body part or noun is a garment: [We don't want to block "normal" things here]
+		If the noun provides the property touchable and the noun is touchable:
+			Continue the action;
+		Else:
 			If the actor is the player:
 				Say "[We] [can't] touch that." (A);
 			Else if the player can see the actor and the action is not silent:
@@ -1475,7 +1497,7 @@ Check an actor touching (this is the touching reachability rule):
 
 Check an actor touching (this is the touching decency rule):
 	Let L be the location of the actor;
-	If the noun is a person or the noun is part of a person:
+	If the noun is enclosed by a person:
 		If the decency threshold of L is greater than the touching decency:
 			If the player is the actor:
 				Say "It [are] too public for [us] to touch that here." (A);
@@ -1527,8 +1549,10 @@ Check an actor rubbing (this is the rubbing specificity rule):
 		Stop the action;
 
 Check an actor rubbing (This is the control what can be rubbed rule):
-	If the noun is a body part:
-		If the noun does not provide the property rubbable and the noun is not rubbable:
+	If the noun is a body part or noun is a garment:
+		If the noun provides the property rubbable and the noun is rubbable:
+			Continue the action;
+		Else:
 			If the actor is the player:
 				Say "[We] [can't] rub that." (A);
 			Else if the player can see the actor and the action is not silent:
@@ -1548,7 +1572,7 @@ Check an actor rubbing (this is the rubbing reachability rule):
 
 Check an actor rubbing (this is the rubbing decency rule):
 	Let L be the location of the actor;
-	If the noun is a person or the noun is part of a person:
+	If the noun is enclosed by a person:
 		If the decency threshold of L is greater than the rubbing decency:
 			If the player is the actor:
 				Say "It [are] too public for [us] to rub that here." (A);
@@ -1561,7 +1585,7 @@ Check an actor rubbing (this is the rubbing consent rule):
 	If the noun is a person or is enclosed by a person:
 ]
 
-Chapter 3.2.3c - Carry Out
+Chapter 3.2.2c - Carry Out
 
 [TODO: Pseudocode not fully implemented yet
 Carry out an actor rubbing (this is the stimulate by rubbing rule):
@@ -1577,7 +1601,159 @@ Tickling is a new action. It takes into account that only other people's body pa
 Tickling is an action applying to one touchable thing.
 The specification of the tickling action is "Tease another person by tickling their body parts."
 
+Chapter 3.2.3a - Understanding
+
+Understand "tickle [something]" as tickling. 
+
+Does the player mean tickling something tickleable: It is very likely.
+Does the player mean tickling the player: It is very unlikely.
+Does the player mean tickling something that is part of the player: It is very unlikely.
+
+The tickling decency is initially immodest.
+
+Chapter 3.2.3b - Check
+
+Check an actor tickling (this is the self tickling rule):
+	If the noun is the actor or the noun is enclosed by the actor:
+		If the actor is the player:
+			say "[We] [don't] get much from that." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [don't] get much from that." (B);
+		Stop the action;
+
+Check an actor tickling (This is the tickling specificity rule):
+	If the noun is a person:
+		If the actor is the player:
+			Say "[We] [have] to be more specific about what to tickle." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[We] [have] to be more specific about what [the actor] should tickle." (B);
+		Stop the action;
+
+Check an actor tickling (This is the control what can be tickled rule):
+	If the noun provides the property tickleable and the noun is tickleable:
+		Continue the action;
+	Else:
+		If the actor is the player:
+			Say "[We] [can't] tickle that." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [can't] tickle that." (B);
+		Stop the action;
+
+Check an actor tickling (this is the tickling reachability rule):
+	If the noun is a body part or noun is a garment:
+		If noun is touchable:
+			Continue the action;
+		Else:
+			If the player is the actor:
+				Say "[We] [can't] reach that." (A);
+			Else if the player can see the actor:
+				Say "[The actor] [can't] reach that." (B);
+			Stop the action;
+
+Check an actor tickling (this is the tickling decency rule):
+	Let L be the location of the actor;
+	If the decency threshold of L is greater than the tickling decency:
+		If the player is the actor:
+			Say "It [are] too public for [us] to tickle [noun] here." (A);
+		Else if the player can see the actor:
+			Say "It [are] too public for [the actor] to tickle [noun] here." (B);
+		Stop the action;
+
+Chapter 3.2.3c - Carry Out
+
+[TODO: Pseudocode not fully implemented yet
+Carry out an actor tickling (this is the stimulate by tickling rule):
+	Stimulate the actor with the tickling stimulation of the actor;
+	Stimulate the noun with the tickling stimulation of the noun;
+]
+
+Chapter 3.2.3d - Reporting
+
+[Default response]
+Report an actor tickling (this is the report tickling rule):
+	If the player is the actor:
+		Say "[We] [tickle] [the noun]." (A);
+	Else if the player can see the actor:
+		Say "[The actor] [tickle] [the noun]" (B);
+	Else if the player can see the noun:
+		Say "[The actor] [are] tickled." (C);
+
 Part 3.2.4 - Slapping/Spanking
+
+[Status: Reimplementation complete, new functionality is partial.
+Spanking is a new action. It takes into account that other people's body parts can be spanked, decency and consent/arousal, and handle reporting. Unlike other new actions, we will allow self-spanking.]
+
+Spanking is an action applying to one touchable thing.
+The specification of the spanking action is "Spanking is the act of hitting or slapping a person's body parts. Attempts to spank a person will redirect to the rear end."
+
+Chapter 3.2.4a - Understanding
+
+Understand "spank [something]", "slap [something]", "smash [something]", "hit [something]", "punch [something]" and "thump [something]" as spanking.
+
+Does the player mean spanking something spankable: It is very likely.
+Does the player mean spanking the player: It is very unlikely.
+Does the player mean spanking something that is part of the player: It is very unlikely.
+
+The spanking decency is initially indecent.
+
+Chapter 3.2.4b - Check
+
+Check an actor spanking (This is the spanking specificity rule):
+	If the noun is a person:
+		If the actor is the player:
+			Say "[We] [have] to be more specific about what to tickle." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[We] [have] to be more specific about what [the actor] should tickle." (B);
+		Stop the action;
+
+Check an actor spanking (This is the control what can be spanked rule):
+	If the noun provides the property spankable and the noun is spankable:
+		Continue the action;
+	Else:
+		If the actor is the player:
+			Say "[We] [can't] spank that." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [can't] spank that." (B);
+		Stop the action;
+
+Check an actor spanking (this is the spanking reachability rule):
+	If the noun is a body part or the noun is a garment:
+		If noun is touchable:
+			Continue the action;
+		Else:
+			If the player is the actor:
+				Say "[We] [can't] reach that." (A);
+			Else if the player can see the actor:
+				Say "[The actor] [can't] reach that." (B);
+			Stop the action;
+
+Check an actor spanking (this is the spanking decency rule):
+	Let L be the location of the actor;
+	If the decency threshold of L is greater than the spanking decency:
+		If the player is the actor:
+			Say "It [are] too public for [us] to spank [noun] here." (A);
+		Else if the player can see the actor:
+			Say "It [are] too public for [the actor] to spank [noun] here." (B);
+		Stop the action;
+
+Chapter 3.2.4c - Carry Out
+
+[TODO: Pseudocode not fully implemented yet
+Carry out an actor spanking (this is the stimulate by spanking rule):
+	Stimulate the actor with the spanking stimulation of the actor;
+	Stimulate the noun with the spanking stimulation of the noun;
+]
+
+Chapter 3.2.4d - Reporting
+
+[Default response]
+Report an actor spanking (this is the report spanking rule):
+	If the player is the actor:
+		Say "[We] [spank] [the noun]." (A);
+	Else if the player can see the actor:
+		Say "[The actor] [spank] [the noun]" (B);
+	Else if the player can see the noun:
+		Say "[The actor] [are] spanked." (C);
 
 Part 3.2.5 - Pinching
 
@@ -1624,7 +1800,9 @@ Check an actor licking (This is the licking specificity rule):
 			Stop the action;
 
 Check an actor licking (This is the control what can be licked rule):
-	If the noun does not provide the property lickable and the noun is not lickable:
+	If the noun provides the property lickable and the noun is lickable:
+		Continue the action;
+	Else:
 		If the actor is the player:
 			Say "[We] [can't] lick that." (A);
 		Else if the player can see the actor and the action is not silent:
@@ -1632,7 +1810,7 @@ Check an actor licking (This is the control what can be licked rule):
 		Stop the action;
 
 Check an actor licking (this is the licking reachability rule):
-	If the noun is a body part:
+	If the noun is a body part or the noun is a garment:
 		If noun is accessible:
 			Continue the action;
 		Else:
@@ -1709,7 +1887,9 @@ Check an actor biting (This is the biting specificity rule):
 		Stop the action;
 
 Check an actor biting (This is the control what can be bitten rule):
-	If the noun does not provide the property biteable and the noun is not biteable:
+	If the noun provides the property biteable and the noun is biteable:
+		Continue the action;
+	Else:
 		If the actor is the player:
 			Say "[We] [can't] bite that." (A);
 		Else if the player can see the actor and the action is not silent:
@@ -1717,7 +1897,7 @@ Check an actor biting (This is the control what can be bitten rule):
 		Stop the action;
 
 Check an actor biting (this is the biting reachability rule):
-	If the noun is a body part:
+	If the noun is a body part or noun is a garment:
 		If noun is accessible:
 			Continue the action;
 		Else:
@@ -1729,13 +1909,12 @@ Check an actor biting (this is the biting reachability rule):
 
 Check an actor biting (this is the biting decency rule):
 	Let L be the location of the actor;
-	If the noun is a body part:
-		If the decency threshold of L is greater than the biting decency:
-			If the player is the actor:
-				Say "It [are] too public for [us] to bite [noun] here." (A);
-			Else if the player can see the actor:
-				Say "It [are] too public for [the actor] to bite [noun] here." (B);
-			Stop the action;
+	If the decency threshold of L is greater than the biting decency:
+		If the player is the actor:
+			Say "It [are] too public for [us] to bite [noun] here." (A);
+		Else if the player can see the actor:
+			Say "It [are] too public for [the actor] to bite [noun] here." (B);
+		Stop the action;
 
 Chapter 3.2.7c - Carry Out
 
@@ -1796,7 +1975,7 @@ The control kissed target rule is listed instead of the block kissing rule in th
 Check an actor kissing (This is the control kissed target rule):
 	If the noun is a body part:
 		Try the actor licking the noun instead;
-	If the noun is not a person:
+	Else if the noun is not a person:
 		If the actor is the player:
 			Say "[We] [don't] want to kiss that." (A);
 		Else if the player can see the actor and the action is not silent:
@@ -1864,7 +2043,7 @@ Check an actor hugging (this is the self hugging rule):
 Check an actor hugging (This is the control what can be hugged rule):
 	If the noun is a body part:
 		Try the actor touching the noun instead;
-	If the noun is not a person:
+	Else if the noun is not a person:
 		If the actor is the player:
 			Say "[We] [don't] want to hug that." (A);
 		Else if the player can see the actor and the action is not silent:
@@ -1923,28 +2102,28 @@ The dancing decency is initially formal.
 Rule for supplying a missing noun while dancing (this is the dancing alone rule):
 	Now the noun is the person asked;
 
-Chapter 3.3.1b - Check
+Chapter 3.3.4b - Check
 
 Check an actor dancing (This is the control what can be danced with rule):
 	If the noun is not a person:
 		If the actor is the player:
-			Say "[We] [don't] want to hug that." (A);
+			Say "[We] [don't] want to dance with that." (A);
 		Else if the player can see the actor and the action is not silent:
-			Say "[The actor] [don't] want to hug that." (B);
+			Say "[The actor] [don't] want to dance with that." (B);
 		Stop the action;
 
 Check an actor dancing (this is the dancing decency rule):
 	Let L be the location of the actor;
 	If the decency threshold of L is greater than formal:
 		If the player is the actor:
-			Say "It [are] too public for [us] to kiss here." (A);
+			Say "It [are] too public for [us] to dance here." (A);
 		Else if the player can see the actor:
-			Say "It [are] too public for [the actor] to kiss here." (B);
+			Say "It [are] too public for [the actor] to dance here." (B);
 		Stop the action;
 
 [TODO: Add check on arousal/consent, acceptable lover]
 
-Chapter 3.3.1c - Carry Out
+Chapter 3.3.4c - Carry Out
 
 [TODO: Pseudocode not fully implemented yet
 Carry out an actor dancing (this is the stimulate by dancing rule):
@@ -1952,7 +2131,7 @@ Carry out an actor dancing (this is the stimulate by dancing rule):
 	Stimulate the noun with the dancing stimulation of the noun;
 ]
 
-Chapter 3.3.1d - Reporting
+Chapter 3.3.4d - Reporting
 
 [Default response]
 Report an actor dancing (this is the report dancing rule):
@@ -1963,7 +2142,7 @@ Report an actor dancing (this is the report dancing rule):
 	Else if the player can see the noun:
 		Say "[The actor] [are] danced with." (C);
 
-Part 3.3.4 - Fucking
+Part 3.3.5 - Fucking
 
 [
 	Tits
