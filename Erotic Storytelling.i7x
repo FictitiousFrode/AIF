@@ -24,6 +24,7 @@ Section - Actions Related Verbs
 To lick is a verb.
 To bite is a verb.
 To tickle is a verb.
+To pinch is a verb.
 To spank is a verb.
 
 To kiss is a verb.
@@ -1387,7 +1388,13 @@ Carry out an actor examining (this is the examining people rule):
 				Now examine text printed is true;]
 
 
-Book 2.2 - Responsiveness
+
+
+
+
+
+
+Book 2.3 - Responsiveness
 
 Part 2.2.2 - Remembering Past Actions
 
@@ -1400,10 +1407,6 @@ Current Action
 
 Book 2.3 - Conversation
 
-Book 2.4 - Arousal
-
-Book 2.5 - Consent
-
 
 
 
@@ -1411,11 +1414,46 @@ Volume 3 - Erotic Actions
 
 Book 3.1 - Concepts
 
-Part 3.2.1
+Part 3.1.1 - Stimulation
 
-Chapter 3.2.1a - Action Control Attributes
+Chapter 3.1.1a - Stimulation Rulebook
 
-[The following attributes are specified to control which things the correspondingly named action is applicable to.
+[Stimulation is a rulebook that deals with altering the arousal of participants in erotic actions.
+We create a new rulebook, with outcomes stimulated and unstimulated, and defaulting to being stimulated. Because of the default value, rules will not fall though to the next case unless explicitly told to make no decision. This allows us to populate the rulebook with default rules.]
+
+The stimulation rules is a rulebook.
+The stimulation rules have outcomes stimulated (success) and unstimulated (failure).
+The stimulation rules have default success.
+
+Part 3.1.2 - Consent
+
+Chapter 3.1.2a - Consent Rulebook
+
+[We use a rulebook to gain consent for actions, as well as a text result when consent is denied.
+In order for the consent rulebook to produce error messages, we have to turn the logic inside out, as only successes can give results.]
+The consent rules is a rulebook producing text.
+The consent rules have outcomes give consent (failure) and deny consent (success).
+The consent rules have default failure.
+
+[This default consent rule is as generic as possible, and will be executed last.]
+A consent rule (this is the default consent rule):
+	[Check consent for the actor first; we assume that the player always consent.]
+	If the actor is not the player:
+		Rule succeeds with result "[The actor] [aren't] consenting to that ([current action])." (A);
+	[Check consent for the noun directly]
+	If the noun is a person:
+		If the noun is not the player:
+			Rule succeeds with result "[The noun] [aren't] consenting to that ([current action])." (B);
+	Else if the noun is a body part:
+		Let P be the holder of the noun;
+		If P is not the player:
+			Rule succeeds with result "[The P] [aren't] consenting to that ([current action])." (C);
+
+Part 3.1.3 - Properties
+
+Chapter 3.1.3a - Action Control Properties
+
+[The following properties are specified to control which things the correspondingly named action is applicable to.
 These can be applied to other things than body part if wanted, and access to garments are supported.]
 
 A body part can be touchable or untouchable. A body part is usually untouchable.
@@ -1426,18 +1464,18 @@ A body part can be pinchable or unpinchable. A body part is usually unpinchable.
 A body part can be lickable or unlickable. A body part is usually unlickable.
 A body part can be biteable or unbiteable. A body part is usually unbiteable.
 
-Chapter 3.2.1b - Sexual Attributes
+Chapter 3.1.3b - Sexual Properties
 
 A body part can be penetrating. A body part is usually not penetrating.
 A body part can be orificial. A body part is usually not orificial.
 
-Part 3.2.2 - Erectable
+Part 3.1.4 - Body Part Patterns
 
-Chapter 3.2.2a - Property
+Chapter 3.1.4a - Erectable
 
 [A body part has a an arousal called the erection threshold.
-Definition: A thing is erectable if it provides the property erection threshold and the erection threshold is not the default value of number.]
-
+Definition: A thing is erectable if it provides the property erection threshold and the erection threshold is not the default value of number.
+Definition: A body part is erect if it provides the property erection threshold and the erection threshold is not greater than the arousal of the holder of the body part.]
 
 Book 3.2 - Body Part Actions
 
@@ -1445,7 +1483,7 @@ Book 3.2 - Body Part Actions
 
 Part 3.2.1 - Touching
 
-[Status: Reimplementation complete, new functionality is partial.
+[Status: Complete; Consent and stimulation defered to later chapter
 Touching is already covered in the Standard Rules, but it doesn't do much. We add some checks for touching people and body parts, and because we don't allow touching people directly we can keep the standard reports.]
 
 The specification of the touching action is "Touching is just that, touching something without applying pressure: a touch-sensitive screen or a living creature might react, but a standard push-button or lever will probably not.
@@ -1505,22 +1543,22 @@ Check an actor touching (this is the touching decency rule):
 				Say "It [are] too public for [the actor] to touch that here." (B);
 			Stop the action;
 
-[TODO: Add check on arousal/consent, acceptable lover
-Check an actor touching (this is the touching consent rule):
-	If the noun is a person or is enclosed by a person:
-]
+Check an actor touching (this is the seek consent for touching rule):
+	If the noun is a person or noun is enclosed by a person:
+		Let result be the text produced by the consent rules;
+		If the rule failed:
+			Say result;
+			Stop the action;
 
-Chapter 3.3.2c - Carry Out
+Chapter 3.2.1c - Carry Out
 
-[TODO: Pseudocode not fully implemented yet
-Carry out an actor touching (this is the stimulate by touching rule):
-	Stimulate the actor with the touching stimulation of the actor;
-	Stimulate the noun with the touching stimulation of the noun;
-]
+Carry out an actor touching (this is the seek stimulation for touching rule):
+	If the noun is a person or noun is enclosed by a person:
+		Follow the stimulation rules;
 
 Part 3.2.2 - Rubbing
 
-[Status: Reimplementation complete, new functionality is partial.
+[Status: Complete; Consent and stimulation defered to later chapter
 Rubbing is already covered in the Standard Rules, but it's disabled by default. We add some checks for rubbing people and body parts, and we can keep the standard reports.]
 
 The specification of the rubbing action is "The Standard Rules define this action in only a minimal way, blocking it with a check rule which stops it in all cases. It exists so that before or instead rules can be written to make it do interesting things in special cases. (Or to reconstruct the action as something more substantial, unlist the block rule and supply carry out and report rules, together perhaps with some further check rules.)
@@ -1537,7 +1575,7 @@ Does the player mean rubbing something that is part of the player: It is very un
 
 The rubbing decency is initially immodest.
 
-Chapter 3.3.2b - Check
+Chapter 3.2.2b - Check
 
 The rubbing specificity rule is listed instead of the can't rub another person rule in the check rubbing rulebook.
 Check an actor rubbing (this is the rubbing specificity rule):
@@ -1580,22 +1618,22 @@ Check an actor rubbing (this is the rubbing decency rule):
 				Say "It [are] too public for [the actor] to rub that here." (B);
 			Stop the action;
 
-[TODO: Add check on arousal/consent, acceptable lover
-Check an actor rubbing (this is the rubbing consent rule):
-	If the noun is a person or is enclosed by a person:
-]
+Check an actor rubbing (this is the seek consent for rubbing rule):
+	If the noun is a person or noun is enclosed by a person:
+		Let result be the text produced by the consent rules;
+		If the rule failed:
+			Say result;
+			Stop the action;
 
 Chapter 3.2.2c - Carry Out
 
-[TODO: Pseudocode not fully implemented yet
-Carry out an actor rubbing (this is the stimulate by rubbing rule):
-	Stimulate the actor with the rubbing stimulation of the actor;
-	Stimulate the noun with the rubbing stimulation of the noun;
-]
+Carry out an actor rubbing (this is the seek stimulation for rubbing rule):
+	If the noun is a person or noun is enclosed by a person:
+		Follow the stimulation rules;
 
 Part 3.2.3 - Tickling
 
-[Status: Reimplementation complete, new functionality is partial.
+[Status: Complete; Consent and stimulation defered to later chapter
 Tickling is a new action. It takes into account that only other people's body parts can be tickled, decency and consent/arousal, and handle reporting.]
 
 Tickling is an action applying to one touchable thing.
@@ -1659,13 +1697,18 @@ Check an actor tickling (this is the tickling decency rule):
 			Say "It [are] too public for [the actor] to tickle [noun] here." (B);
 		Stop the action;
 
+Check an actor tickling (this is the seek consent for tickling rule):
+	If the noun is a person or noun is enclosed by a person:
+		Let result be the text produced by the consent rules;
+		If the rule failed:
+			Say result;
+			Stop the action;
+
 Chapter 3.2.3c - Carry Out
 
-[TODO: Pseudocode not fully implemented yet
-Carry out an actor tickling (this is the stimulate by tickling rule):
-	Stimulate the actor with the tickling stimulation of the actor;
-	Stimulate the noun with the tickling stimulation of the noun;
-]
+Carry out an actor tickling (this is the seek stimulation for tickling rule):
+	If the noun is a person or noun is enclosed by a person:
+		Follow the stimulation rules;
 
 Chapter 3.2.3d - Reporting
 
@@ -1680,7 +1723,7 @@ Report an actor tickling (this is the report tickling rule):
 
 Part 3.2.4 - Slapping/Spanking
 
-[Status: Reimplementation complete, new functionality is partial.
+[Status: Complete; Consent and stimulation defered to later chapter
 Spanking is a new action. It takes into account that other people's body parts can be spanked, decency and consent/arousal, and handle reporting. Unlike other new actions, we will allow self-spanking.]
 
 Spanking is an action applying to one touchable thing.
@@ -1736,13 +1779,18 @@ Check an actor spanking (this is the spanking decency rule):
 			Say "It [are] too public for [the actor] to spank [noun] here." (B);
 		Stop the action;
 
+Check an actor spanking (this is the seek consent for spanking rule):
+	If the noun is a person or noun is enclosed by a person:
+		Let result be the text produced by the consent rules;
+		If the rule failed:
+			Say result;
+			Stop the action;
+
 Chapter 3.2.4c - Carry Out
 
-[TODO: Pseudocode not fully implemented yet
-Carry out an actor spanking (this is the stimulate by spanking rule):
-	Stimulate the actor with the spanking stimulation of the actor;
-	Stimulate the noun with the spanking stimulation of the noun;
-]
+Carry out an actor spanking (this is the seek stimulation for spanking rule):
+	If the noun is a person or noun is enclosed by a person:
+		Follow the stimulation rules;
 
 Chapter 3.2.4d - Reporting
 
@@ -1757,9 +1805,97 @@ Report an actor spanking (this is the report spanking rule):
 
 Part 3.2.5 - Pinching
 
+[Status: Complete; Consent and stimulation defered to later chapter
+Pinching is a new action. It takes into account that only other people's body parts can be pinched, decency and consent/arousal, and handle reporting.]
+
+Pinching is an action applying to one touchable thing.
+The specification of the pinching action is "Tease another person by pinching their body parts."
+
+Chapter 3.2.5a - Understanding
+
+Understand "pinch [something]", "squeeze [something]" as pinching. 
+
+Does the player mean pinching something pinchable: It is very likely.
+Does the player mean pinching the player: It is very unlikely.
+Does the player mean pinching something that is part of the player: It is very unlikely.
+
+The pinching decency is initially immodest.
+
+Chapter 3.2.5b - Check
+
+Check an actor pinching (this is the self pinching rule):
+	If the noun is the actor or the noun is enclosed by the actor:
+		If the actor is the player:
+			say "[We] [don't] get much from that." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [don't] get much from that." (B);
+		Stop the action;
+
+Check an actor pinching (This is the pinching specificity rule):
+	If the noun is a person:
+		If the actor is the player:
+			Say "[We] [have] to be more specific about what to pinch." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[We] [have] to be more specific about what [the actor] should pinch." (B);
+		Stop the action;
+
+Check an actor pinching (This is the control what can be pinched rule):
+	If the noun provides the property pinchable and the noun is pinchable:
+		Continue the action;
+	Else:
+		If the actor is the player:
+			Say "[We] [can't] pinch that." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [can't] pinch that." (B);
+		Stop the action;
+
+Check an actor pinching (this is the pinching reachability rule):
+	If the noun is a body part or noun is a garment:
+		If noun is touchable:
+			Continue the action;
+		Else:
+			If the player is the actor:
+				Say "[We] [can't] reach that." (A);
+			Else if the player can see the actor:
+				Say "[The actor] [can't] reach that." (B);
+			Stop the action;
+
+Check an actor pinching (this is the pinching decency rule):
+	Let L be the location of the actor;
+	If the decency threshold of L is greater than the pinching decency:
+		If the player is the actor:
+			Say "It [are] too public for [us] to pinch [noun] here." (A);
+		Else if the player can see the actor:
+			Say "It [are] too public for [the actor] to pinch [noun] here." (B);
+		Stop the action;
+		
+Check an actor pinching (this is the seek consent for pinching rule):
+	If the noun is a person or noun is enclosed by a person:
+		Let result be the text produced by the consent rules;
+		If the rule failed:
+			Say result;
+			Stop the action;
+
+Chapter 3.2.5c - Carry Out
+
+Carry out an actor pinching (this is the seek stimulation for pinching rule):
+	If the noun is a person or noun is enclosed by a person:
+		Follow the stimulation rules;
+
+Chapter 3.2.5d - Reporting
+
+[Default response]
+Report an actor pinching (this is the report pinching rule):
+	If the player is the actor:
+		Say "[We] [pinch] [the noun]." (A);
+	Else if the player can see the actor:
+		Say "[The actor] [pinch] [the noun]" (B);
+	Else if the player can see the noun:
+		Say "[The actor] [are] pinched." (C);
+
 Part 3.2.6 - Licking
 
-[Status: Reimplementation complete, new functionality is partial.
+[Status: Complete; Consent and stimulation defered to later chapter
 Licking is a new action, used only on body parts but attempts to redirect from persons. It handles decency, access.]
 
 Licking is an action applying to one touchable thing.
@@ -1829,13 +1965,18 @@ Check an actor licking (this is the licking decency rule):
 			Say "It [are] too public for [the actor] to lick [noun] here." (B);
 		Stop the action;
 
+Check an actor licking (this is the seek consent for licking rule):
+	If the noun is a person or noun is enclosed by a person:
+		Let result be the text produced by the consent rules;
+		If the rule failed:
+			Say result;
+			Stop the action;
+
 Chapter 3.2.6c - Carry Out
 
-[TODO: Pseudocode not fully implemented yet
-Carry out an actor licking (this is the stimulate by licking rule):
-	Stimulate the actor with the licking stimulation of the actor;
-	Stimulate the noun with the licking stimulation of the noun;
-]
+Carry out an actor licking (this is the seek stimulation for licking rule):
+	If the noun is a person or noun is enclosed by a person:
+		Follow the stimulation rules;
 
 Chapter 3.2.6d - Reporting
 
@@ -1850,7 +1991,7 @@ Report an actor licking (this is the report licking rule):
 
 Part 3.2.7 - Biting
 
-[Status: Reimplementation complete, new functionality is partial.
+[Status: Complete; Consent and stimulation defered to later chapter
 Biting is a new action, used only on body parts, but attempts to bit something edible is eating. It handles decency, access.]
 
 Biting is an action applying to one touchable thing.
@@ -1916,13 +2057,18 @@ Check an actor biting (this is the biting decency rule):
 			Say "It [are] too public for [the actor] to bite [noun] here." (B);
 		Stop the action;
 
+Check an actor biting (this is the seek consent for biting rule):
+	If the noun is a person or noun is enclosed by a person:
+		Let result be the text produced by the consent rules;
+		If the rule failed:
+			Say result;
+			Stop the action;
+
 Chapter 3.2.7c - Carry Out
 
-[TODO: Pseudocode not fully implemented yet
-Carry out an actor biting (this is the stimulate by licking rule):
-	Stimulate the actor with the biting stimulation of the actor;
-	Stimulate the noun with the biting stimulation of the noun;
-]
+Carry out an actor biting (this is the seek stimulation for biting rule):
+	If the noun is a person or noun is enclosed by a person:
+		Follow the stimulation rules;
 
 Chapter 3.2.7d - Reporting
 
@@ -1937,13 +2083,15 @@ Report an actor biting (this is the report biting rule):
 
 Part 3.2.8 - Fucking It With
 
+[TODO]
+
 Book 3.3 - Person Actions
 
 [These actions only take another person as the noun, but some redirect if used on body parts.]
 
 Part 3.3.1 - Kissing
 
-[Status: Reimplementation complete, new functionality is partial.
+[Status: Complete; Consent and stimulation defered to later chapter
 Kissing is already covered in the Standard Rules, but it's disabled by default.
 We replace the blocks with our own checks, taking into account that only other people can be kissed, decency and consent/arousal, and handle action reporting.]
 
@@ -1991,15 +2139,18 @@ Check an actor kissing (this is the kissing decency rule):
 			Say "It [are] too public for [the actor] to kiss here." (B);
 		Stop the action;
 
-[TODO: Add check on arousal/consent, acceptable lover]
+Check an actor kissing (this is the seek consent for kissing rule):
+	If the noun is a person or noun is enclosed by a person:
+		Let result be the text produced by the consent rules;
+		If the rule failed:
+			Say result;
+			Stop the action;
 
 Chapter 3.3.1c - Carry Out
 
-[TODO: Pseudocode not fully implemented yet
-Carry out an actor kissing (this is the stimulate by kissing rule):
-	Stimulate the actor with the kissing stimulation of the actor;
-	Stimulate the noun with the kissing stimulation of the noun;
-]
+Carry out an actor kissing (this is the seek stimulation for kissing rule):
+	If the noun is a person or noun is enclosed by a person:
+		Follow the stimulation rules;
 
 Chapter 3.3.1d - Reporting
 
@@ -2014,7 +2165,7 @@ Report an actor kissing (this is the report kissing rule):
 
 Part 3.3.2 - Hugging
 
-[Status: Reimplementation complete, new functionality is partial.
+[Status: Complete; Consent and stimulation defered to later chapter
 Hugging is a new action. It takes into account that only other people can be hugged, decency and consent/arousal, and handle reporting.]
 
 Hugging is an action applying to one touchable thing.
@@ -2059,15 +2210,18 @@ Check an actor hugging (this is the hugging decency rule):
 			Say "It [are] too public for [the actor] to kiss here." (B);
 		Stop the action;
 
-[TODO: Add check on arousal/consent, acceptable lover]
+Check an actor hugging (this is the seek consent for hugging rule):
+	If the noun is a person or noun is enclosed by a person:
+		Let result be the text produced by the consent rules;
+		If the rule failed:
+			Say result;
+			Stop the action;
 
 Chapter 3.3.2c - Carry Out
 
-[TODO: Pseudocode not fully implemented yet
-Carry out an actor hugging (this is the stimulate by hugging rule):
-	Stimulate the actor with the hugging stimulation of the actor;
-	Stimulate the noun with the hugging stimulation of the noun;
-]
+Carry out an actor hugging (this is the seek stimulation for hugging rule):
+	If the noun is a person or noun is enclosed by a person:
+		Follow the stimulation rules;
 
 Chapter 3.3.2d - Reporting
 
@@ -2082,13 +2236,13 @@ Report an actor hugging (this is the report hugging rule):
 
 Part 3.3.3 - Dancing 
 
-[Status: Reimplementation complete, new functionality is partial.
+[Status: Complete; Consent and stimulation defered to later chapter
 Dancing with is a new action. It takes into account that only other people can be danced with, decency and consent/arousal, and handle action reporting.]
 
 Dancing is an action applying to one touchable thing.
 The specification of the dancing action is "Dancing with is the act of dancing with a someone, including dancing with yourself."
 
-Chapter 3.3.4a - Understanding
+Chapter 3.3.3a - Understanding
 
 Understand "dance" as dancing.
 Understand "dance with [something]" as dancing.
@@ -2102,7 +2256,7 @@ The dancing decency is initially formal.
 Rule for supplying a missing noun while dancing (this is the dancing alone rule):
 	Now the noun is the person asked;
 
-Chapter 3.3.4b - Check
+Chapter 3.3.3b - Check
 
 Check an actor dancing (This is the control what can be danced with rule):
 	If the noun is not a person:
@@ -2121,17 +2275,20 @@ Check an actor dancing (this is the dancing decency rule):
 			Say "It [are] too public for [the actor] to dance here." (B);
 		Stop the action;
 
-[TODO: Add check on arousal/consent, acceptable lover]
+Check an actor dancing (this is the seek consent for dancing rule):
+	If the noun is a person or noun is enclosed by a person:
+		Let result be the text produced by the consent rules;
+		If the rule failed:
+			Say result;
+			Stop the action;
 
-Chapter 3.3.4c - Carry Out
+Chapter 3.3.3c - Carry Out
 
-[TODO: Pseudocode not fully implemented yet
-Carry out an actor dancing (this is the stimulate by dancing rule):
-	Stimulate the actor with the dancing stimulation of the actor;
-	Stimulate the noun with the dancing stimulation of the noun;
-]
+Carry out an actor dancing (this is the seek stimulation for dancing rule):
+	If the noun is a person or noun is enclosed by a person:
+		Follow the stimulation rules;
 
-Chapter 3.3.4d - Reporting
+Chapter 3.3.3d - Reporting
 
 [Default response]
 Report an actor dancing (this is the report dancing rule):
@@ -2142,27 +2299,211 @@ Report an actor dancing (this is the report dancing rule):
 	Else if the player can see the noun:
 		Say "[The actor] [are] danced with." (C);
 
-Part 3.3.5 - Fucking
+Part 3.3.4 - Fucking
 
-[
+[Status: TODO
+This is a collection of redirect-only actions.
 	Tits
 	Ass
 	Finger
 ]
 
-Part 3.3.6 - Masturbating
+Part 3.3.5 - Masturbating
+
+[Status: TODO
+This is a redirect-only action.]
 
 
+Book 3.4 - Discrete Arousal
+
+[Design notes: TODO
+Two types of arousal; discrete stages or numerical values.
+Design extension around, discrete stages, but allow for them to easily be replaced by numerical values.
+
+Arousals are increased by stimulating with an action, an can be used to grant consent.]
+
+Part 3.4.1 - Definitions
+
+Chapter 3.4.1a - Discrete Arousals
+
+An arousal is a kind of value. The arousals are frigid arousal, unaroused, slightly aroused, aroused, very aroused, orgasmic, unattainable arousal.
+The specification of arousal is "Arousal is a discrete measure of how aroused a person is. Unaroused is the neutral zero-point, with frigid arousal as a negative value and the unattainable arousal (as the last value defined) as the unset/null-value. These methods for arousing and cooling of a person will take these into account."
+
+A person has an arousal called current arousal. The current arousal of a person is usually unaroused.
+
+Chapter 3.4.1b - Orgasms
+
+A person has a number called orgasms. The orgasms of a person is usually 0.
+A person has a number called orgasmic attempts. The orgasmic attempts of a person is usually 0.
+
+Part 3.4.2 - Working with Arousals
+
+Chapter 3.4.2a - Comparisons
+
+To decide whether (P - a person) is (A - an arousal) or more:
+	[Note: Unattainable is treated as a null value, and is never considered more or less than anything.]
+	If the current arousal of P is the unattainable arousal, decide no;
+	If the current arousal of P is at least A, decide yes;
+	Decide no;
+
+To decide whether (P - a person) is (A - an arousal) or less:
+	[Note: Unattainable is treated as a null value, and is never considered more or less than anything.]
+	If the current arousal of P is the unattainable arousal, decide no;
+	If the current arousal of P is at most A, decide yes;
+	Decide no;
+
+Chapter 3.4.2b - Increasing Arousals
+	
+[Increase the arousal of a person by one grade, with a maxmimum level.
+Note: Unattainable is treated as a null value, and calls to increase to it are ignored.]
+To arouse (P - a person) up to (A - an arousal):
+	If the current arousal of P is less than A and A is not the unattainable arousal:
+		Now the current arousal of P is the arousal after the current arousal of P;
+
+[Increase the arousal of a person by one grade, without a maxmimum.
+Note: Will not increase to the unattainable arousal.]
+To arouse (P - a person):
+	Arouse P up to (the arousal before the unattainable arousal);
+
+Chapter 3.4.2c - Decreasing Arousals
+
+[Move the arousal of a person by one grade towards the neutral unaroused, with a minimum level.
+Note: Unattainable is treated as a null value, and will not be moved from.]
+To cool (P - a person) down to (A - an arousal):
+	If the current arousal of P is greater than unaroused and the current arousal of P is not the unattainable arousal:
+		If the current arousal of P is greater than A:
+			Now the current arousal of P is the arousal before the current arousal of P;
+	Else if the current arousal of P is less than unaroused:
+		If the current arousal of P is less than A:
+			Now the current arousal of P is the arousal after the current arousal of P;
+	
+[Decrease the arousal of a person by one grade, without a minimum.]
+To cool down (P - a person):
+	Cool P down to unaroused;
+
+Chapter 3.4.2d - Attaining Orgasms
+
+A person has an arousal called the orgasm reset arousal. The orgasm reset arousal of a person is usually aroused.
+
+[We want to make it so that every time a person orgasms, it's harder to achieve the next one.
+The chance to succed is attempts : orgasms; the first orgasm is 'free'; the second is 50% at first attempt and 100% at second, third is 1/3 then 2/3, and so on.]
+To decide whether (P - a person) orgasms:
+	[Only orgasmic people can try to have an orgasm.]
+	If the current arousal of P is not orgasmic:
+		Decide no;
+	Increase the orgasmic attempts of P by 1;
+	Let X be the orgasmic attempts of P;
+	Let Y be the orgasms of P + 1;
+	If a random chance of X in Y succeeds:
+		Increase the orgasms of P by 1;
+		Now the orgasmic attempts of P is 0;
+		Now the current arousal of P is the orgasm reset arousal of P;
+		Decide yes;
+	Decide no;
+
+Part 3.4.3 - Consent and Stimulation Integration
+
+[Status: Being implemented
+This part deals with integrating the discrete arousals into the stimulation and consent framework of the actions.
+This is separated into it's own part in order to make it easier to excise it if needed, like if the author wants to use a numerical arousal system.
+In order to keep the number of default variables down so as to simplify the author's job, most actions are grouped together:
+
+3.2.1	Touching	(Soft) Touching
+3.2.2	Rubbing		(Soft) Touching
+3.2.3	Tickling	(Soft) Touching
+3.2.4	Spanking	Rough
+3.2.5	Pinching	Rough
+3.2.6	Licking		Oral
+3.2.7	Biting		Rough
+3.2.8	Fucking		Intercourse
+3.3.1	Kissing		Oral
+3.3.2	Hugging		(Soft) Touching
+3.3.3	Dancing		(Soft) Touching
+
+Each of these groups function in a similar manner:
+Consent is given if the actors have each other as (TODO) love-interests, and the current arousal of the actors are atleast the arousal threshold for the action group. For body parts, the lowest threshold of the part and the person it's attached to is taken into consideration.
+
+We assume that the player always consents; TODO: Remake into a variable]
+
+Chapter 3.4.3a - General Requirements
+
+[TODO
+A person has a list of other actors they are willing to engage with. 
+If the interactor is listed, make no decision in order to allow other rules to be consulted as well.]
+
+A person has some text called the unaroused response.
+
+Chapter 3.4.2 - Clothing
+
+[TODO:]
+
+Chapter 3.4.3c - Soft Touching
+
+[This chapter deals with the "soft" touching actions, which share the same thresholds by default.
+These are:
+ * Touching (Usually body part)
+ * Rubbing (Usually body part)
+ * Tickling (Usually body part)
+ * Hugging (Usually a person)
+ * Dancing (Usually a person)]
+
+Section - Properties
+
+[Soft touch threshold is the minimum arousal at which a person or it's body part will engage in the soft-touch actions.]
+A person has an arousal called the soft touch threshold. The soft touch threshold of a person is usually slightly aroused.
+A body part has an arousal called the soft touch threshold. The soft touch threshold of a body part is usually slightly aroused.
+
+[Active/passive soft touch arousal is the arousal attainable by soft-touch actions, as the active and passive participant.]
+A person has an arousal called the active soft touch cap. The active soft touch cap of a person is usually aroused.
+A person has an arousal called the passive soft touch cap. The passive soft touch cap of a person is usually aroused.
+A body part has an arousal called the active soft touch cap. The active soft touch cap of a body part is usually aroused.
+A body part has an arousal called the passive soft touch cap. The passive soft touch cap of a body part is usually aroused.
 
 
+Section - Consent
 
+A consent rule for an actor doing something (this is the soft touching consent rule):
+	[Check consent for the actor first; we assume that the player always consent.]
+	Unless the actor is the player:
+		Unless the actor is the soft touch threshold of the noun or more, rule succeeds with result the unaroused response of the actor;
+	[Check consent for the noun directly]
+	If the noun is a person:
+		Unless the noun is the player:
+			Unless the noun is the soft touch threshold of the noun or more, rule succeeds with result the unaroused response of the noun;
+	Else if the noun is a body part:
+		Let P be the holder of the noun;
+		Unless P is the player:
+			Unless P is the soft touch threshold of the noun or more, rule succeeds with result the unaroused response of P;
+			Unless P is the soft touch threshold of P or more, rule succeeds with result the unaroused response of P;
+	Make no decision;
+		
+[We don't want this rule listed, instead abiding by it as necessary.]
+Consent rule for an actor touching (this is the touching consent rule): Anonymously abide  by the soft touching consent rule;
+Consent rule for an actor rubbing (this is the rubbing consent rule): Anonymously abide  by the soft touching consent rule;
+Consent rule for an actor tickling (this is the tickling consent rule): Anonymously abide  by the soft touching consent rule;
+Consent rule for an actor hugging (this is the hugging consent rule): Anonymously abide  by the soft touching consent rule;
+Consent rule for an actor dancing (this is the dancing consent rule): Anonymously abide  by the soft touching consent rule;
 
+Section - Stimulation
 
+A stimulation rule for an actor doing something (this is the soft touching stimulation rule):
+	[Stimulate the actor first:]
+	Arouse the actor up to the active soft touch cap of the actor;
+	If the noun is a person:
+		Arouse the noun up to the passive soft touch cap of the noun;
+	Else if the noun is a body part:
+		Let P be the holder of the noun;
+		Let target arousal be the passive soft touch cap of the noun;
+		If the passive soft touch cap of P is greater than the target arousal:
+			Let target arousal be the passive soft touch cap of P;
+		Arouse P up to target arousal;
+	Stimulated;
 
-
-
-
-
+Stimulation rule for an actor touching (this is the touching stimulation rule): Anonymously abide  by the soft touching stimulation rule;
+Stimulation rule for an actor rubbing  (this is the rubbing stimulation rule):  Anonymously abide  by the soft touching stimulation rule;
+Stimulation rule for an actor tickling (this is the tickling stimulation rule): Anonymously abide  by the soft touching stimulation rule;
+Stimulation rule for an actor hugging  (this is the hugging stimulation rule):  Anonymously abide  by the soft touching stimulation rule;
+Stimulation rule for an actor dancing  (this is the dancing stimulation rule):  Anonymously abide  by the soft touching stimulation rule;
 
 Volume 5 - Templates
 
@@ -2491,6 +2832,8 @@ Part 5.1.3 - Furniture
 Erotic Storytelling ends here.
 
 ---- DOCUMENTATION ----
+
+NOTE: 27.12 of the documentation states that headings should be marked as Chapter:/Section:, but iirc colons do not compile.
 
 Chapter - Using this Extension
 
