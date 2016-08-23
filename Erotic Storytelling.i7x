@@ -1,5 +1,6 @@
 Version 1 of Erotic Storytelling by Fictitious Frode begins here.
-"A framework for creating Adult Interactive Fiction (AIF), providing the layered clothing, body parts, and the necessary erotic actions. Comes with a discrete arousal system (that is replaceable with numerical arousal), as well as an optional conversation system.
+"A framework for creating Adult Interactive Fiction (AIF), which includes layered clothing, body parts and the necessary erotic actions, all integrated together. It focuses on easy descriptions of things and action outcomes, and a rulebook approach to grant consent from other parties to the player's actions.
+For ease of use it has several template classes ready to use, providing most typical clothing options, body parts, and a ready-to-use arousal based consent system.
 Still being developed."
 
 Volume 0 - New Verbs
@@ -26,6 +27,7 @@ To bite is a verb.
 To tickle is a verb.
 To pinch is a verb.
 To spank is a verb.
+To fuck is a verb.
 
 To kiss is a verb.
 To hug is a verb.
@@ -1422,32 +1424,40 @@ Chapter 3.1.1a - Stimulation Rulebook
 We create a new rulebook, with outcomes stimulated and unstimulated, and defaulting to being stimulated. Because of the default value, rules will not fall though to the next case unless explicitly told to make no decision. This allows us to populate the rulebook with default rules.]
 
 The stimulation rules is a rulebook.
-The stimulation rules have outcomes stimulated (success) and unstimulated (failure).
-The stimulation rules have default success.
+The stimulation rules have outcomes stimulated (success - the default) and unstimulated (failure).
+
+[We also create a seperate rulebook to pack the default rules into, that we only want called explicitly.]
+The default-stimulation rules is a rulebook.
+The default-stimulation rules have outcomes stimulated (success - the default) and unstimulated (failure).
 
 Part 3.1.2 - Consent
 
 Chapter 3.1.2a - Consent Rulebook
 
-[We use a rulebook to gain consent for actions, as well as a text result when consent is denied.
-In order for the consent rulebook to produce error messages, we have to turn the logic inside out, as only successes can give results.]
-The consent rules is a rulebook producing text.
-The consent rules have outcomes give consent (failure) and deny consent (success).
-The consent rules have default failure.
+[We use a rulebook to gain consent for actions.]
+The consent rules is a rulebook.
+The consent rules have outcomes give consent (success - the default) and deny consent (failure).
 
 [This default consent rule is as generic as possible, and will be executed last.]
 A consent rule (this is the default consent rule):
 	[Check consent for the actor first; we assume that the player always consent.]
 	If the actor is not the player:
-		Rule succeeds with result "[The actor] [aren't] consenting to that ([current action])." (A);
+		Say "[The actor] [aren't] consenting to that ([current action])." (A);
+		Deny consent;
 	[Check consent for the noun directly]
 	If the noun is a person:
 		If the noun is not the player:
-			Rule succeeds with result "[The noun] [aren't] consenting to that ([current action])." (B);
+			Say "[The noun] [aren't] consenting to that ([current action])." (B);
+			Deny consent;
 	Else if the noun is a body part:
 		Let P be the holder of the noun;
 		If P is not the player:
-			Rule succeeds with result "[The P] [aren't] consenting to that ([current action])." (C);
+			Say "[The P] [aren't] consenting to that ([current action])." (C);
+			Deny consent;
+
+[We also create a seperate rulebook to pack the default rules into, that we only want called explicitly.]
+The default-consent rules is a rulebook.
+The default-consent rules have outcomes give consent (success - the default) and deny consent (failure).
 
 Part 3.1.3 - Properties
 
@@ -1545,10 +1555,7 @@ Check an actor touching (this is the touching decency rule):
 
 Check an actor touching (this is the seek consent for touching rule):
 	If the noun is a person or noun is enclosed by a person:
-		Let result be the text produced by the consent rules;
-		If the rule failed:
-			Say result;
-			Stop the action;
+		Abide by the consent rules;
 
 Chapter 3.2.1c - Carry Out
 
@@ -1620,10 +1627,7 @@ Check an actor rubbing (this is the rubbing decency rule):
 
 Check an actor rubbing (this is the seek consent for rubbing rule):
 	If the noun is a person or noun is enclosed by a person:
-		Let result be the text produced by the consent rules;
-		If the rule failed:
-			Say result;
-			Stop the action;
+		Abide by the consent rules;
 
 Chapter 3.2.2c - Carry Out
 
@@ -1699,10 +1703,7 @@ Check an actor tickling (this is the tickling decency rule):
 
 Check an actor tickling (this is the seek consent for tickling rule):
 	If the noun is a person or noun is enclosed by a person:
-		Let result be the text produced by the consent rules;
-		If the rule failed:
-			Say result;
-			Stop the action;
+		Abide by the consent rules;
 
 Chapter 3.2.3c - Carry Out
 
@@ -1717,9 +1718,9 @@ Report an actor tickling (this is the report tickling rule):
 	If the player is the actor:
 		Say "[We] [tickle] [the noun]." (A);
 	Else if the player can see the actor:
-		Say "[The actor] [tickle] [the noun]" (B);
+		Say "[The actor] [tickle] [the noun]." (B);
 	Else if the player can see the noun:
-		Say "[The actor] [are] tickled." (C);
+		Say "[The noun] [are] tickled." (C);
 
 Part 3.2.4 - Slapping/Spanking
 
@@ -1781,10 +1782,7 @@ Check an actor spanking (this is the spanking decency rule):
 
 Check an actor spanking (this is the seek consent for spanking rule):
 	If the noun is a person or noun is enclosed by a person:
-		Let result be the text produced by the consent rules;
-		If the rule failed:
-			Say result;
-			Stop the action;
+		Abide by the consent rules;
 
 Chapter 3.2.4c - Carry Out
 
@@ -1799,9 +1797,9 @@ Report an actor spanking (this is the report spanking rule):
 	If the player is the actor:
 		Say "[We] [spank] [the noun]." (A);
 	Else if the player can see the actor:
-		Say "[The actor] [spank] [the noun]" (B);
+		Say "[The actor] [spank] [the noun]." (B);
 	Else if the player can see the noun:
-		Say "[The actor] [are] spanked." (C);
+		Say "[The noun] [are] spanked." (C);
 
 Part 3.2.5 - Pinching
 
@@ -1871,10 +1869,7 @@ Check an actor pinching (this is the pinching decency rule):
 		
 Check an actor pinching (this is the seek consent for pinching rule):
 	If the noun is a person or noun is enclosed by a person:
-		Let result be the text produced by the consent rules;
-		If the rule failed:
-			Say result;
-			Stop the action;
+		Abide by the consent rules;
 
 Chapter 3.2.5c - Carry Out
 
@@ -1889,9 +1884,9 @@ Report an actor pinching (this is the report pinching rule):
 	If the player is the actor:
 		Say "[We] [pinch] [the noun]." (A);
 	Else if the player can see the actor:
-		Say "[The actor] [pinch] [the noun]" (B);
+		Say "[The actor] [pinch] [the noun]." (B);
 	Else if the player can see the noun:
-		Say "[The actor] [are] pinched." (C);
+		Say "[The noun] [are] pinched." (C);
 
 Part 3.2.6 - Licking
 
@@ -1967,10 +1962,7 @@ Check an actor licking (this is the licking decency rule):
 
 Check an actor licking (this is the seek consent for licking rule):
 	If the noun is a person or noun is enclosed by a person:
-		Let result be the text produced by the consent rules;
-		If the rule failed:
-			Say result;
-			Stop the action;
+		Abide by the consent rules;
 
 Chapter 3.2.6c - Carry Out
 
@@ -1985,9 +1977,9 @@ Report an actor licking (this is the report licking rule):
 	If the player is the actor:
 		Say "[We] [lick] [the noun]." (A);
 	Else if the player can see the actor:
-		Say "[The actor] [lick] [the noun]" (B);
+		Say "[The actor] [lick] [the noun]." (B);
 	Else if the player can see the noun:
-		Say "[The actor] [are] licked." (C);
+		Say "[The noun] [are] licked." (C);
 
 Part 3.2.7 - Biting
 
@@ -2059,10 +2051,7 @@ Check an actor biting (this is the biting decency rule):
 
 Check an actor biting (this is the seek consent for biting rule):
 	If the noun is a person or noun is enclosed by a person:
-		Let result be the text produced by the consent rules;
-		If the rule failed:
-			Say result;
-			Stop the action;
+		Abide by the consent rules;
 
 Chapter 3.2.7c - Carry Out
 
@@ -2077,13 +2066,108 @@ Report an actor biting (this is the report biting rule):
 	If the player is the actor:
 		Say "[We] [bite] [the noun]." (A);
 	Else if the player can see the actor:
-		Say "[The actor] [bite] [the noun]" (B);
+		Say "[The actor] [bite] [the noun]." (B);
 	Else if the player can see the noun:
-		Say "[The actor] [are] bitten." (C);
+		Say "[The noun] [are] bitten." (C);
 
 Part 3.2.8 - Fucking It With
 
-[TODO]
+[Status: Being implemented
+Fucking it with is a new action with some complexity, and is the act of inserting something penetrating into something orificial.
+See also the person-oriented redirect actions.]
+
+Fucking it with is an action applying to one touchable thing and one thing.
+The specification of the fucking it with action is "Fucking it with is the action of putting something into something else. By default it expects to receive an orifice to put something penetrating into. See also the person-oriented actions 'fuck', 'assfuck' and 'titfuck' which redirect here."
+
+Chapter 3.2.8a - Understanding
+
+Understand "fuck [something] with [something]" as fucking it with.
+Understand "fuck [something penetrating] with [something orificial]" as fucking it with (with nouns reversed).
+
+Does the player mean fucking something with a something penetrating: it is likely.
+Does the player mean fucking something orificial with something: it is likely.
+Does the player mean fucking something with a something penetrating enclosed by the player: it is very likely.
+
+The fucking decency is initially indecent.
+
+Chapter 3.2.8b - Check
+
+Check an actor fucking something with (this is the self fucking rule):
+	If the noun is the actor or the noun is part of the actor:
+		If the second noun is the actor or the second noun is part of the actor:
+			If the actor is the player:
+				say "[We] [don't] get much from that." (A);
+			Else if the player can see the actor and the action is not silent:
+				Say "[The actor] [don't] get much from that." (B);
+			Stop the action;
+
+[Ensure that the actor is in control of atleast one of the parts, and that all parts are carried or enclosed]
+Check an actor fucking something with (This is the control what can be fucked rule):
+	Unless the noun is part of the actor or the actor has the noun:
+		Unless the second noun is part of the actor or the actor has the second noun:
+			If the actor is the player:
+				Say "[We] [can't] do that withouth being a part of it." (A);
+			Else if the player can see the actor and the action is not silent:
+				Say "[The actor] [can't] do that without being a part of it." (B);
+			Stop the action;
+
+[Make sure that the first noun is orificial and the second noun is penetrating]
+Check an actor fucking something with (This is the fucking specificity rule):
+	If the noun provides the property orificial and the noun is orificial:
+		If the second noun provides the property penetrating and the second noun is penetrating:
+			Continue the action;
+	If the noun provides the property penetrating and the noun is penetrating:
+		If the second noun provides the property orificial and the second noun is orificial:
+			Try the actor fucking the second noun with the noun instead;
+	If the actor is the player:
+		Say "[We] [have] to be more specific about what should go where." (A);
+	Else if the player can see the actor and the action is not silent:
+		Say "[We] [have] to be more specific about what [the actor] should put where." (B);
+	Stop the action;
+
+Check an actor fucking something with (this is the fucking reachability rule):
+	If the noun is a body part or noun is a garment:
+		Unless noun is accessible:
+			If the player is the actor:
+				Say "[We] [can't] reach that." (A);
+			Else if the player can see the actor:
+				Say "[The actor] [can't] reach that." (B);
+			Stop the action;
+	If the second noun is a body part or second noun is a garment:
+		Unless second noun is accessible:
+			If the player is the actor:
+				Say "[We] [can't] reach that." (C);
+			Else if the player can see the actor:
+				Say "[The actor] [can't] reach that." (D);
+			Stop the action;
+
+Check an actor fucking something with (this is the fucking decency rule):
+	Let L be the location of the actor;
+	If the decency threshold of L is greater than the fucking decency:
+		If the player is the actor:
+			Say "It [are] too public for [us] to bite [noun] here." (A);
+		Else if the player can see the actor:
+			Say "It [are] too public for [the actor] to bite [noun] here." (B);
+		Stop the action;
+
+Check an actor fucking something with (this is the seek consent for fucking rule):
+	Abide by the consent rules;
+
+Chapter 3.2.8c - Carry Out
+
+Carry out an actor fucking something with (this is the seek stimulation for fucking rule):
+	Follow the stimulation rules;
+
+Chapter 3.2.8d - Reporting
+
+[Default response]
+Report an actor fucking something with (this is the report fucking rule):
+	If the player is the actor:
+		Say "[We] [fuck] [the noun] with [the second noun]." (A);
+	Else if the player can see the actor:
+		Say "[The actor] [fuck] [the noun] with [the second noun]." (B);
+	Else if the player can see the noun:
+		Say "[The noun] [are] fucked." (C);
 
 Book 3.3 - Person Actions
 
@@ -2141,10 +2225,7 @@ Check an actor kissing (this is the kissing decency rule):
 
 Check an actor kissing (this is the seek consent for kissing rule):
 	If the noun is a person or noun is enclosed by a person:
-		Let result be the text produced by the consent rules;
-		If the rule failed:
-			Say result;
-			Stop the action;
+		Abide by the consent rules;
 
 Chapter 3.3.1c - Carry Out
 
@@ -2159,9 +2240,9 @@ Report an actor kissing (this is the report kissing rule):
 	If the player is the actor:
 		Say "[We] [kiss] [the noun]." (A);
 	Else if the player can see the actor:
-		Say "[The actor] [kiss] [the noun]" (B);
+		Say "[The actor] [kiss] [the noun]." (B);
 	Else if the player can see the noun:
-		Say "[The actor] [are] kissed." (C);
+		Say "[The noun] [are] kissed." (C);
 
 Part 3.3.2 - Hugging
 
@@ -2212,10 +2293,7 @@ Check an actor hugging (this is the hugging decency rule):
 
 Check an actor hugging (this is the seek consent for hugging rule):
 	If the noun is a person or noun is enclosed by a person:
-		Let result be the text produced by the consent rules;
-		If the rule failed:
-			Say result;
-			Stop the action;
+		Abide by the consent rules;
 
 Chapter 3.3.2c - Carry Out
 
@@ -2230,9 +2308,9 @@ Report an actor hugging (this is the report hugging rule):
 	If the player is the actor:
 		Say "[We] [hug] [the noun]." (A);
 	Else if the player can see the actor:
-		Say "[The actor] [hug] [the noun]" (B);
+		Say "[The actor] [hug] [the noun]." (B);
 	Else if the player can see the noun:
-		Say "[The actor] [are] hugged." (C);
+		Say "[The noun] [are] hugged." (C);
 
 Part 3.3.3 - Dancing 
 
@@ -2277,10 +2355,7 @@ Check an actor dancing (this is the dancing decency rule):
 
 Check an actor dancing (this is the seek consent for dancing rule):
 	If the noun is a person or noun is enclosed by a person:
-		Let result be the text produced by the consent rules;
-		If the rule failed:
-			Say result;
-			Stop the action;
+		Abide by the consent rules;
 
 Chapter 3.3.3c - Carry Out
 
@@ -2295,64 +2370,188 @@ Report an actor dancing (this is the report dancing rule):
 	If the player is the actor:
 		Say "[We] [dance] with [the noun]." (A);
 	Else if the player can see the actor:
-		Say "[The actor] [dance] with [the noun]" (B);
+		Say "[The actor] [dance] with [the noun]." (B);
 	Else if the player can see the noun:
-		Say "[The actor] [are] danced with." (C);
+		Say "[The noun] [are] danced with." (C);
 
-Part 3.3.4 - Fucking
+Book 3.4 - Redirect Helpers
 
-[Status: TODO
-This is a collection of redirect-only actions.
-	Tits
-	Ass
-	Finger
-]
+[To improve the understanding of the player, we provide some helper actions that redirect.]
+		
+Part 3.4.1 - Fucking
 
-Part 3.3.5 - Masturbating
+Fucking is an action applying to one touchable thing.
+The specification of the fucking action is "Fucking is a helper action that can allows the player to target a person, and logic is applied to decide what parts are supposed to be involved. Redirects to the fucking it with action."
 
-[Status: TODO
-This is a redirect-only action.]
+Chapter 3.4.1a - Understanding
 
+Understand "fuck [something]" as fucking.
+Does the player mean fucking a person: It is likely.
+Does the player mean fucking something orificial: It is likely.
 
-Book 3.4 - Discrete Arousal
+Chapter 3.4.1b - Redirecting
 
-[Design notes: TODO
-Two types of arousal; discrete stages or numerical values.
-Design extension around, discrete stages, but allow for them to easily be replaced by numerical values.
+Check an actor fucking (This is the fucking redirect rule):
+	[Case 1: The target is an orifice, and we need to find a suitable penetrator:]
+	If the noun provides the property orificial and the noun is orificial:
+		If the actor is enclosing a penis (called P):
+			Try the actor fucking the noun with P instead;
+		If the actor is enclosing a penetrating body part (called P):
+			Try the actor fucking the noun with P instead;
+		If the actor is wearing a penetrating garment (called P):
+			Try the actor fucking the noun with P instead;
+		If the actor is carrying a penetrating thing (called P):
+			Try the actor fucking the noun with P instead;
+	[Case 2: The target is a penetrator, and we need to find a suitable orifice and reverse:]
+	If the noun provides the property penetrating and the noun is penetrating:
+		If actor is enclosing a vagina (called V):
+			Try the actor fucking V with the noun instead;
+		If actor is enclosing an ass (called A):
+			Try the actor fucking A with the noun instead;
+		If actor is enclosing an orificial body part (called O):
+			Try the actor fucking O with the noun instead;
+	[Case 3: The target is a person, and we try to first find the penetrator then the orifice:]
+		If actor is enclosing a penis (called P):
+			If noun is enclosing a vagina (called V):
+				Try the actor fucking V with P instead;
+			If noun is enclosing an ass (called A):
+				Try the actor fucking A with P instead;
+			If noun is enclosing an orificial body part (called O):
+				Try the actor fucking O with P instead;
+		If the actor is enclosing a penetrating body part (called P):
+			If noun is enclosing a vagina (called V):
+				Try the actor fucking V with P instead;
+			If noun is enclosing an ass (called A):
+				Try the actor fucking A with P instead;
+			If noun is enclosing an orificial body part (called O):
+				Try the actor fucking O with P instead;
+		If the actor is wearing a penetrating garment (called P):
+			If noun is enclosing a vagina (called V):
+				Try the actor fucking V with P instead;
+			If noun is enclosing an ass (called A):
+				Try the actor fucking A with P instead;
+			If noun is enclosing an orificial body part (called O):
+				Try the actor fucking O with P instead;
+		If noun is enclosing a penis (called P):
+			If actor is enclosing a vagina (called V):
+				Try the actor fucking V with P instead;
+		If the actor is carrying a penetrating thing (called P):
+			If noun is enclosing a vagina (called V):
+				Try the actor fucking V with P instead;
+			If noun is enclosing an ass (called A):
+				Try the actor fucking A with P instead;
+			If noun is enclosing an orificial body part (called O):
+				Try the actor fucking O with P instead;
+	[Default: Unable to parse]
+	If the actor is the player:
+		Say "[We] [have] to be more specific about what should go where." (A);
+	Else if the player can see the actor and the action is not silent:
+		Say "[We] [have] to be more specific about what [the actor] should put where." (B);
+	Stop the action;
 
-Arousals are increased by stimulating with an action, an can be used to grant consent.]
+Part 3.4.2 - Assfucking
 
-Part 3.4.1 - Definitions
+Assfucking is an action applying to one touchable thing.
+The specification of the assfucking action is "Assfucking is a helper action that can allows the player to target a person, and logic is applied to decide what parts are supposed to be involved. Redirects to the fucking it with action."
 
-Chapter 3.4.1a - Discrete Arousals
+Chapter 3.4.2a - Understanding
+
+Understand "assfuck [something]" as assfucking.
+Does the player mean assfucking a person: It is likely.
+Does the player mean assfucking an ass: It is likely.
+
+Chapter 3.4.2b - Redirecting
+
+Check an actor assfucking (This is the assfucking redirect rule):
+	If the noun is an ass:
+		Try the actor fucking the noun instead;
+	Else if the noun is a person enclosing an ass (called A):
+		Try the actor fucking the A instead;
+	If the actor is the player:
+		Say "[We] [can't] find a way to do that." (A);
+	Else if the player can see the actor and the action is not silent:
+		Say "[The actor] [can't] find a way to do that." (B);
+	Stop the action;
+
+Part 3.4.3 - Titfucking
+
+Titfucking is an action applying to one touchable thing.
+The specification of the titfucking action is "Titfucking is a helper action that can allows the player to target a person, and logic is applied to decide what parts are supposed to be involved. Redirects to the fucking it with action."
+
+Chapter 3.4.3a - Understanding
+
+Understand "titfuck [something]" as titfucking.
+Does the player mean titfucking a person: It is likely.
+Does the player mean titfucking a pair of breasts: It is likely.
+
+Chapter 3.4.3b - Redirecting
+
+Check an actor titfucking (This is the titfucking redirect rule):
+	If the noun is a a pair of breasts:
+		Try the actor fucking the noun instead;
+	Else if the noun is a person enclosing a pair of breasts (called B):
+		Try the actor fucking the B instead;
+	If the actor is the player:
+		Say "[We] [can't] find a way to do that." (A);
+	Else if the player can see the actor and the action is not silent:
+		Say "[The actor] [can't] find a way to do that." (B);
+	Stop the action;
+
+Part 3.4.4 - Fingerfucking
+
+[TODO]
+
+Chapter 3.4.4a - Understanding
+
+Chapter 3.4.4b - Redirecting
+
+Part 3.4.5 - Masturbating
+
+[TODO]
+
+Chapter 3.4.5a - Understanding
+
+Chapter 3.4.5b - Redirecting
+
+Book 3.5 - Discrete Arousal
+
+[Status: Complete
+Arousal has typically been implemented as a linear numeric system, with continuous incremental changes up to thresholds based on the actor and actions. This model typically leads to spamming 'g' (repeat) in order to raise the arousal so as to unlock new actions.
+This extension uses Informs natural value enumeration to divide arousal into discrete values, which should provide a smoother and more natural progression. This part is just the bare bones, allowing the story author to use arousal as a decision making tool.
+The system is extensible, but it assumes that unaorused is the neutral setting, and unattainable arousal is the last defined value.
+In the template volume, this is extended into a full-blown stimulation and consent system.]
+
+Part 3.5.1 - Definitions
+
+Chapter 3.5.1a - Discrete Arousals
 
 An arousal is a kind of value. The arousals are frigid arousal, unaroused, slightly aroused, aroused, very aroused, orgasmic, unattainable arousal.
 The specification of arousal is "Arousal is a discrete measure of how aroused a person is. Unaroused is the neutral zero-point, with frigid arousal as a negative value and the unattainable arousal (as the last value defined) as the unset/null-value. These methods for arousing and cooling of a person will take these into account."
 
 A person has an arousal called current arousal. The current arousal of a person is usually unaroused.
 
-Chapter 3.4.1b - Orgasms
+Chapter 3.5.1b - Orgasms
 
 A person has a number called orgasms. The orgasms of a person is usually 0.
 A person has a number called orgasmic attempts. The orgasmic attempts of a person is usually 0.
 
-Part 3.4.2 - Working with Arousals
+Part 3.5.2 - Working with Arousals
 
-Chapter 3.4.2a - Comparisons
+Part 3.5.2a - Comparisons
 
+[Note: Unattainable is treated as a null value, and is never considered more or less than anything.]
 To decide whether (P - a person) is (A - an arousal) or more:
-	[Note: Unattainable is treated as a null value, and is never considered more or less than anything.]
 	If the current arousal of P is the unattainable arousal, decide no;
 	If the current arousal of P is at least A, decide yes;
 	Decide no;
 
+[Note: Unattainable is treated as a null value, and is never considered more or less than anything.]
 To decide whether (P - a person) is (A - an arousal) or less:
-	[Note: Unattainable is treated as a null value, and is never considered more or less than anything.]
 	If the current arousal of P is the unattainable arousal, decide no;
 	If the current arousal of P is at most A, decide yes;
 	Decide no;
 
-Chapter 3.4.2b - Increasing Arousals
+Part 3.5.2b - Arousing
 	
 [Increase the arousal of a person by one grade, with a maxmimum level.
 Note: Unattainable is treated as a null value, and calls to increase to it are ignored.]
@@ -2365,7 +2564,7 @@ Note: Will not increase to the unattainable arousal.]
 To arouse (P - a person):
 	Arouse P up to (the arousal before the unattainable arousal);
 
-Chapter 3.4.2c - Decreasing Arousals
+Part 3.5.2c - Cooling Down
 
 [Move the arousal of a person by one grade towards the neutral unaroused, with a minimum level.
 Note: Unattainable is treated as a null value, and will not be moved from.]
@@ -2381,130 +2580,31 @@ To cool (P - a person) down to (A - an arousal):
 To cool down (P - a person):
 	Cool P down to unaroused;
 
-Chapter 3.4.2d - Attaining Orgasms
+Part 3.5.2d - Attaining Orgasms
 
 A person has an arousal called the orgasm reset arousal. The orgasm reset arousal of a person is usually aroused.
 
 [We want to make it so that every time a person orgasms, it's harder to achieve the next one.
 The chance to succed is attempts : orgasms; the first orgasm is 'free'; the second is 50% at first attempt and 100% at second, third is 1/3 then 2/3, and so on.]
 To decide whether (P - a person) orgasms:
-	[Only orgasmic people can try to have an orgasm.]
-	If the current arousal of P is not orgasmic:
-		Decide no;
-	Increase the orgasmic attempts of P by 1;
-	Let X be the orgasmic attempts of P;
-	Let Y be the orgasms of P + 1;
-	If a random chance of X in Y succeeds:
-		Increase the orgasms of P by 1;
-		Now the orgasmic attempts of P is 0;
-		Now the current arousal of P is the orgasm reset arousal of P;
-		Decide yes;
+	If the current arousal of P is the unattainable arousal, decide no;
+	If P is orgasmic or more:
+		Increase the orgasmic attempts of P by 1;
+		Let X be the orgasmic attempts of P;
+		Let Y be the orgasms of P + 1;
+		If a random chance of X in Y succeeds:
+			Increase the orgasms of P by 1;
+			Now the orgasmic attempts of P is 0;
+			Now the current arousal of P is the orgasm reset arousal of P;
+			Decide yes;
 	Decide no;
 
-Part 3.4.3 - Consent and Stimulation Integration
+Volume 4 - Support Systems
 
-[Status: Being implemented
-This part deals with integrating the discrete arousals into the stimulation and consent framework of the actions.
-This is separated into it's own part in order to make it easier to excise it if needed, like if the author wants to use a numerical arousal system.
-In order to keep the number of default variables down so as to simplify the author's job, most actions are grouped together:
-
-3.2.1	Touching	(Soft) Touching
-3.2.2	Rubbing		(Soft) Touching
-3.2.3	Tickling	(Soft) Touching
-3.2.4	Spanking	Rough
-3.2.5	Pinching	Rough
-3.2.6	Licking		Oral
-3.2.7	Biting		Rough
-3.2.8	Fucking		Intercourse
-3.3.1	Kissing		Oral
-3.3.2	Hugging		(Soft) Touching
-3.3.3	Dancing		(Soft) Touching
-
-Each of these groups function in a similar manner:
-Consent is given if the actors have each other as (TODO) love-interests, and the current arousal of the actors are atleast the arousal threshold for the action group. For body parts, the lowest threshold of the part and the person it's attached to is taken into consideration.
-
-We assume that the player always consents; TODO: Remake into a variable]
-
-Chapter 3.4.3a - General Requirements
-
-[TODO
-A person has a list of other actors they are willing to engage with. 
-If the interactor is listed, make no decision in order to allow other rules to be consulted as well.]
-
-A person has some text called the unaroused response.
-
-Chapter 3.4.2 - Clothing
-
-[TODO:]
-
-Chapter 3.4.3c - Soft Touching
-
-[This chapter deals with the "soft" touching actions, which share the same thresholds by default.
-These are:
- * Touching (Usually body part)
- * Rubbing (Usually body part)
- * Tickling (Usually body part)
- * Hugging (Usually a person)
- * Dancing (Usually a person)]
-
-Section - Properties
-
-[Soft touch threshold is the minimum arousal at which a person or it's body part will engage in the soft-touch actions.]
-A person has an arousal called the soft touch threshold. The soft touch threshold of a person is usually slightly aroused.
-A body part has an arousal called the soft touch threshold. The soft touch threshold of a body part is usually slightly aroused.
-
-[Active/passive soft touch arousal is the arousal attainable by soft-touch actions, as the active and passive participant.]
-A person has an arousal called the active soft touch cap. The active soft touch cap of a person is usually aroused.
-A person has an arousal called the passive soft touch cap. The passive soft touch cap of a person is usually aroused.
-A body part has an arousal called the active soft touch cap. The active soft touch cap of a body part is usually aroused.
-A body part has an arousal called the passive soft touch cap. The passive soft touch cap of a body part is usually aroused.
-
-
-Section - Consent
-
-A consent rule for an actor doing something (this is the soft touching consent rule):
-	[Check consent for the actor first; we assume that the player always consent.]
-	Unless the actor is the player:
-		Unless the actor is the soft touch threshold of the noun or more, rule succeeds with result the unaroused response of the actor;
-	[Check consent for the noun directly]
-	If the noun is a person:
-		Unless the noun is the player:
-			Unless the noun is the soft touch threshold of the noun or more, rule succeeds with result the unaroused response of the noun;
-	Else if the noun is a body part:
-		Let P be the holder of the noun;
-		Unless P is the player:
-			Unless P is the soft touch threshold of the noun or more, rule succeeds with result the unaroused response of P;
-			Unless P is the soft touch threshold of P or more, rule succeeds with result the unaroused response of P;
-	Make no decision;
-		
-[We don't want this rule listed, instead abiding by it as necessary.]
-Consent rule for an actor touching (this is the touching consent rule): Anonymously abide  by the soft touching consent rule;
-Consent rule for an actor rubbing (this is the rubbing consent rule): Anonymously abide  by the soft touching consent rule;
-Consent rule for an actor tickling (this is the tickling consent rule): Anonymously abide  by the soft touching consent rule;
-Consent rule for an actor hugging (this is the hugging consent rule): Anonymously abide  by the soft touching consent rule;
-Consent rule for an actor dancing (this is the dancing consent rule): Anonymously abide  by the soft touching consent rule;
-
-Section - Stimulation
-
-A stimulation rule for an actor doing something (this is the soft touching stimulation rule):
-	[Stimulate the actor first:]
-	Arouse the actor up to the active soft touch cap of the actor;
-	If the noun is a person:
-		Arouse the noun up to the passive soft touch cap of the noun;
-	Else if the noun is a body part:
-		Let P be the holder of the noun;
-		Let target arousal be the passive soft touch cap of the noun;
-		If the passive soft touch cap of P is greater than the target arousal:
-			Let target arousal be the passive soft touch cap of P;
-		Arouse P up to target arousal;
-	Stimulated;
-
-Stimulation rule for an actor touching (this is the touching stimulation rule): Anonymously abide  by the soft touching stimulation rule;
-Stimulation rule for an actor rubbing  (this is the rubbing stimulation rule):  Anonymously abide  by the soft touching stimulation rule;
-Stimulation rule for an actor tickling (this is the tickling stimulation rule): Anonymously abide  by the soft touching stimulation rule;
-Stimulation rule for an actor hugging  (this is the hugging stimulation rule):  Anonymously abide  by the soft touching stimulation rule;
-Stimulation rule for an actor dancing  (this is the dancing stimulation rule):  Anonymously abide  by the soft touching stimulation rule;
-
+[TODO:
+Help System
+Limits]
+	
 Volume 5 - Templates
 
 Book 5.1 - Ready-to-Use Kinds
@@ -2818,14 +2918,468 @@ A pair of gloves is usually outerwear.
 The cloth decency of pair of gloves is usually formal.
 The cover areas of a pair of gloves is usually {hand area}.
 
-
-
 Part 5.1.3 - Furniture
 
+[Status: Awaiting implementation of posturing. TODO]
+
+Book 5.2 - Discrete Arousal-based Consent and Stimulation
+
+[Status: Being implemented
+This books deals with integrating the discrete arousals into the stimulation and consent framework of the actions, to create a basis system that grants consent based on arousal. It's separated into it's own part in order to make it easier to excise it if needed, like if the author wants to use a numerical arousal system.
+The underlying parts deals with responses of the actors, action integration and custom values for the templated body parts.]
+
+Part 5.2.1 - Responses
+
+[Status: Complete
+If an action is stopped because the actors aren't interested (either in each other, or the arousal threshold is unattainable), then the uninterested response should be issued. If the action is stopped because the current arousal isn't high enough (yet), then the unaroused response should be issued.]
+
+A person has some text called the uninterested response. The uninterested response of a person is usually "'That's not going to happen,' [printed name] says cooly."
+A person has some text called the unaroused response. The unaroused response of a person is usually "'Not yet,' [printed name] says softly."
+
+Part 5.2.2 - Action Integration
+
+[Status: Mostly complete
+For now we assume that the player always consents; this is something that should be remade into a variable later on. (TODO)
+In order to keep the number of default variables down so as to simplify the author's job, most actions are grouped together:
+
+Dressing:	Wearing, taking off
+Soft-play:	Touching, rubbing, tickling, hugging, dancing.
+Rough-play:	Spanking, pinching, biting
+Oral-play:	Licking, kissing
+Fucking
+
+Each of these groups function in a similar manner:
+Consent is given if the actors have each other as (TODO) love-interests, and the current arousal of the actors are atleast the arousal threshold for the action group. For body parts, the lowest threshold of the part and the person it's attached to is taken into consideration.
+Stimulation is similarly handled, being increased one level up to the cap for the group. For body parts, the higher of the person's and the body part's cap is used. There are two caps for each group, one for being the active participant and one for being the passive.
+
+Additionally, there's a check to see if the two actors want to interact with each other, which is used as a default deny rule.]
+
+Chapter 5.2.2a - General Requirements
+
+[TODO
+A person has a list of other actors they are willing to engage with. 
+If the interactor is listed, make no decision in order to allow other rules to be consulted as well.]
 
 
+Chapter 5.2.2b - Clothing
 
+[TODO:]
 
+Chapter 5.2.2c - Soft-play
+
+[This part deals with the "soft" touching actions, which share the same thresholds by default.]
+
+[Soft-play threshold is the minimum arousal at which a person or it's body part will engage in the soft-play actions.]
+A person has an arousal called the soft-play threshold. The soft-play threshold of a person is usually slightly aroused.
+A body part has an arousal called the soft-play threshold. The soft-play threshold of a body part is usually slightly aroused.
+
+[Active/passive soft-play arousal is the arousal attainable by soft-play actions, as the active and passive participant.]
+A person has an arousal called the active soft-play cap. The active soft-play cap of a person is usually aroused.
+A person has an arousal called the passive soft-play cap. The passive soft-play cap of a person is usually aroused.
+A body part has an arousal called the active soft-play cap. The active soft-play cap of a body part is usually aroused.
+A body part has an arousal called the passive soft-play cap. The passive soft-play cap of a body part is usually aroused.
+
+[Create a default consent rule]
+A default-consent rule (this is the soft-playing consent rule):
+	[Check consent for the actor first; we assume that the player always consent.]
+	Unless the actor is the player:
+		If the soft-play threshold of the actor is the unattainable arousal:
+			Say the uninterested response of the actor;
+			Deny consent;
+		Unless the actor is the soft-play threshold of the actor or more:
+			Say the unaroused response of the actor;
+			Deny consent;
+	[Check consent for the noun directly]
+	If the noun is a person:
+		Unless the noun is the player:
+			If the soft-play threshold of the noun is the unattainable arousal:
+				Say the uninterested response of the noun;
+				Deny consent;
+			Unless the noun is the soft-play threshold of the noun or more:
+				Say the unaroused response of the noun;
+				Deny consent;
+	Else if the noun is a body part:
+		Let P be the holder of the noun;
+		Unless P is the player:
+			If the soft-play threshold of the noun is the unattainable arousal:
+				Say the uninterested response of P;
+				Deny consent;
+			If the soft-play threshold of P is the unattainable arousal:
+				Say the uninterested response of P;
+				Deny consent;
+			Unless P is the soft-play threshold of the noun or more:
+				Say the unaroused response of P;
+				Deny consent;
+			Unless P is the soft-play threshold of P or more:
+				Say the unaroused response of P;
+				Deny consent;
+	Make no decision;
+
+A consent rule for an actor touching (this is the default touching consent rule): Anonymously abide by the soft-playing consent rule;
+A consent rule for an actor rubbing (this is the default rubbing consent rule): Anonymously abide by the soft-playing consent rule;
+A consent rule for an actor tickling (this is the default tickling consent rule): Anonymously abide by the soft-playing consent rule;
+A consent rule for an actor hugging (this is the default hugging consent rule): Anonymously abide by the soft-playing consent rule;
+A consent rule for an actor dancing (this is the default dancing consent rule): Anonymously abide by the soft-playing consent rule;
+
+[Create a default stimulation rule]
+A default-stimulation rule (this is the soft-playing stimulation rule):
+	[Stimulate the actor first:]
+	Arouse the actor up to the active soft-play cap of the actor;
+	If the noun is a person:
+		Arouse the noun up to the passive soft-play cap of the noun;
+	Else if the noun is a body part:
+		Let P be the holder of the noun;
+		Let target arousal be the passive soft-play cap of the noun;
+		If the passive soft-play cap of P is greater than the target arousal:
+			Let target arousal be the passive soft-play cap of P;
+		Arouse P up to target arousal;
+	Stimulated;
+
+A stimulation rule for an actor touching (this is the default touching stimulation rule): Anonymously abide by the soft-playing stimulation rule;
+A stimulation rule for an actor rubbing (this is the default rubbing stimulation rule): Anonymously abide by the soft-playing stimulation rule;
+A stimulation rule for an actor tickling (this is the default tickling stimulation rule): Anonymously abide by the soft-playing stimulation rule;
+A stimulation rule for an actor hugging (this is the default hugging stimulation rule): Anonymously abide by the soft-playing stimulation rule;
+A stimulation rule for an actor dancing (this is the default dancing stimulation rule): Anonymously abide by the soft-playing stimulation rule;
+
+Chapter 5.2.2d - Rough Play
+
+[This part deals with the "rough"  actions, which share the same thresholds by default.]
+
+[Rough-play threshold is the minimum arousal at which a person or it's body part will engage in the rough-play actions.]
+A person has an arousal called the rough-play threshold. The rough-play threshold of a person is usually very aroused.
+A body part has an arousal called the rough-play threshold. The rough-play threshold of a body part is usually very aroused.
+
+[Active/passive rough-play arousal is the arousal attainable by rough-play actions, as the active and passive participant.]
+A person has an arousal called the active rough-play cap. The active rough-play cap of a person is usually very aroused.
+A person has an arousal called the passive rough-play cap. The passive rough-play cap of a person is usually very aroused.
+A body part has an arousal called the active rough-play cap. The active rough-play cap of a body part is usually very aroused.
+A body part has an arousal called the passive rough-play cap. The passive rough-play cap of a body part is usually very aroused.
+
+[Create a default consent rule]
+A default-consent rule (this is the rough-playing consent rule):
+	[Check consent for the actor first; we assume that the player always consent.]
+	Unless the actor is the player:
+		If the rough-play threshold of the actor is the unattainable arousal:
+			Say the uninterested response of the actor;
+			Deny consent;
+		Unless the actor is the rough-play threshold of the actor or more:
+			Say the unaroused response of the actor;
+			Deny consent;
+	[Check consent for the noun directly]
+	If the noun is a person:
+		Unless the noun is the player:
+			If the rough-play threshold of the noun is the unattainable arousal:
+				Say the uninterested response of the noun;
+				Deny consent;
+			Unless the noun is the rough-play threshold of the noun or more:
+				Say the unaroused response of the noun;
+				Deny consent;
+	Else if the noun is a body part:
+		Let P be the holder of the noun;
+		Unless P is the player:
+			If the rough-play threshold of the noun is the unattainable arousal:
+				Say the uninterested response of P;
+				Deny consent;
+			If the rough-play threshold of P is the unattainable arousal:
+				Say the uninterested response of P;
+				Deny consent;
+			Unless P is the rough-play threshold of the noun or more:
+				Say the unaroused response of P;
+				Deny consent;
+			Unless P is the rough-play threshold of P or more:
+				Say the unaroused response of P;
+				Deny consent;
+	Make no decision;
+
+A consent rule for an actor spanking (this is the default spanking consent rule): Anonymously abide by the rough-playing consent rule;
+A consent rule for an actor pinching (this is the default pinching consent rule): Anonymously abide by the rough-playing consent rule;
+A consent rule for an actor biting (this is the default biting consent rule): Anonymously abide by the rough-playing consent rule;
+
+[Create a default stimulation rule]
+A default-stimulation rule (this is the rough-playing stimulation rule):
+	[Stimulate the actor first:]
+	Arouse the actor up to the active rough-play cap of the actor;
+	If the noun is a person:
+		Arouse the noun up to the passive rough-play cap of the noun;
+	Else if the noun is a body part:
+		Let P be the holder of the noun;
+		Let target arousal be the passive rough-play cap of the noun;
+		If the passive rough-play cap of P is greater than the target arousal:
+			Let target arousal be the passive rough-play cap of P;
+		Arouse P up to target arousal;
+	Stimulated;
+
+A stimulation rule for an actor spanking (this is the default spanking stimulation rule): Anonymously abide by the rough-playing stimulation rule;
+A stimulation rule for an actor pinching (this is the default pinching stimulation rule): Anonymously abide by the rough-playing stimulation rule;
+A stimulation rule for an actor biting (this is the default biting stimulation rule): Anonymously abide by the rough-playing stimulation rule;
+
+Chapter 5.2.2e - Oral Play
+
+[This part deals with the "oral" actions, which share the same thresholds by default.]
+
+[Oral-play threshold is the minimum arousal at which a person or it's body part will engage in the oral-play actions.]
+A person has an arousal called the oral-play threshold. The oral-play threshold of a person is usually aroused.
+A body part has an arousal called the oral-play threshold. The oral-play threshold of a body part is usually aroused.
+
+[Active/passive oral-play arousal is the arousal attainable by oral-play actions, as the active and passive participant.]
+A person has an arousal called the active oral-play cap. The active oral-play cap of a person is usually very aroused.
+A person has an arousal called the passive oral-play cap. The passive oral-play cap of a person is usually very aroused.
+A body part has an arousal called the active oral-play cap. The active oral-play cap of a body part is usually very aroused.
+A body part has an arousal called the passive oral-play cap. The passive oral-play cap of a body part is usually very aroused.
+
+[Create a default consent rule]
+A default-consent rule (this is the oral-playing consent rule):
+	[Check consent for the actor first; we assume that the player always consent.]
+	Unless the actor is the player:
+		If the oral-play threshold of the actor is the unattainable arousal:
+			Say the uninterested response of the actor;
+			Deny consent;
+		Unless the actor is the oral-play threshold of the actor or more:
+			Say the unaroused response of the actor;
+			Deny consent;
+	[Check consent for the noun directly]
+	If the noun is a person:
+		Unless the noun is the player:
+			If the oral-play threshold of the noun is the unattainable arousal:
+				Say the uninterested response of the noun;
+				Deny consent;
+			Unless the noun is the oral-play threshold of the noun or more:
+				Say the unaroused response of the noun;
+				Deny consent;
+	Else if the noun is a body part:
+		Let P be the holder of the noun;
+		Unless P is the player:
+			If the oral-play threshold of the noun is the unattainable arousal:
+				Say the uninterested response of P;
+				Deny consent;
+			If the oral-play threshold of P is the unattainable arousal:
+				Say the uninterested response of P;
+				Deny consent;
+			Unless P is the oral-play threshold of the noun or more:
+				Say the unaroused response of P;
+				Deny consent;
+			Unless P is the oral-play threshold of P or more:
+				Say the unaroused response of P;
+				Deny consent;
+	Make no decision;
+
+A consent rule for an actor licking (this is the default licking consent rule): Anonymously abide by the oral-playing consent rule;
+A consent rule for an actor kissing (this is the default kissing consent rule): Anonymously abide by the oral-playing consent rule;
+
+[Create a default stimulation rule]
+A default-stimulation rule (this is the oral-playing stimulation rule):
+	[Stimulate the actor first:]
+	Arouse the actor up to the active oral-play cap of the actor;
+	If the noun is a person:
+		Arouse the noun up to the passive oral-play cap of the noun;
+	Else if the noun is a body part:
+		Let P be the holder of the noun;
+		Let target arousal be the passive oral-play cap of the noun;
+		If the passive oral-play cap of P is greater than the target arousal:
+			Let target arousal be the passive oral-play cap of P;
+		Arouse P up to target arousal;
+	Stimulated;
+
+A stimulation rule for an actor licking (this is the default licking stimulation rule): Anonymously abide by the oral-playing stimulation rule;
+A stimulation rule for an actor kissing (this is the default kissing stimulation rule): Anonymously abide by the oral-playing stimulation rule;
+
+Chapter 5.2.2f - Fucking
+
+[This part deals with the fucking.]
+
+[Fuck-play threshold is the minimum arousal at which a person or it's body part will engage in the oral-play actions.]
+A person has an arousal called the fuck-play threshold. The fuck-play threshold of a person is usually aroused.
+A body part has an arousal called the fuck-play threshold. The fuck-play threshold of a body part is usually aroused.
+
+[Active/passive fucking-play arousal is the arousal attainable by fucking, as the active and passive participant.]
+A person has an arousal called the active fuck-play cap. The active fuck-play cap of a person is usually very aroused.
+A person has an arousal called the passive fuck-play cap. The passive fuck-play cap of a person is usually very aroused.
+A body part has an arousal called the active fuck-play cap. The active fuck-play cap of a body part is usually orgasmic.
+A body part has an arousal called the passive fuck-play cap. The passive fuck-play cap of a body part is usually orgasmic.
+
+[Create a default consent rule:
+Due to prior checks, we assume that the actor is enclosing one of the nouns, so we only check consent for the controller of each noun:]
+A default-consent rule (this is the fuck-playing consent rule):
+	If the noun is a body part:
+		Let P be the holder of the noun;
+		Unless P is the player:
+			If the fuck-play threshold of the noun is the unattainable arousal:
+				Say the uninterested response of P;
+				Deny consent;
+			If the fuck-play threshold of P is the unattainable arousal:
+				Say the uninterested response of P;
+				Deny consent;
+			Unless P is the fuck-play threshold of the noun or more:
+				Say the unaroused response of P;
+				Deny consent;
+			Unless P is the fuck-play threshold of P or more:
+				Say the unaroused response of P;
+				Deny consent;
+	Else if the noun is held:
+		Let P be the holder of the noun;
+		Unless P is the player:
+			If the fuck-play threshold of P is the unattainable arousal:
+				Say the uninterested response of P;
+				Deny consent;
+			Unless P is the fuck-play threshold of P or more:
+				Say the unaroused response of P;
+				Deny consent;
+	If the second noun is a body part:
+		Let P be the holder of the second noun;
+		Unless P is the player:
+			If the fuck-play threshold of the second noun is the unattainable arousal:
+				Say the uninterested response of P;
+				Deny consent;
+			If the fuck-play threshold of P is the unattainable arousal:
+				Say the uninterested response of P;
+				Deny consent;
+			Unless P is the fuck-play threshold of the second noun or more:
+				Say the unaroused response of P;
+				Deny consent;
+			Unless P is the fuck-play threshold of P or more:
+				Say the unaroused response of P;
+				Deny consent;
+	Else if the second noun is held:
+		Let P be the holder of the second noun;
+		Unless P is the player:
+			If the fuck-play threshold of P is the unattainable arousal:
+				Say the uninterested response of P;
+				Deny consent;
+			Unless P is the fuck-play threshold of P or more:
+				Say the unaroused response of P;
+				Deny consent;
+	Make no decision;
+
+A consent rule for an actor fucking something with (this is the default fucking consent rule): Anonymously abide by the fuck-playing consent rule;
+
+[Create a default stimulation rule:
+Due to prior checks, we assume that the actor is enclosing one of the nouns, so we don't stimulate the actor directly.
+We do need to make sure we don't stimulate a self-pleasuring actor twice.]
+A default-stimulation rule (this is the fuck-playing stimulation rule):
+	Let actor-stimulation be false;
+	If the noun is a body part:
+		Let P be the holder of the noun;
+		If P is the actor:
+			Let target arousal be the active fuck-play cap of the noun;
+			If the active fuck-play cap of P is greater than the target arousal:
+				Let target arousal be the active fuck-play cap of P;
+			Arouse P up to target arousal;
+			Let actor-stimulation be true;
+		Else:
+			Let target arousal be the passive fuck-play cap of the noun;
+			If the passive fuck-play cap of P is greater than the target arousal:
+				Let target arousal be the passive fuck-play cap of P;
+			Arouse P up to target arousal;
+	Else if the noun is held:
+		Let P be the holder of the noun;
+		If P is the actor:
+			Arouse P up to the active fuck-play cap of P;
+			Let actor-stimulation be true;
+		Else:
+			Arouse P up to the passive fuck-play cap of P;
+	If the noun is a body part:
+		Let P be the holder of the noun;
+		If P is the actor:
+			If actor-stimulation is true:
+				Stimulated; [Actor controls both nouns, and stimulation is already achieved.]
+			Let target arousal be the active fuck-play cap of the noun;
+			If the active fuck-play cap of P is greater than the target arousal:
+				Let target arousal be the active fuck-play cap of P;
+			Arouse P up to target arousal;
+		Else:
+			Let target arousal be the passive fuck-play cap of the noun;
+			If the passive fuck-play cap of P is greater than the target arousal:
+				Let target arousal be the passive fuck-play cap of P;
+			Arouse P up to target arousal;
+	Else if the noun is held:
+		Let P be the holder of the noun;
+		If P is the actor:
+			If actor-stimulation is true:
+				Stimulated; [Actor controls both nouns, and stimulation is already achieved.]
+			Arouse P up to the active fuck-play cap of P;
+		Else:
+			Arouse P up to the passive fuck-play cap of P;
+	Stimulated;
+
+A stimulation rule for an actor fucking something with (this is the default fucking stimulation rule): Anonymously abide by the fuck-playing stimulation rule;
+
+Part 5.2.3 - Body Part Integration
+
+[Status: Complete
+Some of the template body parts should have different arousal thresholds and caps.
+We set them all explicitly, even if some are the same as the default values.]
+
+Chapter 5.2.3a - Ass
+
+The soft-play threshold of an ass is usually slightly aroused.
+The active soft-play cap of an ass is usually very aroused.
+The passive soft-play cap of an ass is usually very aroused.
+
+The rough-play threshold of an ass is usually very aroused.
+The active rough-play cap of an ass is usually very aroused.
+The passive rough-play cap of an ass is usually very aroused.
+
+The oral-play threshold of an ass is usually aroused.
+The active oral-play cap of an ass is usually aroused.
+The passive oral-play cap of an ass is usually very aroused.
+
+The fuck-play threshold of an ass is usually very aroused.
+The active fuck-play cap of an ass is usually very aroused.
+The passive fuck-play cap of an ass is usually very aroused.
+
+Chapter 5.2.3b - Breasts
+
+The soft-play threshold of a pair of breasts is usually aroused.
+The active soft-play cap of a pair of breasts is usually very aroused.
+The passive soft-play cap of a pair of breasts is usually very aroused.
+
+The rough-play threshold of a pair of breasts is usually very aroused.
+The active rough-play cap of a pair of breasts is usually very aroused.
+The passive rough-play cap of a pair of breasts is usually very aroused.
+
+The oral-play threshold of a pair of breasts is usually aroused.
+The active oral-play cap of a pair of breasts is usually very aroused.
+The passive oral-play cap of a pair of breasts is usually very aroused.
+
+The fuck-play threshold of a pair of breasts is usually aroused.
+The active fuck-play cap of a pair of breasts is usually very aroused.
+The passive fuck-play cap of a pair of breasts is usually very aroused.
+
+Chapter 5.2.3c - Penis
+
+The soft-play threshold of a penis is usually aroused.
+The active soft-play cap of a penis is usually very aroused.
+The passive soft-play cap of a penis is usually orgasmic.
+
+The rough-play threshold of a penis is usually very aroused.
+The active rough-play cap of a penis is usually very aroused.
+The passive rough-play cap of a penis is usually very aroused.
+
+The oral-play threshold of a penis is usually aroused.
+The active oral-play cap of a penis is usually very aroused.
+The passive oral-play cap of a penis is usually orgasmic.
+
+The fuck-play threshold of a penis is usually very aroused.
+The active fuck-play cap of a penis is usually orgasmic.
+The passive fuck-play cap of a penis is usually orgasmic.
+
+Chapter 5.2.3d - Vagina
+
+The soft-play threshold of a vagina is usually aroused.
+The active soft-play cap of a vagina is usually very aroused.
+The passive soft-play cap of a vagina is usually orgasmic.
+
+The rough-play threshold of a vagina is usually very aroused.
+The active rough-play cap of a vagina is usually very aroused.
+The passive rough-play cap of a vagina is usually very aroused.
+
+The oral-play threshold of a vagina is usually aroused.
+The active oral-play cap of a vagina is usually very aroused.
+The passive oral-play cap of a vagina is usually orgasmic.
+
+The fuck-play threshold of a vagina is usually very aroused.
+The active fuck-play cap of a vagina is usually orgasmic.
+The passive fuck-play cap of a vagina is usually orgasmic.
 
 
 
