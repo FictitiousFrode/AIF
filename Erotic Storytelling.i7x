@@ -5,8 +5,7 @@ Still being developed."
 
 Volume 0 - New Verbs
 
-[These are the new verbs the framework uses; 
-We put this in it's own volume in case anyone needs to rewrite it for compatibility:]
+[These are the new verbs the framework uses; We put this in it's own volume in case anyone needs to rewrite it for compatibility:]
 
 Section - Dressing Related Verbs
 
@@ -46,13 +45,13 @@ Part 1.1.1 - Coverage
 
 Chapter 1.1.1a - Decency
 
-[Status: Complete]
+[Status: Complete
+Decency is a control mechanism the story author can employ to control what the player should be allowed to do.]
 
 A decency is a kind of value. The decencies are indecent, immodest, casual, formal and undefined decency.
-The specification of decency is "Decency is a measure of how much skin a person is showing, and is defined for cover areas and garments. Body parts will inherit the lowest decency of the areas it covers, but this can be 'upgraded' by covering with clothing.
-The decency of a person is a value that will be referenced more often than it's updated, so we cache it and force the actions that will change it to update the cached value using the provided method 'update decency for Person'. Note; It's possible to manually set the decency of a person to a different value than it would be calculated to be; this value would hold untill the next action that recalculates it.
-Rooms also have a decency called the decency threshold; this is compared to the player's decency before going somewhere, or taking off/shifting/ripping garments.
-Currently, the actions wearing, taking off, shifting, unshifting and ripping garments will recalculate the decency of the (former) wearer.
+The specification of decency is "Decency is a measure of what is socially acceptable in a given location. A room has a decency threshold (usually casual)
+For a person, decency is a measure of how much skin that person is showing, and is defined for cover areas and garments. Body parts will inherit the lowest decency of the areas it covers, but this can be 'upgraded' by covering with clothing. The decency of a person is a value that will be referenced more often than it's updated, so we cache it and force the actions that will change it to update the cached value using the provided method 'update decency for Person'. Note; It's possible to manually set the decency of a person to a different value than it would be calculated to be; this value would hold untill the next action that recalculates it. Currently, the actions wearing, taking off, shifting, unshifting and ripping garments will recalculate the decency of the (former) wearer. Before doing any of these actions (as well as going), the person's (updated) decency is compared to the threshold to see if the action should be allowed.
+The erotic actions also have a decency, which is also compared to the threshold. For many actions, this check is somewhat redundant as the action is only meaningful when indecent body parts are visible.
 The undefined decency is not intended to be used, but is needed to signal that the value hasn't been calculated yet."
 
 A person has a decency called the current decency. The current decency of a person is usually the undefined decency.
@@ -61,11 +60,13 @@ A room has a decency called the decency threshold. The decency threshold of a ro
 
 Chapter 1.1.1b - Cover Areas
 
-[Status: Complete]
+[Status: Complete
+Cover areas are the link between body parts and garments, and are used to defined visibility (with decency) and accesibility.]
 
 A cover area is a kind of value. The cover area are defined by the Table of Coverage.
 The specification of cover area is "Cover areas are the distinct, non-overlapping areas of the body that can be covered by garments. They are needed to provide the link between garments and body parts in order to provide decency, as not all areas on a person might be associated with a body part.
-A body part or garment is considered to be visible if atleast one of it's cover areas is not covered. Visibility of garments are handled by the concealed possessions rulebok, while body parts are obviously present even when covered and as such are handled by descriptions instead. See body parts for more details."
+A body part or garment is considered to be visible if atleast one of it's cover areas is not covered. Visibility of garments are handled by the concealed possessions rulebok, while body parts are obviously present even when covered and as such are handled by descriptions instead. See body parts for more details.
+The cover areas are defined by the Table of Coverage, which can be extended. NOTE: When altering the table, it's also important to update the body areas of people, which state which cover areas are applicable for that person."
 
 Table of Coverage
 Cover Area	Uncovered Decency (decency)
@@ -94,7 +95,9 @@ The body areas of a person is usually {head area, face area, shoulder area, arm 
 
 Chapter 1.1.1c - Body Part
 
-[Status: Complete]
+[Status: Complete
+Body parts are (as the name implies) parts of a body that the player can interact with.
+It's possible to use body parts directly, but most of the time you would use a specific body part from the template section.]
 
 A body part is a kind of thing.
 The specification of body part is "A body part represents a part of a person that the player can interact with. While they can be instantiated directly, it's usually better to use one of the templated subclasses.
@@ -116,7 +119,8 @@ Does the player mean examining a body part that is part of the player: It is unl
 
 Part 1.1.2 - Clothing
 
-[Status: Complete]
+[Status: Complete
+Garments are implementation of wearable clothing that can be layered over cover areas. They have several complex sub-sets, grouped herein by chapter.]
 
 A garment is a kind of thing.
 The specification of garment is "A garment is something a person can wear over their body parts and related cover areas. 
@@ -124,15 +128,15 @@ Garments are quite complex, with several distinct sub-features: Some garments ca
 
 A garment is always wearable.
 A garment has a decency called cloth decency. The cloth decency of a garment is usually casual.
-A garment can be transparent or opaque. A garment is usually opaque. [Determines visibility to underlying parts]
-A garment can be allow touching through or block touching through. A garment is usually block touching through.
-[NOTE: allow or block reaching (to access what is under) is replaced by shiftyness]
+A garment can be transparent or opaque. A garment is usually opaque. [Determines visibility to underlying parts.]
+A garment can be allow touching through or block touching through. A garment is usually block touching through. [Determines touchability of underlying parts.]
 
-A person has a list of garments called the preferred clothing.
+A person has a list of garments called the preferred clothing. [Used by dressing action.]
 
 Chapter 1.1.2a - Shifting and Ripping
 
-[Status: Complete]
+[Status: Complete
+Shifting and ripping are two related but separate ways to alter the covered areas of a garment. Shifting is temporary but ripping is permanent.]
 
 A shiftyness is a kind of value. The shiftyness are defined by the Table of Shift.
 The specification of shiftyness is "Shiftyness (which isn't really a word) are the positions that a garment can be shifted to in order to allow (usually) more access to underlying parts.
@@ -141,33 +145,12 @@ Shifting a garment also has the possibility of altering the areas covered (throu
 
 Table of Shift
 Shiftyness	describe shifting (text)	describe shifted (text)	describe unshifting (text)	describe unshifted (text)
-moveable	"[move]"	"moved aside"	"[move] back"	"in place"
+moveable	"[move] aside"	"moved aside"	"[move] back"	"in place"
 buttonable	"[unbutton]"	"unbuttoned"	"[button] up"	"buttoned"		
 zipable	"[unzip]"	"unzipped"	"[zip] up"	"zipped up"
 fastenable	"[unfasten]"	"unfastened"	"[fasten]"	"fastened"
 raisable	"[hike] up"	"hiked up"	"[pull] down"	"in place"
 lowerable	"[pull] down"	"pulled down"	"[pull] up"	"in place"
-
-[Deciding on:]
-To decide what text is the describe shifting of (S - a shiftyness):
-	Repeat with N running from 1 to the number of rows in the Table of Shift:
-		Choose row N in the Table of Shift;
-		If S is the Shiftyness entry, decide on the describe shifting entry;
-
-To decide what text is the describe unshifting of (S - a shiftyness):
-	Repeat with N running from 1 to the number of rows in the Table of Shift:
-		Choose row N in the Table of Shift;
-		If S is the Shiftyness entry, decide on the describe unshifting entry;
-
-To decide what text is the describe shifted of (S - a shiftyness):
-	Repeat with N running from 1 to the number of rows in the Table of Shift:
-		Choose row N in the Table of Shift;
-		If S is the Shiftyness entry, decide on the describe shifted entry;
-
-To decide what text is the describe unshifted of (S - a shiftyness):
-	Repeat with N running from 1 to the number of rows in the Table of Shift:
-		Choose row N in the Table of Shift;
-		If S is the Shiftyness entry, decide on the describe unshifted entry;
 
 [Saying:]
 To say describe shifting of (S - a shiftyness):
@@ -271,6 +254,12 @@ Before printing the name of something (called D): now D is discovered.
 Book 1.2 - Functionality
 
 Chapter 1.2.0a - Startup Procedures
+
+Section - Info/Warning Screen
+
+[TODO]
+
+Section - Initiation
 
 When play begins (this is the initiate erotic storytelling rule):
 	[Set correct pronouns for body parts; the default is her]
@@ -381,6 +370,16 @@ To decide whether (P - a body part) can be seen:
 			If cloth is opaque and A is listed in the modified covered areas of cloth:
 				Decide no;
 	
+To decide which list of garments is concealing vision of (P - a body part):
+	Let concealers be a list of garments;
+	Let clothing be the list of garments worn by P;
+	Sort clothing in reverse clothing layer order;
+	Repeat with cloth running through clothing:
+		Repeat with A running through the cover locations of P:
+			If cloth is opaque and A is listed in the modified covered areas of cloth:
+				Add cloth to concealers, if absent;
+	Decide on concealers;
+
 To decide whether (P - a body part) can be touched:
 	Let clothing be the list of garments worn by the holder of P;
 	Sort clothing in reverse clothing layer order;
@@ -734,28 +733,28 @@ To decide which decency is exposed by ripping (G - a garment):
 Chapter 1.2.2e - Definitions
 
 Definition: A person is topless if the upper torso area can be seen for it.
-Definition: A person is bottomless if the crotch area can be seen for him.
-Definition: A person is nearly nude if the it is topless and it is bottomless.
-Definition: A person is nude if the it is not wearing any garments.
+Definition: A person is bottomless if the crotch area can be seen for it.
+Definition: A person is nearly nude if it is topless and it is bottomless.
+Definition: A person is nude if it is not wearing any garments.
 
 Part 1.2.3 - Visibility
 
-[Status: Mostly complete
+[Status: Complete
 Deals with determining which items are visible for the player, as well as custom descriptions.]
 
 Chapter 1.2.3a - Concealed Possessions
 
-Rule for deciding the concealed possessions of someone:
+A rule for deciding the concealed possessions of someone:
 	If the particular possession is discovered, no;
 	If the particular possession is a garment (called G):
 		If G can be seen, no;
 		Else yes;
-	No;
+	Make no decision;[Defer to other rules]
 
 Chapter 1.2.3b - Examining Body Parts
 
 The examining body parts rule is listed after the standard examining rule in the carry out examining rulebook.
-Carry out an actor examining (this is the examining body parts rule):
+Carry out examining (this is the examining body parts rule):
 	If noun is a body part:
 		If noun can be seen:
 			If noun provides the property visible description and the visible description of the noun is not the default value of text:
@@ -769,7 +768,7 @@ Carry out an actor examining (this is the examining body parts rule):
 Chapter 1.2.3c - Examining Garments
 
 The examining garments rule is listed after the standard examining rule in the carry out examining rulebook.
-Carry out an actor examining (this is the examining garments rule):
+Carry out examining (this is the examining garments rule):
 	If noun is a garment:
 		If noun provides the property ripped and noun is ripped:
 			If noun provides the property ripped description and the ripped description of the noun is not the default value of text:
@@ -815,7 +814,7 @@ To force strip (P - a person):
 
 [Forces a person to be wearing a given list of items (and only those!), taking off anything else being worn. It ignores all rules, but will update decency.
 Use with caution!]
-To force dress (P - a person) in (L - a list of things):
+To force dress (P - a person) in (L - a list of garments):
 	Let clothing be the list of things worn by P;
 	Repeat with cloth running through clothing:
 		If cloth is not listed in L:
@@ -829,6 +828,8 @@ To force dress (P - a person) in (L - a list of things):
 
 Book 1.3 - (Un-) Dressing
 
+[This book deals with the player actions related to changing clothes.]
+
 Part 1.3.1 - Wearing Garments
 
 [Status: Complete
@@ -837,48 +838,54 @@ See also the consent and arousal sections.]
 
 Chapter 1.3.1a - Check
 
-[For each area the noun covers, get the blockers. If the layer of all those less than the layer of what's being put on, it's ok.]
 Check an actor wearing something (This is the check wearing garments rule):
 	If the noun is a garment (called G):
-		If G can be worn by the actor:
-			Continue the action;
-		Let B be the preventing wearing of G by the actor;
-		If the player is the actor:
-			Say "[We] [can't] wear [noun] on top of [B]." (A);
-		If the player can see the actor and the action is not silent:
-			Say "[The actor] [can't] wear [noun] on top of [B]." (B);
-		Stop the action;
+		Unless G can be worn by the actor:
+			Let B be the preventing wearing of G by the actor;
+			If the player is the actor:
+				Say "[We] [can't] wear [noun] on top of [B]." (A);
+			If the player can see the actor and the action is not silent:
+				Say "[The actor] [can't] wear [noun] on top of [B]." (B);
+			Stop the action;
+
+Check an actor wearing something (This is the check garment size rule):
+	If the noun provides the property clothing size:
+		If the clothing size of noun is not the clothing size of the actor:
+			If the player is the actor:
+				Say "[We] [can't] wear [noun], [it's] the wrong size." (A);
+			If the player can see the actor and the action is not silent:
+				Say "[The actor] [can't] wear [noun], [it's] the wrong size." (B);
+			Stop the action;
 
 Chapter 1.3.1b - Carry Out
 
 Carry out an actor wearing (this is the wearing garments rule):
-	If the noun is a garment (called G):
+	If the noun is a garment:
 		Update decency for the actor;
-[The modified wearing rule substitutes for the standard wearing rule.
-Carry out an actor wearing (this is the modified wearing rule):
-	Now the actor wears the noun;
-	If the noun is a garment (called G):
-		Update decency for the actor;]
 
 Part 1.3.2 - Taking Off Garments
 
 [Status: Complete.
 For an actor taking off their own garments, we can use the standard taking off action, but add some checks and replace the carry out rule.
+The drop undressed garments property of a person decided if the items taken off a dropped or kept by the actor.
+Part 1.3.3 deals with an actor taking someone elses clothes.
 See also the consent and arousal sections.]
+
+A person can be keep clothes after undress. A person is usually keep clothes after undress.
+[TODO: Remake this into clothing behavior rules]
 
 Chapter 1.3.2a - Check
 
 [Make sure that garments that are covered can't be taken off.]
 Check an actor taking off something (this is the can't take off covered items rule):
 	If noun is a garment (called G):
-		If G can be taken off:
-			Continue the action;
-		Let blockers be the preventing taking off G;
-		If the player is the actor:
-			Say "[We] [can't] wear [noun] on top of [blockers]." (A);
-		If the player can see the actor and the action is not silent:
-			Say "[The actor] [can't] wear [noun] on top of [blockers]." (B);
-		Stop the action;
+		Unless G can be taken off:
+			Let blockers be the preventing taking off G;
+			If the player is the actor:
+				Say "[We] [can't] wear [noun] on top of [blockers]." (A);
+			If the player can see the actor and the action is not silent:
+				Say "[The actor] [can't] wear [noun] on top of [blockers]." (B);
+			Stop the action;
 
 Check an actor taking off something (this is the can't take off in public rule):
 	Let L be the location of the actor;
@@ -896,6 +903,7 @@ The modified taking off rule substitutes for the standard taking off rule.
 Carry out an actor taking off (this is the modified taking off rule):
 	Let wearer be the holder of the noun;
 	Now the actor carries the noun;
+	If actor is not keep clothes after undress, silently try the actor dropping the noun;
 	If the noun is a garment (called G):
 		If G is shifted, now G is unshifted;
 		Update decency for the wearer;
@@ -920,16 +928,15 @@ Check an actor removing something from (this is the revised can't remove from pe
 
 The revised can't take people's possessions rule substitutes for the can't take people's possessions rule.
 Check an actor taking (this is the revised can't take people's possessions rule):
-	If the noun is a garment and the noun is worn:
-		Continue the action;
-	Let the local ceiling be the common ancestor of the actor with the noun;
-	Let the owner be the not-counting-parts holder of the noun;
-	While the owner is not nothing and the owner is not the local ceiling:
-		If the owner is a person:
-			If the actor is the player:
-				Say "[regarding the noun][Those] [seem] to belong to [the owner]." (A);
-			Stop the action;
-		Let the owner be the not-counting-parts holder of the owner;
+	Unless the noun is a garment and the noun is worn:
+		Let the local ceiling be the common ancestor of the actor with the noun;
+		Let the owner be the not-counting-parts holder of the noun;
+		While the owner is not nothing and the owner is not the local ceiling:
+			If the owner is a person:
+				If the actor is the player:
+					Say "[regarding the noun][Those] [seem] to belong to [the owner]." (A);
+				Stop the action;
+			Let the owner be the not-counting-parts holder of the owner;
 
 Section - Implementing Taking
 
@@ -940,9 +947,10 @@ Check an actor taking a garment (this is the can't take covered items rule):
 The taking garments rule is listed first in the carry out taking rulebook.
 Carry out an actor taking a garment (called G) (this is the taking garments rule):
 	If G is worn:
+		Let wearer be the holder of G;
 		Now the actor carries G;
 		If G is shifted, now G is unshifted;
-		Update decency for the holder of G;
+		Update decency for the wearer;
 
 Part 1.3.4 - Dressing
 
@@ -1122,13 +1130,12 @@ Does the player mean shifting a unshifted garment: It is likely.
 Chapter 1.4.1b - Check
 
 Check an actor shifting (this is the can only shift shifty items rule):
-	If the noun provides the property shiftable and the noun is shiftable and the noun provides the property shiftyness:
-		continue the action;
-	If the actor is the player:
-		Say "[We] [can't] find a way to do that to [the noun]." (A);
-	Else if the player can see the actor and the action is not silent:
-		Say "[The Actor] [can't] find a way to do that to [the noun]." (B);
-	Stop the action;
+	Unless the noun provides the property shiftable and the noun is shiftable and the noun provides the property shiftyness:
+		If the actor is the player:
+			Say "[We] [can't] find a way to do that to [the noun]." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The Actor] [can't] find a way to do that to [the noun]." (B);
+		Stop the action;
 
 Check an actor shifting (this is the can't shift ripped items rule):
 	If the noun provides the property ripped and the noun is ripped:
@@ -1156,14 +1163,13 @@ Check an actor shifting (this is the can only shift what's worn rule):
 
 Check an actor shifting (this is the can't shift covered items rule):
 	If noun is a garment (called G):
-		If G can be shifted:
-			Continue the action;
-		Let blockers be the preventing shifting of G;
-		If the player is the actor:
-			Say "[We] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (A);
-		If the player can see the actor and the action is not silent:
-			Say "[The actor] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (B);
-		Stop the action;
+		Unless G can be shifted:
+			Let blockers be the preventing shifting of G;
+			If the player is the actor:
+				Say "[We] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (A);
+			If the player can see the actor and the action is not silent:
+				Say "[The actor] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (B);
+			Stop the action;
 
 Check an actor shifting (this is the can't shift in public rule):
 	Let L be the location of the actor;
@@ -1242,13 +1248,12 @@ Does the player mean shifting a unshifted garment: It is unlikely.
 Chapter 1.4.2b - Check
 
 Check an actor unshifting (this is the can only unshift shifty items rule):
-	If the noun provides the property shiftable and the noun is shiftable and the noun provides the property shiftyness:
-		continue the action;
-	If the actor is the player:
-		Say "[We] [can't] find a way to do that to [the noun]." (A);
-	Else if the player can see the actor and the action is not silent:
-		Say "[The Actor] [can't] find a way to do that to [the noun]." (B);
-	Stop the action;
+	Unless the noun provides the property shiftable and the noun is shiftable and the noun provides the property shiftyness:
+		If the actor is the player:
+			Say "[We] [can't] find a way to do that to [the noun]." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The Actor] [can't] find a way to do that to [the noun]." (B);
+		Stop the action;
 
 Check an actor shifting (this is the can only unshift what's already shifted rule):
 	If the noun is not shifted:
@@ -1260,14 +1265,13 @@ Check an actor shifting (this is the can only unshift what's already shifted rul
 
 Check an actor shifting (this is the can't unshift covered items rule):
 	If noun is a garment (called G):
-		If G can be shifted:
-			Continue the action;
-		Let blockers be the preventing shifting of G;
-		If the player is the actor:
-			Say "[We] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (A);
-		If the player can see the actor and the action is not silent:
-			Say "[The actor] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (B);
-		Stop the action;
+		Unless G can be shifted:
+			Let blockers be the preventing shifting of G;
+			If the player is the actor:
+				Say "[We] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (A);
+			If the player can see the actor and the action is not silent:
+				Say "[The actor] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (B);
+			Stop the action;
 
 Chapter 1.4.2c - Carry Out
 		
@@ -1300,23 +1304,21 @@ Chapter 1.4.2b - Check
 
 Check an actor ripping (this is the can't rip covered items rule):
 	If noun is a garment (called G):
-		If G can be ripped:
-			Continue the action;
-		Let blockers be the preventing ripping of G;
-		If the player is the actor:
-			Say "[We] [can't] [rip] apart [noun] when it's covered by [blockers]." (A);
-		If the player can see the actor and the action is not silent:
-			Say "[The actor] [can't] [rip] apart [noun] when it's covered by [blockers]." (B);
-		Stop the action;
+		Unless G can be ripped:
+			Let blockers be the preventing ripping of G;
+			If the player is the actor:
+				Say "[We] [can't] [rip] apart [noun] when it's covered by [blockers]." (A);
+			If the player can see the actor and the action is not silent:
+				Say "[The actor] [can't] [rip] apart [noun] when it's covered by [blockers]." (B);
+			Stop the action;
 
 Check an actor ripping (this is the can only rip rippable items rule):
-	If the noun provides the property rippable and the noun is rippable:
-		continue the action;
-	If the actor is the player:
-		Say "[regarding the noun][They're] [are] too strong to rip apart." (A);
-	Else if the player can see the actor and the action is not silent:
-		Say "[regarding the noun][They're] [are] too strong to rip apart." (B);
-	Stop the action;
+	Unless the noun provides the property rippable and the noun is rippable:
+		If the actor is the player:
+			Say "[regarding the noun][They're] [are] too strong to rip apart." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[regarding the noun][They're] [are] too strong to rip apart." (B);
+		Stop the action;
 
 Check an actor shifting (this is the can only rip once rule):
 	If the noun is ripped:
@@ -1366,50 +1368,250 @@ Report an actor ripping (this is the standard report ripping rule):
 
 Volume 2 - Actors
 
-Book 2.1 - Describing
+[This volume deals with fleshing out actors.
+The first book deals with automating behavior to make actors seem more life-like.
+The second book deals with ways to automatically flesh out the description of people.
+The third book is an attempt at an improved conversation system.
+The last book deals with posturing.]
 
-[This part deals with describing both the player and other actors.]
-Report examining someone: say "[The noun] is [if the noun is wearing something]wearing [a list of unconcealed things worn by the noun] and [end if]carrying [a list of unconcealed things carried by the noun]."
+Book 2.1 - Behavior
 
-Part 2.1.1 - Examining People
+[An actor can have three levels of behavior:
+Idle: Messages that are printed when the actor is not actively engaged in something. These are only processed if the player can see the actor.
+Planned: Actions that the actor seeks to perform, but which will be postponed if they are engaged with someone.
+Urgent: Actions that the actor urgently seek to perform, even if engaged with someone.]
 
-[NOTE: List of text we want printed:
-	Introduction - activity
-	Regular description (who it is, etc)
-	Describe body parts and garments
-	List visible things carried, not worn
-	
-]
+Part 2.1.1 - Concepts
 
-[The examining people rule is listed after the standard examining rule in the carry out examining rulebook.
+[Status:
+This part deals with the underlying concepts needed to make behavior processing possible]
+
+A person can be script-enabled or script-disabled. A person is usually script-disabled.
+
+[Priority determines which persons gets to act first.]
+A person has a number called priority.
+
+Chapter 2.1.1a - Occupied Flag
+
+[This flag should be set whenever the person is interacted with by the player (or another actor), and will suppress their behavior for the rest of that turn.]
+A person can be occupied or unoccupied. A person is usually unoccupied.
+
+Before asking someone (called P) to try doing something:
+	Now P is occupied;
+	Continue the action;
+
+Before doing something to someone (called P):
+	Now P is occupied;
+	Continue the action;
+
+Before doing something to a body part (called B):
+	If B is part of a person (called P):
+		Now P is occupied;
+	Continue the action;
+
+Before doing something to a garment (called G):
+	If G is worn by person (called P):
+		Now P is occupied;
+	Continue the action;
+
+Part 2.1.2 - Rulebooks
+
+[Status:
+We insert a rule into the turn sequence rulebook that's responsible for calling the script rules for each person.
+Exactly at which point it should be inserted can be argued, but as we want this to emulate the every turn rules, we insert it just before. We delay clearing the occupied flag untill after the every turn stage, so that the flag is available for every turn rules.]
+
+Chapter 2.1.2a - Turn Sequence
+
+The scripting stage rule is listed before the every turn stage rule in the turn sequence rules.
+The scripting cleanup rule is listed after the every turn stage rule in the turn sequence rules.
+
+This is the scripting stage rule:
+	Let actors be the list of all script-enabled persons;
+	Sort actors in reverse priority order;
+	[First, allow actors to perform any urgent actions]
+	Repeat with person running through actors:
+		Follow the urgent behavior rulebook for person;
+		If the rule succeeded, now the person is occupied;
+	[Secondly, planned actions are performed]
+	Repeat with person running through actors:
+		If person is unoccupied:
+			Follow the planned behavior rulebook for person;
+			If the rule succeeded, now the person is occupied;
+	[Lastly, print idle messages]
+	Repeat with person running through actors:
+		If person is unoccupied and the player can see the person:
+			Follow the idle behavior rulebook for person;
+			If the rule succeeded, now the person is occupied;
+
+This is the scripting cleanup rule:
+	Repeat with person running through persons:
+		Now person is unoccupied;
+
+Chapter 2.1.2b - Rulebooks
+
+The urgent behavior rulebook is a person based rulebook.
+The planned behavior rulebook is a person based rulebook.
+The idle behavior rulebook is a person based rulebook.
+
+Book 2.2 - Describing
+
+[This book deals with describing both the player and other actors.]
+
+Part 2.2.1 - Examining People
+
+[In order to easily expand upon how people are described when examining, we create a new rulebook that's responsible for printing a description, and then hooking this up in the carry out examining rules. In order to create generic description rules, we also have a rulebook for determining how notable a given feature of a person is.]
+
+The examining people rule is listed after the standard examining rule in the carry out examining rulebook.
 Carry out an actor examining (this is the examining people rule):
 	If noun is a person:
-		Let clothing be the list of garments worn by the noun;]
-[		If noun provides the property visible description and the visible description of the noun is not the default value of text:
-				Say "[visible description of the noun][line break]";
-				Now examine text printed is true;]
+		Follow the description generation rules for the noun;
+		Unless rule failed, now examine text printed is true;
+
+[The short description should be a short (3-4) word summary of the body part, that will be used in list printing.]
+A body part has some text called short description.
+
+Part  2.2.2 - Description Generation Rules
+
+Chapter 2.2.2a - Rulebooks
+
+[The description generation rules is the rulebook consulted to generate a description, and is the one authors are to use.]
+The description generation rules are a person based rulebook.
+The description generation rules have outcomes undescribable (failure), undescribed (no outcome), and described (success  - the default).
+
+[The default description generation rules are called by the generate default descriptions rule.]
+The default description generation rules are a person based rulebook.
+The default description generation rules have outcomes undescribable (failure), undescribed (no outcome), and described (success  - the default).
+
+The generate specific status description rule is listed first in the default description generation rules. [2]
+The generate specific description rule is listed first in the default description generation rules. [1]
+
+The generate grouped description rule is listed last in the default description generation rules. [3]
+The generate script description rule is listed last in the default description generation rules. [4]
+
+[The description notability rules are used by some of the default description generation rules to determine how something should be ]
+The description notability rules are a thing based rulebook.
+The description notability rules have outcomes hidden (failure), unnotable (failure), unknown (no outcome - the default), grouped (success) and distinct (success).
 
 
+Chapter 2.2.2b - Default Description Generation
 
+[This rulebook gets called on after the normal description of the person is printed, so it should generate the interesting points of the person that the description didn't touch upon. We do this by sub-calling four specific rules.
+* The distinctly notable body parts, worn garments and held items.
+* Any other distinctly notable status-features.
+* A list of you-can-also-see grouped features.
+* What the person is currently doing.]
 
+A description generation rule for a person (called P) (this is the generate default descriptions rule):
+	Follow the default description generation rules for P;
 
+Section - Notable features
 
+[The purpose of this rule is to list out any notable features of a person, such as body parts, worn clothing and carried possessions.]
+A default description generation for a person (called P) (This is the generate specific description rule):
+	[Set up lists for holding the descriptions we want printed:]
+	Let notable body part descriptions be a list of text;
+	Let notable clothing descriptions be a list of text;
+	Let notable possession descriptions be a list of text;
+	[Populate the lists, based on the description notability rules:]
+	Let parts be the list of body parts enclosed by P;
+	Repeat with part running through parts:
+		Follow the description notability rules for part;
+		If the outcome of the rulebook is the distinct outcome:
+			If part provides the property short description 
+			and the short description of the part is not the default value of text:
+				Add short description of part to the notable body part descriptions;
+			Else:
+				Add the printed name of the part to the notable body part descriptions;
+	Let clothing be the list of things worn by P;
+	Repeat with cloth running through clothing:
+		Follow the description notability rules for cloth;
+		If the outcome of the rulebook is the distinct outcome:
+			If cloth provides the property short description 
+			and the short description of the cloth is not the default value of text:
+				Add short description of cloth to the notable clothing descriptions;
+			Else:
+				Add the printed name of the cloth to the notable clothing descriptions;
+	Let possessions be the list of things carried by P;
+	Repeat with possession running through possessions:
+		Follow the description notability rules for possession;
+		If the outcome of the rulebook is the distinct outcome:
+			If possession provides the property short description 
+			and the short description of the possession is not the default value of text:
+				Add short description of possession to the notable possession descriptions;
+			Else:
+				Add the printed name of the possession to the notable possession descriptions;
+	[Convert the lists to printed text. We try to combine clothing with carried items.]
+	If notable body part descriptions is non-empty:
+		Say "[Regarding P][They] [have] [notable body part descriptions].";
+	If notable clothing descriptions is non-empty:
+		If notable possession descriptions is non-empty:
+			Say "[Regarding P][They] [are] wearing [notable body part descriptions] and carrying [notable possession descriptions].";
+		Else:
+			Say "[Regarding P][They] [are] wearing [notable body part descriptions].";
 
+Section - Grouped features
 
-Book 2.3 - Responsiveness
+[The purpose of this rule is to list out any other features of a person (you can also see...), such as body parts, worn clothing and carried possessions.]
+A default description generation rule for a person (called P) (this is the generate grouped description rule):
+	[Set up lists for holding the descriptions we want printed:]
+	Let grouped body part descriptions be a list of text;
+	Let grouped clothing descriptions be a list of text;
+	Let grouped possession descriptions be a list of text;
+	[Populate the lists, based on the description notability rules:]
+	Let parts be the list of body parts enclosed by P;
+	Repeat with part running through parts:
+		Follow the description notability rules for part;
+		If the outcome of the rulebook is the grouped outcome:
+			Add the printed name of the part to the grouped body part descriptions;
+	Let clothing be the list of things worn by P;
+	Repeat with cloth running through clothing:
+		Follow the description notability rules for cloth;
+		If the outcome of the rulebook is the grouped outcome:
+			Add the printed name of the cloth to the grouped clothing descriptions;
+	Let possessions be the list of things carried by P;
+	Repeat with possession running through possessions:
+		Follow the description notability rules for possession;
+		If the outcome of the rulebook is the grouped outcome:
+			Add the printed name of the possession to the grouped possession descriptions;
+	[Convert the lists to printed text:]
+	If grouped body part descriptions is non-empty:
+		Say "[We] also note that [regarding P][they] [have] [grouped body part descriptions].";
+	If grouped clothing descriptions is non-empty:
+		If grouped possession descriptions is non-empty:
+			Say "[Regarding P][They] [are] wearing [grouped body part descriptions] and carrying [grouped possession descriptions].";
+		Else:
+			Say "[Regarding P][They] [are] wearing [grouped body part descriptions].";
 
-Part 2.2.2 - Remembering Past Actions
+Section - Status summary
 
-[
-Lovers
-Current Lover
-Current Action
-]
+[The purpose of this rule is to list any noteworthy statuses of a person; including (but not limited to) nudenes/topless, sperming, penetrations, etc.]
+A default description generation rule for a person (called P) (this is the generate specific status description rule):
+	Let status text be the default value of text;
+	[First, a summary of clothing state:]
+	If P is nude:
+		Let status text be "[Regarding P][They] [are] completely naked";
+	Else if P is nearly nude:
+		Let status text be "[Regarding P][They] [are] almost naked";
+	Else if P is topless:
+		Let status text be "[Regarding P][They] [are] topless";
+	Else if P is bottomless:
+		Let status text be "[Regarding P][Their] nether regions are on display";
+	[TODO: Expand to include sperming and penetrations]
+	If status text is the default value of text:
+		Undescribed;
+	Else:
+		Say "[status text].";
 
+Section - State summary
+
+[The purpose of this rule is to give a quick status of what the person is doing, or rather the state snapshot of their AI script.]
+A default description generation rule for a person (called P) (this is the generate script description rule):
+	[TODO]
+	Undescribed;
 
 Book 2.3 - Conversation
 
-
+Book 2.4 - Posturing
 
 
 Volume 3 - Erotic Actions
@@ -1483,7 +1685,8 @@ Part 3.1.4 - Body Part Patterns
 
 Chapter 3.1.4a - Erectable
 
-[A body part has a an arousal called the erection threshold.
+[TODO
+A body part has a an arousal called the erection threshold.
 Definition: A thing is erectable if it provides the property erection threshold and the erection threshold is not the default value of number.
 Definition: A body part is erect if it provides the property erection threshold and the erection threshold is not greater than the arousal of the holder of the body part.]
 
@@ -1500,6 +1703,8 @@ The specification of the touching action is "Touching is just that, touching som
 In the Standard Rules there are no check touching rules, since touchability is already a requirement of the noun for the action anyway, and no carry out rules because nothing in the standard Inform world model reacts to a mere touch - though report rules do mean that attempts to touch other people provoke a special reply.
 In Erotic Storytelling however, touching is 'passive' touching where the player softly feels the target, while the related rubbing action is 'active' touching where the player actively massages the target."
 
+The touching decency is initially immodest.
+
 Chapter 3.2.1a - Understanding
 
 Understand "caress [something]" and "feel [something]" as touching.
@@ -1508,8 +1713,6 @@ Does the player mean touching a body part: It is likely.
 Does the player mean touching a person: It is unlikely.
 Does the player mean touching the player: It is very unlikely.
 Does the player mean touching something that is part of the player: It is very unlikely.
-
-The touching decency is initially immodest.
 
 Chapter 3.2.1b - Check
 
@@ -1523,9 +1726,7 @@ Check an actor touching (this is the touching specificity rule):
 
 Check an actor touching (This is the control what can be touched rule):
 	If the noun is a body part or noun is a garment: [We don't want to block "normal" things here]
-		If the noun provides the property touchable and the noun is touchable:
-			Continue the action;
-		Else:
+		Unless the noun provides the property touchable and the noun is touchable:
 			If the actor is the player:
 				Say "[We] [can't] touch that." (A);
 			Else if the player can see the actor and the action is not silent:
@@ -1534,9 +1735,7 @@ Check an actor touching (This is the control what can be touched rule):
 
 Check an actor touching (this is the touching reachability rule):
 	If the noun is a body part or noun is a garment:
-		If noun can be touched:
-			Continue the action;
-		Else:
+		Unless noun can be touched:
 			If the player is the actor:
 				Say "[We] [can't] reach that." (A);
 			Else if the player can see the actor:
@@ -1571,6 +1770,8 @@ Rubbing is already covered in the Standard Rules, but it's disabled by default. 
 The specification of the rubbing action is "The Standard Rules define this action in only a minimal way, blocking it with a check rule which stops it in all cases. It exists so that before or instead rules can be written to make it do interesting things in special cases. (Or to reconstruct the action as something more substantial, unlist the block rule and supply carry out and report rules, together perhaps with some further check rules.)
 For Erotic Story Actions, rubbing is intended for when the actor uses their hands to rub something (as opposed to the softer touch action), and reponds to commands like RUB ANNA, MASSAGE ANNA'S BREASTS, etc. It only works only body parts that are set to rubbable."
 
+The rubbing decency is initially immodest.
+
 Chapter 3.2.2a - Understanding
 
 Understand "massage [something]", "rub [something]", "fondle [something]" as rubbing. 
@@ -1579,8 +1780,6 @@ Does the player mean rubbing a body part: It is likely.
 Does the player mean rubbing a person: It is unlikely.
 Does the player mean rubbing the player: It is very unlikely.
 Does the player mean rubbing something that is part of the player: It is very unlikely.
-
-The rubbing decency is initially immodest.
 
 Chapter 3.2.2b - Check
 
@@ -1595,9 +1794,7 @@ Check an actor rubbing (this is the rubbing specificity rule):
 
 Check an actor rubbing (This is the control what can be rubbed rule):
 	If the noun is a body part or noun is a garment:
-		If the noun provides the property rubbable and the noun is rubbable:
-			Continue the action;
-		Else:
+		Unless the noun provides the property rubbable and the noun is rubbable:
 			If the actor is the player:
 				Say "[We] [can't] rub that." (A);
 			Else if the player can see the actor and the action is not silent:
@@ -1606,9 +1803,7 @@ Check an actor rubbing (This is the control what can be rubbed rule):
 
 Check an actor rubbing (this is the rubbing reachability rule):
 	If the noun is a body part or noun is a garment:
-		If noun can be touched:
-			Continue the action;
-		Else:
+		Unless noun can be touched:
 			If the player is the actor:
 				Say "[We] [can't] reach that." (A);
 			Else if the player can see the actor:
@@ -1643,6 +1838,8 @@ Tickling is a new action. It takes into account that only other people's body pa
 Tickling is an action applying to one touchable thing.
 The specification of the tickling action is "Tease another person by tickling their body parts."
 
+The tickling decency is initially immodest.
+
 Chapter 3.2.3a - Understanding
 
 Understand "tickle [something]" as tickling. 
@@ -1650,8 +1847,6 @@ Understand "tickle [something]" as tickling.
 Does the player mean tickling something tickleable: It is very likely.
 Does the player mean tickling the player: It is very unlikely.
 Does the player mean tickling something that is part of the player: It is very unlikely.
-
-The tickling decency is initially immodest.
 
 Chapter 3.2.3b - Check
 
@@ -1672,9 +1867,7 @@ Check an actor tickling (This is the tickling specificity rule):
 		Stop the action;
 
 Check an actor tickling (This is the control what can be tickled rule):
-	If the noun provides the property tickleable and the noun is tickleable:
-		Continue the action;
-	Else:
+	Unless the noun provides the property tickleable and the noun is tickleable:
 		If the actor is the player:
 			Say "[We] [can't] tickle that." (A);
 		Else if the player can see the actor and the action is not silent:
@@ -1683,9 +1876,7 @@ Check an actor tickling (This is the control what can be tickled rule):
 
 Check an actor tickling (this is the tickling reachability rule):
 	If the noun is a body part or noun is a garment:
-		If noun is touchable:
-			Continue the action;
-		Else:
+		Unless noun is touchable:
 			If the player is the actor:
 				Say "[We] [can't] reach that." (A);
 			Else if the player can see the actor:
@@ -1730,6 +1921,8 @@ Spanking is a new action. It takes into account that other people's body parts c
 Spanking is an action applying to one touchable thing.
 The specification of the spanking action is "Spanking is the act of hitting or slapping a person's body parts. Attempts to spank a person will redirect to the rear end."
 
+The spanking decency is initially indecent.
+
 Chapter 3.2.4a - Understanding
 
 Understand "spank [something]", "slap [something]", "smash [something]", "hit [something]", "punch [something]" and "thump [something]" as spanking.
@@ -1737,8 +1930,6 @@ Understand "spank [something]", "slap [something]", "smash [something]", "hit [s
 Does the player mean spanking something spankable: It is very likely.
 Does the player mean spanking the player: It is very unlikely.
 Does the player mean spanking something that is part of the player: It is very unlikely.
-
-The spanking decency is initially indecent.
 
 Chapter 3.2.4b - Check
 
@@ -1751,9 +1942,7 @@ Check an actor spanking (This is the spanking specificity rule):
 		Stop the action;
 
 Check an actor spanking (This is the control what can be spanked rule):
-	If the noun provides the property spankable and the noun is spankable:
-		Continue the action;
-	Else:
+	Unless the noun provides the property spankable and the noun is spankable:
 		If the actor is the player:
 			Say "[We] [can't] spank that." (A);
 		Else if the player can see the actor and the action is not silent:
@@ -1762,9 +1951,7 @@ Check an actor spanking (This is the control what can be spanked rule):
 
 Check an actor spanking (this is the spanking reachability rule):
 	If the noun is a body part or the noun is a garment:
-		If noun is touchable:
-			Continue the action;
-		Else:
+		Unless noun is touchable:
 			If the player is the actor:
 				Say "[We] [can't] reach that." (A);
 			Else if the player can see the actor:
@@ -1809,6 +1996,8 @@ Pinching is a new action. It takes into account that only other people's body pa
 Pinching is an action applying to one touchable thing.
 The specification of the pinching action is "Tease another person by pinching their body parts."
 
+The pinching decency is initially immodest.
+
 Chapter 3.2.5a - Understanding
 
 Understand "pinch [something]", "squeeze [something]" as pinching. 
@@ -1816,8 +2005,6 @@ Understand "pinch [something]", "squeeze [something]" as pinching.
 Does the player mean pinching something pinchable: It is very likely.
 Does the player mean pinching the player: It is very unlikely.
 Does the player mean pinching something that is part of the player: It is very unlikely.
-
-The pinching decency is initially immodest.
 
 Chapter 3.2.5b - Check
 
@@ -1838,9 +2025,7 @@ Check an actor pinching (This is the pinching specificity rule):
 		Stop the action;
 
 Check an actor pinching (This is the control what can be pinched rule):
-	If the noun provides the property pinchable and the noun is pinchable:
-		Continue the action;
-	Else:
+	Unless the noun provides the property pinchable and the noun is pinchable:
 		If the actor is the player:
 			Say "[We] [can't] pinch that." (A);
 		Else if the player can see the actor and the action is not silent:
@@ -1849,9 +2034,7 @@ Check an actor pinching (This is the control what can be pinched rule):
 
 Check an actor pinching (this is the pinching reachability rule):
 	If the noun is a body part or noun is a garment:
-		If noun is touchable:
-			Continue the action;
-		Else:
+		Unless noun is touchable:
 			If the player is the actor:
 				Say "[We] [can't] reach that." (A);
 			Else if the player can see the actor:
@@ -1896,6 +2079,8 @@ Licking is a new action, used only on body parts but attempts to redirect from p
 Licking is an action applying to one touchable thing.
 The specification of the licking action is "This action is intended for when the actor uses their mouth on a body part. Trying to lick a person will try to find a better part of that person to lick."
 
+The licking decency is initially immodest.
+
 Chapter 3.2.6a - Understanding
 
 Understand "lick [something]" and "suck [something]" as licking. 
@@ -1904,8 +2089,6 @@ Does the player mean licking something lickable: It is very likely.
 Does the player mean licking a person: It is likely.
 Does the player mean licking the player: It is very unlikely.
 Does the player mean licking something that is part of the player: It is very unlikely.
-
-The licking decency is initially immodest.
 
 Chapter 3.2.6b - Check
 
@@ -1931,9 +2114,7 @@ Check an actor licking (This is the licking specificity rule):
 			Stop the action;
 
 Check an actor licking (This is the control what can be licked rule):
-	If the noun provides the property lickable and the noun is lickable:
-		Continue the action;
-	Else:
+	Unless the noun provides the property lickable and the noun is lickable:
 		If the actor is the player:
 			Say "[We] [can't] lick that." (A);
 		Else if the player can see the actor and the action is not silent:
@@ -1942,9 +2123,7 @@ Check an actor licking (This is the control what can be licked rule):
 
 Check an actor licking (this is the licking reachability rule):
 	If the noun is a body part or the noun is a garment:
-		If noun is accessible:
-			Continue the action;
-		Else:
+		Unless noun is accessible:
 			If the player is the actor:
 				Say "[We] [can't] reach that." (A);
 			Else if the player can see the actor:
@@ -1989,6 +2168,8 @@ Biting is a new action, used only on body parts, but attempts to bit something e
 Biting is an action applying to one touchable thing.
 The specification of the biting action is "This action is intended for when the actor bites on something. Attempts to bite something edible redirects to eating."
 
+The biting decency is initially indecent.
+
 Chapter 3.2.7a - Understanding
 
 Understand "bite [something]", "gnaw [something]" and "chomp [something]" as biting. 
@@ -1996,8 +2177,6 @@ Understand "bite [something]", "gnaw [something]" and "chomp [something]" as bit
 Does the player mean biting something biteable: It is very likely.
 Does the player mean biting the player: It is very unlikely.
 Does the player mean biting something that is part of the player: It is very unlikely.
-
-The biting decency is initially indecent.
 
 Chapter 3.2.7b - Check
 
@@ -2020,9 +2199,7 @@ Check an actor biting (This is the biting specificity rule):
 		Stop the action;
 
 Check an actor biting (This is the control what can be bitten rule):
-	If the noun provides the property biteable and the noun is biteable:
-		Continue the action;
-	Else:
+	Unless the noun provides the property biteable and the noun is biteable:
 		If the actor is the player:
 			Say "[We] [can't] bite that." (A);
 		Else if the player can see the actor and the action is not silent:
@@ -2031,9 +2208,7 @@ Check an actor biting (This is the control what can be bitten rule):
 
 Check an actor biting (this is the biting reachability rule):
 	If the noun is a body part or noun is a garment:
-		If noun is accessible:
-			Continue the action;
-		Else:
+		Unless noun is accessible:
 			If the player is the actor:
 				Say "[We] [can't] reach that." (A);
 			Else if the player can see the actor:
@@ -2072,12 +2247,14 @@ Report an actor biting (this is the report biting rule):
 
 Part 3.2.8 - Fucking It With
 
-[Status: Being implemented
+[Status: Complete
 Fucking it with is a new action with some complexity, and is the act of inserting something penetrating into something orificial.
 See also the person-oriented redirect actions.]
 
 Fucking it with is an action applying to one touchable thing and one thing.
 The specification of the fucking it with action is "Fucking it with is the action of putting something into something else. By default it expects to receive an orifice to put something penetrating into. See also the person-oriented actions 'fuck', 'assfuck' and 'titfuck' which redirect here."
+
+The fucking decency is initially indecent.
 
 Chapter 3.2.8a - Understanding
 
@@ -2087,8 +2264,6 @@ Understand "fuck [something penetrating] with [something orificial]" as fucking 
 Does the player mean fucking something with a something penetrating: it is likely.
 Does the player mean fucking something orificial with something: it is likely.
 Does the player mean fucking something with a something penetrating enclosed by the player: it is very likely.
-
-The fucking decency is initially indecent.
 
 Chapter 3.2.8b - Check
 
@@ -2182,6 +2357,8 @@ We replace the blocks with our own checks, taking into account that only other p
 The specification of the kissing action is "Possibly because Inform was originally written by an Englishman, attempts at kissing another person are normally blocked as being unrealistic or not seriously meant. So the Standard Rules simply block attempts to kiss people, but the action exists for rules to make exceptions.
 Erotic Storytelling replaces the existing checks that block kissing, replacing them with checks to see that only other people can be kissed, and attempts to kiss body parts are redirected to licking that part."
 
+The kissing decency is initially casual.
+
 Chapter 3.3.1a - Understanding
 
 Understand "kiss [body part]" as kissing.
@@ -2189,8 +2366,6 @@ Understand "kiss [body part]" as kissing.
 Does the player mean kissing a person: It is likely.
 Does the player mean kissing the player: It is very unlikely.
 Does the player mean kissing something that is part of the player: It is very unlikely.
-
-The kissing decency is initially casual.
 
 Chapter 3.3.1b - Check
 
@@ -2252,6 +2427,8 @@ Hugging is a new action. It takes into account that only other people can be hug
 Hugging is an action applying to one touchable thing.
 The specification of the hugging action is "Shows affection to another person by giving them a hug. Only other people can be hugged, hugging a body part redirects to touching."
 
+The hugging decency is initially formal.
+
 Chapter 3.3.2a - Understanding
 
 Understand "hug [something]" as hugging.
@@ -2259,8 +2436,6 @@ Understand "hug [something]" as hugging.
 Does the player mean hugging a person: It is likely.
 Does the player mean hugging the player: It is very unlikely.
 Does the player mean hugging something that is part of the player: It is very unlikely.
-
-The hugging decency is initially formal.
 
 Chapter 3.3.2b - Check
 
@@ -2317,6 +2492,8 @@ Part 3.3.3 - Dancing
 [Status: Complete; Consent and stimulation defered to later chapter
 Dancing with is a new action. It takes into account that only other people can be danced with, decency and consent/arousal, and handle action reporting.]
 
+The dancing decency is initially formal.
+
 Dancing is an action applying to one touchable thing.
 The specification of the dancing action is "Dancing with is the act of dancing with a someone, including dancing with yourself."
 
@@ -2328,8 +2505,6 @@ Understand "dance with [something]" as dancing.
 Does the player mean dancing a person: It is likely.
 Does the player mean dancing the player: It is very unlikely.
 Does the player mean dancing something that is part of something: It is very unlikely.
-
-The dancing decency is initially formal.
 
 Rule for supplying a missing noun while dancing (this is the dancing alone rule):
 	Now the noun is the person asked;
@@ -2497,22 +2672,6 @@ Check an actor titfucking (This is the titfucking redirect rule):
 		Say "[The actor] [can't] find a way to do that." (B);
 	Stop the action;
 
-Part 3.4.4 - Fingerfucking
-
-[TODO]
-
-Chapter 3.4.4a - Understanding
-
-Chapter 3.4.4b - Redirecting
-
-Part 3.4.5 - Masturbating
-
-[TODO]
-
-Chapter 3.4.5a - Understanding
-
-Chapter 3.4.5b - Redirecting
-
 Book 3.5 - Discrete Arousal
 
 [Status: Complete
@@ -2603,9 +2762,13 @@ Volume 4 - Support Systems
 
 [TODO:
 Help System
-Limits]
+Limits
+Completion Tracking
+Commentary System]
 	
 Volume 5 - Templates
+
+[This volume provides ready-to-use templates that can be used in a story.]
 
 Book 5.1 - Ready-to-Use Kinds
 
@@ -2802,7 +2965,7 @@ A shirt is usually rippable. The ripping revealed cover areas of a shirt is usua
 
 A dress is a kind of garment.
 The specification of a dress is "A dress covers the entire torso (front and back), as well as the arms/shoulders and thighs/legs. It is usually formal and normalwear. This means a sweater can be worn over it, but not a shirt under it. To swap this around, state that it is overwear instead. By default a dress can be unbuttoned to access the upper torso; to change this to make it raisable to access the crotch see the definition of minidress (you might also want to change default cover blocking).
-Note; Dresses go under boots, which might cause some issues."
+Note; Dresses go under boots, which might cause some issues if boots are modified to cover legs/thighs."
 A dress is usually normalwear.
 The cloth decency of dress is usually casual.
 The cover areas of a dress is usually {shoulder area, arm area, upper torso area, lower torso area, upper back area, lower back area, crotch area, thigh area, leg area}.
@@ -2920,7 +3083,8 @@ The cover areas of a pair of gloves is usually {hand area}.
 
 Part 5.1.3 - Furniture
 
-[Status: Awaiting implementation of posturing. TODO]
+[Status: Awaiting implementation of posturing.
+TODO]
 
 Book 5.2 - Discrete Arousal-based Consent and Stimulation
 
@@ -2949,21 +3113,122 @@ Oral-play:	Licking, kissing
 Fucking
 
 Each of these groups function in a similar manner:
-Consent is given if the actors have each other as (TODO) love-interests, and the current arousal of the actors are atleast the arousal threshold for the action group. For body parts, the lowest threshold of the part and the person it's attached to is taken into consideration.
+Consent is given if the actors have each other as love-interests, and the current arousal of the actors are atleast the arousal threshold for the action group. For body parts, the lowest threshold of the part and the person it's attached to is taken into consideration.
 Stimulation is similarly handled, being increased one level up to the cap for the group. For body parts, the higher of the person's and the body part's cap is used. There are two caps for each group, one for being the active participant and one for being the passive.
 
 Additionally, there's a check to see if the two actors want to interact with each other, which is used as a default deny rule.]
 
 Chapter 5.2.2a - General Requirements
 
-[TODO
-A person has a list of other actors they are willing to engage with. 
+[A person has a list of other actors they are willing to engage with. Make sure that all people potentially involved are listed in each others love interests.
 If the interactor is listed, make no decision in order to allow other rules to be consulted as well.]
 
+A person has a list of people called love interests.
+
+[Always check the love interests first.]
+The love interest consent rule is listed first in the consent rules.
+
+A consent rule (this is the love interest consent rule):
+	[Determine which people are involved]
+	Let first person be the actor;[TODO: This must be redone]
+	If the noun is a person:
+		Let first person be the noun;
+	Else if the noun is part of a person (called P):
+		Let first person be P;
+	Else if the noun is held by a person (called P):
+		Let first person be P;
+	Let second person be the actor;
+	If the second noun is a person:
+		Let second person be the second noun;
+	Else if the second noun is part of a person (called P):
+		Let second person be P;
+	Else if the second noun is held by a person (called P):
+		Let second person be P;
+	[Check love interests for actor]
+	Unless actor is the player:
+		If first person is a person and first person is not listed in the love interests of the actor:
+			Say the uninterested response of the actor;
+			Deny consent;
+		If second person is a person and second person is not listed in the love interests of the actor:
+			Say the uninterested response of the actor;
+			Deny consent;
+	[Check love interests for first person]
+	If first person is a person and first person is not the player:
+		If actor is not listed in the love interests of the first person:
+			Say the uninterested response of the first person;
+			Deny consent;
+		If second person is a person and second person is not listed in the love interests of the first person:
+			Say the uninterested response of the first person;
+			Deny consent;
+	[Check love interests for second person]
+	If second person is a person and second person is not the player:
+		If actor is not listed in the love interests of the actor:
+			Say the uninterested response of the second person;
+			Deny consent;
+		If first person is a person and first person is not listed in the love interests of the second person:
+			Say the uninterested response of the second person;
+			Deny consent;
+	[Defer to other rules]
+	Make no decision;
 
 Chapter 5.2.2b - Clothing
 
-[TODO:]
+[Clothing threshold is the minimum arousal at which a person or a garment will (un-)dress.]
+A person has an arousal called the clothing threshold. The clothing threshold of a person is usually slightly aroused.
+A garment has an arousal called the clothing threshold. The clothing threshold of a garment is usually slightly aroused.
+
+Section - Wearing
+
+Check an actor wearing something (This is the wearing requires consent rule):
+	If the noun is a garment (called G):
+		Abide by the consent rules;
+
+A default-consent rule (this is the dressing consent rule):
+	If the noun is a garment (called G):
+		Unless the actor is the player:
+			If the clothing threshold of the actor is the unattainable arousal
+			or the clothing threshold of G is the unattainable arousal:
+				Say the uninterested response of the actor;
+				Deny consent;
+			Unless the actor is the clothing threshold of the actor or more
+			and the actor is the clothing threshold of G or more:
+				Say the unaroused response of the actor;
+				Deny consent;
+	Give consent;
+
+A consent rule for an actor wearing something (this is the dressing default consent rule): Anonymously abide by the dressing consent rule;
+
+Section - Taking (Off)
+
+Check an actor taking something (This is the taking off requires consent rule):
+	If the noun is a garment (called G) and the noun is worn:
+		Abide by the consent rules;
+
+A default-consent rule (this is the undressing consent rule):
+	If the noun is a garment (called G) and G is worn:
+		Let P be the holder of G;
+		Unless the actor is the player:
+			If the clothing threshold of the actor is the unattainable arousal
+			or the clothing threshold of G is the unattainable arousal:
+				Say the uninterested response of the actor;
+				Deny consent;
+			Unless the actor is the clothing threshold of the actor or more
+			and the actor is the clothing threshold of G or more:
+				Say the unaroused response of the actor;
+				Deny consent;
+		Unless P is the player:
+			If the clothing threshold of P is the unattainable arousal
+			or the clothing threshold of G is the unattainable arousal:
+				Say the uninterested response of P;
+				Deny consent;
+			Unless P is the clothing threshold of P or more
+			and P is the clothing threshold of G or more:
+				Say the unaroused response of the P;
+				Deny consent;
+	Give consent;
+
+A consent rule for an actor taking off something (this is the undressing default consent rule): Anonymously abide by the undressing consent rule;
+A consent rule for an actor taking a garment (this is the taking off default consent rule): Anonymously abide by the undressing consent rule;
 
 Chapter 5.2.2c - Soft-play
 
@@ -3013,7 +3278,7 @@ A default-consent rule (this is the soft-playing consent rule):
 			Unless P is the soft-play threshold of P or more:
 				Say the unaroused response of P;
 				Deny consent;
-	Make no decision;
+	Give consent;
 
 A consent rule for an actor touching (this is the default touching consent rule): Anonymously abide by the soft-playing consent rule;
 A consent rule for an actor rubbing (this is the default rubbing consent rule): Anonymously abide by the soft-playing consent rule;
@@ -3089,7 +3354,7 @@ A default-consent rule (this is the rough-playing consent rule):
 			Unless P is the rough-play threshold of P or more:
 				Say the unaroused response of P;
 				Deny consent;
-	Make no decision;
+	Give consent;
 
 A consent rule for an actor spanking (this is the default spanking consent rule): Anonymously abide by the rough-playing consent rule;
 A consent rule for an actor pinching (this is the default pinching consent rule): Anonymously abide by the rough-playing consent rule;
@@ -3161,7 +3426,7 @@ A default-consent rule (this is the oral-playing consent rule):
 			Unless P is the oral-play threshold of P or more:
 				Say the unaroused response of P;
 				Deny consent;
-	Make no decision;
+	Give consent;
 
 A consent rule for an actor licking (this is the default licking consent rule): Anonymously abide by the oral-playing consent rule;
 A consent rule for an actor kissing (this is the default kissing consent rule): Anonymously abide by the oral-playing consent rule;
@@ -3248,7 +3513,7 @@ A default-consent rule (this is the fuck-playing consent rule):
 			Unless P is the fuck-play threshold of P or more:
 				Say the unaroused response of P;
 				Deny consent;
-	Make no decision;
+	Give consent;
 
 A consent rule for an actor fucking something with (this is the default fucking consent rule): Anonymously abide by the fuck-playing consent rule;
 
@@ -3387,26 +3652,73 @@ Erotic Storytelling ends here.
 
 ---- DOCUMENTATION ----
 
-NOTE: 27.12 of the documentation states that headings should be marked as Chapter:/Section:, but iirc colons do not compile.
+Documentation Disposition start
+
+Chapter - Using this Extension
+Quick intro to the extension; what it provides, how to install, and where to find more information.
+Section - Action Overview
+Section - Body Part Templates
+Section - Garment Templates
+Section - Discrete Arousal Consent and Stimulation
+Section - Description Customization
+Section - Behavior Overview
+
+Chapter - Actions in Detail
+
+Chapter - Coverage in Detail
+Section - Shifting
+Section - Ripping
+
+Chapter - Customizing
+Section - Custom Body Parts
+Section - Custom Garments
+
+Chapter - Dealing with Actors
+Section - Descriptions
+Section - Consent, Arousal and Stimulation
+Section - Conversation
+Section - Behavior Rules
+
+Chapter - Technical Reference
+
+Chapter - Expanded Tutorial: Writing Erotic Stories
+
+Chapter - Technical Notes
+Section - Version History
+Section - Contact Info
+
+
+Examples
+
+[End Documentation Disposition]
+[Begin Documentation Upgrade]
 
 Chapter - Using this Extension
 
-To use this framework, you need to install it (which you probably have if you're reading this) and include it in your story:
+To use this framework, you need to download and install it (which you probably have if you're reading this) and include it in your story:
 
 	Include Version 1 of Adult Framework by Fictitious Frode.
 
-By including this extension, you will enable certain actions (listed below) for the player, which you should write your own custom "After" rules for, and a warning/information screen will be printed at the start of a story. In order to turn this off, you should change the "warn of adult content" activity. Additionally, the extension provides a lot of options that are available, but not present unless you specify them:
+By including this extension, you will enable most of what's necessary to write erotic stories. Most of the content is not automatically visible to the player, but have to be specifically included by the author. The only parts available by default, are the expanded actions (listed in the action overview below), and the printing of a warning/information screen at the start of the story. This is handled by the "warn of adult content" activity, which can be altered.
 
-	Body Parts
-	Garments (Clothing layered over body parts)
-	Arousal (with thresholds for actions)
+The sections of this chapter introduces the various concepts available within the extension, and subsequent chapters will go into further detail. Towards the end of the documentation you will find a fully fleshed out tutorial and sample adventure, and a complete technical reference. All kinds and actions are also documented in the Inform IDE.
+
+Section - Action Overview
+
+
 
 Section - Body Part Templates
 
 Section - Garment Templates
 
-The "Kinds" section of the index has an exhaustive list of the template garments available, including documentation.
+Section - Discrete Arousal Consent and Stimulation
 
+Section - Description Customization
+
+Section - Behavior Overview
+
+[End Documentation Upgrade]
+[Begin Old Stuff]
 
 Chapter - Descriptions and Responses
 
