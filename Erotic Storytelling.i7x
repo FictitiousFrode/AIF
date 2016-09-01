@@ -2971,8 +2971,20 @@ A shirt is usually default cover blocking.
 A shirt is usually shiftable. The shiftyness of a shirt is usually buttonable. The shifting revealed cover areas of a shirt is usually {shoulder area, upper torso area, lower torso area}.
 A shirt is usually rippable. The ripping revealed cover areas of a shirt is usually {shoulder area, upper torso area, lower torso area}.
 
+A pair of glasses is a kind of garment.
+They are usually plural-named. The indefinite article is usually "a". The plural of glasses is pairs of glasses.
+Understand "goggles", "eyewear" as pair of glasses.
+The specification of pair of glasses is "Glasses go on the face, and are usually formal normalwear. Because of this, they will block direct access and view to face parts (such as the mouth); this is usually not a problem as kissing redirects to the person."
+A pair of glasses is usually normalwear.
+The cloth decency of pair of glasses is usually formal.
+The cover areas of a pair of glasses is usually {face area}.
+
+Chapter 5.1.2c - Overwear
+
+[Overwear is the outer layer of clothing, and is only covered by outerwear (clothing that is meant for outside use).]
+
 A dress is a kind of garment.
-The specification of a dress is "A dress covers the entire torso (front and back), as well as the arms/shoulders and thighs/legs. It is usually formal and normalwear. This means a sweater can be worn over it, but not a shirt under it. To swap this around, state that it is overwear instead. By default a dress can be unbuttoned to access the upper torso; to change this to make it raisable to access the crotch see the definition of minidress (you might also want to change default cover blocking).
+The specification of a dress is "A dress covers the entire torso (front and back), as well as the arms/shoulders and thighs/legs. It is usually formal and outerwear. This means a shirt under it, but not a sweater can be worn over it. Making it normalwear would also make for some interesting interactions with pantyhose and trousers. By default a dress can be unbuttoned to access the upper torso; to change this to make it raisable to access the crotch see the definition of minidress (you might also want to change default cover blocking).
 Note; Dresses go under boots, which might cause some issues if boots are modified to cover legs/thighs."
 A dress is usually normalwear.
 The cloth decency of dress is usually casual.
@@ -2986,18 +2998,6 @@ A minidress is usually normalwear.
 The cloth decency of minidress is usually immodest.
 The cover areas of a minidress is usually {shoulder area, arm area, upper torso area, lower torso area, upper back area, lower back area, crotch area, thigh area}.
 A minidress is usually shiftable. The shiftyness of a dress is usually raisable. The shifting revealed cover areas of a dress is usually {crotch area, thigh area}.
-
-A pair of glasses is a kind of garment.
-They are usually plural-named. The indefinite article is usually "a". The plural of glasses is pairs of glasses.
-Understand "goggles", "eyewear" as pair of glasses.
-The specification of pair of glasses is "Glasses go on the face, and are usually formal normalwear. Because of this, they will block direct access and view to face parts (such as the mouth); this is usually not a problem as kissing redirects to the person."
-A pair of glasses is usually normalwear.
-The cloth decency of pair of glasses is usually formal.
-The cover areas of a pair of glasses is usually {face area}.
-
-Chapter 5.1.2c - Overwear
-
-[Overwear is the outer layer of clothing, and is only covered by outerwear (clothing that is meant for outside use).]
 
 A pair of trousers is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of trousers is pairs of trousers.
