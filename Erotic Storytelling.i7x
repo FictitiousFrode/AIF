@@ -2796,53 +2796,63 @@ Section - Legs
 A pair of thighs is a kind of body part.
 The cover locations of a pair of thighs is usually {the thigh area}. 
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of thighs is pairs of thighs.
+A pair of thighs is usually touchable. A pair of thighs is usually rubbable.
 
 A pair of legs is a kind of body part.
 The cover locations of a pair of legs is usually {the leg area}.
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of legs is pairs of legs.
+A pair of legs is usually touchable. A pair of legs is usually rubbable.
 
 A pair of ankles is a kind of body part.
-The cover locations of a pair of ankles is usually {the feet area}.
+The cover locations of a pair of ankles is usually {the feet area, the leg area}.
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of ankles is pairs of ankles.
 
 A pair of feet is a kind of body part.
 The cover locations of a pair of feet is usually {the feet area}.
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of feet is pairs of feet.
+A pair of feet is usually touchable. A pair of feet is usually rubbable. A pair of feet is usually tickleable. A pair of feet is usually lickable. A pair of feet is usually biteable.
 
 Section - Arms
 
 A pair of arms is a kind of body part.
 The cover locations of a pair of arms is usually {the arm area}.
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of arms is pairs of arms.
+A pair of arms is usually touchable. A pair of arms is usually rubbable.
 
 A pair of wrists is a kind of body part.
-The cover locations of a pair of wrists is usually {the hand area}.
+The cover locations of a pair of wrists is usually {the hand area, the arm area}.
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of wrists is pairs of wrists.
 
 A pair of hands is a kind of body part.
 The cover locations of a pair of arms is usually {the hand area}.
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of hands is pairs of hands.
+A pair of hands is usually touchable. A pair of hands is usually rubbable.
 
 Chapter 5.1.1c - Torso
 
 A neck is a kind of body part.
 The cover locations of a neck is usually {the shoulder area}.
+A neck is usually lickable. A neck is usually biteable.
 
 A pair of shoulders is a kind of body part.
 The cover locations of a pair of shoulders is usually {the shoulder area}.
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of shoulders is pairs of shoulders.
+A pair of shoulders is usually rubbable. 
 
 A chest is a kind of body part.
 The cover locations of a chest is usually {the upper torso area}.
+A chest is usually touchable. A chest is usually rubbable. A chest is usually tickleable. A chest is usually lickable. A chest is usually biteable.
 
 A pair of breasts is a kind of body part.
 The cover locations of a pair of breasts is usually {the upper torso area}. 
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of breasts is pairs of breasts. 
 Understand "tit", "tits", "breast", "boob", "boobs", "tittie", "titties" and "juggs" as a pair of breasts.
+A pair of breasts is usually touchable. A pair of breasts is usually rubbable. A pair of breasts is usually tickleable. A pair of breasts is usually lickable. A pair of breasts is usually biteable. A pair of breasts is usually pinchable.
 
 A midriff is a kind of body part.
 The cover locations of a midriff is usually {the lower torso area}.
 Understand "stomach", "tummy" as midriff.
+A midriff is usually touchable. A midriff is usually rubbable. A midriff is usually tickleable. A midriff is usually lickable.
 
 A waist is a kind of body part.
 The cover locations of a waist is usually {the lower torso area, the lower back area}.
@@ -2855,14 +2865,17 @@ Chapter 5.1.1d - Crotch
 An ass is a kind of body part.
 The cover locations of an ass is usually {the crotch area}.
 Understand "asshole", "anus", "rear", "rear end", "butt", "bottom", "rump" as ass.
+An ass is usually touchable. An ass is usually rubbable. An ass is usually spankable. An ass is usually pinchable. An ass is usually lickable. An ass is usually orificial.
 
 A penis is a kind of body part.
 The cover locations of a penis is usually {the crotch area}.
 Understand "cock", "dick", "wang", "dong", "wiener", "willy", "schlong", "boner", "pecker" as penis.
+A penis is usually touchable. A penis is usually rubbable. A penis is usually pinchable. A penis is usually lickable. A penis is usually biteable. A penis is usually penetrating.
 
 A vagina is a kind of body part.
 The cover locations of a vagina is usually {the crotch area}.
 Understand "pussy", "cunt", "slit", "crotch", "snatch", "clitoris", "clit", "twat" as vagina.
+A vagina is usually touchable. A vagina is usually rubbable. A vagina is usually lickable. A vagina is usually orificial.
 
 Part 5.1.2 - Wardrobe
 
@@ -3102,9 +3115,9 @@ For now we assume that the player always consents; this is something that should
 In order to keep the number of default variables down so as to simplify the author's job, most actions are grouped together:
 
 Dressing:	Wearing, taking (off)
-Soft-play:	Touching, rubbing, tickling, hugging, dancing.
+Soft-play:	Touching, rubbing, tickling, kissing, hugging, dancing.
 Rough-play:	Spanking, pinching, biting
-Oral-play:	Licking, kissing
+Oral-play:	Licking
 Fucking
 
 Each of these groups function in a similar manner:
@@ -3278,6 +3291,7 @@ A default-consent rule (this is the soft-playing consent rule):
 A consent rule for an actor touching (this is the default touching consent rule): Anonymously abide by the soft-playing consent rule;
 A consent rule for an actor rubbing (this is the default rubbing consent rule): Anonymously abide by the soft-playing consent rule;
 A consent rule for an actor tickling (this is the default tickling consent rule): Anonymously abide by the soft-playing consent rule;
+A consent rule for an actor kissing (this is the default kissing consent rule): Anonymously abide by the soft-playing consent rule;
 A consent rule for an actor hugging (this is the default hugging consent rule): Anonymously abide by the soft-playing consent rule;
 A consent rule for an actor dancing (this is the default dancing consent rule): Anonymously abide by the soft-playing consent rule;
 
@@ -3298,6 +3312,7 @@ A default-stimulation rule (this is the soft-playing stimulation rule):
 A stimulation rule for an actor touching (this is the default touching stimulation rule): Anonymously abide by the soft-playing stimulation rule;
 A stimulation rule for an actor rubbing (this is the default rubbing stimulation rule): Anonymously abide by the soft-playing stimulation rule;
 A stimulation rule for an actor tickling (this is the default tickling stimulation rule): Anonymously abide by the soft-playing stimulation rule;
+A stimulation rule for an actor kissing (this is the default kissing stimulation rule): Anonymously abide by the soft-playing stimulation rule;
 A stimulation rule for an actor hugging (this is the default hugging stimulation rule): Anonymously abide by the soft-playing stimulation rule;
 A stimulation rule for an actor dancing (this is the default dancing stimulation rule): Anonymously abide by the soft-playing stimulation rule;
 
@@ -3424,7 +3439,6 @@ A default-consent rule (this is the oral-playing consent rule):
 	Give consent;
 
 A consent rule for an actor licking (this is the default licking consent rule): Anonymously abide by the oral-playing consent rule;
-A consent rule for an actor kissing (this is the default kissing consent rule): Anonymously abide by the oral-playing consent rule;
 
 [Create a default stimulation rule]
 A default-stimulation rule (this is the oral-playing stimulation rule):
@@ -3441,7 +3455,6 @@ A default-stimulation rule (this is the oral-playing stimulation rule):
 	Stimulated;
 
 A stimulation rule for an actor licking (this is the default licking stimulation rule): Anonymously abide by the oral-playing stimulation rule;
-A stimulation rule for an actor kissing (this is the default kissing stimulation rule): Anonymously abide by the oral-playing stimulation rule;
 
 Chapter 5.2.2f - Fucking
 
@@ -3647,68 +3660,98 @@ Erotic Storytelling ends here.
 
 ---- DOCUMENTATION ----
 
-Documentation Disposition start
-
-Chapter - Using this Extension
-Quick intro to the extension; what it provides, how to install, and where to find more information.
-Section - Action Overview
-Section - Body Part Templates
-Section - Garment Templates
-Section - Discrete Arousal Consent and Stimulation
-Section - Description Customization
-Section - Behavior Overview
-
-Chapter - Actions in Detail
-
-Chapter - Coverage in Detail
-Section - Shifting
-Section - Ripping
-
-Chapter - Customizing
-Section - Custom Body Parts
-Section - Custom Garments
-
-Chapter - Dealing with Actors
-Section - Descriptions
-Section - Consent, Arousal and Stimulation
-Section - Conversation
-Section - Behavior Rules
-
-Chapter - Technical Reference
-
-Chapter - Expanded Tutorial: Writing Erotic Stories
-
-Chapter - Technical Notes
-Section - Version History
-Section - Contact Info
-
-
-Examples
-
-[End Documentation Disposition]
-[Begin Documentation Upgrade]
-
 Chapter - Using this Extension
 
 To use this framework, you need to download and install it (which you probably have if you're reading this) and include it in your story:
 
+*:
 	Include Version 1 of Adult Framework by Fictitious Frode.
 
-By including this extension, you will enable most of what's necessary to write erotic stories. Most of the content is not automatically visible to the player, but have to be specifically included by the author. The only parts available by default, are the expanded actions (listed in the action overview below), and the printing of a warning/information screen at the start of the story. This is handled by the "warn of adult content" activity, which can be altered.
+By including this extension, you will enable most of what's necessary to write erotic stories. Most of the content is not automatically available out-of-the-box, but have to be specifically included by the author for the player to notice. The only parts available by default, are the expanded actions (listed in the action overview below), but these don't do anything without proper targets such as the templated garments and body parts. There is also an intrductory warning/information screen at the start of the story, which is governed by the "warn of adult content" activity.
 
 The sections of this chapter introduces the various concepts available within the extension, and subsequent chapters will go into further detail. Towards the end of the documentation you will find a fully fleshed out tutorial and sample adventure, and a complete technical reference. All kinds and actions are also documented in the Inform IDE.
 
+Note; Inform can behave slightly odd regarding the naming (and creation) of things which are part of the character, this is described in chapter 4.15 of Writing with Inform. If the player is declared after the creation of the body part, then the body part will be named after what the character was named. Also, any gender-specific creations might not occur if the gender of the player was undetermined at that point. Likewise, changing the identity of the player during play might give interesting results.
+
+In short, declare the player (with gender) before invoking body part creation.
+
 Section - Action Overview
 
+The following table lists all the actions that are defined or modified in the extension:
 
+	Table of Modified Actions
+	Action	Category	Type
+	Assfucking	Person	New	Redirect
+	Biting	Body Part	New	Rough-play
+	Dancing	Person	New	Soft-play
+	Dressing	Clothing	New
+	Fucking	Person	New	Redirect
+	Fucking it with	Body Part	New	Fuck-play
+	Hugging	Person	New	Soft-play
+	Kissing	Person	Modified	Soft-play
+	Licking	Body Part	New	Oral-play
+	Pinching	Body Part	New	Rough-play
+	Ripping	Clothing	New
+	Rubbing	Body Part	Modified	Soft-play
+	Shifting	Clothing	New
+	Spanking	Body Part	New	Rough-play
+	Stripping	Clothing	New
+	Taking	Clothing	Modified
+	Taking Off	Clothing	Modified
+	Tickling	Body Part	New	Soft-play
+	Titfucking	Person	New	Redirect
+	Touching	Body Part	Modified	Soft-play
+	Unshifting	Clothing	New
+	Wearing	Clothing	Modified
+
+These are detailed both in the IDE, and at various places in the documentation.
+
+Section - Descriptions and Responses
+
+Reduced to it's most basic components, an interactive fiction story (adult or not) can be seen as the printing of responses to the player's actions. It follows that an extension should focus on making it easier for the story author to write these responses, taking care of the gritty details such as checking if actions are valid. This allows the author to focus on the arguably more important features such as over-arching plotlines. Inform offers several ways of altering responses for specific actions; Chapter 12.2 ("How actions are processed") goes into some detail on this subject. What follows is a quick overview of how to best utilize this extension.
+
+After: As the name implies, these rules are processed after the action has taken place, in place of the default action report rules. This is where most custom responses would go.
+
+Before/Instead: As the name implies, these rules are processed before the action takes place. The difference (also implied by the naming) is that instead rules will stop the action from taking place (unless explicitly told to allow it to continue), while before rules are the opposite. Instead rules are great for writing custom "errors" to the player, while the before rules are often used to flesh out some of the standard actions.
+
+Descriptions: Descriptions are a special form of response, issued by the "x/examine" action. All things in Inform can have the description property, which is printed when the thing is examined. Two of the new kinds in this extension, garments and body parts, also have some special description properties that are printed under certain circumstances, while persons get an entire rulebook dedicated to generate descriptions. See the later chapter "Descriptions in Detail" for more on this.
+
+Persuasion/Consent: Persuasion is a built-in rulebook, and is invoked when the player asks another person to do something. This can be a common occurence in AIFs, so it's important to include (or atleast give better persuasion failed rules). Chapter 12.4 covers the use of this. Consent is a new rulebook for this extension, and is intended to work in a similar way, to allow persons the possibility to object to the player's actions if they are directly involved. This is covered in more detail later on, in the chapter on Dealing with Actors. Note that it's also possible to take advantage of the bundled Discrete-Arousal-based Consent and Stimulation (DACS) system.
+
+Inform is quite smart about processing rulebooks, allowing you to write a mixture of general and specific rules, picking the most specific rule to process. In general, the more specific the parameters are (a named person beats a generic person, and a templated body part beats the generic body part) the more specific it is. Handily, if a scene is listed (with the during keyword), it's considered more specific than without. This makes it very easy to give diferrent responses for the same action but at different times (scenes) in the story. For reference, the exact laws used to sort rulebooks are described in 19.16.
 
 Section - Body Part Templates
+
+While you're free to create your own body parts as you please, the extension comes with a variety of ready-made template parts you can use. Here is an overview, with the most pertinent properties and the default decency (as implied by their cover locations):
+
+	Ass (Indecent): touchable, rubbable, spankable, pinchable, lickable, orificial.
+	pair of Ankles (Immodest): plural; 
+	pair of Arms (Casual): plural; touchable, rubbable
+	Backside (Immodest): rubbable, spankable
+	pair of Breasts (Indecent): plural; touchable, rubbable, lickable, biteable, tickleable, pinchable
+	Chest (Indecent): touchable, rubbable, lickable, biteable, tickleable
+	pair of Eyes (Formal): plural
+	Face (Formal): 
+	pair of Feet (Immodest): plural; touchable, rubbable, lickable, biteable, tickleable
+	Hair (Formal): plural (ambigously)
+	pair of Hands (Formal): plural; touchable, rubbable
+	Head (Formal): 
+	pair of Legs (Casual): plural; touchable, rubbable
+	Midriff (Immodest): touchable, rubbable, lickable, tickleable
+	Mouth (Formal):
+	Neck (Casual): lickable, biteable
+	Penis (Indecent): touchable, rubbable, pinchable, lickable, biteable, penetrating.
+	pair of Shoulders (Casual): plural; rubbable
+	pair of Thighs (Immodest): plural; touchable, rubbable
+	Vagina (Indecent): touchable, rubbable, lickable, orificial.
+	Waist (Immodest): 
+	pair of Wrists (Casual): plural;
 
 Section - Garment Templates
 
 Section - Discrete Arousal Consent and Stimulation
 
-Section - Description Customization
+
 
 Section - Behavior Overview
 
