@@ -244,13 +244,6 @@ Chapter - Body Part Descriptions
 
 Chapter - Reactive Crowds
 
-Part 1.1.4 - Discovery and Concealment
-
-[Status: Bare-bones.]
-
-A thing can be discovered. A thing is usually not discovered.
-Before printing the name of something (called D): now D is discovered.
-
 Book 1.2 - Functionality
 
 Chapter 1.2.0a - Startup Procedures
@@ -262,13 +255,17 @@ Section - Info/Warning Screen
 Section - Initiation
 
 When play begins (this is the initiate erotic storytelling rule):
-	[Set correct pronouns for body parts; the default is her]
+	[Set correct pronouns for body parts:]
 	Repeat with part running through the body parts:
 		If part is part of the player:
 			Now owner's pronoun of part is "my";		
 		Else if part is part of a man:
 			Now owner's pronoun of part is "his";
-	[Set correct pronouns for garments; the default is her]
+		Else if part is part of a woman:
+			Now owner's pronoun of part is "her";
+		Else:
+			Now owner's pronoun of part is "their";
+	[Set correct pronouns for garments:]
 	Repeat with cloth running through the garments:
 		Update pronoun for cloth;
 	[Calculate the decency for any undefined persons: Small hack here, as Inform won't let us iterate over all persons anymore.]
@@ -745,7 +742,6 @@ Deals with determining which items are visible for the player, as well as custom
 Chapter 1.2.3a - Concealed Possessions
 
 A rule for deciding the concealed possessions of someone:
-	If the particular possession is discovered, no;
 	If the particular possession is a garment (called G):
 		If G can be seen, no;
 		Else yes;
@@ -785,9 +781,7 @@ Carry out examining (this is the examining garments rule):
 		Else if noun is worn:
 			If noun provides the property worn description and the worn description of the noun is not the default value of text:
 				Say "[worn description of the noun][line break]";
-			Else:
-				Say "[The noun] [are] worn by the [the holder of the noun].";
-			Now examine text printed is true;
+				Now examine text printed is true;
 		Else:
 			If noun provides the property unworn description and the unworn description of the noun is not the default value of text:
 				Say "[unworn description of the noun][line break]";
@@ -1470,17 +1464,17 @@ Carry out an actor examining (this is the examining people rule):
 [The short description should be a short (3-4) word summary of the body part, that will be used in list printing.]
 A body part has some text called short description.
 
-Part  2.2.2 - Description Generation Rules
+Part 2.2.2 - Description Generation Rules
 
 Chapter 2.2.2a - Rulebooks
 
 [The description generation rules is the rulebook consulted to generate a description, and is the one authors are to use.]
 The description generation rules are a person based rulebook.
-The description generation rules have outcomes undescribable (failure), undescribed (no outcome), and described (success  - the default).
+The description generation rules have outcomes undescribable (failure), undescribed (no outcome), and described (success - the default).
 
 [The default description generation rules are called by the generate default descriptions rule.]
 The default description generation rules are a person based rulebook.
-The default description generation rules have outcomes undescribable (failure), undescribed (no outcome), and described (success  - the default).
+The default description generation rules have outcomes undescribable (failure), undescribed (no outcome), and described (success - the default).
 
 The generate specific status description rule is listed first in the default description generation rules. [2]
 The generate specific description rule is listed first in the default description generation rules. [1]
@@ -2760,7 +2754,8 @@ To decide whether (P - a person) orgasms:
 
 Volume 4 - Support Systems
 
-[TODO:
+[This volume deals with out-of-game support systems to improve the experience for both the player and the author.
+TODO:
 Help System
 Limits
 Completion Tracking
@@ -3088,7 +3083,7 @@ TODO]
 
 Book 5.2 - Discrete Arousal-based Consent and Stimulation
 
-[Status: Being implemented
+[Status: Complete
 This books deals with integrating the discrete arousals into the stimulation and consent framework of the actions, to create a basis system that grants consent based on arousal. It's separated into it's own part in order to make it easier to excise it if needed, like if the author wants to use a numerical arousal system.
 The underlying parts deals with responses of the actors, action integration and custom values for the templated body parts.]
 
@@ -3106,7 +3101,7 @@ Part 5.2.2 - Action Integration
 For now we assume that the player always consents; this is something that should be remade into a variable later on. (TODO)
 In order to keep the number of default variables down so as to simplify the author's job, most actions are grouped together:
 
-Dressing:	Wearing, taking off
+Dressing:	Wearing, taking (off)
 Soft-play:	Touching, rubbing, tickling, hugging, dancing.
 Rough-play:	Spanking, pinching, biting
 Oral-play:	Licking, kissing
@@ -3239,10 +3234,10 @@ A person has an arousal called the soft-play threshold. The soft-play threshold 
 A body part has an arousal called the soft-play threshold. The soft-play threshold of a body part is usually slightly aroused.
 
 [Active/passive soft-play arousal is the arousal attainable by soft-play actions, as the active and passive participant.]
-A person has an arousal called the active soft-play cap. The active soft-play cap of a person is usually aroused.
-A person has an arousal called the passive soft-play cap. The passive soft-play cap of a person is usually aroused.
-A body part has an arousal called the active soft-play cap. The active soft-play cap of a body part is usually aroused.
-A body part has an arousal called the passive soft-play cap. The passive soft-play cap of a body part is usually aroused.
+A person has an arousal called the soft-play performer limit. The soft-play performer limit of a person is usually aroused.
+A person has an arousal called the soft-play recipient limit. The soft-play recipient limit of a person is usually aroused.
+A body part has an arousal called the soft-play performer limit. The soft-play performer limit of a body part is usually aroused.
+A body part has an arousal called the soft-play recipient limit. The soft-play recipient limit of a body part is usually aroused.
 
 [Create a default consent rule]
 A default-consent rule (this is the soft-playing consent rule):
@@ -3289,14 +3284,14 @@ A consent rule for an actor dancing (this is the default dancing consent rule): 
 [Create a default stimulation rule]
 A default-stimulation rule (this is the soft-playing stimulation rule):
 	[Stimulate the actor first:]
-	Arouse the actor up to the active soft-play cap of the actor;
+	Arouse the actor up to the soft-play performer limit of the actor;
 	If the noun is a person:
-		Arouse the noun up to the passive soft-play cap of the noun;
+		Arouse the noun up to the soft-play recipient limit of the noun;
 	Else if the noun is a body part:
 		Let P be the holder of the noun;
-		Let target arousal be the passive soft-play cap of the noun;
-		If the passive soft-play cap of P is greater than the target arousal:
-			Let target arousal be the passive soft-play cap of P;
+		Let target arousal be the soft-play recipient limit of the noun;
+		If the soft-play recipient limit of P is greater than the target arousal:
+			Let target arousal be the soft-play recipient limit of P;
 		Arouse P up to target arousal;
 	Stimulated;
 
@@ -3308,17 +3303,17 @@ A stimulation rule for an actor dancing (this is the default dancing stimulation
 
 Chapter 5.2.2d - Rough Play
 
-[This part deals with the "rough"  actions, which share the same thresholds by default.]
+[This part deals with the "rough" actions, which share the same thresholds by default.]
 
 [Rough-play threshold is the minimum arousal at which a person or it's body part will engage in the rough-play actions.]
 A person has an arousal called the rough-play threshold. The rough-play threshold of a person is usually very aroused.
 A body part has an arousal called the rough-play threshold. The rough-play threshold of a body part is usually very aroused.
 
 [Active/passive rough-play arousal is the arousal attainable by rough-play actions, as the active and passive participant.]
-A person has an arousal called the active rough-play cap. The active rough-play cap of a person is usually very aroused.
-A person has an arousal called the passive rough-play cap. The passive rough-play cap of a person is usually very aroused.
-A body part has an arousal called the active rough-play cap. The active rough-play cap of a body part is usually very aroused.
-A body part has an arousal called the passive rough-play cap. The passive rough-play cap of a body part is usually very aroused.
+A person has an arousal called the rough-play performer limit. The rough-play performer limit of a person is usually very aroused.
+A person has an arousal called the rough-play recipient limit. The rough-play recipient limit of a person is usually very aroused.
+A body part has an arousal called the rough-play performer limit. The rough-play performer limit of a body part is usually very aroused.
+A body part has an arousal called the rough-play recipient limit. The rough-play recipient limit of a body part is usually very aroused.
 
 [Create a default consent rule]
 A default-consent rule (this is the rough-playing consent rule):
@@ -3363,14 +3358,14 @@ A consent rule for an actor biting (this is the default biting consent rule): An
 [Create a default stimulation rule]
 A default-stimulation rule (this is the rough-playing stimulation rule):
 	[Stimulate the actor first:]
-	Arouse the actor up to the active rough-play cap of the actor;
+	Arouse the actor up to the rough-play performer limit of the actor;
 	If the noun is a person:
-		Arouse the noun up to the passive rough-play cap of the noun;
+		Arouse the noun up to the rough-play recipient limit of the noun;
 	Else if the noun is a body part:
 		Let P be the holder of the noun;
-		Let target arousal be the passive rough-play cap of the noun;
-		If the passive rough-play cap of P is greater than the target arousal:
-			Let target arousal be the passive rough-play cap of P;
+		Let target arousal be the rough-play recipient limit of the noun;
+		If the rough-play recipient limit of P is greater than the target arousal:
+			Let target arousal be the rough-play recipient limit of P;
 		Arouse P up to target arousal;
 	Stimulated;
 
@@ -3387,10 +3382,10 @@ A person has an arousal called the oral-play threshold. The oral-play threshold 
 A body part has an arousal called the oral-play threshold. The oral-play threshold of a body part is usually aroused.
 
 [Active/passive oral-play arousal is the arousal attainable by oral-play actions, as the active and passive participant.]
-A person has an arousal called the active oral-play cap. The active oral-play cap of a person is usually very aroused.
-A person has an arousal called the passive oral-play cap. The passive oral-play cap of a person is usually very aroused.
-A body part has an arousal called the active oral-play cap. The active oral-play cap of a body part is usually very aroused.
-A body part has an arousal called the passive oral-play cap. The passive oral-play cap of a body part is usually very aroused.
+A person has an arousal called the oral-play performer limit. The oral-play performer limit of a person is usually very aroused.
+A person has an arousal called the oral-play recipient limit. The oral-play recipient limit of a person is usually very aroused.
+A body part has an arousal called the oral-play performer limit. The oral-play performer limit of a body part is usually very aroused.
+A body part has an arousal called the oral-play recipient limit. The oral-play recipient limit of a body part is usually very aroused.
 
 [Create a default consent rule]
 A default-consent rule (this is the oral-playing consent rule):
@@ -3434,14 +3429,14 @@ A consent rule for an actor kissing (this is the default kissing consent rule): 
 [Create a default stimulation rule]
 A default-stimulation rule (this is the oral-playing stimulation rule):
 	[Stimulate the actor first:]
-	Arouse the actor up to the active oral-play cap of the actor;
+	Arouse the actor up to the oral-play performer limit of the actor;
 	If the noun is a person:
-		Arouse the noun up to the passive oral-play cap of the noun;
+		Arouse the noun up to the oral-play recipient limit of the noun;
 	Else if the noun is a body part:
 		Let P be the holder of the noun;
-		Let target arousal be the passive oral-play cap of the noun;
-		If the passive oral-play cap of P is greater than the target arousal:
-			Let target arousal be the passive oral-play cap of P;
+		Let target arousal be the oral-play recipient limit of the noun;
+		If the oral-play recipient limit of P is greater than the target arousal:
+			Let target arousal be the oral-play recipient limit of P;
 		Arouse P up to target arousal;
 	Stimulated;
 
@@ -3457,10 +3452,10 @@ A person has an arousal called the fuck-play threshold. The fuck-play threshold 
 A body part has an arousal called the fuck-play threshold. The fuck-play threshold of a body part is usually aroused.
 
 [Active/passive fucking-play arousal is the arousal attainable by fucking, as the active and passive participant.]
-A person has an arousal called the active fuck-play cap. The active fuck-play cap of a person is usually very aroused.
-A person has an arousal called the passive fuck-play cap. The passive fuck-play cap of a person is usually very aroused.
-A body part has an arousal called the active fuck-play cap. The active fuck-play cap of a body part is usually orgasmic.
-A body part has an arousal called the passive fuck-play cap. The passive fuck-play cap of a body part is usually orgasmic.
+A person has an arousal called the fuck-play performer limit. The fuck-play performer limit of a person is usually very aroused.
+A person has an arousal called the fuck-play recipient limit. The fuck-play recipient limit of a person is usually very aroused.
+A body part has an arousal called the fuck-play performer limit. The fuck-play performer limit of a body part is usually very aroused.
+A body part has an arousal called the fuck-play recipient limit. The fuck-play recipient limit of a body part is usually very aroused.
 
 [Create a default consent rule:
 Due to prior checks, we assume that the actor is enclosing one of the nouns, so we only check consent for the controller of each noun:]
@@ -3525,45 +3520,45 @@ A default-stimulation rule (this is the fuck-playing stimulation rule):
 	If the noun is a body part:
 		Let P be the holder of the noun;
 		If P is the actor:
-			Let target arousal be the active fuck-play cap of the noun;
-			If the active fuck-play cap of P is greater than the target arousal:
-				Let target arousal be the active fuck-play cap of P;
+			Let target arousal be the fuck-play performer limit of the noun;
+			If the fuck-play performer limit of P is greater than the target arousal:
+				Let target arousal be the fuck-play performer limit of P;
 			Arouse P up to target arousal;
 			Let actor-stimulation be true;
 		Else:
-			Let target arousal be the passive fuck-play cap of the noun;
-			If the passive fuck-play cap of P is greater than the target arousal:
-				Let target arousal be the passive fuck-play cap of P;
+			Let target arousal be the fuck-play recipient limit of the noun;
+			If the fuck-play recipient limit of P is greater than the target arousal:
+				Let target arousal be the fuck-play recipient limit of P;
 			Arouse P up to target arousal;
 	Else if the noun is held:
 		Let P be the holder of the noun;
 		If P is the actor:
-			Arouse P up to the active fuck-play cap of P;
+			Arouse P up to the fuck-play performer limit of P;
 			Let actor-stimulation be true;
 		Else:
-			Arouse P up to the passive fuck-play cap of P;
+			Arouse P up to the fuck-play recipient limit of P;
 	If the noun is a body part:
 		Let P be the holder of the noun;
 		If P is the actor:
 			If actor-stimulation is true:
 				Stimulated; [Actor controls both nouns, and stimulation is already achieved.]
-			Let target arousal be the active fuck-play cap of the noun;
-			If the active fuck-play cap of P is greater than the target arousal:
-				Let target arousal be the active fuck-play cap of P;
+			Let target arousal be the fuck-play performer limit of the noun;
+			If the fuck-play performer limit of P is greater than the target arousal:
+				Let target arousal be the fuck-play performer limit of P;
 			Arouse P up to target arousal;
 		Else:
-			Let target arousal be the passive fuck-play cap of the noun;
-			If the passive fuck-play cap of P is greater than the target arousal:
-				Let target arousal be the passive fuck-play cap of P;
+			Let target arousal be the fuck-play recipient limit of the noun;
+			If the fuck-play recipient limit of P is greater than the target arousal:
+				Let target arousal be the fuck-play recipient limit of P;
 			Arouse P up to target arousal;
 	Else if the noun is held:
 		Let P be the holder of the noun;
 		If P is the actor:
 			If actor-stimulation is true:
 				Stimulated; [Actor controls both nouns, and stimulation is already achieved.]
-			Arouse P up to the active fuck-play cap of P;
+			Arouse P up to the fuck-play performer limit of P;
 		Else:
-			Arouse P up to the passive fuck-play cap of P;
+			Arouse P up to the fuck-play recipient limit of P;
 	Stimulated;
 
 A stimulation rule for an actor fucking something with (this is the default fucking stimulation rule): Anonymously abide by the fuck-playing stimulation rule;
@@ -3576,75 +3571,75 @@ We set them all explicitly, even if some are the same as the default values.]
 
 Chapter 5.2.3a - Ass
 
-The soft-play threshold of an ass is usually slightly aroused.
-The active soft-play cap of an ass is usually very aroused.
-The passive soft-play cap of an ass is usually very aroused.
+[No Change: The soft-play threshold of an ass is usually slightly aroused.]
+The soft-play performer limit of an ass is usually very aroused.
+The soft-play recipient limit of an ass is usually very aroused.
 
-The rough-play threshold of an ass is usually very aroused.
-The active rough-play cap of an ass is usually very aroused.
-The passive rough-play cap of an ass is usually very aroused.
+[No Change: The rough-play threshold of an ass is usually very aroused.]
+[No Change: The rough-play performer limit of an ass is usually very aroused.]
+[No Change: The rough-play recipient limit of an ass is usually very aroused.]
 
-The oral-play threshold of an ass is usually aroused.
-The active oral-play cap of an ass is usually aroused.
-The passive oral-play cap of an ass is usually very aroused.
+[No Change: The oral-play threshold of an ass is usually aroused.]
+The oral-play performer limit of an ass is usually aroused.
+[No Change: The oral-play recipient limit of an ass is usually very aroused.]
 
-The fuck-play threshold of an ass is usually very aroused.
-The active fuck-play cap of an ass is usually very aroused.
-The passive fuck-play cap of an ass is usually very aroused.
+[No Change: The fuck-play threshold of an ass is usually very aroused.]
+[No Change: The fuck-play performer limit of an ass is usually very aroused.]
+[No Change: The fuck-play recipient limit of an ass is usually very aroused.]
 
 Chapter 5.2.3b - Breasts
 
 The soft-play threshold of a pair of breasts is usually aroused.
-The active soft-play cap of a pair of breasts is usually very aroused.
-The passive soft-play cap of a pair of breasts is usually very aroused.
+The soft-play performer limit of a pair of breasts is usually very aroused.
+The soft-play recipient limit of a pair of breasts is usually very aroused.
 
-The rough-play threshold of a pair of breasts is usually very aroused.
-The active rough-play cap of a pair of breasts is usually very aroused.
-The passive rough-play cap of a pair of breasts is usually very aroused.
+[No Change: The rough-play threshold of a pair of breasts is usually very aroused.]
+[No Change: The rough-play performer limit of a pair of breasts is usually very aroused.]
+[No Change: The rough-play recipient limit of a pair of breasts is usually very aroused.]
 
-The oral-play threshold of a pair of breasts is usually aroused.
-The active oral-play cap of a pair of breasts is usually very aroused.
-The passive oral-play cap of a pair of breasts is usually very aroused.
+[No Change: The oral-play threshold of a pair of breasts is usually aroused.]
+[No Change: The oral-play performer limit of a pair of breasts is usually very aroused.]
+[No Change: The oral-play recipient limit of a pair of breasts is usually very aroused.]
 
 The fuck-play threshold of a pair of breasts is usually aroused.
-The active fuck-play cap of a pair of breasts is usually very aroused.
-The passive fuck-play cap of a pair of breasts is usually very aroused.
+[No Change: The fuck-play performer limit of a pair of breasts is usually very aroused.]
+[No Change: The fuck-play recipient limit of a pair of breasts is usually very aroused.]
 
 Chapter 5.2.3c - Penis
 
 The soft-play threshold of a penis is usually aroused.
-The active soft-play cap of a penis is usually very aroused.
-The passive soft-play cap of a penis is usually orgasmic.
+The soft-play performer limit of a penis is usually very aroused.
+The soft-play recipient limit of a penis is usually orgasmic.
 
-The rough-play threshold of a penis is usually very aroused.
-The active rough-play cap of a penis is usually very aroused.
-The passive rough-play cap of a penis is usually very aroused.
+[No Change: The rough-play threshold of a penis is usually very aroused.]
+[No Change: The rough-play performer limit of a penis is usually very aroused.]
+[No Change: The rough-play recipient limit of a penis is usually very aroused.]
 
-The oral-play threshold of a penis is usually aroused.
-The active oral-play cap of a penis is usually very aroused.
-The passive oral-play cap of a penis is usually orgasmic.
+[No Change: The oral-play threshold of a penis is usually aroused.]
+[No Change: The oral-play performer limit of a penis is usually very aroused.]
+The oral-play recipient limit of a penis is usually orgasmic.
 
-The fuck-play threshold of a penis is usually very aroused.
-The active fuck-play cap of a penis is usually orgasmic.
-The passive fuck-play cap of a penis is usually orgasmic.
+[No Change: The fuck-play threshold of a penis is usually very aroused.]
+The fuck-play performer limit of a penis is usually orgasmic.
+The fuck-play recipient limit of a penis is usually orgasmic.
 
 Chapter 5.2.3d - Vagina
 
 The soft-play threshold of a vagina is usually aroused.
-The active soft-play cap of a vagina is usually very aroused.
-The passive soft-play cap of a vagina is usually orgasmic.
+The soft-play performer limit of a vagina is usually very aroused.
+The soft-play recipient limit of a vagina is usually orgasmic.
 
-The rough-play threshold of a vagina is usually very aroused.
-The active rough-play cap of a vagina is usually very aroused.
-The passive rough-play cap of a vagina is usually very aroused.
+[No Change: The rough-play threshold of a vagina is usually very aroused.]
+[No Change: The rough-play performer limit of a vagina is usually very aroused.]
+[No Change: The rough-play recipient limit of a vagina is usually very aroused.]
 
-The oral-play threshold of a vagina is usually aroused.
-The active oral-play cap of a vagina is usually very aroused.
-The passive oral-play cap of a vagina is usually orgasmic.
+[No Change: The oral-play threshold of a vagina is usually aroused.]
+[No Change: The oral-play performer limit of a vagina is usually very aroused.]
+The oral-play recipient limit of a vagina is usually orgasmic.
 
-The fuck-play threshold of a vagina is usually very aroused.
-The active fuck-play cap of a vagina is usually orgasmic.
-The passive fuck-play cap of a vagina is usually orgasmic.
+[No Change: The fuck-play threshold of a vagina is usually very aroused.]
+The fuck-play performer limit of a vagina is usually orgasmic.
+The fuck-play recipient limit of a vagina is usually orgasmic.
 
 
 
@@ -3743,7 +3738,7 @@ Garments have four new text properties, one of which will be printed after the r
 
 	Ripped description: Printed if the garment is both ripped and worn. Defaults to stating that the garment is ripped to shreds.
 	Shifted description: Printed if the garment is both shifted and worn. Defaults to stating that the garment is shifted to be more revealing.
-	Worn description: Printed if the garment is worn, but not shifted or ripped. Defaults to stating that the garment is worn.
+	Worn description: Printed if the garment is worn, but not shifted or ripped. No default value.
 	Unworn description: Printed if the garment is not worn, and is usually superflous to the regular description. No default value.
 
 
