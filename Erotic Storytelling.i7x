@@ -3034,8 +3034,8 @@ A sweater is usually default cover blocking.
 A sweater is usually shiftable. The shiftyness of a sweater is usually raisable. The shifting revealed cover areas of a sweater is usually a {upper torso area, lower torso area}.
 
 A suit is a kind of garment.
-The specification of a suit is "A suit is really a combination of a sweater-jacket and pants. It's usually formal overwear, and covers the back of the torso (it's assumed to be open to the chest), arms, legs/thighs and crotch. It can be unzipped to access the crotch."
-The cover areas of a suit is usually {arm area, shoulder area, upper back area, lower back area, leg area, thigh area, crotch area}.
+The specification of a suit is "A suit is really a combination of a sweater-jacket and pants. It's usually formal overwear, and covers the  front and back of the torso, arms, legs/thighs and crotch. It can be unzipped to access the crotch."
+The cover areas of a suit is usually {upper torso area, lower torso area, arm area, shoulder area, upper back area, lower back area, leg area, thigh area, crotch area}.
 A suit is usually overwear.
 The cloth decency of suit is usually casual.
 A suit is usually default cover blocking.
