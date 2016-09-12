@@ -108,8 +108,8 @@ A body part has a list of cover areas called cover locations.
 
 Section - Descriptions
 
-A body part has some text called the concealed description.
-A body part has some text called the visible description.
+A body part has some text called the covered description.
+A body part has some text called the uncovered description.
 
 Section - Understanding
 
@@ -754,12 +754,12 @@ The examining body parts rule is listed after the standard examining rule in the
 Carry out examining (this is the examining body parts rule):
 	If noun is a body part:
 		If noun can be seen:
-			If noun provides the property visible description and the visible description of the noun is not the default value of text:
-				Say "[visible description of the noun][line break]";
+			If noun provides the property uncovered description and the uncovered description of the noun is not the default value of text:
+				Say "[uncovered description of the noun][line break]";
 				Now examine text printed is true;
 		Else:
-			If noun provides the property concealed description and the concealed description of the noun is not the default value of text:
-				Say "[concealed description of the noun][line break]";
+			If noun provides the property covered description and the covered description of the noun is not the default value of text:
+				Say "[covered description of the noun][line break]";
 				Now examine text printed is true;
 
 Chapter 1.2.3c - Examining Garments
@@ -3870,10 +3870,10 @@ Section - Describing Body Parts
 
 Body parts have two new text properties, one of which will be printed after the regular description of the body part. They have no default values, so if they are undefined nothing will be printed.
 
-	Concealed description: Printed if all the cover areas for the body part are concealed by opaque garments.
-	Visible description: Printed if atleast one of the cover areas for the body part is not concealed by an opaque garment.
+	Covered description: Printed if all the cover areas for the body part are concealed by opaque garments.
+	Uncovered description: Printed if atleast one of the cover areas for the body part is not concealed by an opaque garment.
 
-This can be used in 3 main ways: If you only provide a description for a body part, that text will always be printed, regardless of clothing. This might be helpful for "always on" body parts, such as hair and eyes. The other extreme is to only provde concealed and visible descriptions, which miught be useful for body parts that are radically different, typically genitalia. The most common approach would be to use a combination of the two, where the description deals with the aspects that are readily inferable, and the concealed and visible descriptions providing additional details.
+This can be used in 3 main ways: If you only provide a description for a body part, that text will always be printed, regardless of clothing. This might be helpful for "always on" body parts, such as hair and eyes. The other extreme is to only provde concealed and visible descriptions, which might be useful for body parts that are radically different, typically genitalia. The most common approach would be to use a combination of the two, where the description deals with the aspects that are readily inferable, and the concealed and visible descriptions providing additional details.
 
 Section - Describing Garment
 
@@ -3885,44 +3885,15 @@ Garments have four new text properties, one of which will be printed after the r
 	Unworn description: Printed if the garment is not worn, and is usually superflous to the regular description. No default value.
 
 
+Example: * Template Tricks - Saving time with templates.
 
+This example shows some of the templated body parts and garments in action. In order to show off the tricks better, we set unrealistic defaults for persuasion and consent.
 
-Section - Action Responses
-
-Chapter - Body Parts
-
-Chapter - Garments
-
-Section - Layering
-
-Section - 
-
-Section - Shifting
-
-Section - Ripping
-
-Chapter - Consent and Arousal
-
-Chapter - Advanced Topics
-
-Section - Custom Body Parts
-
-Section - Custom Garments
-
-Section - Layered Clothing
-
-Concealment is not cover. 
--Military Proverb
-
-This framework takes aim to provide clothing (with integrated body parts) that can:
- * Block visibility
- * Deny and allow access (touchability)
- * Opening/Shifting/Breaking
-
-
-
-Chapter - Technical Notes
-
-Section - Version History
-
-Section - Method Overview
+	*: "Template Tricks"
+	
+	Include Erotic Storytelling by Fictitious Frode.
+	Use MAX_STATIC_DATA of 300000.
+	
+	Lounge is a room.
+	Laura is a woman in Lounge.
+	
