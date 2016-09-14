@@ -852,6 +852,10 @@ Check an actor wearing something (This is the check garment size rule):
 				Say "[The actor] [can't] wear [noun], [it's] the wrong size." (B);
 			Stop the action;
 
+Check an actor wearing something (This is the wearing requires consent rule):
+	If the noun is a garment (called G):
+		Abide by the consent rules;
+
 Chapter 1.3.1b - Carry Out
 
 Carry out an actor wearing (this is the wearing garments rule):
@@ -867,7 +871,6 @@ Part 1.3.3 deals with an actor taking someone elses clothes.
 See also the consent and arousal sections.]
 
 A person can be keep clothes after undress. A person is usually keep clothes after undress.
-[TODO: Remake this into clothing behavior rules]
 
 Chapter 1.3.2a - Check
 
@@ -891,6 +894,10 @@ Check an actor taking off something (this is the can't take off in public rule):
 			Else if the player can see the actor:
 				Say "It [are] too public for [the actor] to take that off here." (B);
 			Stop the action;
+
+Check an actor taking something (This is the taking garments requires consent rule):
+	If the noun is a garment and the noun is worn:
+		Abide by the consent rules;
 
 Chapter 1.3.2b - Carry Out
 
@@ -938,6 +945,10 @@ Section - Implementing Taking
 Check an actor taking a garment (this is the can't take covered items rule):
 	Follow the can't take off covered items rule;
 	Follow the can't take off in public rule;
+
+Check an actor taking something (This is the taking off requires consent rule):
+	If the noun is a garment and the noun is worn:
+		Abide by the consent rules;
 
 The taking garments rule is listed first in the carry out taking rulebook.
 Carry out an actor taking a garment (called G) (this is the taking garments rule):
@@ -1176,6 +1187,10 @@ Check an actor shifting (this is the can't shift in public rule):
 				Say "It [are] too public for [the actor] to do that here." (B);
 			Stop the action;
 
+Check an actor shifting something (This is the shifting requires consent rule):
+	If the noun is a garment and the noun is worn:
+		Abide by the consent rules;
+
 Chapter 1.4.1c - Carry Out
 		
 Carry out an actor shifting (this is the standard shifting rule):
@@ -1268,6 +1283,10 @@ Check an actor shifting (this is the can't unshift covered items rule):
 				Say "[The actor] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (B);
 			Stop the action;
 
+Check an actor unshifting something (This is the unshifting requires consent rule):
+	If the noun is a garment and the noun is worn:
+		Abide by the consent rules;
+
 Chapter 1.4.2c - Carry Out
 		
 Carry out an actor unshifting (this is the standard unshifting rule):
@@ -1332,6 +1351,10 @@ Check an actor ripping (this is the can't rip in public rule):
 			Else if the player can see the actor:
 				Say "It [are] too public for [the actor] to do that here." (B);
 			Stop the action;
+
+Check an actor ripping something (This is the ripping requires consent rule):
+	If the noun is a garment and the noun is worn:
+		Abide by the consent rules;
 
 Chapter 1.4.2c - Carry Out
 
@@ -1658,7 +1681,7 @@ The default-consent rules have outcomes give consent (success - the default) and
 
 Part 3.1.3 - Properties
 
-Chapter 3.1.3a - Action Control Properties
+Chapter 3.1.3a - Action Control Adjectives
 
 [The following properties are specified to control which things the correspondingly named action is applicable to.
 These can be applied to other things than body part if wanted, and access to garments are supported.]
@@ -1671,7 +1694,7 @@ A body part can be pinchable or unpinchable. A body part is usually unpinchable.
 A body part can be lickable or unlickable. A body part is usually unlickable.
 A body part can be biteable or unbiteable. A body part is usually unbiteable.
 
-Chapter 3.1.3b - Sexual Properties
+Chapter 3.1.3b - Sexual Adjectives
 
 A body part can be penetrating. A body part is usually not penetrating.
 A body part can be orificial. A body part is usually not orificial.
@@ -3188,10 +3211,6 @@ A garment has an arousal called the clothing threshold. The clothing threshold o
 
 Section - Wearing
 
-Check an actor wearing something (This is the wearing requires consent rule):
-	If the noun is a garment (called G):
-		Abide by the consent rules;
-
 A default-consent rule (this is the dressing consent rule):
 	If the noun is a garment (called G):
 		Unless the actor is the player:
@@ -3207,11 +3226,7 @@ A default-consent rule (this is the dressing consent rule):
 
 A consent rule for an actor wearing something (this is the dressing default consent rule): Anonymously abide by the dressing consent rule;
 
-Section - Taking (Off)
-
-Check an actor taking something (This is the taking off requires consent rule):
-	If the noun is a garment (called G) and the noun is worn:
-		Abide by the consent rules;
+Section - Worn Garments
 
 A default-consent rule (this is the undressing consent rule):
 	If the noun is a garment (called G) and G is worn:
@@ -3238,6 +3253,9 @@ A default-consent rule (this is the undressing consent rule):
 
 A consent rule for an actor taking off something (this is the undressing default consent rule): Anonymously abide by the undressing consent rule;
 A consent rule for an actor taking a garment (this is the taking off default consent rule): Anonymously abide by the undressing consent rule;
+A consent rule for an actor ripping a garment (this is the ripping default consent rule): Anonymously abide by the undressing consent rule;
+A consent rule for an actor shifting a garment (this is the shifting default consent rule): Anonymously abide by the undressing consent rule;
+A consent rule for an actor unshifting a garment (this is the unshifting default consent rule): Anonymously abide by the undressing consent rule;
 
 Chapter 5.2.2c - Soft-play
 
@@ -3668,11 +3686,20 @@ To use this framework, you need to download and install it (which you probably h
 *:
 	Include Version 1 of Adult Framework by Fictitious Frode.
 
-By including this extension, you will enable most of what's necessary to write erotic stories. Most of the content is not automatically available out-of-the-box, but have to be specifically included by the author for the player to notice. The only parts available by default, are the expanded actions (listed in the action overview below), but these don't do anything without proper targets such as the templated garments and body parts. There is also an intrductory warning/information screen at the start of the story, which is governed by the "warn of adult content" activity.
+By including this extension, you will enable most of what's necessary to write erotic stories.
+Most of the content is not automatically available out-of-the-box, but have to be specifically included by the author for the player to notice.
+The only parts available by default, are the expanded actions (listed in the action overview below), but these don't do anything without proper targets such as the templated garments and body parts.
+There is also an introductory warning/information screen at the start of the story, which is governed by the "warn of adult content" activity.
+[TODO: Implement said activity]
 
-The sections of this chapter introduces the various concepts available within the extension, and subsequent chapters will go into further detail. Towards the end of the documentation you will find a fully fleshed out tutorial and sample adventure, and a complete technical reference. All kinds and actions are also documented in the Inform IDE.
+The sections of this chapter introduces the various concepts available within the extension, and subsequent chapters will go into further detail.
+Towards the end of the documentation you will find a fully fleshed out tutorial and sample adventure, and a complete technical reference.
+All kinds and actions are also documented inside the Inform IDE.
 
-Note; Inform can behave slightly odd regarding the naming (and creation) of things which are part of the character, this is described in chapter 4.15 of Writing with Inform. If the player is declared after the creation of the body part, then the body part will be named after what the character was named. Also, any gender-specific creations might not occur if the gender of the player was undetermined at that point. Likewise, changing the identity of the player during play might give interesting results.
+Note; Inform can behave slightly odd regarding the naming (and creation) of things which are part of the character, this is described in chapter 4.15 of Writing with Inform.
+If the player is declared after the creation of the body part, then the body part will be named after what the character was named.
+Also, any gender-specific creations might not occur if the gender of the player was undetermined at that point.
+Likewise, changing the identity of the player during play might give interesting results.
 
 In short, declare the player (with gender) before invoking body part creation.
 
@@ -3692,19 +3719,37 @@ As this is quite a sprawling extension, a proper overview of what can be found i
 
 Section 1.2 - Responses and Descriptions
 
-Reduced to it's most basic components, an interactive fiction story (adult or not) can be seen as the printing of responses to the player's actions. It follows that an extension should focus on making it easier for the story author to write these responses, taking care of the gritty details such as checking if actions are valid. This allows the author to focus on the arguably more important features such as over-arching plotlines.
+Reduced to it's most basic components, an interactive fiction story (adult or not) can be seen as the printing of responses to the player's actions.
+It follows that an extension should focus on making it easier for the story author to write these responses, taking care of the gritty details such as checking if actions are valid.
+This allows the author to focus on the arguably more important features such as over-arching plotlines.
 
-Inform offers several ways of altering responses for specific actions; Chapter 12.2 ("How actions are processed") goes into some detail on this subject. What follows is a quick overview of how to best utilize this extension.
+Inform offers several ways of altering responses for specific actions; Writing with Inform has several examples of varying text, and chapter 12.2 ("How actions are processed") goes into some detail on how action responses are chosen.
+What follows is a quick overview of how to best utilize this extension to generate responses and description:
 
-After: As the name implies, these rules are processed after the action has taken place, in place of the default action report rules. This is where most custom responses would go.
+After: As the name implies, these rules are processed after the action has taken place, in place of the default action report rules.
+This is where most custom responses would go.
 
-Before/Instead: As the name implies, these rules are processed before the action takes place. The difference (also implied by the naming) is that instead rules will stop the action from taking place (unless explicitly told to allow it to continue), while before rules are the opposite. Instead rules are great for writing custom "errors" to the player, while the before rules are often used to flesh out some of the standard actions.
+Before/Instead: As the name implies, these rules are processed before the action takes place.
+The difference (also implied by the naming) is that instead rules will stop the action from taking place (unless explicitly told to allow it to continue), while before rules are the opposite.
+Instead rules are great for writing custom "errors" to the player, while the before rules are often used to flesh out some of the standard actions.
 
-Descriptions: Descriptions are a special form of response, issued by the "x/examine" action. All things in Inform can have the description property, which is printed when the thing is examined. Two of the new kinds in this extension, garments and body parts, also have some special description properties that are printed under certain circumstances, while persons get an entire rulebook dedicated to generate descriptions. See the later chapter "Descriptions in Detail" for more on this.
+Descriptions: Descriptions are a special form of response, issued by the "x/examine" action.
+All things in Inform can have the description property, which is printed when the thing is examined.
+Two of the new kinds in this extension, garments and body parts, also have some special description properties that are printed under certain circumstances, while persons get an entire rulebook dedicated to generate descriptions.
+See the later chapter "Descriptions in Detail" for more on this.
 
-Persuasion/Consent: Persuasion is a built-in rulebook, and is invoked when the player asks another person to do something. This can be a common occurence in AIFs, so it's important to include (or atleast give better persuasion failed rules). Chapter 12.4 covers the use of this. Consent is a new rulebook for this extension, and is intended to work in a similar way, to allow persons the possibility to object to the player's actions if they are directly involved. This is covered in more detail later on, in the chapter on Dealing with Actors. Note that it's also possible to take advantage of the bundled Discrete-Arousal-based Consent and Stimulation (DACS) system.
+Persuasion/Consent: Persuasion is a built-in rulebook, and is invoked when the player asks another person to do something.
+This can be a common occurence in AIFs, so it's important to include (or atleast give better persuasion failed rules).
+Chapter 12.4 of Writing with Inform covers the use of persuasion.
+Consent is a new rulebook for this extension, and is intended to work in a similar way, to allow persons the possibility to object to the player's actions if they are directly involved.
+This is covered in more detail later on, in the chapter on Dealing with Actors.
+Note that it's also possible to take advantage of the bundled Discrete-Arousal-based Consent and Stimulation (DACS) system.
 
-Inform is quite smart about processing rulebooks, allowing you to write a mixture of general and specific rules, picking the most specific rule to process. In general, the more specific the parameters are (a named person beats a generic person, and a templated body part beats the generic body part) the more specific it is. Handily, if a scene is listed (with the during keyword), it's considered more specific than without. This makes it very easy to give diferrent responses for the same action but at different times (scenes) in the story. For reference, the exact laws used to sort rulebooks are described in 19.16.
+Inform is quite smart about processing rulebooks, allowing you to write a mixture of general and specific rules, picking the most specific rule to process.
+In general, the more specific the parameters are (a named person beats a generic person, and a templated body part beats the generic body part) the higher priority the rule gets.
+Handily, if a scene is listed (with the during keyword), it's considered more specific than without.
+This makes it very easy to give diferrent responses for the same action but at different times (scenes) in the story.
+For reference, the exact laws used to sort rulebooks are described in 19.16.
 
 Section 1.3 - Action Overview
 
@@ -3735,13 +3780,20 @@ The following table lists all the actions that are defined or modified in the ex
 	Unshifting	Clothing	New
 	Wearing	Clothing	Modified
 
-These are detailed both in the IDE, and at various places in the documentation.
+These are detailed both in the IDE, and covered in Chapter 2 of this documentation.
 
 Section 1.4 - Layering and Templates
 
-A common feature to promote realism in AIFs, is clothing that can be examined and removed one piece at a time. The most common technical implementation of this in libraries is called layered clothing. In order to facilitate layered clothing, the extension uses cover areas to link people, body parts, and garments. The technical peculiarities of this is covered in a later chapter, but the extension provides templates for garments and body part that cover most normal use. Example A shows a simple setup with templated body parts and garments. One notabale difference is that garments that are not visible, are considered to be concealed and un-interactive for the player, while body parts are never considered and can thus be refered to by the player.
+A common feature to promote realism in AIFs, is clothing that can be examined and removed one piece at a time.
+The most common technical implementation of this in libraries is called layered clothing.
+In order to facilitate layered clothing, the extension uses cover areas to link people, body parts, and garments.
+The technical peculiarities of this is covered in chapter 3, but the extension provides templates for garments and body part that cover most normal use.
+Example A shows a simple setup with templated body parts and garments.
+One notabale difference between garments and body parts is regarding to knowledge and visiblitity.
+Garments that are not visible are considered to be concealed and un-interactive for the player, while body parts are always known regardless of visibility and can thus be refered to by the player.
 
-While you're free to create your own body parts as you please, the extension comes with a variety of ready-made template parts you can use. Here is an overview, with the most pertinent properties and the default decency (as implied by their cover locations):
+While you're free to create your own body parts as you please, the extension comes with a variety of ready-made template parts you can use.
+Here is an overview, with the most pertinent properties (See section 2.1) and the default decency (as implied by their cover locations):
 
 	Ass (Indecent): touchable, rubbable, spankable, pinchable, lickable, orificial.
 	pair of Ankles (Immodest): plural; 
@@ -3766,7 +3818,9 @@ While you're free to create your own body parts as you please, the extension com
 	Waist (Immodest): 
 	pair of Wrists (Casual): plural;
 
-Similar to body parts, Garments can also be created from the base kind, but the extension has most normal clothing available for use. Below is an overview of the properties for the default garments; note that all of this is possible to change for specific garments. There is also more informatin available in the kind listing in the IDE.
+Similar to body parts, Garments can also be created from the base kind, but the extension has most normal clothing available for use.
+Below is an overview of the properties for the default garments; note that all of this is possible to change for specific garments.
+There is also more informatin available in the kind listing in the IDE.
 
 	Bodysuit (Indecent Underwear): Covers shoulder area, arm area, upper torso area, upper back area, lower torso area, lower back area, crotch area, thigh area, leg area and feet area (Or, everything except hands, head and face).
 	Bra (Indecent Underwear): Covers upper torso/back; allow touching through.
@@ -3796,17 +3850,31 @@ Similar to body parts, Garments can also be created from the base kind, but the 
 	Jacket (Formal Outerwear): Covers upper/lower torso/back, arm, shoulder. Can be unbuttoned to reveal upper/lower torso.
 	pair of Shoes (Formal Outerwear): Covers feet; plural.
 
-Additionally, an outfit is a special kind of garment, designed to be an alternative to individual garment pieces the player can interact with. It therefore cover almost all the body areas of a person, except hands and head/face.
+Additionally, an outfit is a special kind of garment, designed to be an alternative to individual garment pieces the player can interact with.
+It therefore cover almost all the body areas of a person, except hands and head/face.
 
 Section 1.5 - Discrete Arousal-based Consent and Stimulation
 
-Ever since the early days of AIF there has been a need to limit which actions an NPC is willing to let the player do, and two patterns quickly emerged. ADRIFT games usually had a puzzle to solve to 'unlock the girl', after which anything you wanted was fair game. TADS with it's more traditional programming language allowed more complex solutions, and ever since Moist(*) used 'excitement' with thresholds to control the flow of sex scenes, arousal-like mechanics have been a staple of TADS games. The downside of using arousal thresholds, is that sex scenes quickly turn into guess-which-action-works (**), and then repeating that action untill you think a new action has been unlocked. 
+Ever since the early days of AIF there has been a need to limit which actions an NPC is willing to let the player do, and two patterns quickly emerged.
+ADRIFT games usually had a puzzle to solve to 'unlock the girl', after which anything you wanted was fair game.
+TADS with it's more traditional programming language allowed more complex solutions, and ever since Moist(*) used 'excitement' with thresholds to control the flow of sex scenes, arousal-like mechanics have been a staple of TADS games.
+The downside of using arousal thresholds, is that sex scenes quickly turn into guess-which-action-works (**), and then repeating that action untill you think a new action has been unlocked. 
 
-Regardless of our feelings over arousal-based systems, there needs to be some mechanism in place to control which actions are permissible. To accomplish this in Inform, this extension has settled on using 'Consent' as a new rulebook which works in a similar way to the existing rules for persuasion (which governs when the player asks an NPC to something). This allows authors to write aribitrarily complex control mechanisms.
+Regardless of our feelings over arousal-based systems, there needs to be some mechanism in place to control which actions are permissible.
+To accomplish this in Inform, this extension has settled on using 'Consent' as a new rulebook which works in a similar way to the existing rules for persuasion (which governs when the player asks an NPC to something).
+This allows authors to write aribitrarily complex control mechanisms.
 
-Not every author is technically inclined to write such a system though, so we also make available an optional system to grant consent based on the current arousal of the involved parties. First we have to decide how we want arousal represented; in traditional TADS, arousal was always represented as finite numbers with thresholds. This extension has opted to use a discrete set of arousals, using Inform's support for enumerated values. This has several benefits; the code is easier to read, and fewer discrete values makes it easier to model both for the author and the player exploring it. Second, such a system isn't much use if the current arousal of a person is fixed, or left to the author to update manually for each action. This led to the stimulation rules, which together with some default consent rules form the Discrete Arousal-based Consent and Stimulation-system (DACS for short).
+Not every author is technically inclined to write such a system though, so we also make available an optional system to grant consent based on the current arousal of the involved parties.
+This is a similar approach to how the TADS libraries work.
+First we have to decide how we want arousal represented; in traditional TADS, arousal was always represented as finite numbers with thresholds.
+This extension has opted to use a discrete set of arousals, using Inform's support for enumerated values.
+This has several benefits; the code is easier to read, and fewer discrete values makes it easier to model both for the author and the player exploring it.
+Second, such a system isn't much use if the current arousal of a person is fixed, or left to the author to update manually for each action.
+This led to the stimulation rules, which together with some default consent rules form the Discrete Arousal-based Consent and Stimulation-system (DACS for short).
 
-This system isn't entirely enabled out of the box however, both to avoid unplanned sex-scenes and to make it optional. There is a lot more that can be customized in the system, which is covered in the later chapter on NPCs. To use the included DACS-system in your story, you have to do the following:
+This system isn't entirely enabled out of the box however, both to avoid unplanned sex-scenes and to make it optional.
+There is a lot more that can be customized in the system, which is covered in the later chapter on NPCs.
+To use the included DACS-system in your story, you have to do the following:
 
 	1: Add the actors to the love interests of each other.
 	2: Increase the arousal of any NPC to slightly aroused, or lower the threshold of an action to unaroused.
@@ -3818,9 +3886,16 @@ Example B shows a simple DACS setup with some customizations.
 
 Section 1.6 - Behavior Overview
 
-A recurring difficulty in person-oriented IF, which most AIF are, is how to make people seem lifelike. This problem manifests in several way, from the simple task of writing "idle"-messages when the actor is not doing anything, to actors who roam around the map either randomly or goal oriented. The standard approach to this in Inform, is to write "every turn" rules, which work very well for goal oriented actors. The problem arises when you have actors who are active only under certain conditions, and otherwise can idle. Speaking as a player, it's also very frustrating to have a randomly loitering NPC wander away from you in the middle of an interaction.
+A recurring difficulty in person-oriented IF, which most AIF are, is how to make people seem lifelike.
+This problem manifests in several way, from the simple task of writing 'idle'-messages when the actor is not doing anything, to actors who roam around the map either randomly or goal oriented.
+The standard approach to this in Inform, is to write 'every turn' rules, which work very well for goal oriented actors.
+The problem arises when you have actors who are active only under certain conditions, and otherwise can idle.
+Speaking as a player, it's also very frustrating to have a randomly loitering NPC wander away from you in the middle of an interaction.
 
-From this, we can infer that a NPC has three different stages of behavior, that require different treatment: At the most basic stage, a NPC without a goal might want to print a randomized text message ('idle') to show that they aren't just static scenery. For characters that have a goal, we want to distinguish between planned and urgent behavior, with 'normal' planned behavior being postponed by interactions, but urgent behavior being executed regardless. To facilitate this, the extension introduces a new stage in the turn processing rules, called the behavior stage, where we consult the urgent, planned and idle behavior rules for behavior-enabled persons.
+From this, we can infer that a NPC has three different stages of behavior, that require different treatment:
+At the most basic stage, a NPC without a goal might want to print a randomized text message ('idle') to show that they aren't just static scenery.
+For characters that have a goal, we want to distinguish between planned and urgent behavior, with 'normal' planned behavior being postponed by interactions, but urgent behavior being executed regardless.
+To facilitate this, the extension introduces a new stage in the turn processing rules, called the behavior stage, where we consult the urgent, planned and idle behavior rules for behavior-enabled persons.
 
 The later chapter on NPCs covers this topic in detail, and Example C shows some sample interactive actors.
 
@@ -3839,14 +3914,15 @@ The author of this extension can be reached in the following ways:
 	Reddit: https://www.reddit.com/r/AIFCentral/ is the subreddit for the AIF community, and the author checks this regularly.
 	GitHub: https://github.com/FictitiousFrode/AIF Contains the latest version of the extension, possibly including functionality that hasn't been released yet.
 
-Feedback of all varieties is welcome, but constructive criticism and discussion is the most appreciated, along with reports of bugs and other issues. For support I would appreciate using public communication, so that other may learn from the request as well.
+Feedback of all varieties is welcome, but constructive criticism and discussion is the most appreciated, along with reports of bugs and other issues.
+For support I would appreciate using public communication, so that other may learn from the request as well.
 
 Section 1.9 - Acknowledgments
 
 The author of this extension would like to acknowledge the influence of several people in the AIF community, some of which are:
 
 	Scarlet Herring and CCole; for providing the material of my first forays into AIF.
-	Mr Flibble; for his excellent game 'The Magician's Nephew', which has provided inspiration for parts of this extension.
+	Mr Flibble; for his excellent game 'The Magician's Nephew', which provided inspiration for parts of this extension.
 	ExLibris; for sobering discussions on AIF in general.
 	AnotherWannabe; whose AIF Library is a worthy alternative to this extension, with different priorities.
 	ABomire and Dudeman; whose early work on AIF in I7 inspired me to start this journey.
@@ -3881,9 +3957,8 @@ A Body Part represents a part of a person, and is intended to always be a part o
 	Uncovered Description: A text that is printed if atleast one of the cover areas of the body part is visible (even through transparent garments). If the property is not set, nothing is printed.
 	Owner's Pronoun: A "hack" to allow the player to refer to "my/his/her/their" body part. Set at the start of play by the initiate erotic storytelling rule, and should be updated if the person changes gender or plurality.
 	
-A body part also has some properties to control which of the actions are applicable:
+A body part also has some properties to control which of the actions are applicable. The body part templates redefine some of these: [TODO: Rename to allow?]
 
-[TODO: Set defaults for these on the templates! Rename to allow?]
 	A body part can be touchable or untouchable. A body part is usually untouchable.
 	A body part can be rubbable or unrubbable. A body part is usually unrubbable.
 	A body part can be tickleable or untickleable. A body part is usually untickleable.
@@ -3979,20 +4054,20 @@ Persons also have quite a few arousals for use with DACS; How these work are des
 
 Section 6.5 - Global Variables
 
-All of the erotic actions have a corresponding decency, which is compared to the decency threshold of the room to see if the action should be allowed. To make it easy for an author to alter this, they are defined as global variables, listed below.
+As described in section 2.1, all of the erotic actions have a corresponding decency which is compared to the decency threshold of the room to see if the action should be allowed. To make it easy for an author to alter this, they are defined as global variables, listed below.
 
 *:
-	The touching decency is initially immodest.
-	The rubbing decency is initially immodest.
-	The tickling decency is initially immodest.
-	The spanking decency is initially indecent.
-	The pinching decency is initially immodest.
-	The licking decency is initially immodest.
 	The biting decency is initially indecent.
-	The fucking decency is initially indecent.
-	The kissing decency is initially casual.
-	The hugging decency is initially formal.
 	The dancing decency is initially formal.
+	The fucking decency is initially indecent.
+	The hugging decency is initially formal.
+	The kissing decency is initially casual.
+	The licking decency is initially immodest.
+	The pinching decency is initially immodest.
+	The rubbing decency is initially immodest.
+	The spanking decency is initially indecent.
+	The tickling decency is initially immodest.
+	The touching decency is initially immodest.
 
 Section 6.6 - Adjectives
 
