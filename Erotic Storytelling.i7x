@@ -361,22 +361,28 @@ To decide what list of cover areas is the blocked cover areas of (G - a garment)
 Chapter 1.2.2b - Body Parts
 
 To decide whether (P - a body part) can be seen:
-	Let clothing be the list of garments worn by the holder of P;
-	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		Repeat with A running through the cover locations of P:
-			If cloth is opaque and A is listed in the modified covered areas of cloth:
-				Decide no;
-	Decide yes;
+	Repeat with A running through the cover locations of P:
+		Let clothing be the list of garments worn by the holder of P;
+		Sort clothing in reverse clothing layer order;
+		Repeat with cloth running through clothing:
+			[Only consider opaque garments]
+			If cloth is opaque:
+				If A is not listed in the modified covered areas of cloth: [Take shifted/ripped into account]
+					Remove cloth from clothing;
+			Else:
+				Remove cloth from clothing;
+		If clothing is empty, decide yes; [Nothing covers this area, so P is visible]
+	Decide no; [We only come here if no cover areas were visible]
 	
 To decide which list of garments is concealing vision of (P - a body part):
 	Let concealers be a list of garments;
-	Let clothing be the list of garments worn by P;
-	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		Repeat with A running through the cover locations of P:
-			If cloth is opaque and A is listed in the modified covered areas of cloth:
-				Add cloth to concealers, if absent;
+	Repeat with A running through the cover locations of P:
+		Let clothing be the list of garments worn by the holder of P;
+		Sort clothing in reverse clothing layer order;
+		Repeat with cloth running through clothing:
+			Repeat with A running through the cover locations of P:
+				If cloth is opaque and A is listed in the modified covered areas of cloth:
+					Add cloth to concealers, if absent;
 	Decide on concealers;
 
 To decide whether (P - a body part) can be touched:
@@ -3219,7 +3225,28 @@ A pair of gloves is usually outerwear.
 The cloth decency of pair of gloves is usually formal.
 The cover areas of a pair of gloves is usually {hand area}.
 
-Part 5.1.3 - Furniture
+Part 5.1.3 - Toy Box
+
+Chapter 5.1.3 - Sex Toy
+
+A sex toy is a kind of thing.
+The specification of a sex toy is "A sex toy is a thing that is intended for use with the fucking it with action, and therefore supports the adjectives penetrating and orificial. It is usually penetrating but not orificial."
+
+A sex toy can be penetrating. A sex toy is usually penetrating.
+A sex toy can be orificial. A sex toy is usually not orificial.
+
+Chapter 5.1.4 - Strap-On
+
+A strap-on is a kind of garment.
+The specification of a strap-on is "A strap-on is a special garment that is intended for use with the fucking it with action, and therefore also supports the adjective penetrating (which it usually is). It is indecent and outerwear, so it can be worn over pants and dresses if needed."
+
+A strap-on can be penetrating. A strap-on is usually penetrating.
+A strap-on is usually outerwear.
+The cloth decency of a strap-on is usually indecent.
+A strap-on is usually allow touching through.
+The cover areas of a strap-on is usually {crotch area}.
+
+Part 5.1.4 - Furniture
 
 [Status: Awaiting implementation of posturing.
 TODO]
