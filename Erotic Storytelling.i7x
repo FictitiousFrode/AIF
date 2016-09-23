@@ -361,12 +361,13 @@ To decide what list of cover areas is the blocked cover areas of (G - a garment)
 Chapter 1.2.2b - Body Parts
 
 To decide whether (P - a body part) can be seen:
-	Let clothing be the list of garments worn by P;
+	Let clothing be the list of garments worn by the holder of P;
 	Sort clothing in reverse clothing layer order;
 	Repeat with cloth running through clothing:
 		Repeat with A running through the cover locations of P:
 			If cloth is opaque and A is listed in the modified covered areas of cloth:
 				Decide no;
+	Decide yes;
 	
 To decide which list of garments is concealing vision of (P - a body part):
 	Let concealers be a list of garments;
@@ -849,7 +850,9 @@ Check an actor wearing something (This is the check garment size rule):
 
 Check an actor wearing something (This is the wearing requires consent rule):
 	If the noun is a garment (called G):
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 Chapter 1.3.1b - Carry Out
 
@@ -892,7 +895,9 @@ Check an actor taking off something (this is the can't take off in public rule):
 
 Check an actor taking something (This is the taking garments requires consent rule):
 	If the noun is a garment and the noun is worn:
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 Chapter 1.3.2b - Carry Out
 
@@ -943,7 +948,9 @@ Check an actor taking a garment (this is the can't take covered items rule):
 
 Check an actor taking something (This is the taking off requires consent rule):
 	If the noun is a garment and the noun is worn:
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 The taking garments rule is listed first in the carry out taking rulebook.
 Carry out an actor taking a garment (called G) (this is the taking garments rule):
@@ -1184,7 +1191,9 @@ Check an actor shifting (this is the can't shift in public rule):
 
 Check an actor shifting something (This is the shifting requires consent rule):
 	If the noun is a garment and the noun is worn:
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 Chapter 1.4.1c - Carry Out
 		
@@ -1280,7 +1289,9 @@ Check an actor shifting (this is the can't unshift covered items rule):
 
 Check an actor unshifting something (This is the unshifting requires consent rule):
 	If the noun is a garment and the noun is worn:
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 Chapter 1.4.2c - Carry Out
 		
@@ -1349,7 +1360,9 @@ Check an actor ripping (this is the can't rip in public rule):
 
 Check an actor ripping something (This is the ripping requires consent rule):
 	If the noun is a garment and the noun is worn:
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 Chapter 1.4.2c - Carry Out
 
@@ -1539,13 +1552,13 @@ Part 2.2.2 - Description Generation Rules
 
 Chapter 2.2.2a - Default Notability Rules
 
-Description notability for a worn thing (called N) (this is the worn items notability rule):
+Description notability for something (called N)  worn by someone (this is the worn items notability rule):
 	If N is concealed:
 		Hidden;
 	Otherwise:
 		Grouped;
 
-Description notability for a carried thing (called N) (this is the carried items notability rule):
+Description notability for a thing (called N) carried by someone (this is the carried items notability rule):
 	If N is concealed:
 		Hidden;
 	Otherwise:
@@ -1585,7 +1598,11 @@ A default description generation for a person (called P) (This is the generate s
 			and the short description of the part is not the default value of text:
 				Add short description of part to the notable body part descriptions;
 			Else:
-				Add the printed name of the part to the notable body part descriptions;
+				Let article be "";
+				If part is not proper-named:
+					If part is plural-named, let article be "some ";
+					If part is singular-named, let article be "a ";
+				Add "[article][the printed name of the part]" to the notable body part descriptions;
 	Let clothing be the list of things worn by P;
 	Repeat with cloth running through clothing:
 		Follow the description notability rules for cloth;
@@ -1594,7 +1611,11 @@ A default description generation for a person (called P) (This is the generate s
 			and the short description of the cloth is not the default value of text:
 				Add short description of cloth to the notable clothing descriptions;
 			Else:
-				Add the printed name of the cloth to the notable clothing descriptions;
+				Let article be "";
+				If cloth is not proper-named:
+					If cloth is plural-named, let article be "some ";
+					If cloth is singular-named, let article be "a ";
+				Add "[article][the printed name of the cloth]" to the notable clothing descriptions;
 	Let possessions be the list of things carried by P;
 	Repeat with possession running through possessions:
 		Follow the description notability rules for possession;
@@ -1603,7 +1624,11 @@ A default description generation for a person (called P) (This is the generate s
 			and the short description of the possession is not the default value of text:
 				Add short description of possession to the notable possession descriptions;
 			Else:
-				Add the printed name of the possession to the notable possession descriptions;
+				Let article be "";
+				If possession is not proper-named:
+					If possession is plural-named, let article be "some ";
+					If possession is singular-named, let article be "a ";
+				Add "[article][the printed name of the possession]" to the notable possession descriptions;
 	[Convert the lists to printed text. We try to combine clothing with carried items.]
 	If notable body part descriptions is non-empty:
 		Say "[Regarding P][They] [have] [notable body part descriptions].";
@@ -1644,17 +1669,29 @@ A default description generation rule for a person (called P) (this is the gener
 	Repeat with part running through parts:
 		Follow the description notability rules for part;
 		If the outcome of the rulebook is the grouped outcome:
-			Add the printed name of the part to the grouped body part descriptions;
+			Let article be "";
+			If part is not proper-named:
+				If part is plural-named, let article be "some ";
+				If part is singular-named, let article be "a ";
+			Add "[article][the printed name of the part]" to the grouped body part descriptions;
 	Let clothing be the list of things worn by P;
 	Repeat with cloth running through clothing:
 		Follow the description notability rules for cloth;
 		If the outcome of the rulebook is the grouped outcome:
-			Add the printed name of the cloth to the grouped clothing descriptions;
+			Let article be "";
+			If cloth is not proper-named:
+				If cloth is plural-named, let article be "some ";
+				If cloth is singular-named, let article be "a ";
+			Add "[article][the printed name of the cloth]" to the grouped clothing descriptions;
 	Let possessions be the list of things carried by P;
 	Repeat with possession running through possessions:
 		Follow the description notability rules for possession;
 		If the outcome of the rulebook is the grouped outcome:
-			Add the printed name of the possession to the grouped possession descriptions;
+			Let article be "";
+			If possession is not proper-named:
+				If possession is plural-named, let article be "some ";
+				If possession is singular-named, let article be "a ";
+			Add "[article][the printed name of the possession]" to the grouped possession descriptions;
 	[Convert the lists to printed text:]
 	If grouped body part descriptions is non-empty:
 		Say "[We] also note that [regarding P][they] [have] [grouped body part descriptions].";
@@ -1819,7 +1856,9 @@ Check an actor touching (this is the touching decency rule):
 
 Check an actor touching (this is the seek consent for touching rule):
 	If the noun is a person or noun is enclosed by a person:
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 Chapter 3.2.1c - Carry Out
 
@@ -1887,7 +1926,9 @@ Check an actor rubbing (this is the rubbing decency rule):
 
 Check an actor rubbing (this is the seek consent for rubbing rule):
 	If the noun is a person or noun is enclosed by a person:
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 Chapter 3.2.2c - Carry Out
 
@@ -1959,7 +2000,9 @@ Check an actor tickling (this is the tickling decency rule):
 
 Check an actor tickling (this is the seek consent for tickling rule):
 	If the noun is a person or noun is enclosed by a person:
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 Chapter 3.2.3c - Carry Out
 
@@ -2034,7 +2077,9 @@ Check an actor spanking (this is the spanking decency rule):
 
 Check an actor spanking (this is the seek consent for spanking rule):
 	If the noun is a person or noun is enclosed by a person:
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 Chapter 3.2.4c - Carry Out
 
@@ -2117,7 +2162,9 @@ Check an actor pinching (this is the pinching decency rule):
 		
 Check an actor pinching (this is the seek consent for pinching rule):
 	If the noun is a person or noun is enclosed by a person:
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 Chapter 3.2.5c - Carry Out
 
@@ -2206,7 +2253,9 @@ Check an actor licking (this is the licking decency rule):
 
 Check an actor licking (this is the seek consent for licking rule):
 	If the noun is a person or noun is enclosed by a person:
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 Chapter 3.2.6c - Carry Out
 
@@ -2291,7 +2340,9 @@ Check an actor biting (this is the biting decency rule):
 
 Check an actor biting (this is the seek consent for biting rule):
 	If the noun is a person or noun is enclosed by a person:
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 Chapter 3.2.7c - Carry Out
 
@@ -2391,7 +2442,9 @@ Check an actor fucking something with (this is the fucking decency rule):
 		Stop the action;
 
 Check an actor fucking something with (this is the seek consent for fucking rule):
-	Abide by the consent rules;
+	Follow the consent rules;
+	Unless the outcome of the rulebook is the give consent outcome:
+		Stop the action;
 
 Chapter 3.2.8c - Carry Out
 
@@ -2465,7 +2518,9 @@ Check an actor kissing (this is the kissing decency rule):
 
 Check an actor kissing (this is the seek consent for kissing rule):
 	If the noun is a person or noun is enclosed by a person:
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 Chapter 3.3.1c - Carry Out
 
@@ -2533,7 +2588,9 @@ Check an actor hugging (this is the hugging decency rule):
 
 Check an actor hugging (this is the seek consent for hugging rule):
 	If the noun is a person or noun is enclosed by a person:
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 Chapter 3.3.2c - Carry Out
 
@@ -2595,7 +2652,9 @@ Check an actor dancing (this is the dancing decency rule):
 
 Check an actor dancing (this is the seek consent for dancing rule):
 	If the noun is a person or noun is enclosed by a person:
-		Abide by the consent rules;
+		Follow the consent rules;
+		Unless the outcome of the rulebook is the give consent outcome:
+			Stop the action;
 
 Chapter 3.3.3c - Carry Out
 
@@ -3210,21 +3269,24 @@ The love interest consent rule is listed first in the consent rules.
 A consent rule (this is the love interest consent rule):
 	[Determine which people are involved]
 	Let first person be the actor;[TODO: This must be redone]
-	If the noun is a person:
-		Let first person be the noun;
-	Else if the noun is part of a person (called P):
-		Let first person be P;
-	Else if the noun is held by a person (called P):
-		Let first person be P;
+	If the noun is a thing:
+		If the noun is a person:
+			Let first person be the noun;
+		Else if the noun is part of a person (called P):
+			Let first person be P;
+		Else if the noun is held by a person (called P):
+			Let first person be P;
 	Let second person be the actor;
-	If the second noun is a person:
-		Let second person be the second noun;
-	Else if the second noun is part of a person (called P):
-		Let second person be P;
-	Else if the second noun is held by a person (called P):
-		Let second person be P;
+	If the second noun is a thing:
+		If the second noun is a person:
+			Let second person be the second noun;
+		Else if the second noun is part of a person (called P):
+			Let second person be P;
+		Else if the second noun is held by a person (called P):
+			Let second person be P;	
 	[Check love interests for actor]
 	Unless actor is the player:
+		Say "Testing interest of Person0.";
 		If first person is a person and first person is not listed in the love interests of the actor:
 			Say the uninterested response of the actor;
 			Deny consent;
@@ -3233,6 +3295,7 @@ A consent rule (this is the love interest consent rule):
 			Deny consent;
 	[Check love interests for first person]
 	If first person is a person and first person is not the player:
+		Say "Testing interest of Person1.";
 		If actor is not listed in the love interests of the first person:
 			Say the uninterested response of the first person;
 			Deny consent;
@@ -3241,6 +3304,7 @@ A consent rule (this is the love interest consent rule):
 			Deny consent;
 	[Check love interests for second person]
 	If second person is a person and second person is not the player:
+		Say "Testing interest of Person0.";
 		If actor is not listed in the love interests of the actor:
 			Say the uninterested response of the second person;
 			Deny consent;
@@ -3271,7 +3335,7 @@ A default-consent rule (this is the dressing consent rule):
 				Deny consent;
 	Give consent;
 
-A consent rule for an actor wearing something (this is the dressing default consent rule): Anonymously abide by the dressing consent rule;
+A consent rule for an actor wearing something (this is the dressing default consent rule): Abide by the dressing consent rule;
 
 Section - Worn Garments
 
@@ -3298,11 +3362,11 @@ A default-consent rule (this is the undressing consent rule):
 				Deny consent;
 	Give consent;
 
-A consent rule for an actor taking off something (this is the undressing default consent rule): Anonymously abide by the undressing consent rule;
-A consent rule for an actor taking a garment (this is the taking off default consent rule): Anonymously abide by the undressing consent rule;
-A consent rule for an actor ripping a garment (this is the ripping default consent rule): Anonymously abide by the undressing consent rule;
-A consent rule for an actor shifting a garment (this is the shifting default consent rule): Anonymously abide by the undressing consent rule;
-A consent rule for an actor unshifting a garment (this is the unshifting default consent rule): Anonymously abide by the undressing consent rule;
+A consent rule for an actor taking off something (this is the undressing default consent rule): Abide by the undressing consent rule;
+A consent rule for an actor taking a garment (this is the taking off default consent rule): Abide by the undressing consent rule;
+A consent rule for an actor ripping a garment (this is the ripping default consent rule): Abide by the undressing consent rule;
+A consent rule for an actor shifting a garment (this is the shifting default consent rule): Abide by the undressing consent rule;
+A consent rule for an actor unshifting a garment (this is the unshifting default consent rule): Abide by the undressing consent rule;
 
 Chapter 5.2.2c - Soft-play
 
@@ -3354,12 +3418,12 @@ A default-consent rule (this is the soft-playing consent rule):
 				Deny consent;
 	Give consent;
 
-A consent rule for an actor touching (this is the default touching consent rule): Anonymously abide by the soft-playing consent rule;
-A consent rule for an actor rubbing (this is the default rubbing consent rule): Anonymously abide by the soft-playing consent rule;
-A consent rule for an actor tickling (this is the default tickling consent rule): Anonymously abide by the soft-playing consent rule;
-A consent rule for an actor kissing (this is the default kissing consent rule): Anonymously abide by the soft-playing consent rule;
-A consent rule for an actor hugging (this is the default hugging consent rule): Anonymously abide by the soft-playing consent rule;
-A consent rule for an actor dancing (this is the default dancing consent rule): Anonymously abide by the soft-playing consent rule;
+A consent rule for an actor touching (this is the default touching consent rule): Abide by the soft-playing consent rule;
+A consent rule for an actor rubbing (this is the default rubbing consent rule): Abide by the soft-playing consent rule;
+A consent rule for an actor tickling (this is the default tickling consent rule): Abide by the soft-playing consent rule;
+A consent rule for an actor kissing (this is the default kissing consent rule): Abide by the soft-playing consent rule;
+A consent rule for an actor hugging (this is the default hugging consent rule): Abide by the soft-playing consent rule;
+A consent rule for an actor dancing (this is the default dancing consent rule): Abide by the soft-playing consent rule;
 
 [Create a default stimulation rule]
 A default-stimulation rule (this is the soft-playing stimulation rule):
@@ -3375,12 +3439,12 @@ A default-stimulation rule (this is the soft-playing stimulation rule):
 		Arouse P up to target arousal;
 	Stimulated;
 
-A stimulation rule for an actor touching (this is the default touching stimulation rule): Anonymously abide by the soft-playing stimulation rule;
-A stimulation rule for an actor rubbing (this is the default rubbing stimulation rule): Anonymously abide by the soft-playing stimulation rule;
-A stimulation rule for an actor tickling (this is the default tickling stimulation rule): Anonymously abide by the soft-playing stimulation rule;
-A stimulation rule for an actor kissing (this is the default kissing stimulation rule): Anonymously abide by the soft-playing stimulation rule;
-A stimulation rule for an actor hugging (this is the default hugging stimulation rule): Anonymously abide by the soft-playing stimulation rule;
-A stimulation rule for an actor dancing (this is the default dancing stimulation rule): Anonymously abide by the soft-playing stimulation rule;
+A stimulation rule for an actor touching (this is the default touching stimulation rule): Abide by the soft-playing stimulation rule;
+A stimulation rule for an actor rubbing (this is the default rubbing stimulation rule): Abide by the soft-playing stimulation rule;
+A stimulation rule for an actor tickling (this is the default tickling stimulation rule): Abide by the soft-playing stimulation rule;
+A stimulation rule for an actor kissing (this is the default kissing stimulation rule): Abide by the soft-playing stimulation rule;
+A stimulation rule for an actor hugging (this is the default hugging stimulation rule): Abide by the soft-playing stimulation rule;
+A stimulation rule for an actor dancing (this is the default dancing stimulation rule): Abide by the soft-playing stimulation rule;
 
 Chapter 5.2.2d - Rough Play
 
@@ -3432,9 +3496,9 @@ A default-consent rule (this is the rough-playing consent rule):
 				Deny consent;
 	Give consent;
 
-A consent rule for an actor spanking (this is the default spanking consent rule): Anonymously abide by the rough-playing consent rule;
-A consent rule for an actor pinching (this is the default pinching consent rule): Anonymously abide by the rough-playing consent rule;
-A consent rule for an actor biting (this is the default biting consent rule): Anonymously abide by the rough-playing consent rule;
+A consent rule for an actor spanking (this is the default spanking consent rule): Abide by the rough-playing consent rule;
+A consent rule for an actor pinching (this is the default pinching consent rule): Abide by the rough-playing consent rule;
+A consent rule for an actor biting (this is the default biting consent rule): Abide by the rough-playing consent rule;
 
 [Create a default stimulation rule]
 A default-stimulation rule (this is the rough-playing stimulation rule):
@@ -3450,9 +3514,9 @@ A default-stimulation rule (this is the rough-playing stimulation rule):
 		Arouse P up to target arousal;
 	Stimulated;
 
-A stimulation rule for an actor spanking (this is the default spanking stimulation rule): Anonymously abide by the rough-playing stimulation rule;
-A stimulation rule for an actor pinching (this is the default pinching stimulation rule): Anonymously abide by the rough-playing stimulation rule;
-A stimulation rule for an actor biting (this is the default biting stimulation rule): Anonymously abide by the rough-playing stimulation rule;
+A stimulation rule for an actor spanking (this is the default spanking stimulation rule): Abide by the rough-playing stimulation rule;
+A stimulation rule for an actor pinching (this is the default pinching stimulation rule): Abide by the rough-playing stimulation rule;
+A stimulation rule for an actor biting (this is the default biting stimulation rule): Abide by the rough-playing stimulation rule;
 
 Chapter 5.2.2e - Oral Play
 
@@ -3504,7 +3568,7 @@ A default-consent rule (this is the oral-playing consent rule):
 				Deny consent;
 	Give consent;
 
-A consent rule for an actor licking (this is the default licking consent rule): Anonymously abide by the oral-playing consent rule;
+A consent rule for an actor licking (this is the default licking consent rule): Abide by the oral-playing consent rule;
 
 [Create a default stimulation rule]
 A default-stimulation rule (this is the oral-playing stimulation rule):
@@ -3520,7 +3584,7 @@ A default-stimulation rule (this is the oral-playing stimulation rule):
 		Arouse P up to target arousal;
 	Stimulated;
 
-A stimulation rule for an actor licking (this is the default licking stimulation rule): Anonymously abide by the oral-playing stimulation rule;
+A stimulation rule for an actor licking (this is the default licking stimulation rule): Abide by the oral-playing stimulation rule;
 
 Chapter 5.2.2f - Fucking
 
@@ -3589,7 +3653,7 @@ A default-consent rule (this is the fuck-playing consent rule):
 				Deny consent;
 	Give consent;
 
-A consent rule for an actor fucking something with (this is the default fucking consent rule): Anonymously abide by the fuck-playing consent rule;
+A consent rule for an actor fucking something with (this is the default fucking consent rule): Abide by the fuck-playing consent rule;
 
 [Create a default stimulation rule:
 Due to prior checks, we assume that the actor is enclosing one of the nouns, so we don't stimulate the actor directly.
@@ -3640,7 +3704,7 @@ A default-stimulation rule (this is the fuck-playing stimulation rule):
 			Arouse P up to the fuck-play recipient limit of P;
 	Stimulated;
 
-A stimulation rule for an actor fucking something with (this is the default fucking stimulation rule): Anonymously abide by the fuck-playing stimulation rule;
+A stimulation rule for an actor fucking something with (this is the default fucking stimulation rule): Abide by the fuck-playing stimulation rule;
 
 Part 5.2.3 - Body Part Integration
 
@@ -3736,7 +3800,7 @@ To use this framework, you need to download and install it (which you probably h
 By including this extension, you will enable most of what's necessary to write erotic stories.
 Most of the content is not automatically available out-of-the-box, but have to be specifically included by the author for the player to notice.
 The only parts available by default, are the expanded actions (listed in the action overview below), but these don't do anything without proper targets such as the templated garments and body parts.
-There is also an introductory warning/information screen at the start of the story, which is governed by the "warn of adult content" activity.
+There is also an introductory warning/information screen at the start of the story, which is governed by the 'warn of adult content' activity.
 [TODO: Implement said activity]
 
 The sections of this chapter introduces the various concepts available within the extension, and subsequent chapters will go into further detail.
@@ -3748,7 +3812,7 @@ If the player is declared after the creation of the body part, then the body par
 Also, any gender-specific creations might not occur if the gender of the player was undetermined at that point.
 Likewise, changing the identity of the player during play might give interesting results.
 
-In short, declare the player (with gender) before invoking body part creation.
+In short, declare the persons(especially the player) with gender before invoking body part creation.
 
 Section 1.1 - Documentation Overview
 
