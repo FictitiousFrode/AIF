@@ -3087,7 +3087,7 @@ A pair of stockings is usually normalwear.
 The cloth decency of a pair of stockings is usually formal.
 A pair of stockings is usually allow touching through.
 The cover areas of a pair of stockings is usually {feet area, leg area, thigh area}.
-A pair of panties is usually rippable. The ripping revealed cover areas of a pair of panties is usually {thigh area}.
+A pair of stockings is usually rippable. The ripping revealed cover areas of a pair of stockings is usually {thigh area}.
 
 A pair of pantyhose is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of pantyhose is pairs of pantyhose.
@@ -4208,6 +4208,119 @@ We assure that the actor is in fact in control of atleast one of the two nouns; 
 Lastly we ensure that any involved body parts or garments, are not covered by (other) garments.
 
 Chapter 3 - Layering and Coverage
+
+Clothing and body parts have several overlapping qualities, but are still easily distinguishable from each other.
+They can both be covered, but only clothing can be the covering part of this relationship.
+The natural way to model this in Inform is using relationships, and the Inform documentation has an implementation of layered clothing in example 242.
+Unfortunately, there are several fatal flaws with this approach.
+Firstly, because relations can only be between things and not kinds, the amount of relations needed to keep track scales geometrically with the number of dressed actors.
+Partial coverage also becomes very problematic without impressing an unwanted amount of body parts onto the story author:
+If a person was wearing a long coat and a pair of pants, then these would overlap in the crotch and thigh, but if those were the only parts implemented that the pants covered, they would turn invisible for the player.
+
+The first version of this framework tried to turn example 242 into a full blown clothing model, but in the end it was better to start from scratch using the cover area model that's been used in TADS.
+By using cover area to link body parts with garments and defining a depth/clothing level for garments, it's possible to calculate coverage based on what is worn without costly all-to-all relations.
+This approach is less flexible than using relations, but it's more workable even though it results in some oddities.
+For instance, socks are defined as normalwear instead of underwear in order to make them incompatible with pantyhose, which has to be able to be worn over underwear.
+A case could me made for a hybrid model, using cover areas for coverage and relations for depth, but that is left as an excercise for the reader.
+
+Section 3.1 - Kinds and Templates
+
+The technical implementation breaks a person down into cover areas, stored in the body area list property for each person.
+Body parts can then be assigned to be in one or more cover areas, stored in the cover locations for each body part.
+Cover areas are defined in the Table of Coverage, which links a given area to a decency.
+
+Garments are then implemented as a type of clothing that can be worn over cover areas in layers.
+For simplicity this layering is discrete using the new kind of value clothing layer.
+Determining the cover areas that a garment covers is slightly more complex, because the system supports garments that can be altered to be more revealing.
+Each garment has a default list of areas covered, stored in the cover areas property.
+Depending on the status of the garment, this list can be modified by either the shifting revealed cover areas or ripping revealed cover areas, and the MODIFIED COVERED AREAS OF (garment) phrase selects the correct list of cover areas based on the garment's status.
+This is detailed further in section 3.3.
+Garments also have a clothing size property that is used to match against the clothing size of a person.
+Every person and garments defaults to the same size, but this is an easy way of limiting certain garments to certain persons.
+
+Not every person needs to have a complete set of garments, and some stories might not want to deal with a detailed clothing system.
+Outfits serve this purpose, it's a special kind of garment that is incompatible with any other garments, and covers everything except the hands and head/face.
+
+The garment and body part kinds can be used to create parts and clothing directly, but most stories will need the same parts and clothing types.
+The extension therefore comes with an extensive set of templates that can be used directly, descriptions are all that's needed.
+Both types can be defined indepentendly or broadly for groups of persons, as shown in Example A.
+Section 1.4 contains a complete list of all garment and body part templates included.
+
+In theory, any thing that has the penetrating and orificial properties can potentially be used in the fucking it with action.
+For ease of use however we create the two template kinds sex toy and strap-on.
+A sex toy is simply a thing that canbe penetrating and orificial and defaults to being penetrating.
+A strap-on is slightly more complicated; it's a garment that covers the crotch area on the outerwear level (allowing it to fit over trousers) that's penetrating.
+
+If you feel the included templates are lacking, feel free to contact the extension author as described earlier.
+Creating your own custom parts and garments is covered in later sections and Example D.
+It's very important to note that no garments or body parts are ever created without the author explicitly saying so.
+
+Section 3.2 - Access and Visibility
+
+The extension works with three general levels of access to garments and body parts: vision, touching and accessible (manipulation).
+Section 6.9 - Phrases for Deciding on Values covers the phrases that deal with calculating this, and most phrases are pretty self explanatory.
+This section will instead focus on how they are implemented and the differences between them.
+For simplicity sake we'll refer to something as covered if the related person is wearing atleast one garment whose modified cover areas match the compared items' and the clothling level is higher on the worn item.
+
+The visibility checks require that atleast one cover area is not covered by any garments that are opaque.
+Transparent garments will allow visibility even through multiple layers of garments.
+Touching is similarly calculated if atleast one cover area is not covered by any garments that are not allow touching through.
+Accesibility however is used for 'major' actions such as taking off garments and sexual contact with body parts, and therefore it requires that all the cover areas are not covered and touching through is not considered.
+
+Section 3.3 - Manipulating Garments
+
+Manipulation of garments is heavily dependant on coverage.
+At the most basic level, a garment can not be worn if the person is already wearing something that would cover the garment being put on.
+Similarly, a garment can only be taken off if it is not covered, and we can also calculate which things (and decency) would be revealed by taking off a garment.
+
+Garments can also be manipulated in other ways, specifically the have the possibility of being ripped apart or shifted to be more revealing.
+These work in much the same way, except that ripping is permanent and shifting is only applicable to worn garments and a ripped garment can no longer be shifted.
+Shiftable garments also have a property called shiftyness, which determines the verbs the player can use and how the feedback on the action is given.
+Both of these options are controlled by a property on each garment, and some templated garments have these properties set.
+Garments that can be manipulated in this way should also include the ripping or shifting revealed cover areas property to say which areas are revealed by the action.
+In order to manipulate a garment in this way, these revealed cover areas have to be not covered by anything (although the access might be temporary in the form of a shifted garment).
+
+The following templates are rippable and will reveal:
+
+	pair of Panties: crotch
+	pair of Pantyhose: crotch
+	Shirt: shoulder, upper/lower torso
+	pair of Stockings: thigh
+	Undershirt: upper torso
+
+The following templates are shiftable in a given way and will reveal:
+
+	Coat (Unbutton): shoulder, upper/lower torso, crotch, thigh
+	Dress (Unbutton): shoulder, upper/lower torso
+	Jacket (Unbutton): upper/lower torso
+	Minidress (Raise): crotch, thigh
+	pair of Panties (Move): crotch
+	Shirt (Unbutton): shoulder, upper/lower torso
+	pair of Shorts (Unzip): Crotch
+	Skirt (Raise): crotch, thigh
+	Suit (Unzip): crotch
+	Sweater (Raise): upper/lower torso
+	Swimsuit (move): upper torso
+	pair of Trousers (Unzip): Crotch
+
+Section 3.4 - Customization
+
+If a story has a need that's not covered by the templates, it's easy to create new garments, body parts or even cover areas.
+Example D shows how one might add a tail, which includes creating a custom cover area, body part and garment.
+
+Body parts and garments are the easiest to customize, and you have the option of adapting one of the templates or using the base kind as a reference.
+For one-off items you can just create a new thing of the base kind, but most times it's best to create a new template kind.
+Once the thing or template is defined, the real work lies in setting the needed properties on it.
+The most important of these is the relevant cover areas, stored in cover locations for body parts and cover areas for garments.
+Garments also should have decency and a clothing level, which requires some work to fit in with other garments.
+As mentioned in the previous section garments can also be manipulated, governed by the rippable and shiftable (with shiftability) properties.
+For a custom body parts to be involved in a sexual action it needs one or more of the limiting properties, as defined in section 2.1.
+The complete set of properties available for these kinds are listed in chapter 6.
+
+It's slightly more complex to create new cover areas.
+These are defined in the Table of Coverage containing the columns Cover Area and Uncovered Decency (decency), where cover area is the name of the new value and decency is the decency of any visibile body parts in that area.
+Creating a new cover area doesn't do much on it's own though, and it has to be added to the body areas property of the relevant persons.
+This can be done by either adding it to the list when play begins (or dynamically during play), or typing out the entire set of cover areas for a person.
 
 Chapter 4 - Descriptions in Detail
 
