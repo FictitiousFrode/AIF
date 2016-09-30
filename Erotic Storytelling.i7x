@@ -1,4 +1,4 @@
-Version 1 of Erotic Storytelling by Fictitious Frode begins here.
+Version 1/160930 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF). Includes erotic actions, components and mechanics for layered clothing with distinct body parts, as well as consent system for actions involving others. 
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for npc behavior.
 
@@ -361,21 +361,21 @@ To decide what list of cover areas is the blocked cover areas of (G - a garment)
 Chapter 1.2.2b - Body Parts
 
 To decide whether (P - a body part) can be seen:
-	Let clothing be the list of garments worn by the holder of P;
-	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		Repeat with A running through the cover locations of P:
-			If cloth is opaque and A is listed in the modified covered areas of cloth:
-				Decide no;
-	Decide yes;
-	
+	Repeat with A running through the cover locations of P:
+		Let clothing be the list of opaque garments worn by the holder of P;
+		Sort clothing in reverse clothing layer order;
+		Repeat with cloth running through clothing:
+			If A is not listed in the modified covered areas of cloth, remove cloth from clothing;
+		If clothing is empty, decide yes; [Nothing covers this area, so G is visible]
+	Decide no; [We only come here if no cover areas were visible]
+
 To decide which list of garments is concealing vision of (P - a body part):
 	Let concealers be a list of garments;
-	Let clothing be the list of garments worn by P;
-	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		Repeat with A running through the cover locations of P:
-			If cloth is opaque and A is listed in the modified covered areas of cloth:
+	Repeat with A running through the cover locations of P:
+		Let clothing be the list of opaque garments worn by the holder of P;
+		Sort clothing in reverse clothing layer order;
+		Repeat with cloth running through clothing:
+			If A is not listed in the modified covered areas of cloth:
 				Add cloth to concealers, if absent;
 	Decide on concealers;
 
@@ -460,10 +460,8 @@ To decide which list of things is concealed by (G - a garment) for (A - cover ar
 			[The area is covered, so body parts and underlying garments won't be revealed.]
 			Decide on revealed;
 	[Determine which body parts would be revealed]
-	Repeat with P running through the body parts contained by the holder of G:
+	Repeat with P running through the body parts enclosed by the holder of G:
 		If A is listed in the cover locations of P:
-			If P can be seen:
-				Next; [It's already visible, and thus can't be revealed]
 			Add P to revealed, if absent;
 	Decide on revealed;
 
@@ -476,7 +474,7 @@ a shifted/ripped garment can be seen even if the only visible cover area is visi
 An unworn garment is assumed to be visible.]
 
 To decide whether (G - a garment) can be seen:
-	If G is not worn:
+	If G is not worn by someone:
 		Decide yes;
 	Repeat with A running through the cover areas of G:
 		Let clothing be the list of garments worn by the holder of G;
@@ -494,7 +492,7 @@ To decide whether (G - a garment) can be seen:
 
 To decide which list of garments is concealing vision of (G - a garment):
 	Let concealers be a list of garments;
-	If G is not worn:
+	If G is not worn by someone:
 		Decide on concealers;
 	Repeat with A running through the cover areas of G:
 		Let clothing be the list of garments worn by the holder of G;
@@ -511,8 +509,9 @@ Section - Touching Garments
 
 [A garment can be touched if all of the cover areas of it are not blocked by anything that doesn't allow touching]
 To decide whether (G - a garment) can be touched:
-	If G is not worn:
+	If G is not worn by someone:
 		Decide yes;
+	Let cover be the modified covered areas of G;
 	Let clothing be the list of garments worn by the holder of G;
 	Remove G from clothing; [We don't want to let G block itself]
 	Sort clothing in reverse clothing layer order;
@@ -520,14 +519,15 @@ To decide whether (G - a garment) can be touched:
 		If cloth is block touching through and clothing layer of cloth is greater than clothing layer of G:
 			Let intersect be the modified covered areas of cloth;
 			Repeat with A running through intersect:
-				If A is not listed in the modified covered areas of G, remove A from intersect;
+				If A is not listed in cover, remove A from intersect;
 			If the number of entries in intersect is greater than 0, decide no;
 	Decide yes;
 
 To decide which list of garments is preventing touching of (G - a garment):
 	Let preventers be a list of garments;
-	If G is not worn:
+	If G is not worn by someone:
 		Decide on preventers;
+	Let cover be the modified covered areas of G;
 	Let clothing be the list of garments worn by the holder of G;
 	Remove G from clothing; [We don't want to let G block itself]
 	Sort clothing in reverse clothing layer order;
@@ -535,7 +535,7 @@ To decide which list of garments is preventing touching of (G - a garment):
 		If cloth is block touching through and clothing layer of cloth is greater than clothing layer of G:
 			Let intersect be the modified covered areas of cloth;
 			Repeat with A running through intersect:
-				If A is not listed in the modified covered areas of G, remove A from intersect;
+				If A is not listed in cover, remove A from intersect;
 			If the number of entries in intersect is greater than 0:
 				Add cloth to preventers, if absent;
 	Decide on preventers;
@@ -546,13 +546,14 @@ Section - Wearing Garments
 To decide whether (G - a garment) can be worn by (P - a person):
 	If G is worn by P:
 		Decide yes; [Technically no, but that's stopped elsewhere]
+	Let cover be the modified covered areas of G;
 	Let clothing be the list of garments worn by P;
 	Sort clothing in reverse clothing layer order;
 	Repeat with cloth running through clothing:
 		If clothing layer of cloth is greater than clothing layer of G:
 			Let intersect be the modified covered areas of cloth;
 			Repeat with A running through intersect:
-				If A is not listed in the blocked cover areas of G, remove A from intersect;
+				If A is not listed in cover, remove A from intersect;
 			If the number of entries in intersect is greater than 0, decide no;
 	Decide yes;
 	
@@ -560,13 +561,14 @@ To decide which list of garments is preventing wearing of (G - a garment) by (P 
 	Let preventers be a list of garments;
 	If G is worn by P:
 		Decide on preventers;
+	Let cover be the modified covered areas of G;
 	Let clothing be the list of garments worn by P;
 	Sort clothing in reverse clothing layer order;
 	Repeat with cloth running through clothing:
 		If clothing layer of cloth is greater than clothing layer of G:
 			Let intersect be the modified covered areas of cloth;
 			Repeat with A running through intersect:
-				If A is not listed in the blocked cover areas of G, remove A from intersect;
+				If A is not listed in cover, remove A from intersect;
 			If the number of entries in intersect is greater than 0:
 				Add cloth to preventers, if absent;
 	Decide on preventers;
@@ -574,22 +576,23 @@ To decide which list of garments is preventing wearing of (G - a garment) by (P 
 Section - Taking Off Garments
 
 To decide whether (G - a garment) can be taken off:
-	If G is not worn:
+	If G is not worn by someone:
 		Decide yes;[Technically, no; but we don't want to stop that here.]
 	Let clothing be the list of garments worn by the holder of G;
 	Remove G from clothing; [We don't want to let G block itself]
 	Sort clothing in reverse clothing layer order;
 	Repeat with cloth running through clothing:
 		If clothing layer of cloth is greater than clothing layer of G:
-			Let intersect be the blocked cover areas of cloth;
-			Repeat with A running through intersect:
-				If A is not listed in the blocked cover areas of G, remove A from intersect;
-			If the number of entries in intersect is greater than 0, decide no;
+			Let matches be 0;
+			Let cover be the blocked cover areas of cloth;
+			Repeat with A running through cover:
+				If A is listed in the blocked cover areas of G, increase matches by 1;
+			If matches is not 0, decide no;
 	Decide yes;
 
 To decide which list of garments is preventing taking off (G - a garment):
 	Let preventers be a list of garments;
-	If G is not worn:
+	If G is not worn by someone:
 		Decide on preventers;
 	Let clothing be the list of garments worn by the holder of G;
 	Remove G from clothing; [We don't want to let G block itself]
@@ -606,7 +609,7 @@ To decide which list of garments is preventing taking off (G - a garment):
 [For each cover area removed, check if G is the current concealer, and if it is, add what it conceals]
 To decide which list of things is revealed by taking off (G - a garment):
 	Let revealed be a list of things;
-	If G is not worn or G is transparent: [It doesn't conceal anything, so nothing will be revealed]
+	If G is not worn by someone or G is transparent: [It doesn't conceal anything, so nothing will be revealed]
 		Decide on revealed;
 	[Use modified cover, as the areas revealed by shifting/ripping are already revealed:]
 	Repeat with A running through the modified covered areas of G:
@@ -627,7 +630,7 @@ Section - Shifting Garments
 
 [A garment can be shifted if the cover areas that are exposed by the shifting are not under the blocking areas of overlying garments.]
 To decide whether (G - a garment) can be shifted:
-	If G is not worn:
+	If G is not worn by someone:
 		Decide yes;[Technically, no; but we don't want to stop that here.]
 	Let clothing be the list of garments worn by the holder of G;
 	Remove G from clothing; [We don't want to let G block itself]
@@ -642,7 +645,7 @@ To decide whether (G - a garment) can be shifted:
 
 To decide which list of garments is preventing shifting of (G - a garment):
 	Let preventers be a list of garments;
-	If G is not worn:
+	If G is not worn by someone:
 		Decide on preventers;
 	Let clothing be the list of garments worn by the holder of G;
 	Remove G from clothing; [We don't want to let G block itself]
@@ -659,7 +662,7 @@ To decide which list of garments is preventing shifting of (G - a garment):
 [For each cover area removed, check if G is the current concealer, and if it is, add what it conceals]
 To decide which list of things is revealed by shifting (G - a garment):
 	Let revealed be a list of things;
-	If G is not worn or G is transparent: [It doesn't conceal anything, so nothing will be revealed]
+	If G is not worn by someone or G is transparent: [It doesn't conceal anything, so nothing will be revealed]
 		Decide on revealed;
 	[Use modified cover, as the areas revealed by shifting/ripping are already revealed:]
 	Repeat with A running through the shifting revealed cover areas of G:
@@ -680,7 +683,7 @@ Section - Ripping Garments
 
 [A garment can be ripped if the cover areas that are exposed by the ripping are not under the blocking areas of overlying garments.]
 To decide whether (G - a garment) can be ripped:
-	If G is not worn:
+	If G is not worn by someone:
 		Decide yes;[Technically, no; but we don't want to stop that here.]
 	Let clothing be the list of garments worn by the holder of G;
 	Remove G from clothing; [We don't want to let G block itself]
@@ -695,7 +698,7 @@ To decide whether (G - a garment) can be ripped:
 
 To decide which list of garments is preventing ripping of (G - a garment):
 	Let preventers be a list of garments;
-	If G is not worn:
+	If G is not worn by someone:
 		Decide on preventers;
 	Let clothing be the list of garments worn by the holder of G;
 	Remove G from clothing; [We don't want to let G block itself]
@@ -712,7 +715,7 @@ To decide which list of garments is preventing ripping of (G - a garment):
 [For each cover area removed, check if G is the current concealer, and if it is, add what it conceals]
 To decide which list of things is revealed by ripping (G - a garment):
 	Let revealed be a list of things;
-	If G is not worn or G is transparent: [It doesn't conceal anything, so nothing will be revealed]
+	If G is not worn by someone or G is transparent: [It doesn't conceal anything, so nothing will be revealed]
 		Decide on revealed;
 	[Use modified cover, as the areas revealed by shifting/ripping are already revealed:]
 	Repeat with A running through the ripping revealed cover areas of G:
@@ -740,6 +743,8 @@ Part 1.2.3 - Visibility
 
 [Status: Complete
 Deals with determining which items are visible for the player, as well as custom descriptions.]
+
+The examine undescribed things rule is listed last in the carry out examining rulebook.
 
 Chapter 1.2.3a - Concealed Possessions
 
@@ -774,13 +779,13 @@ Carry out examining (this is the examining garments rule):
 			Else:
 				Say "[The noun] [are] ripped to shreds.";
 			Now examine text printed is true;
-		Else if noun is worn and noun provides the property shifted and noun is shifted:
+		Else if noun is worn by someone and noun provides the property shifted and noun is shifted:
 			If noun provides the property shifted description and the shifted description of the noun is not the default value of text:
 				Say "[shifted description of the noun][line break]";
 			Else:
 				Say "[The noun] [are] [describe shifted of the shiftyness] to be more revealing.";
 			Now examine text printed is true;
-		Else if noun is worn:
+		Else if noun is worn by someone:
 			If noun provides the property worn description and the worn description of the noun is not the default value of text:
 				Say "[worn description of the noun][line break]";
 				Now examine text printed is true;
@@ -831,12 +836,24 @@ Chapter 1.3.1a - Check
 
 Check an actor wearing something (This is the check wearing garments rule):
 	If the noun is a garment (called G):
+		[Check that G and the person have atleast one area of overlap]
+		Let intersect be a list of cover areas;
+		Let areas be the cover areas of G;
+		Repeat with A running through areas:
+			If A is not listed in the body areas of actor, remove the A from areas;
+		If areas is empty:
+			If the player is the actor:
+				Say "[The noun] [can't] fit on [us]." (A);
+			Else if the player can see the actor and the action is not silent:
+				Say "[The noun] [can't] fit on [the actor]." (B);
+			Stop the action;
+		[Check that G would be the topmost cover for all areas]
 		Unless G can be worn by the actor:
 			Let B be the preventing wearing of G by the actor;
 			If the player is the actor:
-				Say "[We] [can't] wear [noun] on top of [B]." (A);
-			If the player can see the actor and the action is not silent:
-				Say "[The actor] [can't] wear [noun] on top of [B]." (B);
+				Say "[We] [can't] wear [noun] on top of [B]." (C);
+			Else if the player can see the actor and the action is not silent:
+				Say "[The actor] [can't] wear [noun] on top of [B]." (D);
 			Stop the action;
 
 Check an actor wearing something (This is the check garment size rule):
@@ -844,7 +861,7 @@ Check an actor wearing something (This is the check garment size rule):
 		If the clothing size of noun is not the clothing size of the actor:
 			If the player is the actor:
 				Say "[We] [can't] wear [noun], [it's] the wrong size." (A);
-			If the player can see the actor and the action is not silent:
+			Else if the player can see the actor and the action is not silent:
 				Say "[The actor] [can't] wear [noun], [it's] the wrong size." (B);
 			Stop the action;
 
@@ -878,9 +895,9 @@ Check an actor taking off something (this is the can't take off covered items ru
 		Unless G can be taken off:
 			Let blockers be the preventing taking off G;
 			If the player is the actor:
-				Say "[We] [can't] wear [noun] on top of [blockers]." (A);
-			If the player can see the actor and the action is not silent:
-				Say "[The actor] [can't] wear [noun] on top of [blockers]." (B);
+				Say "[We] [can't] take off [noun] due to [blockers with definite articles]." (A);
+			Else if the player can see the actor and the action is not silent:
+				Say "[The actor] [can't] take off [noun] due to [blockers with definite articles]." (B);
 			Stop the action;
 
 Check an actor taking off something (this is the can't take off in public rule):
@@ -894,7 +911,7 @@ Check an actor taking off something (this is the can't take off in public rule):
 			Stop the action;
 
 Check an actor taking something (This is the taking garments requires consent rule):
-	If the noun is a garment and the noun is worn:
+	If the noun is a garment and the noun is worn by someone:
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
@@ -930,7 +947,7 @@ Check an actor removing something from (this is the revised can't remove from pe
 
 The revised can't take people's possessions rule substitutes for the can't take people's possessions rule.
 Check an actor taking (this is the revised can't take people's possessions rule):
-	Unless the noun is a garment and the noun is worn:
+	Unless the noun is a garment and the noun is worn by someone:
 		Let the local ceiling be the common ancestor of the actor with the noun;
 		Let the owner be the not-counting-parts holder of the noun;
 		While the owner is not nothing and the owner is not the local ceiling:
@@ -943,18 +960,18 @@ Check an actor taking (this is the revised can't take people's possessions rule)
 Section - Implementing Taking
 
 Check an actor taking a garment (this is the can't take covered items rule):
-	Follow the can't take off covered items rule;
-	Follow the can't take off in public rule;
+	Abide by the can't take off covered items rule;
+	Abide by the can't take off in public rule;
 
 Check an actor taking something (This is the taking off requires consent rule):
-	If the noun is a garment and the noun is worn:
+	If the noun is a garment and the noun is worn by someone:
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
 The taking garments rule is listed first in the carry out taking rulebook.
 Carry out an actor taking a garment (called G) (this is the taking garments rule):
-	If G is worn:
+	If G is worn by someone:
 		Let wearer be the holder of G;
 		Now the actor carries G;
 		If G is shifted, now G is unshifted;
@@ -979,7 +996,7 @@ Check an actor dressing (this is the dressing required preferred clothing rule):
 	If the preferred clothing of the actor is empty:
 		If the actor is the player:
 			Say "[We] [have] to be more specific about what to wear." (A);
-		If the player can see the actor and the action is not silent:
+		Else if the player can see the actor and the action is not silent:
 			Say "[We] [have] to be more specific about what [actor] should wear." (B);
 		Stop the action;
 
@@ -1023,7 +1040,7 @@ Chapter 1.3.4d - Report
 Report an actor dressing (this is the report dressing rule):
 	If the player is the actor:
 		Say "[We] [put] on [our] clothes." (A);
-	If the player can see the actor:
+	Else if the player can see the actor:
 		Say "[The actor] [put] on [our] clothes." (B);
 
 Part 1.3.5 - Stripping
@@ -1049,7 +1066,7 @@ Check an actor stripping something (this is the can only strip people rule):
 	If the noun is not a person:
 		If the player is the actor:
 			Say "[We] [can't] find a way to strip [noun]." (A);
-		If the player can see the actor and the action is not silent:
+		Else if the player can see the actor and the action is not silent:
 			Say "[The actor] [can't] find a way to strip [noun]." (B);
 		Stop the action;
 
@@ -1058,7 +1075,7 @@ Check an actor stripping something (this is the can't strip naked people rule):
 	If clothing is empty:
 		If the player is the actor:
 			Say "[We] [are] already naked!" (A);
-		If the player can see the actor and the action is not silent:
+		Else if the player can see the actor and the action is not silent:
 			Say "[The noun] [are] already naked." (B);
 		Stop the action;
 
@@ -1080,15 +1097,18 @@ Report an actor stripping (this is the report stripping rule):
 	If the actor is not wearing any garments:
 		If the player is the actor:
 			Say "[We] [take] off all [their] clothes and is now completely naked." (A);
-		If the player can see the actor and the actor is the noun:
+		Else if the player can see the actor and the actor is the noun:
 			Say "[The actor] [take] off all [their] clothes and is now completely naked." (B);
-		If the player can see the noun:
+		Else if the player can see the noun:
 			If the player can see the actor:
 				Say "[The noun] has all of [their] clothes removed by [the actor], and is now completely naked." (C);
 			Else:
 				Say "[The noun] has all of [their] clothes removed, and is now completely naked." (D);
 	Else:
-		Say "[The actor] [are] unable to take off [regarding the noun][their] clothes." (E);
+		If the player is the actor:
+			Say "[We] [are] unable to take off [regarding the noun][their] clothes." (E);
+		Else:
+			Say "[The actor] [are] unable to take off [regarding the noun][their] clothes." (F);
 
 Book 1.4 - Shifting and Ripping
 
@@ -1119,13 +1139,13 @@ Understand "unzip [fastenable garment]" as shifting.
 Understand "unbutton [fastenable garment]" as shifting.
 Understand "open [fastenable garment]" as shifting.
 
-Understand "pull --/up [raisable garment]" as shifting.
-Understand "raise --/up [raisable garment]" as shifting.
-Understand "lift --/up [raisable garment]" as shifting.
+Understand "pull up/-- [raisable garment]" as shifting.
+Understand "raise up/-- [raisable garment]" as shifting.
+Understand "lift up/-- [raisable garment]" as shifting.
 Understand "hike up [raisable garment]" as shifting.
 
-Understand "pull --/down [lowerable garment]" as shifting.
-Understand "lower --/down [lowerable garment]" as shifting.
+Understand "pull down/-- [lowerable garment]" as shifting.
+Understand "lower down/-- [lowerable garment]" as shifting.
 
 Does the player mean shifting a shifted garment: It is unlikely.
 Does the player mean shifting a unshifted garment: It is likely.
@@ -1144,7 +1164,7 @@ Check an actor shifting (this is the can't shift ripped items rule):
 	If the noun provides the property ripped and the noun is ripped:
 		If the actor is the player:
 			Say "[regarding the noun][They're] too ripped up to [describe shifting of the shiftyness of the noun]." (A);
-		If the player can see the actor and the action is not silent:
+		Else if the player can see the actor and the action is not silent:
 			Say "[regarding the noun][They're] too ripped up to [describe shifting of the shiftyness of the noun]." (B);
 		Stop the action;
 
@@ -1152,12 +1172,12 @@ Check an actor shifting (this is the can't shift what's already shifted rule):
 	If the noun is shifted:
 		If the actor is the player:
 			Say "[regarding the noun][They're] already [describe shifted of the shiftyness of the noun]." (A);
-		If the player can see the actor and the action is not silent:
+		Else if the player can see the actor and the action is not silent:
 			Say "[regarding the noun][They're] already [describe shifted of the shiftyness of the noun]." (B);
 		Stop the action;
 
 Check an actor shifting (this is the can only shift what's worn rule):
-	If the noun does not provide the property wearable or the noun is not worn:
+	If the noun does not provide the property wearable or the noun is not worn by someone:
 		If the actor is the player:
 			Say "[We] [can] only [describe shifting of the shiftyness of the noun] [the noun] when it's worn." (A);
 		Else if the player can see the actor and the action is not silent:
@@ -1170,7 +1190,7 @@ Check an actor shifting (this is the can't shift covered items rule):
 			Let blockers be the preventing shifting of G;
 			If the player is the actor:
 				Say "[We] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (A);
-			If the player can see the actor and the action is not silent:
+			Else if the player can see the actor and the action is not silent:
 				Say "[The actor] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (B);
 			Stop the action;
 
@@ -1185,7 +1205,7 @@ Check an actor shifting (this is the can't shift in public rule):
 			Stop the action;
 
 Check an actor shifting something (This is the shifting requires consent rule):
-	If the noun is a garment and the noun is worn:
+	If the noun is a garment and the noun is worn by someone:
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
@@ -1202,11 +1222,11 @@ Report an actor shifting (this is the standard report shifting rule):
 	If the noun is a garment:
 		Let exposed be the revealed by shifting the noun;
 		If the actor is the player:
-			Say "[We] [the describe shifting of the shiftyness of the noun] [the noun], revealing [exposed]." (A);
+			Say "[We] [the describe shifting of the shiftyness of the noun] [the noun], revealing [exposed with indefinite articles]." (A);
 		Else if the player can see the actor:
-			Say "[The actor] [the describe shifting of the shiftyness of the noun] [the noun], revealing [exposed]." (B);
+			Say "[The actor] [the describe shifting of the shiftyness of the noun] [the noun], revealing [exposed with indefinite articles]." (B);
 		Else if the player can see the noun:
-			Say "[The noun] [are] [the describe shifting of the shiftyness of the noun], revealing [exposed]." (C);
+			Say "[The noun] [are] [the describe shifting of the shiftyness of the noun], revealing [exposed with indefinite articles]." (C);
 	Else:
 		If the actor is the player:
 			Say "[We] [the describe shifting of the shiftyness of the noun] [the noun]." (D);
@@ -1231,24 +1251,24 @@ Understand "move [shifted garment]" as unshifting.
 Understand "shift [shifted garment]" as unshifting.
 Understand "unshift [shifted garment]" as unshifting.
 
-Understand "button --/up [buttonable garment]" as unshifting.
-Understand "close --/up [buttonable garment]" as unshifting.
+Understand "button up [buttonable garment]" and "button [buttonable garment]" as unshifting.
+Understand "close up/-- [buttonable garment]" as unshifting.
 
-Understand "zip --/up [zipable garment]" as unshifting.
-Understand "close --/up [zipable garment]" as unshifting.
+Understand "zip up/-- [zipable garment]" as unshifting.
+Understand "close up/-- [zipable garment]" as unshifting.
 
 Understand "fasten [fastenable garment]" as unshifting.
-Understand "buckle --/up [fastenable garment]" as unshifting.
-Understand "zip --/up [fastenable garment]" as unshifting.
-Understand "button --/up [fastenable garment]" as unshifting.
-Understand "close --/up [fastenable garment]" as unshifting.
+Understand "buckle up/-- [fastenable garment]" as unshifting.
+Understand "zip up/-- [fastenable garment]" as unshifting.
+Understand "button up/-- [fastenable garment]" as unshifting.
+Understand "close up/-- [fastenable garment]" as unshifting.
 
-Understand "pull --/down [raisable garment]" as unshifting.
-Understand "lower --/down [raisable garment]" as unshifting.
+Understand "pull down/-- [raisable garment]" as unshifting.
+Understand "lower down/-- [raisable garment]" as unshifting.
 
-Understand "pull --/up [lowerable garment]" as unshifting.
-Understand "raise --/up [lowerable garment]" as unshifting.
-Understand "lift --/up [lowerable garment]" as unshifting.
+Understand "pull up/-- [lowerable garment]" as unshifting.
+Understand "raise up/-- [lowerable garment]" as unshifting.
+Understand "lift up/-- [lowerable garment]" as unshifting.
 Understand "hike up [lowerable garment]" as unshifting.
 
 Does the player mean shifting a shifted garment: It is likely.
@@ -1264,26 +1284,26 @@ Check an actor unshifting (this is the can only unshift shifty items rule):
 			Say "[The Actor] [can't] find a way to do that to [the noun]." (B);
 		Stop the action;
 
-Check an actor shifting (this is the can only unshift what's already shifted rule):
+Check an actor unshifting (this is the can only unshift what's already shifted rule):
 	If the noun is not shifted:
 		If the actor is the player:
 			Say "[regarding the noun][They're] already [describe unshifted of the shiftyness of the noun]." (A);
-		If the player can see the actor and the action is not silent:
+		Else if the player can see the actor and the action is not silent:
 			Say "[regarding the noun][They're] already [describe unshifted of the shiftyness of the noun]." (B);
 		Stop the action;
 
-Check an actor shifting (this is the can't unshift covered items rule):
+Check an actor unshifting (this is the can't unshift covered items rule):
 	If noun is a garment (called G):
 		Unless G can be shifted:
 			Let blockers be the preventing shifting of G;
 			If the player is the actor:
 				Say "[We] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (A);
-			If the player can see the actor and the action is not silent:
+			Else if the player can see the actor and the action is not silent:
 				Say "[The actor] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (B);
 			Stop the action;
 
 Check an actor unshifting something (This is the unshifting requires consent rule):
-	If the noun is a garment and the noun is worn:
+	If the noun is a garment and the noun is worn by someone:
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
@@ -1312,8 +1332,8 @@ The specification of the ripping action is "Ripping is the act of tearing a piec
 
 Chapter 1.4.2a - Understanding
 
-Understand "rip --/open/off/up [garment]" as ripping.
-Understand "tear --/open/off/up [garment]" as ripping.
+Understand "rip open/off/up/-- [garment]" as ripping.
+Understand "tear open/off/up/-- [garment]" as ripping.
 
 Chapter 1.4.2b - Check
 
@@ -1323,7 +1343,7 @@ Check an actor ripping (this is the can't rip covered items rule):
 			Let blockers be the preventing ripping of G;
 			If the player is the actor:
 				Say "[We] [can't] [rip] apart [noun] when it's covered by [blockers]." (A);
-			If the player can see the actor and the action is not silent:
+			Else if the player can see the actor and the action is not silent:
 				Say "[The actor] [can't] [rip] apart [noun] when it's covered by [blockers]." (B);
 			Stop the action;
 
@@ -1339,7 +1359,7 @@ Check an actor shifting (this is the can only rip once rule):
 	If the noun is ripped:
 		If the actor is the player:
 			Say "[regarding the noun][They're] already ripped apart." (A);
-		If the player can see the actor and the action is not silent:
+		Else if the player can see the actor and the action is not silent:
 			Say "[regarding the noun][They're] already ripped apart." (B);
 		Stop the action;
 
@@ -1354,7 +1374,7 @@ Check an actor ripping (this is the can't rip in public rule):
 			Stop the action;
 
 Check an actor ripping something (This is the ripping requires consent rule):
-	If the noun is a garment and the noun is worn:
+	If the noun is a garment and the noun is worn by someone:
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
@@ -1591,39 +1611,27 @@ A default description generation for a person (called P) (This is the generate s
 		If the outcome of the rulebook is the distinct outcome:
 			If part provides the property short description 
 			and the short description of the part is not the default value of text:
-				Add short description of part to the notable body part descriptions;
+				Add "[indefinite article of part] [short description of part]" to the notable body part descriptions;
 			Else:
-				Let article be "";
-				If part is not proper-named:
-					If part is plural-named, let article be "some ";
-					If part is singular-named, let article be "a ";
-				Add "[article][the printed name of the part]" to the notable body part descriptions;
+				Add "[a part]" to the notable body part descriptions;
 	Let clothing be the list of things worn by P;
 	Repeat with cloth running through clothing:
 		Follow the description notability rules for cloth;
 		If the outcome of the rulebook is the distinct outcome:
 			If cloth provides the property short description 
 			and the short description of the cloth is not the default value of text:
-				Add short description of cloth to the notable clothing descriptions;
+				Add "[indefinite article of cloth] [short description of cloth]" to the notable clothing descriptions;
 			Else:
-				Let article be "";
-				If cloth is not proper-named:
-					If cloth is plural-named, let article be "some ";
-					If cloth is singular-named, let article be "a ";
-				Add "[article][the printed name of the cloth]" to the notable clothing descriptions;
+				Add "[a cloth]" to the notable clothing descriptions;
 	Let possessions be the list of things carried by P;
 	Repeat with possession running through possessions:
 		Follow the description notability rules for possession;
 		If the outcome of the rulebook is the distinct outcome:
 			If possession provides the property short description 
 			and the short description of the possession is not the default value of text:
-				Add short description of possession to the notable possession descriptions;
+				Add "[indefinite article of possession] [short description of possession]" to the notable possession descriptions;
 			Else:
-				Let article be "";
-				If possession is not proper-named:
-					If possession is plural-named, let article be "some ";
-					If possession is singular-named, let article be "a ";
-				Add "[article][the printed name of the possession]" to the notable possession descriptions;
+				Add "[a possession]" to the notable possession descriptions;
 	[Convert the lists to printed text. We try to combine clothing with carried items.]
 	If notable body part descriptions is non-empty:
 		Say "[Regarding P][They] [have] [notable body part descriptions].";
@@ -1664,29 +1672,17 @@ A default description generation rule for a person (called P) (this is the gener
 	Repeat with part running through parts:
 		Follow the description notability rules for part;
 		If the outcome of the rulebook is the grouped outcome:
-			Let article be "";
-			If part is not proper-named:
-				If part is plural-named, let article be "some ";
-				If part is singular-named, let article be "a ";
-			Add "[article][the printed name of the part]" to the grouped body part descriptions;
+			Add "[a part]" to the grouped body part descriptions;
 	Let clothing be the list of things worn by P;
 	Repeat with cloth running through clothing:
 		Follow the description notability rules for cloth;
 		If the outcome of the rulebook is the grouped outcome:
-			Let article be "";
-			If cloth is not proper-named:
-				If cloth is plural-named, let article be "some ";
-				If cloth is singular-named, let article be "a ";
-			Add "[article][the printed name of the cloth]" to the grouped clothing descriptions;
+			Add "[a cloth]" to the grouped clothing descriptions;
 	Let possessions be the list of things carried by P;
 	Repeat with possession running through possessions:
 		Follow the description notability rules for possession;
 		If the outcome of the rulebook is the grouped outcome:
-			Let article be "";
-			If possession is not proper-named:
-				If possession is plural-named, let article be "some ";
-				If possession is singular-named, let article be "a ";
-			Add "[article][the printed name of the possession]" to the grouped possession descriptions;
+			Add "[a possession]" to the grouped possession descriptions;
 	[Convert the lists to printed text:]
 	If grouped body part descriptions is non-empty:
 		Say "[We] also note that [regarding P][they] [have] [grouped body part descriptions].";
@@ -2879,12 +2875,76 @@ To decide whether (P - a person) orgasms:
 
 Volume 4 - Support Systems
 
-[This volume deals with out-of-game support systems to improve the experience for both the player and the author.
-TODO:
-Help System
-Limits
-Completion Tracking
-Commentary System]
+[This volume deals with out-of-game support systems to improve the experience for both the player and the author.]
+
+Book 4.1 - Debug Functions - Not for release
+
+Part 4.1.1 - Debug Examine (DEX)
+
+Chapter 4.1.1a - Action Default
+
+Debug examining is an action out of world applying to one thing.
+The debug examining action has a truth state called debug text printed.
+
+The specification of the debug examining action is "The debug examining action is intended to show the intricacies of the kinds in the Erotic Storytelling extension, that isn't always shown my using SHOWME."
+
+Understand "debug examine [something]" and "dex [something]" as debug examining.
+
+The default debug examine rule is listed last in the carry out debug examining rulebook.
+Carry out debug examining something (This is the default debug examine rule):
+	If debug text printed is false:
+		say "There is nothing special about [noun]." (A).
+
+Chapter 4.1.1b - Body Part
+
+Carry out debug examining something (this is the debug examine body parts rule):
+	If noun is a body part:
+		Now debug text printed is true;
+		Let P be the holder of the noun;
+		Say "[The noun] is a body part that can [unless noun can be seen]not [end unless]be seen, [unless noun can be touched]not [end unless]be touched and is [unless noun is accessible]not [end unless] accessible.";
+		Say "Cover Areas:[line break]";
+		Repeat with L running through the cover locations of the noun:
+			Say "[L]: [if L can be seen for P]visible[else]hidden[line break]";
+		Say "Soft-Play:[line break]";
+		If noun is touchable, say "Touchable at [soft-play threshold of noun]([soft-play threshold of P]) up to [soft-play recipient limit of noun]([soft-play recipient limit of P]).";
+		If noun is rubbable, say "Rubbable at [soft-play threshold of noun]([soft-play threshold of P]) up to [soft-play recipient limit of noun]([soft-play recipient limit of P]).";
+		If noun is tickleable, say "Tickleble at [soft-play threshold of noun]([soft-play threshold of P]) up to [soft-play recipient limit of noun]([soft-play recipient limit of P]).";
+		Say "Rough-Play:[line break]";
+		If noun is spankable, say "Spankable at [rough-play threshold of noun]([rough-play threshold of P]) up to [rough-play recipient limit of noun]([rough-play recipient limit of P]).";
+		If noun is pinchable, say "Pinchable at [rough-play threshold of noun]([rough-play threshold of P]) up to [rough-play recipient limit of noun]([rough-play recipient limit of P]).";
+		If noun is biteable, say "Biteable at [rough-play threshold of noun]([rough-play threshold of P]) up to [rough-play recipient limit of noun]([rough-play recipient limit of P]).";
+		Say "Oral-Play:[line break]";
+		If noun is lickable, say "Lickable at [oral-play threshold of noun]([oral-play threshold of P]) up to [oral-play recipient limit of noun]([oral-play recipient limit of P]).";
+		Say "Fuck-Play:[line break]";
+		If noun is penetrating, say "Penetrate at [fuck-play threshold of noun]([fuck-play threshold of P]) up to [fuck-play recipient limit of noun]([fuck-play recipient limit of P]).";
+		If noun is orificial, say "Orifice at [fuck-play threshold of noun]([fuck-play threshold of P]) up to [fuck-play recipient limit of noun]([fuck-play recipient limit of P]).";
+
+Chapter 4.1.1c - Garment
+
+Carry out debug examining something (this is the debug examine garments rule):
+	If noun is a garment:
+		Now debug text printed is true;
+		Let P be the holder of the noun;
+		Say "[The noun] is a garment that [if noun is shiftable]can be [describe shifted of shiftyness of noun][else]can't be shifted[end if], and is [if noun is rippable]rippable[else]not rippable[end if]. It is [if noun can be seen]visible[else]concealed[end if] and [if noun can be touched]touchable[else]covered[end if].";
+		If noun is shiftable, say "[The noun] is [if noun is shifted]shifted, revealing[else]not shifted. Shifting it will reveal[end if] the [shifting revealed cover areas of noun].";
+		If noun is rippable, say "[The noun] is [if noun is ripped]ripped, revealing[else]not ripped. Ripping it will reveal[end if] the [ripping revealed cover areas of noun].";
+		Repeat with L running through the cover areas of the noun:
+			Say "[L]:";
+			If L is listed in the shifting revealed cover areas of noun, say "(shifting-revealed)";
+			If L is listed in the ripping revealed cover areas of noun, say "(shifting-revealed)";
+			Say "[if L can be seen for P]visible[else]hidden[end if].";
+
+Chapter 4.1.1d - Person
+
+[TODO]
+
+Book 4.2 - Hint System
+
+Book 4.3 - Content Limits
+
+Book 4.4 - Completion Tracking
+
+Book 4.5 - Commentary System
 	
 Volume 5 - Templates
 
@@ -2897,56 +2957,60 @@ Part 5.1.1 - Anatomy
 Chapter 5.1.1a - Head
 
 A head is a kind of body part.
+The indefinite article is usually "a".
 The cover locations of a head is usually {the head area}.
 
 Some hair is a kind of body part.
-The cover locations of hair is usually {the head area}.
+The indefinite article is usually "some".
 It is ambiguously plural.
+The cover locations of hair is usually {the head area}.
 
 A face is a kind of body part.
+The indefinite article is usually "a".
 The cover locations of face is usually {the face area}.
 
 A mouth is a kind of body part.
+The indefinite article is usually "a".
 The cover locations of mouth is usually {the face area}.
 Understand "lip", "lips" as mouth.
 
 A pair of eyes is a kind of body part.
-The cover locations of pair of eyes is usually {the face area}.
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of eyes is pairs of eyes.
+The cover locations of pair of eyes is usually {the face area}.
 
 Chapter 5.1.1b - Limbs
 
 Section - Legs
 
 A pair of thighs is a kind of body part.
-The cover locations of a pair of thighs is usually {the thigh area}. 
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of thighs is pairs of thighs.
+The cover locations of a pair of thighs is usually {the thigh area}. 
 A pair of thighs is usually touchable. A pair of thighs is usually rubbable.
 
 A pair of legs is a kind of body part.
-The cover locations of a pair of legs is usually {the leg area}.
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of legs is pairs of legs.
+The cover locations of a pair of legs is usually {the leg area}.
 A pair of legs is usually touchable. A pair of legs is usually rubbable.
 
 A pair of ankles is a kind of body part.
-The cover locations of a pair of ankles is usually {the feet area, the leg area}.
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of ankles is pairs of ankles.
+The cover locations of a pair of ankles is usually {the feet area, the leg area}.
 
 A pair of feet is a kind of body part.
-The cover locations of a pair of feet is usually {the feet area}.
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of feet is pairs of feet.
+The cover locations of a pair of feet is usually {the feet area}.
 A pair of feet is usually touchable. A pair of feet is usually rubbable. A pair of feet is usually tickleable. A pair of feet is usually lickable. A pair of feet is usually biteable.
 
 Section - Arms
 
 A pair of arms is a kind of body part.
-The cover locations of a pair of arms is usually {the arm area}.
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of arms is pairs of arms.
+The cover locations of a pair of arms is usually {the arm area}.
 A pair of arms is usually touchable. A pair of arms is usually rubbable.
 
 A pair of wrists is a kind of body part.
-The cover locations of a pair of wrists is usually {the hand area, the arm area}.
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of wrists is pairs of wrists.
+The cover locations of a pair of wrists is usually {the hand area, the arm area}.
 
 A pair of hands is a kind of body part.
 The cover locations of a pair of arms is usually {the hand area}.
@@ -2956,48 +3020,56 @@ A pair of hands is usually touchable. A pair of hands is usually rubbable.
 Chapter 5.1.1c - Torso
 
 A neck is a kind of body part.
+The indefinite article is usually "a".
 The cover locations of a neck is usually {the shoulder area}.
 A neck is usually lickable. A neck is usually biteable.
 
 A pair of shoulders is a kind of body part.
-The cover locations of a pair of shoulders is usually {the shoulder area}.
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of shoulders is pairs of shoulders.
+The cover locations of a pair of shoulders is usually {the shoulder area}.
 A pair of shoulders is usually rubbable. 
 
 A chest is a kind of body part.
+The indefinite article is usually "a".
 The cover locations of a chest is usually {the upper torso area}.
 A chest is usually touchable. A chest is usually rubbable. A chest is usually tickleable. A chest is usually lickable. A chest is usually biteable.
 
 A pair of breasts is a kind of body part.
-The cover locations of a pair of breasts is usually {the upper torso area}. 
 They are usually plural-named. The indefinite article is usually "a". The plural of pair of breasts is pairs of breasts. 
+The cover locations of a pair of breasts is usually {the upper torso area}. 
 Understand "tit", "tits", "breast", "boob", "boobs", "tittie", "titties" and "juggs" as a pair of breasts.
 A pair of breasts is usually touchable. A pair of breasts is usually rubbable. A pair of breasts is usually tickleable. A pair of breasts is usually lickable. A pair of breasts is usually biteable. A pair of breasts is usually pinchable.
 
 A midriff is a kind of body part.
+The indefinite article is usually "a".
 The cover locations of a midriff is usually {the lower torso area}.
 Understand "stomach", "tummy" as midriff.
 A midriff is usually touchable. A midriff is usually rubbable. A midriff is usually tickleable. A midriff is usually lickable.
 
 A waist is a kind of body part.
+The indefinite article is usually "a".
 The cover locations of a waist is usually {the lower torso area, the lower back area}.
 
 A backside is a kind of body part.
+The indefinite article is usually "a".
 The cover locations of a backside is usually {the upper back area, the lower back area}.
 
 Chapter 5.1.1d - Crotch
 
 An ass is a kind of body part.
+The indefinite article is usually "an".
 The cover locations of an ass is usually {the crotch area}.
 Understand "asshole", "anus", "rear", "rear end", "butt", "bottom", "rump" as ass.
 An ass is usually touchable. An ass is usually rubbable. An ass is usually spankable. An ass is usually pinchable. An ass is usually lickable. An ass is usually orificial.
 
 A penis is a kind of body part.
+The indefinite article is usually "a".
 The cover locations of a penis is usually {the crotch area}.
 Understand "cock", "dick", "wang", "dong", "wiener", "willy", "schlong", "boner", "pecker" as penis.
 A penis is usually touchable. A penis is usually rubbable. A penis is usually pinchable. A penis is usually lickable. A penis is usually biteable. A penis is usually penetrating.
 
 A vagina is a kind of body part.
+The indefinite article is usually "a".
 The cover locations of a vagina is usually {the crotch area}.
 Understand "pussy", "cunt", "slit", "crotch", "snatch", "clitoris", "clit", "twat" as vagina.
 A vagina is usually touchable. A vagina is usually rubbable. A vagina is usually lickable. A vagina is usually orificial.
@@ -3020,6 +3092,7 @@ A pair of panties is usually shiftable. The shiftyness of a pair of panties is u
 A pair of panties is usually rippable. The ripping revealed cover areas of pair of panties is usually {crotch area}.
 
 A bra is a kind of garment.
+The indefinite article is usually "a".
 The specification of bra is "Bras are usually indecent underwear, and go on the upper torso/back."
 A bra is usually underwear.
 The cloth decency of a bra is usually indecent.
@@ -3027,6 +3100,7 @@ A bra is usually allow touching through.
 The cover areas of a pair of panties is usually {upper torso area, upper back area}.
 
 An undershirt is a kind of garment.
+The indefinite article is usually "an".
 The specification of undershirt is "An undershirt is a shirt that's meant to go under a normal shirt, covering just the torso (front/back). It's usually immodest underwear. It can be ripped to expose the upper torso area."
 An undershirt is usually underwear.
 The cloth decency of an undershirt is usually immodest.
@@ -3035,6 +3109,7 @@ The cover areas of an undershirt is usually {upper torso area, lower torso area,
 An undershirt is usually rippable. The ripping revealed cover areas of an undershirt is usually a {upper torso area}.
 
 A swimsuit is a kind of garment.
+The indefinite article is usually "a".
 The specification of swimsuit is "A swimsuit is immodest underwear that covers the upper torso, lower back/torso and crotch. It doesn't necessarily have to be for swimming; teddies and similar underwear can also use the same template. It can usually be moved aside to expose upper torso."
 A swimsuit is usually underwear.
 The cloth decency of a swimsuit is usually immodest.
@@ -3043,15 +3118,14 @@ The cover areas of a swimsuit is usually {upper torso area, lower torso area, lo
 A swimsuit is usually shiftable. The shiftyness of a swimsuit is usually moveable. The shifting revealed cover areas of a swimsuit is usually a {upper torso area}.
 
 A bodysuit is a kind of garment.
+The indefinite article is usually "a".
 The specification of bodysuit is "A bodysuit is a special form of indecent underwear that covers most of a person, only leaving the hands and head/face uncovered."
 A bodysuit is usually underwear.
 The cloth decency of a bodysuit is usually indecent.
 The cover areas of a bodysuit is usually {shoulder area, arm area, upper torso area, upper back area, lower torso area, lower back area, crotch area, thigh area, leg area, feet area}.
 
-[TODO: Move to documentation, needs to be custom implemented, usually based on undershirt or swimsuit.
-The specification of corset is "A corset is a (usually rigid) underwear that's usually immodest, and covers the upper/lower front/back by default. As there are many kinds of corsets, this is a garment that usually takes some customization to match the requirements, such as altering cover areas and clothing layer."]
-
 A mask is a kind of garment.
+The indefinite article is usually "a".
 The specification of mask is "A mask covers a persons face and head, and is usually immodest. This is a piece of garment that should be used with care, as it will block access to a person's mouth."
 A mask is usually underwear.
 The cloth decency of a mask is usually immodest.
@@ -3062,8 +3136,8 @@ Chapter 5.1.2b - Normalwear
 [Normalwear is clothing that go on the "normal" layer, above underwear but under overwear. Because pantyhose needs to go over underwear and be on the same layer as socks, socks also sort here.]
 
 A pair of socks is a kind of garment.
-The specification of pair of socks is "Socks cover the feet, and is usually formal and normalwear (in order to match stockings and pantyhose)."
 They are usually plural-named. The indefinite article is usually "a". The plural of socks is pairs of socks.
+The specification of pair of socks is "Socks cover the feet, and is usually formal and normalwear (in order to match stockings and pantyhose)."
 A pair of socks is usually normalwear.
 The cloth decency of a pair of socks is usually formal.
 A pair of socks is usually allow touching through.
@@ -3088,6 +3162,7 @@ The cover areas of a pair of pantyhose is usually {feet area, leg area, thigh ar
 A pair of pantyhose is usually rippable. The ripping revealed cover areas of a pair of pantyhose is usually {crotch area}.
 
 A shirt is a kind of garment.
+The indefinite article is usually "a".
 The specification of shirt is "Shirt covers the entire back and torso, as well as shoulders and arms. It is usually casual and normalwear."
 A shirt is usually normalwear.
 The cloth decency of shirt is usually casual.
@@ -3109,17 +3184,19 @@ Chapter 5.1.2c - Overwear
 [Overwear is the outer layer of clothing, and is only covered by outerwear (clothing that is meant for outside use).]
 
 A dress is a kind of garment.
+The indefinite article is usually "a".
 The specification of a dress is "A dress covers the entire torso (front and back), as well as the arms/shoulders and thighs/legs. It is usually formal and outerwear. This means a shirt under it, but not a sweater can be worn over it. Making it normalwear would also make for some interesting interactions with pantyhose and trousers. By default a dress can be unbuttoned to access the upper torso; to change this to make it raisable to access the crotch see the definition of minidress (you might also want to change default cover blocking).
 Note; Dresses go under boots, which might cause some issues if boots are modified to cover legs/thighs."
-A dress is usually normalwear.
+A dress is usually overwear.
 The cloth decency of dress is usually casual.
 The cover areas of a dress is usually {shoulder area, arm area, upper torso area, lower torso area, upper back area, lower back area, crotch area, thigh area, leg area}.
 A dress is usually default cover blocking.
 A dress is usually shiftable. The shiftyness of a dress is usually buttonable. The shifting revealed cover areas of a dress is usually {shoulder area, upper torso area, lower torso area}.
 
 A minidress is a kind of garment.
+The indefinite article is usually "a".
 The specification of a minidress is "A minidress is a short dress that doesn't cover the legs; see dress for more details. It's usually casual and normalwear. It's can usually be raised to gain access to the crotch."
-A minidress is usually normalwear.
+A minidress is usually overwear.
 The cloth decency of minidress is usually immodest.
 The cover areas of a minidress is usually {shoulder area, arm area, upper torso area, lower torso area, upper back area, lower back area, crotch area, thigh area}.
 A minidress is usually shiftable. The shiftyness of a dress is usually raisable. The shifting revealed cover areas of a dress is usually {crotch area, thigh area}.
@@ -3144,6 +3221,7 @@ A pair of shorts is usually default cover blocking.
 A pair of shorts is usually shiftable. The shiftyness of a pair of shorts is usually zipable. The shifting revealed cover areas of a pair of shorts is usually {crotch area}.
 
 A skirt is a kind of garment.
+The indefinite article is usually "a".
 The specification of skirt is "A skirt is usually a casual overwear that covers the crotch and thighs, and can easily be made longer by changing the default cover areas. It's usually liftable to expose everything."
 A skirt is usually overwear.
 The cloth decency of skirt is usually casual.
@@ -3151,6 +3229,7 @@ The cover areas of a skirt is usually {thigh area, crotch area}.
 A skirt is usually shiftable. The shiftyness of a skirt is usually raisable. The shifting revealed cover areas of a skirt is usually a {thigh area, crotch area}.
 
 A sweater is a kind of garment.
+The indefinite article is usually "a".
 The specification of a sweater is "A sweater is a casual overwear that covers the entire upper body and arms. It can be pulled up to expose the upper and lower torso."
 A sweater is usually overwear.
 The cloth decency of sweater is usually casual.
@@ -3159,6 +3238,7 @@ A sweater is usually default cover blocking.
 A sweater is usually shiftable. The shiftyness of a sweater is usually raisable. The shifting revealed cover areas of a sweater is usually a {upper torso area, lower torso area}.
 
 A suit is a kind of garment.
+The indefinite article is usually "a".
 The specification of a suit is "A suit is really a combination of a sweater-jacket and pants. It's usually formal overwear, and covers the  front and back of the torso, arms, legs/thighs and crotch. It can be unzipped to access the crotch."
 The cover areas of a suit is usually {upper torso area, lower torso area, arm area, shoulder area, upper back area, lower back area, leg area, thigh area, crotch area}.
 A suit is usually overwear.
@@ -3186,12 +3266,14 @@ The cloth decency of pair of boots is usually formal.
 The cover areas of a pair of glasses is usually {feet area, leg area}.
 
 A hat is a kind of garment.
+The indefinite article is usually "a".
 The specification of hat is "A hat goes on the head, and is usually formal outerwear. Because a hat covers the head area, it will block direct view of hair."
 A hat is usually outerwear.
 The cloth decency of a hat is usually formal.
 The cover areas of a hat is usually {head area}.
 
 A jacket is a kind of garment.
+The indefinite article is usually "a".
 The specification of jacket is "A jacket is usually formal outerwear that is worn over the torso. It can be unbuttoned to expose the front."
 The cover areas of a jacket is usually {arm area, shoulder area, upper torso area, lower torso area, upper back area, lower back area}.
 A jacket is usually outerwear.
@@ -3200,6 +3282,7 @@ A jacket is usually default cover blocking.
 A jacket is usually shiftable. The shiftyness of a jacket is usually buttonable. The shifting revealed cover areas of a jacket is usually {upper torso area, lower torso area}.
 
 A coat is a kind of garment.
+The indefinite article is usually "a".
 The specification of coat is "A coat a longer version of a jacket, that also covers the thighs and crotch. It can be unbuttoned to expose the front and thighs/crotch."
 The cover areas of a coat is usually {arm area, shoulder area, upper torso area, lower torso area, upper back area, lower back area, crotch area, thigh area}.
 A coat is usually outerwear.
@@ -3208,6 +3291,7 @@ A coat is usually default cover blocking.
 A coat is usually shiftable. The shiftyness of a coat is usually buttonable. The shifting revealed cover areas of a coat is usually {shoulder area, upper torso area, lower torso area, crotch area, thigh area}.
 
 A pair of gloves is a kind of garment.
+The indefinite article is usually "a".
 They are usually plural-named. The indefinite article is usually "a". The plural of gloves is pairs of gloves.
 The specification of pair of gloves is "Gloves are formal outerwear that go over the hands."
 A pair of gloves is usually outerwear.
@@ -3219,21 +3303,21 @@ Part 5.1.3 - Toy Box
 Chapter 5.1.3 - Sex Toy
 
 A sex toy is a kind of thing.
+The indefinite article is usually "a".
 The specification of a sex toy is "A sex toy is a thing that is intended for use with the fucking it with action, and therefore supports the adjectives penetrating and orificial. It is usually penetrating but not orificial."
-
 A sex toy can be penetrating. A sex toy is usually penetrating.
 A sex toy can be orificial. A sex toy is usually not orificial.
 
 Chapter 5.1.4 - Strap-On
 
 A strap-on is a kind of garment.
+The indefinite article is usually "a".
 The specification of a strap-on is "A strap-on is a special garment that is intended for use with the fucking it with action, and therefore also supports the adjective penetrating (which it usually is). It is indecent and outerwear, so it can be worn over pants and dresses if needed."
-
-A strap-on can be penetrating. A strap-on is usually penetrating.
 A strap-on is usually outerwear.
 The cloth decency of a strap-on is usually indecent.
 A strap-on is usually allow touching through.
 The cover areas of a strap-on is usually {crotch area}.
+A strap-on can be penetrating. A strap-on is usually penetrating.
 
 Part 5.1.4 - Furniture
 
@@ -3302,7 +3386,6 @@ A consent rule (this is the love interest consent rule):
 			Let second person be P;	
 	[Check love interests for actor]
 	Unless actor is the player:
-		Say "Testing interest of Person0.";
 		If first person is a person and first person is not listed in the love interests of the actor:
 			Say the uninterested response of the actor;
 			Deny consent;
@@ -3311,7 +3394,6 @@ A consent rule (this is the love interest consent rule):
 			Deny consent;
 	[Check love interests for first person]
 	If first person is a person and first person is not the player:
-		Say "Testing interest of Person1.";
 		If actor is not listed in the love interests of the first person:
 			Say the uninterested response of the first person;
 			Deny consent;
@@ -3320,7 +3402,6 @@ A consent rule (this is the love interest consent rule):
 			Deny consent;
 	[Check love interests for second person]
 	If second person is a person and second person is not the player:
-		Say "Testing interest of Person0.";
 		If actor is not listed in the love interests of the actor:
 			Say the uninterested response of the second person;
 			Deny consent;
@@ -3356,7 +3437,7 @@ A consent rule for an actor wearing something (this is the dressing default cons
 Section - Worn Garments
 
 A default-consent rule (this is the undressing consent rule):
-	If the noun is a garment (called G) and G is worn:
+	If the noun is a garment (called G) and G is worn by someone:
 		Let P be the holder of G;
 		Unless the actor is the player:
 			If the clothing threshold of the actor is the unattainable arousal
@@ -3839,8 +3920,9 @@ As this is quite a sprawling extension, a proper overview of what can be found i
 	Chapter 3: In-depth explanation of how the layered clothing system works. Mostly intended for advanced users who want customization.
 	Chapter 4: Guidelines on how to write better descriptions, using both the hooks in the extension and Inform's standard rules.
 	Chapter 5: Techniques for how to write better Non-Player Characters (NPCs) with the extension.
-	Chapter 6: A complete technical reference for everything changed or added with this extension.
+	Chapter 6: The various out-of-world functions, such as completion tracking, hint system and debugging.
 	Chapter 7: A tutorial on how to write Erotic Stories in Inform.
+	Chapter 8: A complete technical reference for everything changed or added with this extension.
 
 [TODO: List of examples]
 
@@ -3850,7 +3932,8 @@ Reduced to it's most basic components, an interactive fiction story (adult or no
 It follows that an extension should focus on making it easier for the story author to write these responses, taking care of the gritty details such as checking if actions are valid.
 This allows the author to focus on the arguably more important features such as over-arching plotlines.
 
-Inform offers several ways of altering responses for specific actions; Writing with Inform has several examples of varying text, and chapter 12.2 ("How actions are processed") goes into some detail on how action responses are chosen.
+Inform offers several ways of altering responses for specific actions.
+Writing with Inform has several examples on how to vary text, and chapter 12.2 ("How actions are processed") goes into some detail on how action responses are chosen.
 What follows is a quick overview of how to best utilize this extension to generate responses and description:
 
 After: As the name implies, these rules are processed after the action has taken place, in place of the default action report rules.
@@ -4325,12 +4408,12 @@ The following short example highlights some of the these tricks:
 
 Chapter 5 - NPCs
 
-Chapter 6 - Technical Reference
+Chapter 8 - Technical Reference
 
 Contained in this chapter is a technical description of all the new and altered mechanics for the extension, divided by type.
 It's intended as a companion to the other chapters, although an experienced author could glean much of the previous information from this chapter alone.
 
-Section 6.1 - New Kinds of Value
+Section 8.1 - New Kinds of Value
 
 The extension creates a few new kinds of value to help cohesion.
 Several of these could have been implemented as numeric properties instead, but making them kinds of value improves readability and makes it harder to compare the wrong values. 
@@ -4358,7 +4441,7 @@ Shiftyness is a horrible made up word, which governs how the player can rearrang
 The values (and their associated textual descriptions) are defined in the Table of Shift, which can be expanded upon.
 See Garments for more details.
 
-Section 6.2 - New Kind: Body Part
+Section 8.2 - New Kind: Body Part
 
 Besides the new Kind of Values, the extension also defines some new Kinds.
 Note that this section only covers the new base kinds, as these will have templated sub-kinds with different defaults.
@@ -4402,7 +4485,7 @@ Body parts also have quite a few arousals for use with DACS; How these work are 
 		Performer Limit: Very Aroused; Orgasmic for penis and vagina.
 		Recipient Limit: Very Aroused; Orgasmic for penis and vagina.
 
-Section 6.3 - New Kind: Garment
+Section 8.3 - New Kind: Garment
 
 A garment is as the name implies a thing that is designed to be worn, and as such is always wearable.
 It interacts with body parts through the use of the cover area kind of value, as described earlier.
@@ -4428,7 +4511,7 @@ Garments are also referenced by persons, in the list of preferred clothing which
 	Worn Description: A text that is printed in addition to the normal description property when examined, if the garment is worn by someone. If the property is not set, nothing is printed.
 	Unworn Description: A text that is printed in addition to the normal description property when examined, if the garment is not worn by anyone. If the property is not set, nothing is printed.
 
-Section 6.4 - New Properties for Existing Kinds
+Section 8.4 - New Properties for Existing Kinds
 
 Besides defining new Kinds and Kinds of Value, the extension also adds some properties to existing Kinds: Room and Person.
 
@@ -4454,6 +4537,7 @@ Persons get more changes, see also decency above.
 	Unaroused Response: Issued by the DACS templates when the person is not interested in the action, due to the current arousal of the person not being high enough. Defaults to "'Not yet,' [printed name] says softly."
 	Uninterested Response: Issued by the DACS templates when the person is not interested in the action, either due to unattainable arousal threshold or lack of love interest. Defaults to "'That's not going to happen,' [printed name] says cooly."
 
+
 Persons also have quite a few arousals for use with DACS; How these work are described in more detail earlier in the arousal section, but the default values are listed here:
 
 	Clothing threshold: Slightly Aroused.
@@ -4474,7 +4558,7 @@ Persons also have quite a few arousals for use with DACS; How these work are des
 		Performer Limit: Very Aroused.
 		Recipient Limit: Very Aroused.
 
-Section 6.5 - Global Variables
+Section 8.5 - Global Variables
 
 As described in section 2.1, all of the erotic actions have a corresponding decency which is compared to the decency threshold of the room to see if the action should be allowed.
 To make it easy for an author to alter this, they are defined as global variables, listed below.
@@ -4492,7 +4576,7 @@ To make it easy for an author to alter this, they are defined as global variable
 	The tickling decency is initially immodest.
 	The touching decency is initially immodest.
 
-Section 6.6 - Adjectives
+Section 8.6 - Adjectives
 
 The extension provides some adjectives for the story author to take advantage of:
 
@@ -4503,7 +4587,7 @@ The extension provides some adjectives for the story author to take advantage of
 
 The extension itself never uses these.
 
-Section 6.7 - Phrases for Saying
+Section 8.7 - Phrases for Saying
 
 These phrases are provided to simplify using the properties of shiftyness, which are mainly used as say-able values.
 
@@ -4512,7 +4596,7 @@ These phrases are provided to simplify using the properties of shiftyness, which
 	DESCRIBE SHIFTED OF (shiftyness): Describe the shifted appearance, as defined by the describe shifted entry in the Table of Shift.
 	DESCRIBE UNSHIFTED OF (shiftyness): Describe the un-shifted appearance, as defined by the describe unshifted entry in the Table of Shift.
 
-Section 6.8 - Phrases for Updating Values
+Section 8.8 - Phrases for Updating Values
 
 The extension contains some phrases which are used to update the world model.
 The phrases for forcing clothing are most applicable to a story author, and are intended to simplify set-changing.
@@ -4523,7 +4607,7 @@ They bypass all action checks on wearing garments, and will allow for a person t
 	FORCE STRIP (person): Forcibly removes all worn items from a person, bypassing all restrictions. Use with caution!
 	FORCE DRESS (person) in (list of garments): Forcibly replaces the currently worn items of a person with the list of garments, bypassing all restrictions. Use with caution!
 
-Section 6.9 - Phrases for Deciding on Values
+Section 8.9 - Phrases for Deciding on Values
 
 The extension contains some phrases to decide on values, which are used in actions.
 These only do calculations and don't update anything, so they are safe to use for a story author.
@@ -4586,7 +4670,6 @@ These phrases deals with arousal and orgasms:
 
 
 
-
 Example: * Moulded and Stamped - Using the provided templates to flesh out actors.
 
 This example shows some of the templated body parts and garments in action.
@@ -4599,4 +4682,79 @@ In order to show off the tricks better, we set unrealistic defaults for persuasi
 	
 	Lounge is a room.
 	Laura is a woman in Lounge.
+
+Example: ** A Furry Tale - How to create custom body parts.
+
+The provided templates covers the need of most stories, but it's impossible to cover every eventuality.
+This example shows how a new type of body part requiring it's own cover area can be implemented.
+
+	*: "A Furry Tale"
 	
+	Include Erotic Storytelling by Fictitious Frode.
+	Use MAX_STATIC_DATA of 300000.
+	Use unabbreviated object names.
+
+It's best to define the actors (including the player) with gender as early as possible.
+
+	Lounge is a room. "Despite the name, the lounge is rather boring and devoid of any furniture. It seems as though it serves no real purpose."
+	Kitsune is a woman in Lounge.
+	Adam is a man in Lounge. The player is Adam.
+
+The first part is expanding the Table of Coverage to define the new cover area.
+
+	Table of Coverage(continued)
+	Cover Area	Uncovered Decency (decency)
+	The tail area	immodest
+
+For creating the body part, we have two options: create a new template kind or a new generic body part.
+Both approaches need all properties set; the most important is the cover locations but any understand phrases or action control adjectives should also be defined.
+If we expect to create multiples of the new part it's best to create a new template so all this is only done once.
+	
+	A tail is a kind of body part.
+	The cover locations of a tail is usually {tail area}.
+	A tail is usually touchable. A tail is usually rubbable.
+
+Because the tail uses a new cover area, we need to add that cover area to any persons that have a tail.
+This can be done by either declaring the contents of the body area property, or we can dynamically alter the list during start up or play.
+The body part must also be declared to be part of the relevant persons.
+
+	When play begins, add tail area to the body areas of Kitsune.
+	
+	Kitsune's tail is a tail that is part of Kitsune.
+	The covered description of Kitsune's tail is "You've heard the rumours about her [short description], but you can't see it."
+	The uncovered description of Kitsune's tail is "She has a [short description], wagging playfully from side to side."
+	The short description of Kitsune's tail is "long furry tail".
+	Description notability for Kitsune's tail: If Kitsune's tail can be seen, distinct.
+
+The second part is adapting existing garments to take this new cover area into consideration.
+Without this modification the tail would not be covered by the dress, which might be what was wanted (if it had a tail-hole, for instance).
+We also change the dress to be raisable instead of buttonable
+
+	A pink dress is a dress worn by Kitsune.
+	The short description is "pink frilly dress".
+	The unworn description is "It's a [short description]."
+	The worn description is "She's wearing a [short description] that covers most of her body."
+	The shifted description is "Her [short description] is raised to reveal her legs and [short description of Kitsune's tail]."
+	
+	The cover areas of pink dress is usually {shoulder area, arm area, upper torso area, lower torso area, upper back area, lower back area, crotch area, thigh area, leg area, tail area}.
+	A pink dress is not default cover blocking.
+	The shiftyness of a pink dress is raisable. The shifting revealed cover areas of a dress is usually {crotch area, thigh area, leg area, tail area}.	
+
+We can also create new garments for just this body part.
+We make it transparent because we don't want it to block vision.
+Note that because this only covers the tail, a person without a tail will be unable to wear it.
+
+	A ribbon is a garment worn by Kitsune.
+	It is transparent.
+	The cover areas is {tail area}.
+	The worn description is "A pink ribbon is tied around the tail."
+	The unworn description is "A pink strip of fabric that can be tied into a ribbon."
+	Understand "pink", "strip of/--", "fabric" as ribbon.
+
+We grant consent for some actions so the player can test the differences.
+
+	The love interests of Kitsune is {Adam}.
+	Consent for shifting a garment worn by Kitsune: Give consent.
+	Consent for taking ribbon: Give consent.
+	
+	Test me with "x kitsune / x tail / x ribbon / lift dress / x kitsune / x tail / x ribbon / take ribbon / wear ribbon"
