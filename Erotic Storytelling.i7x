@@ -343,7 +343,7 @@ There's probably a need for more functions here later on, but as of now all nece
 
 Chapter 1.2.2a - Determining Cover Areas
 
-To decide what list of cover areas is the modified covered areas of (G - a garment):
+To decide what list of cover areas is the modified cover areas of (G - a garment):
 	Let cover be the cover areas of G;
 	If G is ripped:
 		Repeat with A running through the ripping revealed cover areas of G:
@@ -356,78 +356,71 @@ To decide what list of cover areas is the modified covered areas of (G - a garme
 To decide what list of cover areas is the blocked cover areas of (G - a garment):
 	If G is default cover blocking:
 		Decide on the cover areas of G;
-	Decide on the modified covered areas of G;
+	Decide on the modified cover areas of G;
 
 Chapter 1.2.2b - Body Parts
 
 To decide whether (P - a body part) can be seen:
+	Let clothing be the list of opaque garments worn by the holder of P;
+	Sort clothing in reverse clothing layer order;
 	Repeat with A running through the cover locations of P:
-		Let clothing be the list of opaque garments worn by the holder of P;
-		Sort clothing in reverse clothing layer order;
 		Repeat with cloth running through clothing:
-			If A is not listed in the modified covered areas of cloth, remove cloth from clothing;
-		If clothing is empty, decide yes; [Nothing covers this area, so G is visible]
-	Decide no; [We only come here if no cover areas were visible]
+			If A is listed in the modified cover areas of cloth, decide no;
+	Decide yes;
 
 To decide which list of garments is concealing vision of (P - a body part):
 	Let concealers be a list of garments;
+	Let clothing be the list of opaque garments worn by the holder of P;
+	Sort clothing in reverse clothing layer order;
 	Repeat with A running through the cover locations of P:
-		Let clothing be the list of opaque garments worn by the holder of P;
-		Sort clothing in reverse clothing layer order;
 		Repeat with cloth running through clothing:
-			If A is not listed in the modified covered areas of cloth:
+			If A is listed in the modified cover areas of cloth:
 				Add cloth to concealers, if absent;
 	Decide on concealers;
 
 To decide whether (P - a body part) can be touched:
-	Let clothing be the list of garments worn by the holder of P;
+	Let clothing be the list of block touching through garments worn by the holder of P;
 	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		If cloth is block touching through:
-			Let intersect be the modified covered areas of cloth;
-			Repeat with A running through intersect:
-				If A is not listed in the cover locations of P, remove A from intersect;
-			If the number of entries in intersect greater than 0, decide no;
+	Repeat with A running through the cover locations of P:
+		Repeat with cloth running through clothing:
+			If A is listed in the modified cover areas of cloth, decide no;
 	Decide yes;
 
 To decide which list of garments is preventing touching of (P - a body part):
 	Let preventers be a list of garments;
-	Let clothing be the list of garments worn by the holder of P;
+	Let clothing be the list of block touching through garments worn by the holder of P;
 	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		If cloth is block touching through:
-			Let intersect be the modified covered areas of cloth;
-			Repeat with A running through intersect:
-				If A is not listed in the cover locations of P, remove A from intersect;
-			If the number of entries in intersect is greater than 0:
+	Repeat with A running through the cover locations of P:
+		Repeat with cloth running through clothing:
+			If A is listed in the modified cover areas of cloth:
 				Add cloth to preventers, if absent;
 	Decide on preventers;
 
 To decide whether (P - a body part) is accessible:
 	Let clothing be the list of garments worn by the holder of P;
 	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		Let intersect be the blocked cover areas of cloth;
-		Repeat with A running through intersect:
-			If A is not listed in the cover locations of P, remove A from intersect;
-		If the number of entries in intersect is greater than 0, decide no;
+	Repeat with A running through the cover locations of P:
+		Repeat with cloth running through clothing:
+			If A is listed in the modified cover areas of cloth, decide no;
 	Decide yes;
+
+[TODO: Preventing access]
 
 Chapter 1.2.2c - Cover Areas
 
 To decide whether (A - cover area) can be seen for (P - a person):
-	Let clothing be the list of garments worn by P;
+	Let clothing be the list of opaque garments worn by P;
 	Sort clothing in reverse clothing layer order;
 	Repeat with cloth running through clothing:
-		If cloth is opaque and A is listed in the modified covered areas of cloth:
+		If A is listed in the modified cover areas of cloth:
 			Decide no;
 	Decide yes;
 
 To decide which decency is exposed by (A - cover area) on (P - a person):
-	Let clothing be the list of garments worn by P;
+	Let clothing be the list of opaque garments worn by P;
 	Sort clothing in reverse clothing layer order;
 	Repeat with cloth running through clothing:
-		If cloth is opaque and A is listed in the modified covered areas of cloth:
+		If A is listed in the modified cover areas of cloth:
 			Decide on the cloth decency of cloth;
 	Decide on the decency of A;
 
@@ -436,24 +429,25 @@ To decide which list of things is concealed by (G - a garment) for (A - cover ar
 	Let revealed be a list of things;
 	[First; determine whether G would reveal anything at all]
 	Let clothing be the list of garments worn by the holder of G;
-	Remove G from clothing;
+	If G is listed in clothing, remove G from clothing; [We don't want to let G block or reveal itself]
 	Sort clothing in reverse clothing layer order;
 	[Determine if G is the topmost concealer for the area:]
+	Let concealed clothing be clothing;
 	Repeat with cloth running through clothing:
 		If clothing layer of cloth is less than clothing layer of G:
 			Break; [What remains in clothing are the potentially revealed garments]
 		If clothing layer of cloth is clothing layer of G:
-			Remove cloth from clothing;
+			Remove cloth from concealed clothing;
 			Next;
 		If cloth is transparent:
-			Remove cloth from clothing;
+			Remove cloth from concealed clothing;
 			Next;
-		If A is listed in the modified covered areas of cloth:
+		If A is listed in the modified cover areas of cloth:
 			[Cloth overlies G for the area, so nothing would be revealed here]
 			Decide on revealed;
 	[Determine which garments would be revealed, and whether body parts are visible too.]
-	Repeat with cloth running through clothing:
-		If A is not listed in the modified covered areas of cloth:
+	Repeat with cloth running through concealed clothing:
+		If A is not listed in the modified cover areas of cloth:
 			Next;
 		Add cloth to revealed, if absent;
 		If cloth is opaque:
@@ -476,32 +470,27 @@ An unworn garment is assumed to be visible.]
 To decide whether (G - a garment) can be seen:
 	If G is not worn by someone:
 		Decide yes;
+	Let clothing be the list of opaque garments worn by the holder of G;
+	If G is listed in clothing, remove G from clothing; [We don't want to let G block itself]
+	Sort clothing in reverse clothing layer order;
 	Repeat with A running through the cover areas of G:
-		Let clothing be the list of garments worn by the holder of G;
-		Remove G from clothing; [We don't want to let G block vision of G]
-		Sort clothing in reverse clothing layer order;
 		Repeat with cloth running through clothing:
-			[Only consider opaque garments with a higher clothing layer]
-			If cloth is opaque and clothing layer of cloth is greater than clothing layer of G:
-				If A is not listed in the modified covered areas of cloth: [Take shifted/ripped into account]
-					Remove cloth from clothing;
-			Else:
-				Remove cloth from clothing;
-		If clothing is empty, decide yes; [Nothing covers this area, so G is visible]
-	Decide no; [We only come here if no cover areas were visible]
+			If clothing layer of cloth is greater than clothing layer of G:
+				If A is listed in the modified cover areas of cloth, decide no;
+	Decide yes;
 
 To decide which list of garments is concealing vision of (G - a garment):
 	Let concealers be a list of garments;
 	If G is not worn by someone:
 		Decide on concealers;
+	Let clothing be the list of opaque garments worn by the holder of G;
+	If G is listed in clothing, remove G from clothing; [We don't want to let G block itself]
+	Sort clothing in reverse clothing layer order;
 	Repeat with A running through the cover areas of G:
-		Let clothing be the list of garments worn by the holder of G;
-		Remove G from clothing; [We don't want to let G block itself]
-		Sort clothing in reverse clothing layer order;
 		Repeat with cloth running through clothing:
 			[Only consider opaque garments with a higher clothing layer]
-			If cloth is opaque and clothing layer of cloth is greater than clothing layer of G:
-				If A is listed in the modified covered areas of cloth: [Take shifted/ripped into account]
+			If clothing layer of cloth is greater than clothing layer of G:
+				If A is listed in the modified cover areas of cloth: [Take shifted/ripped into account]
 					Add cloth to concealers, if absent;
 	Decide on concealers;
 
@@ -511,33 +500,29 @@ Section - Touching Garments
 To decide whether (G - a garment) can be touched:
 	If G is not worn by someone:
 		Decide yes;
-	Let cover be the modified covered areas of G;
+	Let cover be the modified cover areas of G;
 	Let clothing be the list of garments worn by the holder of G;
-	Remove G from clothing; [We don't want to let G block itself]
+	If G is listed in clothing, remove G from clothing; [We don't want to let G block itself]
 	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		If cloth is block touching through and clothing layer of cloth is greater than clothing layer of G:
-			Let intersect be the modified covered areas of cloth;
-			Repeat with A running through intersect:
-				If A is not listed in cover, remove A from intersect;
-			If the number of entries in intersect is greater than 0, decide no;
+	Repeat with A running through cover:
+		Repeat with cloth running through clothing:
+			If cloth is block touching through and clothing layer of cloth is greater than clothing layer of G:
+				If A is listed in modified cover areas of cloth, decide no;
 	Decide yes;
 
 To decide which list of garments is preventing touching of (G - a garment):
 	Let preventers be a list of garments;
 	If G is not worn by someone:
 		Decide on preventers;
-	Let cover be the modified covered areas of G;
+	Let cover be the modified cover areas of G;
 	Let clothing be the list of garments worn by the holder of G;
-	Remove G from clothing; [We don't want to let G block itself]
+	If G is listed in clothing, remove G from clothing; [We don't want to let G block itself]
 	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		If cloth is block touching through and clothing layer of cloth is greater than clothing layer of G:
-			Let intersect be the modified covered areas of cloth;
-			Repeat with A running through intersect:
-				If A is not listed in cover, remove A from intersect;
-			If the number of entries in intersect is greater than 0:
-				Add cloth to preventers, if absent;
+	Repeat with A running through cover:
+		Repeat with cloth running through clothing:
+			If cloth is block touching through and clothing layer of cloth is greater than clothing layer of G:
+				If A is listed in the modified cover areas of cloth:
+					Add cloth to preventers, if absent;
 	Decide on preventers;
 
 Section - Wearing Garments
@@ -546,31 +531,27 @@ Section - Wearing Garments
 To decide whether (G - a garment) can be worn by (P - a person):
 	If G is worn by P:
 		Decide yes; [Technically no, but that's stopped elsewhere]
-	Let cover be the modified covered areas of G;
+	Let cover be the modified cover areas of G;
 	Let clothing be the list of garments worn by P;
 	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		If clothing layer of cloth is greater than clothing layer of G:
-			Let intersect be the modified covered areas of cloth;
-			Repeat with A running through intersect:
-				If A is not listed in cover, remove A from intersect;
-			If the number of entries in intersect is greater than 0, decide no;
+	Repeat with A running through cover:
+		Repeat with cloth running through clothing:
+			If clothing layer of cloth is greater than clothing layer of G:
+				If A is listed in the modified cover areas of cloth, decide no;
 	Decide yes;
 	
 To decide which list of garments is preventing wearing of (G - a garment) by (P - a person):
 	Let preventers be a list of garments;
 	If G is worn by P:
 		Decide on preventers;
-	Let cover be the modified covered areas of G;
+	Let cover be the modified cover areas of G;
 	Let clothing be the list of garments worn by P;
 	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		If clothing layer of cloth is greater than clothing layer of G:
-			Let intersect be the modified covered areas of cloth;
-			Repeat with A running through intersect:
-				If A is not listed in cover, remove A from intersect;
-			If the number of entries in intersect is greater than 0:
-				Add cloth to preventers, if absent;
+	Repeat with A running through cover:
+		Repeat with cloth running through clothing:
+			If clothing layer of cloth is greater than clothing layer of G:
+				If A is listed in modified cover areas of cloth:
+					Add cloth to preventers, if absent;
 	Decide on preventers;
 
 Section - Taking Off Garments
@@ -578,32 +559,29 @@ Section - Taking Off Garments
 To decide whether (G - a garment) can be taken off:
 	If G is not worn by someone:
 		Decide yes;[Technically, no; but we don't want to stop that here.]
+	Let cover be the blocked cover areas of G;
 	Let clothing be the list of garments worn by the holder of G;
-	Remove G from clothing; [We don't want to let G block itself]
+	If G is listed in clothing, remove G from clothing; [We don't want to let G block itself]
 	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		If clothing layer of cloth is greater than clothing layer of G:
-			Let matches be 0;
-			Let cover be the blocked cover areas of cloth;
-			Repeat with A running through cover:
-				If A is listed in the blocked cover areas of G, increase matches by 1;
-			If matches is not 0, decide no;
+	Repeat with A running through cover:
+		Repeat with cloth running through clothing:
+			If clothing layer of cloth is greater than clothing layer of G:
+				If A is listed in the blocked cover areas of cloth, decide no;
 	Decide yes;
 
 To decide which list of garments is preventing taking off (G - a garment):
 	Let preventers be a list of garments;
 	If G is not worn by someone:
 		Decide on preventers;
+	Let cover be the blocked cover areas of G;
 	Let clothing be the list of garments worn by the holder of G;
-	Remove G from clothing; [We don't want to let G block itself]
+	If G is listed in clothing, remove G from clothing; [We don't want to let G block itself]
 	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		If clothing layer of cloth is greater than clothing layer of G:
-			Let intersect be the blocked cover areas of cloth;
-			Repeat with A running through intersect:
-				If A is not listed in the blocked cover areas of G, remove A from intersect;
-			If the number of entries in intersect is greater than 0:
-				Add cloth to preventers, if absent;
+	Repeat with A running through cover:
+		Repeat with cloth running through clothing:
+			If clothing layer of cloth is greater than clothing layer of G:
+				If A is listed in the blocked cover areas of cloth:
+					Add cloth to preventers, if absent;
 	Decide on preventers;
 
 [For each cover area removed, check if G is the current concealer, and if it is, add what it conceals]
@@ -612,7 +590,8 @@ To decide which list of things is revealed by taking off (G - a garment):
 	If G is not worn by someone or G is transparent: [It doesn't conceal anything, so nothing will be revealed]
 		Decide on revealed;
 	[Use modified cover, as the areas revealed by shifting/ripping are already revealed:]
-	Repeat with A running through the modified covered areas of G:
+	Let cover be the modified cover areas of G;
+	Repeat with A running through cover:
 		Let items be the concealed by G for A;
 		Repeat with I running through items:
 			Add I to revealed, if absent;
@@ -620,10 +599,16 @@ To decide which list of things is revealed by taking off (G - a garment):
 			
 To decide which decency is exposed by taking off (G - a garment):
 	Let exposed be the undefined decency;
-	Let revealed be the revealed by taking off G;
-	Repeat with I running through revealed:
-		If I provides the property cloth decency and the cloth decency of I is less than exposed:
-			Now exposed is the cloth decency of I;
+	If G is not worn by someone or G is transparent: [It doesn't conceal anything, so nothing will be revealed]
+		Decide on exposed;
+	[Use modified cover, as the areas revealed by shifting/ripping are already revealed:]
+	Let cover be the modified cover areas of G;
+	Repeat with A running through cover:
+		Let items be the concealed by G for A;
+		Repeat with I running through items:
+			If I provides the property cloth decency and the cloth decency of I is less than exposed, now exposed is the cloth decency of I;
+			If I is a body part and the base decency of I is less than exposed, now exposed is the base decency of I;
+		If items is empty and the decency of A is less than exposed, now exposed is the decency of A;
 	Decide on exposed;
 
 Section - Shifting Garments
@@ -632,31 +617,29 @@ Section - Shifting Garments
 To decide whether (G - a garment) can be shifted:
 	If G is not worn by someone:
 		Decide yes;[Technically, no; but we don't want to stop that here.]
+	Let cover be the shifting revealed cover areas of G;
 	Let clothing be the list of garments worn by the holder of G;
-	Remove G from clothing; [We don't want to let G block itself]
+	If G is listed in clothing, remove G from clothing; [We don't want to let G block itself]
 	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		If clothing layer of cloth is greater than clothing layer of G:
-			Let intersect be the blocked cover areas of cloth;
-			Repeat with A running through intersect:
-				If A is not listed in the shifting revealed cover areas of G, remove A from intersect;
-			If the number of entries in intersect is greater than 0, decide no;
+	Repeat with A running through cover:
+		Repeat with cloth running through clothing:
+			If clothing layer of cloth is greater than clothing layer of G:
+				If A is listed in the blocked cover areas of cloth, decide no;
 	Decide yes;
 
 To decide which list of garments is preventing shifting of (G - a garment):
 	Let preventers be a list of garments;
 	If G is not worn by someone:
 		Decide on preventers;
+	Let cover be the shifting revealed cover areas of G;
 	Let clothing be the list of garments worn by the holder of G;
-	Remove G from clothing; [We don't want to let G block itself]
+	If G is listed in clothing, remove G from clothing; [We don't want to let G block itself]
 	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		If clothing layer of cloth is greater than clothing layer of G:
-			Let intersect be the blocked cover areas of cloth;
-			Repeat with A running through intersect:
-				If A is not listed in the shifting revealed cover areas of G, remove A from intersect;
-			If the number of entries in intersect is greater than 0:
-				Add cloth to preventers, if absent;
+	Repeat with A running through cover:
+		Repeat with cloth running through clothing:
+			If clothing layer of cloth is greater than clothing layer of G:
+				If A is listed in the blocked cover areas of cloth:
+					Add cloth to preventers, if absent;
 	Decide on preventers;
 
 [For each cover area removed, check if G is the current concealer, and if it is, add what it conceals]
@@ -664,8 +647,9 @@ To decide which list of things is revealed by shifting (G - a garment):
 	Let revealed be a list of things;
 	If G is not worn by someone or G is transparent: [It doesn't conceal anything, so nothing will be revealed]
 		Decide on revealed;
-	[Use modified cover, as the areas revealed by shifting/ripping are already revealed:]
-	Repeat with A running through the shifting revealed cover areas of G:
+	[Use the shifting revealed cover]
+	Let cover be the shifting revealed cover areas of G;
+	Repeat with A running through cover:
 		Let items be the concealed by G for A;
 		Repeat with I running through items:
 			Add I to revealed, if absent;
@@ -673,10 +657,16 @@ To decide which list of things is revealed by shifting (G - a garment):
 
 To decide which decency is exposed by shifting (G - a garment):
 	Let exposed be the undefined decency;
-	Let revealed be the revealed by shifting G;
-	Repeat with I running through revealed:
-		If I provides the property cloth decency and the cloth decency of I is less than exposed:
-			Now exposed is the cloth decency of I;
+	If G is not worn by someone or G is transparent: [It doesn't conceal anything, so nothing will be revealed]
+		Decide on exposed;
+	[Use the shifting revealed cover]
+	Let cover be the shifting revealed cover areas of G;
+	Repeat with A running through cover:
+		Let items be the concealed by G for A;
+		Repeat with I running through items:
+			If I provides the property cloth decency and the cloth decency of I is less than exposed, now exposed is the cloth decency of I;
+			If I is a body part and the base decency of I is less than exposed, now exposed is the base decency of I;
+		If items is empty and the decency of A is less than exposed, now exposed is the decency of A;
 	Decide on exposed;
 
 Section - Ripping Garments
@@ -685,31 +675,30 @@ Section - Ripping Garments
 To decide whether (G - a garment) can be ripped:
 	If G is not worn by someone:
 		Decide yes;[Technically, no; but we don't want to stop that here.]
+	Let cover be the ripping revealed cover areas of G;
 	Let clothing be the list of garments worn by the holder of G;
-	Remove G from clothing; [We don't want to let G block itself]
+	If G is listed in clothing, remove G from clothing; [We don't want to let G block itself]
 	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		If clothing layer of cloth is greater than clothing layer of G:
-			Let intersect be the blocked cover areas of cloth;
-			Repeat with A running through intersect:
-				If A is not listed in the ripping revealed cover areas of G, remove A from intersect;
-			If the number of entries in intersect is greater than 0, decide no;
+	Repeat with A running through cover:
+		Repeat with cloth running through clothing:
+			If clothing layer of cloth is greater than clothing layer of G:
+				If A is listed in the blocked cover areas of cloth, decide no;
 	Decide yes;
+
 
 To decide which list of garments is preventing ripping of (G - a garment):
 	Let preventers be a list of garments;
 	If G is not worn by someone:
 		Decide on preventers;
+	Let cover be the ripping revealed cover areas of G;
 	Let clothing be the list of garments worn by the holder of G;
-	Remove G from clothing; [We don't want to let G block itself]
+	If G is listed in clothing, remove G from clothing; [We don't want to let G block itself]
 	Sort clothing in reverse clothing layer order;
-	Repeat with cloth running through clothing:
-		If clothing layer of cloth is greater than clothing layer of G:
-			Let intersect be the blocked cover areas of cloth;
-			Repeat with A running through intersect:
-				If A is not listed in the ripping revealed cover areas of G, remove A from intersect;
-			If the number of entries in intersect is greater than 0:
-				Add cloth to preventers, if absent;
+	Repeat with A running through cover:
+		Repeat with cloth running through clothing:
+			If clothing layer of cloth is greater than clothing layer of G:
+				If A is listed in the blocked cover areas of cloth:
+					Add cloth to preventers, if absent;
 	Decide on preventers;
 
 [For each cover area removed, check if G is the current concealer, and if it is, add what it conceals]
@@ -717,8 +706,9 @@ To decide which list of things is revealed by ripping (G - a garment):
 	Let revealed be a list of things;
 	If G is not worn by someone or G is transparent: [It doesn't conceal anything, so nothing will be revealed]
 		Decide on revealed;
-	[Use modified cover, as the areas revealed by shifting/ripping are already revealed:]
-	Repeat with A running through the ripping revealed cover areas of G:
+	[Use the ripping revealed cover]
+	Let cover be the ripping revealed cover areas of G;
+	Repeat with A running through cover:
 		Let items be the concealed by G for A;
 		Repeat with I running through items:
 			Add I to revealed, if absent;
@@ -726,10 +716,16 @@ To decide which list of things is revealed by ripping (G - a garment):
 
 To decide which decency is exposed by ripping (G - a garment):
 	Let exposed be the undefined decency;
-	Let revealed be the revealed by ripping G;
-	Repeat with I running through revealed:
-		If I provides the property cloth decency and the cloth decency of I is less than exposed:
-			Now exposed is the cloth decency of I;
+	If G is not worn by someone or G is transparent: [It doesn't conceal anything, so nothing will be revealed]
+		Decide on exposed;
+	[Use the ripping revealed cover]
+	Let cover be the ripping revealed cover areas of G;
+	Repeat with A running through cover:
+		Let items be the concealed by G for A;
+		Repeat with I running through items:
+			If I provides the property cloth decency and the cloth decency of I is less than exposed, now exposed is the cloth decency of I;
+			If I is a body part and the base decency of I is less than exposed, now exposed is the base decency of I;
+		If items is empty and the decency of A is less than exposed, now exposed is the decency of A;
 	Decide on exposed;
 
 Chapter 1.2.2e - Definitions
@@ -839,9 +835,10 @@ Check an actor wearing something (This is the check wearing garments rule):
 		[Check that G and the person have atleast one area of overlap]
 		Let intersect be a list of cover areas;
 		Let areas be the cover areas of G;
+		Let matches be 0;
 		Repeat with A running through areas:
-			If A is not listed in the body areas of actor, remove the A from areas;
-		If areas is empty:
+			If A is listed in the body areas of actor, increase matches by 1;
+		If matches is 0:
 			If the player is the actor:
 				Say "[The noun] [can't] fit on [us]." (A);
 			Else if the player can see the actor and the action is not silent:
@@ -4699,6 +4696,7 @@ It's best to define the actors (including the player) with gender as early as po
 	Lounge is a room. "Despite the name, the lounge is rather boring and devoid of any furniture. It seems as though it serves no real purpose."
 	Kitsune is a woman in Lounge.
 	Adam is a man in Lounge. The player is Adam.
+	The decency threshold of Lounge is indecent.
 
 The first part is expanding the Table of Coverage to define the new cover area.
 
@@ -4745,7 +4743,7 @@ We make it transparent because we don't want it to block vision.
 Note that because this only covers the tail, a person without a tail will be unable to wear it.
 
 	A ribbon is a garment worn by Kitsune.
-	It is transparent.
+	It is transparent. It is allow touching through.
 	The cover areas is {tail area}.
 	The worn description is "A pink ribbon is tied around the tail."
 	The unworn description is "A pink strip of fabric that can be tied into a ribbon."
