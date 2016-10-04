@@ -47,6 +47,18 @@ Section 6.4 - Completion Tracking
 Section 6.5 - Commentary System
 
 Chapter 7 - Expanded Tutorial: Writing Erotic Stories
+Section - Setting and Characters
+Section - Introduction to Inform
+Section - Geography (Locations)
+Section - Storyfile Layout (Organizing Inform)
+Section - Items
+Section - Programming Inform
+Section - Chronology (Scenes)
+Section - Descriptions
+Section - Sex Scenes
+Section - Actions, Continued
+Section - Behavior
+Section - Mechanics
 
 Chapter 8 - Technical Reference
 Section 8.1 - New Kinds of Value
