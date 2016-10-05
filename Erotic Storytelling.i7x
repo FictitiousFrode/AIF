@@ -1,6 +1,6 @@
 Version 1/160930 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF). Includes erotic actions, components and mechanics for layered clothing with distinct body parts, as well as consent system for actions involving others. 
-Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for npc behavior.
+Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for npc agency.
 
 Future plans include conversation and posturing, as well as out-of-game features such as content limits, completion tracking and hints."
 
@@ -1409,28 +1409,28 @@ Report an actor ripping (this is the standard report ripping rule):
 Volume 2 - Actors
 
 [This volume deals with fleshing out actors.
-The first book deals with automating behavior to make actors seem more life-like.
+The first book deals with automating agency of actors to make them more life-like.
 The second book deals with ways to automatically flesh out the description of people.
 The third book is an attempt at an improved conversation system.
 The last book deals with posturing.]
 
-Book 2.1 - Behavior
+Book 2.1 - Agency
 
-[An actor can have three levels of behavior:
-Idle: Messages that are printed when the actor is not actively engaged in something. These are only processed if the player can see the actor.
+[An actor can have three levels of agency:
+Idleness: Messages that are printed when the actor is not actively engaged in something. These are only processed if the player can see the actor.
 Planned: Actions that the actor seeks to perform, but which will be postponed if they are engaged with someone.
 Urgent: Actions that the actor urgently seek to perform, even if engaged with someone.]
 
 Part 2.1.1 - Concepts
 
 [Status: Complete
-This part deals with the underlying concepts needed to make behavior processing possible]
+This part deals with the underlying concepts needed to make agency processing possible]
 
 Chapter 2.1.1a - Occupied Flag
 
-[We need a way to stop people from doing several behaviors in a turn, so we set a flag.
-This is also used to suppress planned behavior when the player interacts with that person, and can also be used to allow NPCs to interact with each other without acting twice.
-It can also be set manually as needed to delay behavior for a turn, but if longer term stopping is needed, use the next property instead.]
+[We need a way to stop people from doing several agency actions in a turn, so we set a flag.
+This is also used to suppress planned agency when the player interacts with that person, and can also be used to allow NPCs to interact with each other without acting twice.
+It can also be set manually as needed to delay agency for a turn, but if longer term stopping is needed, use the next property instead.]
 
 A person can be occupied or unoccupied. A person is usually unoccupied.
 
@@ -1454,20 +1454,20 @@ Before doing something to a garment (called G):
 
 Chapter 2.1.1b - Enabling
 
-[In order to support easy temporary disabling of a persons behavior, we put in a toggle.
-This would also slightly reduce the overhead as we don't need to parse rulebooks for people that are not supposed to have behavior.]
+[In order to support easy temporary disabling of a persons agency, we put in a toggle.
+This would also slightly reduce the overhead as we don't need to parse rulebooks for people that are not supposed to have agency.]
 
-A person can be behavior-enabled or behavior-disabled. A person is usually behavior-disabled.
+A person can be agency-enabled or agency-disabled. A person is usually agency-disabled.
 
 Chapter 2.1.1c - Priority
 
 [In order to control which NPCs script gets called first, we introduce a simple numerical property to order actors by.]
 A person has a number called priority.
 
-Chapter 2.1.1d - Behavior State
+Chapter 2.1.1d - Agency State
 
-[The behavior state can be used to control the script, but the main purpose is to hook into the person description generation.]
-A person has some text called the behavior state description.
+[The agency state can be used to control the script, but the main purpose is to hook into the person description generation.]
+A person has some text called the agency state description.
 
 Part 2.1.2 - Rulebooks
 
@@ -1477,41 +1477,41 @@ Exactly at which point it should be inserted can be argued, but as we want this 
 
 Chapter 2.1.2a - Turn Sequence
 
-The behavior stage rule is listed before the every turn stage rule in the turn sequence rules.
-The behavior cleanup rule is listed after the every turn stage rule in the turn sequence rules.
+The agency stage rule is listed before the every turn stage rule in the turn sequence rules.
+The agency cleanup rule is listed after the every turn stage rule in the turn sequence rules.
 
-This is the behavior stage rule:
-	Let actors be the list of all behavior-enabled persons;
+This is the agency stage rule:
+	Let actors be the list of all agency-enabled persons;
 	Sort actors in reverse priority order;
 	[First, allow actors to perform any urgent actions]
 	Repeat with person running through actors:
-		Follow the urgent behavior rulebook for person;
+		Follow the urgent agency rulebook for person;
 		If the rule succeeded, now the person is occupied;
 	[Secondly, planned actions are performed]
 	Repeat with person running through actors:
 		If person is unoccupied:
-			Follow the planned behavior rulebook for person;
+			Follow the planned agency rulebook for person;
 			If the rule succeeded, now the person is occupied;
 	[Lastly, print idle messages]
 	Repeat with person running through actors:
 		If person is unoccupied and the player can see the person:
-			Follow the idle behavior rulebook for person;
+			Follow the idleness rulebook for person;
 			If the rule succeeded, now the person is occupied;
 
-This is the behavior cleanup rule:
+This is the agency cleanup rule:
 	Repeat with person running through persons:
 		Now person is unoccupied;
 
 Chapter 2.1.2b - New Rulebooks
 
-The urgent behavior rulebook is a person based rulebook.
-The urgent behavior rules have outcomes behavior cancelled (failure), behavior postponed (no outcome), and behavior performed (success - the default).
+The urgent agency rulebook is a person based rulebook.
+The urgent agency rules have outcomes agency cancelled (failure), agency postponed (no outcome), and agency performed (success - the default).
 
-The planned behavior rulebook is a person based rulebook.
-The planned behavior rules have outcomes behavior cancelled (failure), behavior postponed (no outcome), and behavior performed (success - the default).
+The planned agency rulebook is a person based rulebook.
+The planned agency rules have outcomes agency cancelled (failure), agency postponed (no outcome), and agency performed (success - the default).
 
-The idle behavior rulebook is a person based rulebook.
-The idle behavior rules have outcomes behavior cancelled (failure), behavior postponed (no outcome), and behavior performed (success - the default).
+The idleness rulebook is a person based rulebook.
+The idleness rules have outcomes agency cancelled (failure), agency postponed (no outcome), and agency performed (success - the default).
 
 Book 2.2 - Describing People
 
@@ -1695,8 +1695,8 @@ Section - State summary (4)
 
 [The purpose of this rule is to give a quick status of what the person is doing, or rather the state snapshot of their AI script.]
 A default description generation rule for a person (called P) (this is the generate script description rule):
-	If P provides the property behavior state description and the behavior state description is not the default value of text:
-		Say the behavior state description of P;
+	If P provides the property agency state description and the agency state description is not the default value of text:
+		Say the agency state description of P;
 
 Book 2.3 - Conversation
 

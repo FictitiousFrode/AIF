@@ -9,7 +9,7 @@ Section 1.4 - Layering and Templates
 	Example A
 Section 1.5 - Discrete Arousal-based Consent and Stimulation
 	Example B
-Section 1.6 - Behavior Overview
+Section 1.6 - Character Behavior
 	Example C
 Section 1.7 - Version History
 Section 1.8 - Contact Info
@@ -35,7 +35,7 @@ Section 4.4 - Responses
 
 Chapter 5 - NPCs
 Section 5.1 - Consent and Persusasion
-Section 5.2 - Behavior
+Section 5.2 - Agency
 Section 5.3 - Conversation
 Section 5.4 - Discrete Arousal-based Consent and Stimulation
 
@@ -57,7 +57,7 @@ Section - Chronology (Scenes)
 Section - Descriptions
 Section - Sex Scenes
 Section - Actions, Continued
-Section - Behavior
+Section - Agency
 Section - Mechanics
 
 Chapter 8 - Technical Reference
@@ -77,7 +77,7 @@ Section 8.10 - Rulebooks
 Examples
 A (*): Templates: Mould Away - Using the provided templates to flesh out actors.
 B: DACS
-C: Behavior (***): Behavior Analysis Paralysis - 
+C: Agency (***): Intelligent Agency - 
 D (***): Customization: A Furry Tale - How to create custom body parts.
 	Complete
 
@@ -119,7 +119,7 @@ As this is quite a sprawling extension, a proper overview of what can be found i
 	Chapter 2: A deeper look at the actions available, and how to make them work.
 	Chapter 3: In-depth explanation of how the layered clothing system works. Mostly intended for advanced users who want customization.
 	Chapter 4: Guidelines on how to write better descriptions, using both the hooks in the extension and Inform's standard rules.
-	Chapter 5: Techniques for how to write better Non-Player Characters (NPCs) with the extension.
+	Chapter 5: Techniques for writing better Non-Player Characters (NPCs) using the extension.
 	Chapter 6: The various out-of-world functions, such as completion tracking, hint system and debugging.
 	Chapter 7: A tutorial on how to write Erotic Stories in Inform.
 	Chapter 8: A complete technical reference for everything changed or added with this extension.
@@ -295,18 +295,19 @@ Example B shows a simple DACS setup with some customizations.
 
 (**): See 'Anatomy of a Sex Scene', by ExLibris. http://overanalysingaif.blogspot.no/2010/12/anatomy-of-sex-scene.html
 
-Section 1.6 - Behavior Overview
+Section 1.6 - Character Behavior
 
 A recurring difficulty in person-oriented IF, which most AIF are, is how to make people seem lifelike.
 This problem manifests in several way, from the simple task of writing 'idle'-messages when the actor is not doing anything, to actors who roam around the map either randomly or goal oriented.
 The standard approach to this in Inform, is to write 'every turn' rules, which work very well for goal oriented actors.
-The problem arises when you have actors who are active only under certain conditions, and otherwise can idle.
+The problem arises when you have actors who are active only under certain conditions and otherwise can idle.
 Speaking as a player, it's also very frustrating to have a randomly loitering NPC wander away from you in the middle of an interaction.
 
-From this, we can infer that a NPC has three different stages of behavior, that require different treatment:
+Agency is a term from philosophy which relates to an actor's capacity to act in any given environment, which seems like a fitting name for our problem and solution.
+From the frustrations we can infer that a NPC has three different modes of agency that require different treatment:
 At the most basic stage, a NPC without a goal might want to print a randomized text message ('idle') to show that they aren't just static scenery.
-For characters that have a goal, we want to distinguish between planned and urgent behavior, with 'normal' planned behavior being postponed by interactions, but urgent behavior being executed regardless.
-To facilitate this, the extension introduces a new stage in the turn processing rules, called the behavior stage, where we consult the urgent, planned and idle behavior rules for behavior-enabled persons.
+For characters that have a goal, we want to distinguish between planned and urgent agency, with the difference being that 'normal' planned agency will be delayed by player interactions while urgent agency being executed regardless.
+To facilitate this, the extension introduces a new stage in the turn processing rules, called the agency stage, where we consult the urgent, planned and idle agency rules for agency-enabled persons.
 
 The later chapter on NPCs covers this topic in detail, and Example C shows some sample interactive actors.
 
@@ -682,7 +683,7 @@ Almost as important are any notable statuses for the person;
 by default it will state the clothing level using the definitions (See section 6.6) but it's possible to extend the person status rules.
 This is an area where some expansion is planned in the future.
 We then list any parts of the person that are grouped notable, into an 'You can also see' text.
-Lastly we give a snapshot of the person's behavior state, stored in the behavior state description.
+Lastly we give a snapshot of the person's agency state, stored in the agency state description.
 
 The description notability rules are the key to implementing this, and have five distinct outcomes listed in the table below.
 Worn clothing and carried items that are not concealed will be grouped, but all concealed clothing will default to hidden.
@@ -740,7 +741,7 @@ For characters that deserve more attention, I offer the following qualities to s
 These points flow into each other somewhat, but each still encompasses a core truth about the player's experience for a character.
 More than anything else the player's experience is what should be guiding the design, and as stated above the player's expectations vary widely by genre.
 The solution for these suggestions lies more in story design than technicalities, but the extension tries to be accomodating where possible.
-A character's purpose is embodied through their persuasion and consent rules while the behavior rules handles their active goal-seeking.
+A character's purpose is embodied through their persuasion and consent rules while the agency rules handles their active goal-seeking.
 The conversation system tries to help with creating meaningful choices, and the description system (detailed in chapter 4) tries to highlight the memorable physical features of each person.
 
 Some final thoughts on memorable characters: 
@@ -775,13 +776,40 @@ Currently there is also a check that the persons involved in the action are in e
 The extension also includes the Discrete-Arousal-based Consent and Stimulation (DACS) system that grants consent based on the current arousal.
 This is explained in more detail in Section 5.4.
 
-Section 5.2 - Behavior
+Section 5.2 - Agency
+
+Perhaps the 
+
+A person can be occupied or unoccupied. A person is usually unoccupied.
+A person can be behavior-enabled or behavior-disabled. A person is usually behavior-disabled.
+A person has a number called priority.
+A person has some text called the behavior state description.
 
 
 
 Section 5.3 - Conversation
 
 Section 5.4 - Discrete Arousal-based Consent and Stimulation
+
+Chapter 7 - Expanded Tutorial
+
+A complete tutorial on using Inform 7 to write AIF games is a rather ambitious project.
+There are several good tutorials available for writing in I7, and the bundled Writing with Inform is a good starting point.
+However the only tutorials that deal with both AIF and I7 have become rather aged, and it's good form for an extension such as this to showcase how it might be used in practice.
+But first, some pointers to other readings on I7 that are worthwhile:
+
+Ron Newcomb has a guide at http://www.plover.net/~pscion/inform7.html that explains I7 from a tradional programmer's perspective.
+It's still the best summary of classic programming techniques in I7 despite being based on a rather outdated version of I7.
+
+Carolyn VanEseltine hosts a tutorial at http://www.sibylmoon.com/welcome-to-adventure/ which reimplements the original Adventure game.
+
+Jim Aikin has a handbook available at http://www.musicwords.net/if/i7hb.htm which is an alternative to Writing with Inform.
+It tackles the same topics in a different fashion and order, and it's aimed at students.
+It's not yet updataded for the very last version of I7 but it should be current enough for most purposes.
+
+Inside Erin was a magazine dedicated to AIF, and in it's time contained several articles on the topic of writing AIF.
+The Inside Erin newsletter at http://newsletter.aifcommunity.org/index.php?id=writing.html contains a topical overview of these articles.
+It's highly suggested to read through the generic articles, the I7 tutorials are outdated on the technical topics but are still worth reading.
 
 Chapter 8 - Technical Reference
 
@@ -896,22 +924,21 @@ Rooms get a minimal change:
 
 Persons get more changes, see also decency above.
 
-	Behavior-enabled (Defaults to behavior-disabled): Used by the behavior rules to enable or disable the rules for a person.
-	Behavior State Description:	Used by the behavior and description generation rules to convey the current state of the person, if defined.
+	Agency-enabled (Defaults to agency-disabled): Used by the agency rules to enable or disable the rules for a person.
+	Agency State Description: Used by the agency and description generation rules to convey the current state of the person, if defined.
 	Body Areas (List of cover areas): The cover areas that a person incorporates. See Cover Area above.
 	Clothing Size (Defaults to 0): Defines what garments a person can wear, see the same property on garments.
 	Current Arousal (Defaults to unaroused): The current discrete arousal level of the person. See Arousal above.
 	Current Decency: A stored value (calculated by UPDATE DECENCY FOR) that indicates the decency of visible garments and body parts for a person.
 	Keep Clothes after Undress (default): Decides if the person shold keep or drop clothes when undressing.
 	Love Interests (List of persons): The list of people that they are willing to engage in erotic actions with, used by the DACS templates.
-	Occupied (Defaults and resets to Unoccupied): Used by the behavior rules to stop a person from more than one behavior action per turn.
+	Occupied (Defaults and resets to Unoccupied): Used by the agency rules to stop a person from more than one agency action per turn.
 	Orgasm Reset Arousal (Default to aroused): The discrete arousal level the person is reset to after the ORGASMS phrases succeeds.
 	Orgasms: The number of times the person has orgasmed, as defined by the number of times the ORGASMS phrase has succeeded. Used to calculate the success rate for ORGASMS.
 	Orgasmic Attemps: The number of times the ORGASMS phrase has been called since the last orgasm. Used to calculate the success rate for ORGASMS.
-	Priority: Used by the behavior rules to determine the acting order.
+	Priority: Used by the agency rules to determine the acting order.
 	Unaroused Response: Issued by the DACS templates when the person is not interested in the action, due to the current arousal of the person not being high enough. Defaults to "'Not yet,' [printed name] says softly."
 	Uninterested Response: Issued by the DACS templates when the person is not interested in the action, either due to unattainable arousal threshold or lack of love interest. Defaults to "'That's not going to happen,' [printed name] says cooly."
-
 
 Persons also have quite a few arousals for use with DACS; How these work are described in more detail earlier in the arousal section, but the default values are listed here:
 
@@ -1049,7 +1076,7 @@ Example: * Moulded and Stamped - Using the provided templates to flesh out actor
 
 Example: ** DACS
 
-Example: *** Behavior Analysis Paralysis
+Example: *** Intelligent Agency
 
 
 
