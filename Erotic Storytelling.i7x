@@ -2681,7 +2681,7 @@ Does the player mean fucking something orificial: It is likely.
 Chapter 3.4.1b - Redirecting
 
 Check an actor fucking (This is the fucking redirect rule):
-	[Case 1: The target is an orifice, and we need to find a suitable penetrator:]
+	[Case 1: The target is an orifice, and we need to find a suitable penetrator]
 	If the noun provides the property orificial and the noun is orificial:
 		If the actor is enclosing a penis (called P):
 			Try the actor fucking the noun with P instead;
@@ -2691,7 +2691,7 @@ Check an actor fucking (This is the fucking redirect rule):
 			Try the actor fucking the noun with P instead;
 		If the actor is carrying a penetrating thing (called P):
 			Try the actor fucking the noun with P instead;
-	[Case 2: The target is a penetrator, and we need to find a suitable orifice and reverse:]
+	[Case 2: The target is a penetrator, and we need to find a suitable orifice and reverse]
 	If the noun provides the property penetrating and the noun is penetrating:
 		If actor is enclosing a vagina (called V):
 			Try the actor fucking V with the noun instead;
@@ -2699,7 +2699,8 @@ Check an actor fucking (This is the fucking redirect rule):
 			Try the actor fucking A with the noun instead;
 		If actor is enclosing an orificial body part (called O):
 			Try the actor fucking O with the noun instead;
-	[Case 3: The target is a person, and we try to first find the penetrator then the orifice:]
+	[Case 3: The target is a person, and we try to first find the penetrator then the orifice.]
+	If the noun is a person:
 		If actor is enclosing a penis (called P):
 			If noun is enclosing a vagina (called V):
 				Try the actor fucking V with P instead;
