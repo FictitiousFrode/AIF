@@ -6,11 +6,11 @@ Section 1.1 - Documentation Overview
 Section 1.2 - Responses and Descriptions
 Section 1.3 - Action Overview
 Section 1.4 - Layering and Templates
-	Example A
+	Example A - Templates
 Section 1.5 - Discrete Arousal-based Consent and Stimulation
-	Example B
-Section 1.6 - Character Behavior
-	Example C
+	Example B - DACS
+Section 1.6 - Character Agency
+	Example C - Agency
 Section 1.7 - Version History
 Section 1.8 - Contact Info
 Section 1.9 - Acknowledgments
@@ -26,6 +26,7 @@ Section 3.1 - Kinds and Templates
 Section 3.2 - Access and Visibility
 Section 3.3 - Manipulating Garments
 Section 3.4 - Customization
+	Example D - Customization
 
 Chapter 4 - Descriptions in Detail
 Section 4.1 - Body Parts
@@ -36,8 +37,11 @@ Section 4.4 - Responses
 Chapter 5 - NPCs
 Section 5.1 - Consent and Persusasion
 Section 5.2 - Agency
+	Example C - Agency
 Section 5.3 - Conversation
+	Example E - Dialogue
 Section 5.4 - Discrete Arousal-based Consent and Stimulation
+	Example B - DACS
 
 Chapter 6 - Support Functions
 Section 6.1 - Debug Functions
@@ -51,13 +55,14 @@ Section - Setting and Characters
 Section - Introduction to Inform
 Section - Geography (Locations)
 Section - Storyfile Layout (Organizing Inform)
+Section - Testing
 Section - Items
 Section - Programming Inform
 Section - Chronology (Scenes)
-Section - Descriptions
+Section - Character Facades
 Section - Sex Scenes
 Section - Actions, Continued
-Section - Agency
+Section - Character Depth
 Section - Mechanics
 
 Chapter 8 - Technical Reference
@@ -80,8 +85,7 @@ B: DACS
 C: Agency (***): Intelligent Agency - 
 D (***): Customization: A Furry Tale - How to create custom body parts.
 	Complete
-
-
+E: Dialogue
 
 
 	
@@ -295,7 +299,7 @@ Example B shows a simple DACS setup with some customizations.
 
 (**): See 'Anatomy of a Sex Scene', by ExLibris. http://overanalysingaif.blogspot.no/2010/12/anatomy-of-sex-scene.html
 
-Section 1.6 - Character Behavior
+Section 1.6 - Character Agency
 
 A recurring difficulty in person-oriented IF, which most AIF are, is how to make people seem lifelike.
 This problem manifests in several way, from the simple task of writing 'idle'-messages when the actor is not doing anything, to actors who roam around the map either randomly or goal oriented.
@@ -307,7 +311,7 @@ Agency is a term from philosophy which relates to an actor's capacity to act in 
 From the frustrations we can infer that a NPC has three different modes of agency that require different treatment:
 At the most basic stage, a NPC without a goal might want to print a randomized text message ('idle') to show that they aren't just static scenery.
 For characters that have a goal, we want to distinguish between planned and urgent agency, with the difference being that 'normal' planned agency will be delayed by player interactions while urgent agency being executed regardless.
-To facilitate this, the extension introduces a new stage in the turn processing rules, called the agency stage, where we consult the urgent, planned and idle agency rules for agency-enabled persons.
+To facilitate this, the extension introduces a new stage in the turn sequence rules, called the agency stage, where we consult the urgent, planned and idle agency rules for agency-enabled persons.
 
 The later chapter on NPCs covers this topic in detail, and Example C shows some sample interactive actors.
 
@@ -354,12 +358,13 @@ Section 2.1 - Limiting Factors
 It's unrealistic (and rather boring) to expect that every erotic action would succeed in every occasion.
 The actions go through a similar set of checks (with some exceptions) to verify that the action is feasible:
 
+[TODO: Rewrite these to not all start with 'the']
 	The body part isn't part of the actor. Exceptions: touching/rubbing/spanking/dancing. Fucking is also a special case.
 	The noun is the correct type (person/body part); some action tries to redirect to a noun of the correct type.
 	The noun supports the action, through the adjectives listed below.
 	The clothing of the person allows access to the noun
 	The action is decent enough for the location
-	The owner of the noun consents
+	The person related to the noun consents
 
 The check to se whether the noun supports an action is done through a set of adjectives, which by default are defined for body parts.
 These adjectives are named according to the related action, and the default negated form is the un- prefix.
@@ -399,6 +404,7 @@ Actions applying to body parts or persons are also compared to the threshold, an
 	The touching decency is initially immodest.
 
 The last check is to see if all involved parties consent to the action, which is a separate rulebook described in section 5.1.
+If no consent rules are written and the DACS system is not enabled, the default consent rule will deny consent and state the uninterested response for the person.
 It's possible to use the builtin (optional) Discrete Arousal-based Consent and Stimulation system (DACS), which is described in Section 5.4.
 
 As mentioned earlier, the actions are split into those who expects a person as the noun, and those that expect a body part.
@@ -715,6 +721,7 @@ Randomly alternating text is also very simple, using the 'one of' constructs des
 The following short example highlights some of the these tricks:
 
 *:
+	A Boring Room is a room.
 	After waiting, say "[first time]This will only be printed the first time. [only]You [one of]wait[or]linger[or]sulk[or]skulk[then at random]."
 	After waiting the second time, say "This is getting boring."
 	After waiting for four turns, say "You sneeze. Whoops."
@@ -760,30 +767,78 @@ Asking other characters to perform actions is well supported by Inform 7, and an
 While chapters 12.3 to 12.5 cover persuasion in detail, a quick recap is called for.
 Whenever the player asks another character to do something in the form of MARY, KISS ME, Inform consults the persuasion rules to see if the action should be attempted.
 The author is then free to devise arbitrarily complex rules for determining if the actor should attempt the given action.
+If no consent rules are written and the DACS system is not enabled, the default consent rule will deny consent and state the uninterested response for the person.
 
 The approach works well for when the actor is the main participant in an action, but it doesn't really handle interactions with multiple parties.
 Taking kissing as an example, what is really the difference between MARY, KISS ME and KISS MARY?
 The first would be governed by the persuasion rules but the second would succeed unless the author intervened with an instead rule.
-To make it easier for the author to control when a character consents to being a part of such actions we have created the consent rules along a similar vein as the persuasion rules.
-All of the actions in this extension goes through this rulebook, even the single actor actions such as wearing and taking off garments.
+[TODO: Grant persuasion based on consent?]
+To make it easier for the author to control when a character consents to being a part of such actions the consent rules are processed in a similar fashion as the persuasion rules.
+The Discrete-Arousal-based Consent and Stimulation (DACS) system included with the extension provides an option to grant consent based on the current arousal of the character.
+Using DACS to handle consent is explained in more detail in section 5.4, while this section is more focused on how to write custom consent rules.
 
+All of the actions in this extension goes through the consent rulebook, including the single actor actions such as wearing and taking off garments.
 Writing consent rules are done in a similar way as for persuasion, but instead of the outcomes 'persuasion succeeds' or 'persuasion fails' we have 'give consent' and 'deny consent'.
 The default outcome of a rule is to deny consent, but it's also possible to 'make no decision' to give control back to the rulebook for further processing.
 The rulebook includes a 'default consent rule' that will be consulted if no other rule is found, which will stop the action with a generic 'They aren't consenting to that (action)'.
 Currently there is also a check that the persons involved in the action are in each other's love interests list-property, but this is something that might be revised.
 [TODO: Revise this]
 
-The extension also includes the Discrete-Arousal-based Consent and Stimulation (DACS) system that grants consent based on the current arousal.
-This is explained in more detail in Section 5.4.
+We previously mentioned (in Section 4.4 - Responses) that the scene function of Inform should be to control sex scenes.
+It's also possible to split one sex scene into several scenes, to allow consent for various new actions as the sex scene progresses.
+We can then use the 'during' clause when writing rules to tie them to that scene, which allows for the consent rule itself to be very broad.
+Below is a minimal example that illustrates this:
+
+*:
+	Include Erotic Storytelling by Fictitious Frode.
+
+	Bedroom is a room. The decency threshold of Bedroom is indecent.
+	Adam is a man in Bedroom. The player is Adam.
+	Beatrice is a woman in Bedroom.
+	A penis is a part of every man.
+	A vagina is a part of every woman.
+
+	Beatrice's Encounter is a scene. Beatrice's Encounter begins when the player is in Bedroom for the fifth turn. [* This is a bug in 6M62 that makes the scene trigger a turn early]
+	When Beatrice's Encounter begins, say "'Oh, all right then, let's get this over with,' Beatrice sighs."
+	When Beatrice's Encounter begins, add Adam to the Love Interests of Beatrice. [TODO: Make this obsolete]
+	Consent rule for doing something to Beatrice during Beatrice's Encounter: Give consent.
+	Consent rule for doing something to something enclosed by Beatrice during Beatrice's Encounter: Give consent.
+	Consent rule for fucking something enclosed by Beatrice with something during Beatrice's Encounter: Give consent.
+	
+	Test me with "kiss Beatrice / lick Beatrice / fuck Beatrice / z / kiss Beatrice / lick Beatrice / fuck Beatrice".
+
+[You can also use the action groupings that DACS uses]
 
 Section 5.2 - Agency
 
-Perhaps the 
+One of the most important ways to distinguish characters is to give them the agency to act on their own.
+While characters in traditional AIF is mainly stationary, it's easy to use Inform's every turn rules to make them act on their own.
+The mechanisms for providing agency in this extension is based on the every turn rules with some extra scaffolding to make it easier to control interactions between multiple actors and the player.
+
+Agency is implemented as a new stage in the turn sequence rules, similar to how the player's action and the every turn rules are processed.
+We divide an actors agency into three categories that must be treated differently, each of which get their own rulebook that the agency stage rule will process as appropriate.
+
+
+[From intro:
+From the frustrations we can infer that a NPC has three different modes of agency that require different treatment:
+At the most basic stage, a NPC without a goal might want to print a randomized text message ('idle') to show that they aren't just static scenery.
+For characters that have a goal, we want to distinguish between planned and urgent agency, with the difference being that 'normal' planned agency will be delayed by player interactions while urgent agency being executed regardless.
+To facilitate this, the extension introduces a new stage in the turn processing rules, called the agency stage, where we consult the urgent, planned and idle agency rules for agency-enabled persons.
+]
+
+[The difference between the agency rulebooks]
+
+[How the agency rulebooks are processed]
+
+[Interactions between several actors, and with every turn rules]
+
+
+
 
 A person can be occupied or unoccupied. A person is usually unoccupied.
-A person can be behavior-enabled or behavior-disabled. A person is usually behavior-disabled.
+A person can be agency-enabled or agency-disabled. A person is usually agency-disabled.
 A person has a number called priority.
-A person has some text called the behavior state description.
+A person has some text called the agency state description.
 
 
 
@@ -938,7 +993,7 @@ Persons get more changes, see also decency above.
 	Orgasmic Attemps: The number of times the ORGASMS phrase has been called since the last orgasm. Used to calculate the success rate for ORGASMS.
 	Priority: Used by the agency rules to determine the acting order.
 	Unaroused Response: Issued by the DACS templates when the person is not interested in the action, due to the current arousal of the person not being high enough. Defaults to "'Not yet,' [printed name] says softly."
-	Uninterested Response: Issued by the DACS templates when the person is not interested in the action, either due to unattainable arousal threshold or lack of love interest. Defaults to "'That's not going to happen,' [printed name] says cooly."
+	Uninterested Response: Issued by the the consent rules when the default consent rule denies consent. Also used by the DACS templates and issued when the person is not interested in the action, either due to unattainable arousal threshold or lack of love interest. Defaults to "'That's not going to happen,' [printed name] says cooly."
 
 Persons also have quite a few arousals for use with DACS; How these work are described in more detail earlier in the arousal section, but the default values are listed here:
 

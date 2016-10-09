@@ -1720,9 +1720,11 @@ We create a new rulebook, with outcomes stimulated and unstimulated, and default
 The stimulation rules is a rulebook.
 The stimulation rules have outcomes stimulated (success - the default) and unstimulated (failure).
 
-[We also create a seperate rulebook to pack the default rules into, that we only want called explicitly.]
-The default-stimulation rules is a rulebook.
-The default-stimulation rules have outcomes stimulated (success - the default) and unstimulated (failure).
+[This default stimulation rule is as generic as possible, and will be executed last.
+It's main purpose is to stop the execution of any rule defined to be after it.]
+The default stimulation rule is listed last in the stimulation rules.
+A stimulation rule (this is the default stimulation rule):
+	Unstimulated;
 
 Part 3.1.2 - Consent
 
@@ -1733,25 +1735,25 @@ The consent rules is a rulebook.
 The consent rules have outcomes give consent (success) and deny consent (failure - the default).
 
 [This default consent rule is as generic as possible, and will be executed last.]
+The default consent rule is listed last in the consent rules.
 A consent rule (this is the default consent rule):
 	[Check consent for the actor first; we assume that the player always consent.]
 	If the actor is not the player:
-		Say "[The actor] [aren't] consenting to that ([current action])." (A);
+		Say the uninterested response of the actor;
+[		Say "[The actor] [aren't] consenting to that ([current action])." (A);]
 		Deny consent;
 	[Check consent for the noun directly]
 	If the noun is a person:
 		If the noun is not the player:
-			Say "[The noun] [aren't] consenting to that ([current action])." (B);
+			Say the uninterested response of the noun;
+[			Say "[The noun] [aren't] consenting to that ([current action])." (B);]
 			Deny consent;
 	Else if the noun is a body part:
 		Let P be the holder of the noun;
 		If P is not the player:
-			Say "[The P] [aren't] consenting to that ([current action])." (C);
+			Say the uninterested response of P;
+[			Say "[The P] [aren't] consenting to that ([current action])." (C);]
 			Deny consent;
-
-[We also create a seperate rulebook to pack the default rules into, that we only want called explicitly.]
-The default-consent rules is a rulebook.
-The default-consent rules have outcomes give consent (success - the default) and deny consent (failure).
 
 Part 3.1.3 - Properties
 
@@ -3330,6 +3332,9 @@ Book 5.2 - Discrete Arousal-based Consent and Stimulation
 This books deals with integrating the discrete arousals into the stimulation and consent framework of the actions, to create a basis system that grants consent based on arousal. It's separated into it's own part in order to make it easier to excise it if needed, like if the author wants to use a numerical arousal system.
 The underlying parts deals with responses of the actors, action integration and custom values for the templated body parts.]
 
+[We create a use-mode for enabling DACS:]
+Use DACS translates as (- Constant ENABLE_DACS; -). 
+
 Part 5.2.1 - Responses
 
 [Status: Complete
@@ -3356,6 +3361,15 @@ Stimulation is similarly handled, being increased one level up to the cap for th
 
 Additionally, there's a check to see if the two actors want to interact with each other, which is used as a default deny rule.]
 
+[DEPRECATED: We can avoid these seperate rulebooks by stashing the rules last, so the default rule will be processed before them.
+We also create a seperate rulebook to pack the default rules into, that we only want called explicitly.
+The default-consent rules is a rulebook.
+The default-consent rules have outcomes give consent (success - the default) and deny consent (failure).
+We also create a seperate rulebook to pack the default rules into, that we only want called explicitly.
+The default-stimulation rules is a rulebook.
+The default-stimulation rules have outcomes stimulated (success - the default) and unstimulated (failure).
+]
+
 Chapter 5.2.2a - General Requirements
 
 [A person has a list of other actors they are willing to engage with. Make sure that all people potentially involved are listed in each others love interests.
@@ -3363,9 +3377,8 @@ If the interactor is listed, make no decision in order to allow other rules to b
 
 A person has a list of people called love interests.
 
-[Always check the love interests first.]
-The love interest consent rule is listed first in the consent rules.
-
+[Love interests should only be checked by the DACS rules.]
+The love interest consent rule is listed after the default consent rule in the consent rules.
 A consent rule (this is the love interest consent rule):
 	[Determine which people are involved]
 	Let first person be the actor;[TODO: This must be redone]
@@ -3419,7 +3432,8 @@ A garment has an arousal called the clothing threshold. The clothing threshold o
 
 Section - Wearing
 
-A default-consent rule (this is the dressing consent rule):
+The dressing consent rule is listed after the default consent rule in the consent rules.
+A consent rule (this is the dressing consent rule):
 	If the noun is a garment (called G):
 		Unless the actor is the player:
 			If the clothing threshold of the actor is the unattainable arousal
@@ -3432,11 +3446,15 @@ A default-consent rule (this is the dressing consent rule):
 				Deny consent;
 	Give consent;
 
-A consent rule for an actor wearing something (this is the dressing default consent rule): Abide by the dressing consent rule;
+[We can skip abide by the love interest consent rule because only the actor will be wearing clothes]
+A consent rule for an actor wearing something (this is the dressing default consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the dressing consent rule;
 
 Section - Worn Garments
 
-A default-consent rule (this is the undressing consent rule):
+The worn garment consent rule is listed after the default consent rule in the consent rules.
+A consent rule (this is the worn garment consent rule):
 	If the noun is a garment (called G) and G is worn by someone:
 		Let P be the holder of G;
 		Unless the actor is the player:
@@ -3459,11 +3477,26 @@ A default-consent rule (this is the undressing consent rule):
 				Deny consent;
 	Give consent;
 
-A consent rule for an actor taking off something (this is the undressing default consent rule): Abide by the undressing consent rule;
-A consent rule for an actor taking a garment (this is the taking off default consent rule): Abide by the undressing consent rule;
-A consent rule for an actor ripping a garment (this is the ripping default consent rule): Abide by the undressing consent rule;
-A consent rule for an actor shifting a garment (this is the shifting default consent rule): Abide by the undressing consent rule;
-A consent rule for an actor unshifting a garment (this is the unshifting default consent rule): Abide by the undressing consent rule;
+A consent rule for an actor taking off something (this is the undressing default consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the worn garment consent rule;
+A consent rule for an actor taking a garment (this is the taking off default consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the worn garment consent rule;
+A consent rule for an actor ripping a garment (this is the ripping default consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the worn garment consent rule;
+A consent rule for an actor shifting a garment (this is the shifting default consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the worn garment consent rule;
+A consent rule for an actor unshifting a garment (this is the unshifting default consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the worn garment consent rule;
 
 Chapter 5.2.2c - Soft-play
 
@@ -3479,8 +3512,9 @@ A person has an arousal called the soft-play recipient limit. The soft-play reci
 A body part has an arousal called the soft-play performer limit. The soft-play performer limit of a body part is usually aroused.
 A body part has an arousal called the soft-play recipient limit. The soft-play recipient limit of a body part is usually aroused.
 
-[Create a default consent rule]
-A default-consent rule (this is the soft-playing consent rule):
+[Create a default soft-playing consent rule]
+The soft-playing consent rule is listed after the default consent rule in the consent rules.
+A consent rule (this is the soft-playing consent rule):
 	[Check consent for the actor first; we assume that the player always consent.]
 	Unless the actor is the player:
 		If the soft-play threshold of the actor is the unattainable arousal:
@@ -3515,15 +3549,34 @@ A default-consent rule (this is the soft-playing consent rule):
 				Deny consent;
 	Give consent;
 
-A consent rule for an actor touching (this is the default touching consent rule): Abide by the soft-playing consent rule;
-A consent rule for an actor rubbing (this is the default rubbing consent rule): Abide by the soft-playing consent rule;
-A consent rule for an actor tickling (this is the default tickling consent rule): Abide by the soft-playing consent rule;
-A consent rule for an actor kissing (this is the default kissing consent rule): Abide by the soft-playing consent rule;
-A consent rule for an actor hugging (this is the default hugging consent rule): Abide by the soft-playing consent rule;
-A consent rule for an actor dancing (this is the default dancing consent rule): Abide by the soft-playing consent rule;
+A consent rule for an actor touching (this is the default touching consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the soft-playing consent rule;
+A consent rule for an actor rubbing (this is the default rubbing consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the soft-playing consent rule;
+A consent rule for an actor tickling (this is the default tickling consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the soft-playing consent rule;
+A consent rule for an actor kissing (this is the default kissing consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the soft-playing consent rule;
+A consent rule for an actor hugging (this is the default hugging consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the soft-playing consent rule;
+A consent rule for an actor dancing (this is the default dancing consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the soft-playing consent rule;
 
 [Create a default stimulation rule]
-A default-stimulation rule (this is the soft-playing stimulation rule):
+The soft-playing stimulation rule is listed after the default stimulation rule in the stimulation rules.
+A stimulation rule (this is the soft-playing stimulation rule):
 	[Stimulate the actor first:]
 	Arouse the actor up to the soft-play performer limit of the actor;
 	If the noun is a person:
@@ -3536,12 +3589,24 @@ A default-stimulation rule (this is the soft-playing stimulation rule):
 		Arouse P up to target arousal;
 	Stimulated;
 
-A stimulation rule for an actor touching (this is the default touching stimulation rule): Abide by the soft-playing stimulation rule;
-A stimulation rule for an actor rubbing (this is the default rubbing stimulation rule): Abide by the soft-playing stimulation rule;
-A stimulation rule for an actor tickling (this is the default tickling stimulation rule): Abide by the soft-playing stimulation rule;
-A stimulation rule for an actor kissing (this is the default kissing stimulation rule): Abide by the soft-playing stimulation rule;
-A stimulation rule for an actor hugging (this is the default hugging stimulation rule): Abide by the soft-playing stimulation rule;
-A stimulation rule for an actor dancing (this is the default dancing stimulation rule): Abide by the soft-playing stimulation rule;
+A stimulation rule for an actor touching (this is the default touching stimulation rule):
+	Unless DACS option is active, make no decision;
+	Abide by the soft-playing stimulation rule;
+A stimulation rule for an actor rubbing (this is the default rubbing stimulation rule):
+	Unless DACS option is active, make no decision;
+	Abide by the soft-playing stimulation rule;
+A stimulation rule for an actor tickling (this is the default tickling stimulation rule):
+	Unless DACS option is active, make no decision;
+	Abide by the soft-playing stimulation rule;
+A stimulation rule for an actor kissing (this is the default kissing stimulation rule):
+	Unless DACS option is active, make no decision;
+	Abide by the soft-playing stimulation rule;
+A stimulation rule for an actor hugging (this is the default hugging stimulation rule):
+	Unless DACS option is active, make no decision;
+	Abide by the soft-playing stimulation rule;
+A stimulation rule for an actor dancing (this is the default dancing stimulation rule):
+	Unless DACS option is active, make no decision;
+	Abide by the soft-playing stimulation rule;
 
 Chapter 5.2.2d - Rough Play
 
@@ -3558,7 +3623,8 @@ A body part has an arousal called the rough-play performer limit. The rough-play
 A body part has an arousal called the rough-play recipient limit. The rough-play recipient limit of a body part is usually very aroused.
 
 [Create a default consent rule]
-A default-consent rule (this is the rough-playing consent rule):
+The rough-playing consent rule is listed after the default consent rule in the consent rules.
+A consent rule (this is the rough-playing consent rule):
 	[Check consent for the actor first; we assume that the player always consent.]
 	Unless the actor is the player:
 		If the rough-play threshold of the actor is the unattainable arousal:
@@ -3593,12 +3659,22 @@ A default-consent rule (this is the rough-playing consent rule):
 				Deny consent;
 	Give consent;
 
-A consent rule for an actor spanking (this is the default spanking consent rule): Abide by the rough-playing consent rule;
-A consent rule for an actor pinching (this is the default pinching consent rule): Abide by the rough-playing consent rule;
-A consent rule for an actor biting (this is the default biting consent rule): Abide by the rough-playing consent rule;
+A consent rule for an actor spanking (this is the default spanking consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the rough-playing consent rule;
+A consent rule for an actor pinching (this is the default pinching consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the rough-playing consent rule;
+A consent rule for an actor biting (this is the default biting consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the rough-playing consent rule;
 
 [Create a default stimulation rule]
-A default-stimulation rule (this is the rough-playing stimulation rule):
+The rough-playing stimulation rule is listed after the default stimulation rule in the stimulation rules.
+A stimulation rule (this is the rough-playing stimulation rule):
 	[Stimulate the actor first:]
 	Arouse the actor up to the rough-play performer limit of the actor;
 	If the noun is a person:
@@ -3611,9 +3687,15 @@ A default-stimulation rule (this is the rough-playing stimulation rule):
 		Arouse P up to target arousal;
 	Stimulated;
 
-A stimulation rule for an actor spanking (this is the default spanking stimulation rule): Abide by the rough-playing stimulation rule;
-A stimulation rule for an actor pinching (this is the default pinching stimulation rule): Abide by the rough-playing stimulation rule;
-A stimulation rule for an actor biting (this is the default biting stimulation rule): Abide by the rough-playing stimulation rule;
+A stimulation rule for an actor spanking (this is the default spanking stimulation rule):
+	Unless DACS option is active, make no decision;
+	Abide by the rough-playing stimulation rule;
+A stimulation rule for an actor pinching (this is the default pinching stimulation rule):
+	Unless DACS option is active, make no decision;
+	Abide by the rough-playing stimulation rule;
+A stimulation rule for an actor biting (this is the default biting stimulation rule):
+	Unless DACS option is active, make no decision;
+	Abide by the rough-playing stimulation rule;
 
 Chapter 5.2.2e - Oral Play
 
@@ -3630,7 +3712,8 @@ A body part has an arousal called the oral-play performer limit. The oral-play p
 A body part has an arousal called the oral-play recipient limit. The oral-play recipient limit of a body part is usually very aroused.
 
 [Create a default consent rule]
-A default-consent rule (this is the oral-playing consent rule):
+The oral-playing consent rule is listed after the default consent rule in the consent rules.
+A consent rule (this is the oral-playing consent rule):
 	[Check consent for the actor first; we assume that the player always consent.]
 	Unless the actor is the player:
 		If the oral-play threshold of the actor is the unattainable arousal:
@@ -3665,10 +3748,14 @@ A default-consent rule (this is the oral-playing consent rule):
 				Deny consent;
 	Give consent;
 
-A consent rule for an actor licking (this is the default licking consent rule): Abide by the oral-playing consent rule;
+A consent rule for an actor licking (this is the default licking consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the oral-playing consent rule;
 
 [Create a default stimulation rule]
-A default-stimulation rule (this is the oral-playing stimulation rule):
+The oral-playing stimulation rule is listed after the default stimulation rule in the stimulation rules.
+A stimulation rule (this is the oral-playing stimulation rule):
 	[Stimulate the actor first:]
 	Arouse the actor up to the oral-play performer limit of the actor;
 	If the noun is a person:
@@ -3681,7 +3768,9 @@ A default-stimulation rule (this is the oral-playing stimulation rule):
 		Arouse P up to target arousal;
 	Stimulated;
 
-A stimulation rule for an actor licking (this is the default licking stimulation rule): Abide by the oral-playing stimulation rule;
+A stimulation rule for an actor licking (this is the default licking stimulation rule):
+	Unless DACS option is active, make no decision;
+	Abide by the oral-playing stimulation rule;
 
 Chapter 5.2.2f - Fucking
 
@@ -3699,7 +3788,8 @@ A body part has an arousal called the fuck-play recipient limit. The fuck-play r
 
 [Create a default consent rule:
 Due to prior checks, we assume that the actor is enclosing one of the nouns, so we only check consent for the controller of each noun:]
-A default-consent rule (this is the fuck-playing consent rule):
+The fuck-playing consent rule is listed after the default consent rule in the consent rules.
+A consent rule (this is the fuck-playing consent rule):
 	If the noun is a body part:
 		Let P be the holder of the noun;
 		Unless P is the player:
@@ -3750,12 +3840,16 @@ A default-consent rule (this is the fuck-playing consent rule):
 				Deny consent;
 	Give consent;
 
-A consent rule for an actor fucking something with (this is the default fucking consent rule): Abide by the fuck-playing consent rule;
+A consent rule for an actor fucking something with (this is the default fucking consent rule):
+	Unless DACS option is active, make no decision;
+	Abide by the love interest consent rule;
+	Abide by the fuck-playing consent rule;
 
 [Create a default stimulation rule:
 Due to prior checks, we assume that the actor is enclosing one of the nouns, so we don't stimulate the actor directly.
 We do need to make sure we don't stimulate a self-pleasuring actor twice.]
-A default-stimulation rule (this is the fuck-playing stimulation rule):
+The fuck-playing stimulation rule is listed after the default stimulation rule in the stimulation rules.
+A stimulation rule (this is the fuck-playing stimulation rule):
 	Let actor-stimulation be false;
 	If the noun is a body part:
 		Let P be the holder of the noun;
@@ -3801,7 +3895,9 @@ A default-stimulation rule (this is the fuck-playing stimulation rule):
 			Arouse P up to the fuck-play recipient limit of P;
 	Stimulated;
 
-A stimulation rule for an actor fucking something with (this is the default fucking stimulation rule): Abide by the fuck-playing stimulation rule;
+A stimulation rule for an actor fucking something with (this is the default fucking stimulation rule):
+	Unless DACS option is active, make no decision;
+	Abide by the fuck-playing stimulation rule;
 
 Part 5.2.3 - Body Part Integration
 
