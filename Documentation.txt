@@ -787,7 +787,8 @@ Currently there is also a check that the persons involved in the action are in e
 We previously mentioned (in Section 4.4 - Responses) that the scene function of Inform should be to control sex scenes.
 It's also possible to split one sex scene into several scenes, to allow consent for various new actions as the sex scene progresses.
 We can then use the 'during' clause when writing rules to tie them to that scene, which allows for the consent rule itself to be very broad.
-Below is a minimal example that illustrates this:
+Below is a minimal example that illustrates how consent can be tied to a scene.
+Note that any attempts to ask Beatrice to do something will not work as we haven't defined any persuasion or consent rules for this.
 
 *:
 	Include Erotic Storytelling by Fictitious Frode.
@@ -798,16 +799,16 @@ Below is a minimal example that illustrates this:
 	A penis is a part of every man.
 	A vagina is a part of every woman.
 
-	Beatrice's Encounter is a scene. Beatrice's Encounter begins when the player is in Bedroom for the fifth turn. [* This is a bug in 6M62 that makes the scene trigger a turn early]
+	Beatrice's Encounter is a scene. Beatrice's Encounter begins when the player is in Bedroom for the fifth turn. [* This is to account for a bug in 6M62 that makes the scene trigger a turn early]
 	When Beatrice's Encounter begins, say "'Oh, all right then, let's get this over with,' Beatrice sighs."
-	When Beatrice's Encounter begins, add Adam to the Love Interests of Beatrice. [TODO: Make this obsolete]
+
 	Consent rule for doing something to Beatrice during Beatrice's Encounter: Give consent.
 	Consent rule for doing something to something enclosed by Beatrice during Beatrice's Encounter: Give consent.
 	Consent rule for fucking something enclosed by Beatrice with something during Beatrice's Encounter: Give consent.
 	
 	Test me with "kiss Beatrice / lick Beatrice / fuck Beatrice / z / kiss Beatrice / lick Beatrice / fuck Beatrice".
 
-[You can also use the action groupings that DACS uses]
+[Reuse this with DACS, using love interests to enable consent.]
 
 Section 5.2 - Agency
 
