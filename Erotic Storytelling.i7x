@@ -252,15 +252,15 @@ Chapter 1.1.3b - Wearing Incomptibility
 Check an actor wearing something (this is the outfit incompatibility rule):
 	If the noun is a garment and the actor is wearing an outfit (called blocker):
 		If the player is the actor:
-			Say "[We] [can't] wear [noun], [we're] already wearing [blocker]." (A);
+			Say "[We] [can't] wear [noun], [we] [are] already wearing [blocker]." (A);
 		Else if the player can see the actor and the action is not silent:
-			Say "[The actor] [can't] wear [noun], [they're] already wearing [blocker]." (B);
+			Say "[The actor] [can't] wear [noun], [they] [are] already wearing [blocker]." (B);
 		Stop the action;
 	If the noun is an outfit and the actor is wearing a garment (called blocker):
 		If the player is the actor:
-			Say "[We] [can't] wear [noun], [we're] already wearing [blocker]." (C);
+			Say "[We] [can't] wear [noun], [we] [are] already wearing [blocker]." (C);
 		Else if the player can see the actor and the action is not silent:
-			Say "[The actor] [can't] wear [noun], [they're] already wearing [blocker]." (D);
+			Say "[The actor] [can't] wear [noun], [they] [are] already wearing [blocker]." (D);
 		Stop the action;
 
 Book 1.2 - Functionality
@@ -935,7 +935,7 @@ Check an actor taking off something (This is the taking off garments requires co
 			Stop the action;
 
 [Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone taking off something when the reason the action failed is the taking off garments require consent rule: Rule succeeds;
+Unsuccessful attempt by someone taking off something when the reason the action failed is the taking off garments requires consent rule: Rule succeeds;
 
 Chapter 1.3.2b - Carry Out
 
@@ -991,7 +991,7 @@ Check an actor taking something (This is the taking garments requires consent ru
 			Stop the action;
 
 [Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone taking something when the reason the action failed is the taking garments require consent rule: Rule succeeds;
+Unsuccessful attempt by someone taking something when the reason the action failed is the taking garments requires consent rule: Rule succeeds;
 
 The taking garments rule is listed first in the carry out taking rulebook.
 Carry out an actor taking a garment (called G) (this is the taking garments rule):
@@ -1235,7 +1235,7 @@ Check an actor shifting something (This is the shifting garments requires consen
 			Stop the action;
 
 [Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone shifting something when the reason the action failed is the shifting garments require consent rule: Rule succeeds;
+Unsuccessful attempt by someone shifting something when the reason the action failed is the shifting garments requires consent rule: Rule succeeds;
 
 Chapter 1.4.1c - Carry Out
 		
@@ -1336,7 +1336,7 @@ Check an actor unshifting something (This is the unshifting garments requires co
 			Stop the action;
 
 [Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone unshifting something when the reason the action failed is the unshifting garments require consent rule: Rule succeeds;
+Unsuccessful attempt by someone unshifting something when the reason the action failed is the unshifting garments requires consent rule: Rule succeeds;
 
 Chapter 1.4.2c - Carry Out
 		
@@ -1410,7 +1410,7 @@ Check an actor ripping something (This is the ripping garments requires consent 
 			Stop the action;
 
 [Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone ripping something when the reason the action failed is the ripping garments require consent rule: Rule succeeds;
+Unsuccessful attempt by someone ripping something when the reason the action failed is the ripping garments requires consent rule: Rule succeeds;
 
 Chapter 1.4.2c - Carry Out
 
