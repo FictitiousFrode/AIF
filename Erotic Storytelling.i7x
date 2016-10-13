@@ -870,6 +870,9 @@ Check an actor wearing something (This is the wearing requires consent rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone wearing something when the reason the action failed is the wearing requires consent rule: Rule succeeds;
+
 Chapter 1.3.1b - Carry Out
 
 Carry out an actor wearing (this is the wearing garments rule):
@@ -909,11 +912,14 @@ Check an actor taking off something (this is the can't take off in public rule):
 				Say "It [are] too public for [the actor] to take that off here." (B);
 			Stop the action;
 
-Check an actor taking something (This is the taking garments requires consent rule):
+Check an actor taking off something (This is the taking off garments requires consent rule):
 	If the noun is a garment and the noun is worn by someone:
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
+
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone taking off something when the reason the action failed is the taking off garments require consent rule: Rule succeeds;
 
 Chapter 1.3.2b - Carry Out
 
@@ -962,11 +968,14 @@ Check an actor taking a garment (this is the can't take covered items rule):
 	Abide by the can't take off covered items rule;
 	Abide by the can't take off in public rule;
 
-Check an actor taking something (This is the taking off requires consent rule):
+Check an actor taking something (This is the taking garments requires consent rule):
 	If the noun is a garment and the noun is worn by someone:
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
+
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone taking something when the reason the action failed is the taking garments require consent rule: Rule succeeds;
 
 The taking garments rule is listed first in the carry out taking rulebook.
 Carry out an actor taking a garment (called G) (this is the taking garments rule):
@@ -1203,11 +1212,14 @@ Check an actor shifting (this is the can't shift in public rule):
 				Say "It [are] too public for [the actor] to do that here." (B);
 			Stop the action;
 
-Check an actor shifting something (This is the shifting requires consent rule):
+Check an actor shifting something (This is the shifting garments requires consent rule):
 	If the noun is a garment and the noun is worn by someone:
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
+
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone shifting something when the reason the action failed is the shifting garments require consent rule: Rule succeeds;
 
 Chapter 1.4.1c - Carry Out
 		
@@ -1301,11 +1313,14 @@ Check an actor unshifting (this is the can't unshift covered items rule):
 				Say "[The actor] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (B);
 			Stop the action;
 
-Check an actor unshifting something (This is the unshifting requires consent rule):
+Check an actor unshifting something (This is the unshifting garments requires consent rule):
 	If the noun is a garment and the noun is worn by someone:
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
+
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone unshifting something when the reason the action failed is the unshifting garments require consent rule: Rule succeeds;
 
 Chapter 1.4.2c - Carry Out
 		
@@ -1372,11 +1387,14 @@ Check an actor ripping (this is the can't rip in public rule):
 				Say "It [are] too public for [the actor] to do that here." (B);
 			Stop the action;
 
-Check an actor ripping something (This is the ripping requires consent rule):
+Check an actor ripping something (This is the ripping garments requires consent rule):
 	If the noun is a garment and the noun is worn by someone:
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
+
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone ripping something when the reason the action failed is the ripping garments require consent rule: Rule succeeds;
 
 Chapter 1.4.2c - Carry Out
 
@@ -1852,6 +1870,9 @@ Check an actor touching (this is the seek consent for touching rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone touching something when the reason the action failed is the seek consent for touching rule: Rule succeeds;
+
 Chapter 3.2.1c - Carry Out
 
 Carry out an actor touching (this is the seek stimulation for touching rule):
@@ -1921,6 +1942,9 @@ Check an actor rubbing (this is the seek consent for rubbing rule):
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
+
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone rubbing something when the reason the action failed is the seek consent for rubbing rule: Rule succeeds;
 
 Chapter 3.2.2c - Carry Out
 
@@ -1995,6 +2019,9 @@ Check an actor tickling (this is the seek consent for tickling rule):
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
+
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone tickling something when the reason the action failed is the seek consent for tickling rule: Rule succeeds;
 
 Chapter 3.2.3c - Carry Out
 
@@ -2072,6 +2099,9 @@ Check an actor spanking (this is the seek consent for spanking rule):
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
+
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone spanking something when the reason the action failed is the seek consent for spanking rule: Rule succeeds;
 
 Chapter 3.2.4c - Carry Out
 
@@ -2157,6 +2187,9 @@ Check an actor pinching (this is the seek consent for pinching rule):
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
+
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone pinching something when the reason the action failed is the seek consent for pinching rule: Rule succeeds;
 
 Chapter 3.2.5c - Carry Out
 
@@ -2249,6 +2282,9 @@ Check an actor licking (this is the seek consent for licking rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone licking something when the reason the action failed is the seek consent for licking rule: Rule succeeds;
+
 Chapter 3.2.6c - Carry Out
 
 Carry out an actor licking (this is the seek stimulation for licking rule):
@@ -2335,6 +2371,9 @@ Check an actor biting (this is the seek consent for biting rule):
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
+
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone biting something when the reason the action failed is the seek consent for biting rule: Rule succeeds;
 
 Chapter 3.2.7c - Carry Out
 
@@ -2437,6 +2476,9 @@ Check an actor fucking something with (this is the seek consent for fucking rule
 	Follow the consent rules;
 	Unless the outcome of the rulebook is the give consent outcome:
 		Stop the action;
+		
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone fucking something with when the reason the action failed is the seek consent for fucking rule: Rule succeeds;
 
 Chapter 3.2.8c - Carry Out
 
@@ -2514,6 +2556,9 @@ Check an actor kissing (this is the seek consent for kissing rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone kissing something when the reason the action failed is the seek consent for kissing rule: Rule succeeds;
+
 Chapter 3.3.1c - Carry Out
 
 Carry out an actor kissing (this is the seek stimulation for kissing rule):
@@ -2584,6 +2629,9 @@ Check an actor hugging (this is the seek consent for hugging rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone hugging something when the reason the action failed is the seek consent for hugging rule: Rule succeeds;
+
 Chapter 3.3.2c - Carry Out
 
 Carry out an actor hugging (this is the seek stimulation for hugging rule):
@@ -2647,6 +2695,9 @@ Check an actor dancing (this is the seek consent for dancing rule):
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
+
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone dancing something when the reason the action failed is the seek consent for dancing rule: Rule succeeds;
 
 Chapter 3.3.3c - Carry Out
 
