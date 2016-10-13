@@ -3503,12 +3503,12 @@ Chapter 5.2.2c - Soft-play
 [This part deals with the "soft" touching actions, which share the same thresholds by default.]
 
 [Soft-play threshold is the minimum arousal at which a person or it's body part will engage in the soft-play actions.]
-A person has an arousal called the soft-play threshold. The soft-play threshold of a person is usually slightly aroused.
+A person has an arousal called the soft-play threshold. The soft-play threshold of a person is usually unaroused.
 A body part has an arousal called the soft-play threshold. The soft-play threshold of a body part is usually slightly aroused.
 
 [Active/passive soft-play arousal is the arousal attainable by soft-play actions, as the active and passive participant.]
-A person has an arousal called the soft-play performer limit. The soft-play performer limit of a person is usually aroused.
-A person has an arousal called the soft-play recipient limit. The soft-play recipient limit of a person is usually aroused.
+A person has an arousal called the soft-play performer limit. The soft-play performer limit of a person is usually slightly aroused.
+A person has an arousal called the soft-play recipient limit. The soft-play recipient limit of a person is usually slightly aroused.
 A body part has an arousal called the soft-play performer limit. The soft-play performer limit of a body part is usually aroused.
 A body part has an arousal called the soft-play recipient limit. The soft-play recipient limit of a body part is usually aroused.
 
