@@ -1,4 +1,4 @@
-Version 1/160930 of Erotic Storytelling by Fictitious Frode begins here.
+Version 1/161013 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF). Includes erotic actions, components and mechanics for layered clothing with distinct body parts, as well as consent system for actions involving others. 
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for npc agency.
 
@@ -235,7 +235,10 @@ Does the player mean examining a garment that is worn by player: It is unlikely.
 
 Part 1.1.3 - Outfits
 
-[Status: TODO; Concept-stage]
+[Status: Complete, minimal implementation
+Can re-use reactive crowds and table-based descriptions from outfits extension.]
+
+Chapter 1.1.3a - Definition
 
 An outfit is a kind of garment.
 The specification of outfit is "An outfit is a special kind of garment, designed to be an alternative to individual garment pieces the player can interact with. It therefore cover almost all the body areas of a person, except hands and head/face."
@@ -243,9 +246,22 @@ The specification of outfit is "An outfit is a special kind of garment, designed
 The cover areas of an outfit is usually {shoulder area, arm area, upper torso area, upper back area, lower torso area, lower back area, crotch area, thigh area, leg area, feet area}.
 The clothing layer of an outfit is usually skinwear.
 
-Chapter - Body Part Descriptions
+Chapter 1.1.3b - Wearing Incomptibility
 
-Chapter - Reactive Crowds
+[Ensure that a person wearing an outfit can't also be wearing a garment.]
+Check an actor wearing something (this is the outfit incompatibility rule):
+	If the noun is a garment and the actor is wearing an outfit (called blocker):
+		If the player is the actor:
+			Say "[We] [can't] wear [noun], [we're] already wearing [blocker]." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [can't] wear [noun], [they're] already wearing [blocker]." (B);
+		Stop the action;
+	If the noun is an outfit and the actor is wearing a garment (called blocker):
+		If the player is the actor:
+			Say "[We] [can't] wear [noun], [we're] already wearing [blocker]." (C);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [can't] wear [noun], [they're] already wearing [blocker]." (D);
+		Stop the action;
 
 Book 1.2 - Functionality
 
