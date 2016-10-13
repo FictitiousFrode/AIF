@@ -5,6 +5,7 @@ Section 1.1 - Documentation Overview
 	Missing example table
 Section 1.2 - Responses and Descriptions
 Section 1.3 - Action Overview
+	TODO: Add Posturing
 Section 1.4 - Layering and Templates
 	Example A - Templates
 Section 1.5 - Discrete Arousal-based Consent and Stimulation
@@ -20,6 +21,7 @@ Section 2.1 - Limiting Factors
 Section 2.2 - Clothing-related
 Section 2.3 - Person-related
 Section 2.4 - Body Part-related
+Section 2.5 - Posturing (TODO)
 
 Chapter 3 - Layering and Coverage
 Section 3.1 - Kinds and Templates
@@ -108,7 +110,7 @@ The sections of this chapter introduces the various concepts available within th
 Towards the end of the documentation you will find a fully fleshed out tutorial and sample adventure, and a complete technical reference.
 All kinds and actions are also documented inside the Inform IDE.
 
-Note; Inform can behave slightly odd regarding the naming (and creation) of things which are part of the character, this is described in chapter 4.15 of Writing with Inform.
+Note; Inform can behave slightly odd regarding the naming (and creation) of things which are part of the character, this is described in chapter 4.15 of "Writing with Inform".
 If the player is declared after the creation of the body part, then the body part will be named after what the character was named.
 Also, any gender-specific creations might not occur if the gender of the player was undetermined at that point.
 Likewise, changing the identity of the player during play might give interesting results.
@@ -142,13 +144,25 @@ What follows is a quick overview of how to best utilize this extension to genera
 
 After: As the name implies, these rules are processed after the action has taken place, in place of the default action report rules.
 This is where most custom responses would go.
-[Comment/TODO:
+[Comment:
 RalphWiggumPhD: A somewhat generic example could be useful here.
-FictitiousFrode: This is very basic Inform, but I might add something or refer to the tutorial.]
+FictitiousFrode: Added an example.]
 
 Before/Instead: As the name implies, these rules are processed before the action takes place.
 The difference (also implied by the naming) is that "instead" rules will stop the action from taking place (unless explicitly told to allow it to continue), while "before" rules are the opposite.
 "Instead" rules are great for writing custom "errors" to the player, while "before" rules are often used to flesh out some of the standard actions.
+
+The differences between these three rulebooks can be illustrated by the following small example.
+To truly appreciate the different results you should try to alter the type of each of the three rules.
+If we were to use "instead" and not "after" for eating the apple, that rule would be processed regardless of whether the apple held by the player or the apple was even edible.
+
+*:
+	Garden is a room.
+	An apple is an edible thing in Garden. "An apple is growing here."
+	Instead of going down in Garden, say "You have nothing to dig with."
+	Before taking the apple, say "You gently pick the apple."
+	After eating the apple, end the story saying "You take a chunk of the apple, which lodges in your esophagus choking you to death."
+	Test me with "down / eat apple"
 
 Descriptions: Descriptions are a special form of response, issued by the "x/examine" action.
 All things in Inform can have the description property, which is printed when the thing is examined.
@@ -300,16 +314,12 @@ This extension has opted to use Inform's support for enumerated values to provid
 This has several benefits; the code is easier to read, and fewer discrete values makes it easier to model both for the author and the player exploring it.
 Second, such a system isn't much use if the current arousal of a person is fixed, or left to the author to update manually for each action.
 This led to the stimulation rules, which together with some default consent rules form the Discrete Arousal-based Consent and Stimulation-system (DACS for short).
+In order to avoid unplanned sex-scenes, DACS must be manually enabled:
 
-[TODO: Update for the new use function to enable DACS]
-This system isn't entirely enabled out of the box however, both to avoid unplanned sex-scenes and to make it optional.
-There is a lot more that can be customized in the system, which is covered in the later chapter on NPCs.
-To use the included DACS-system in your story, you have to do the following:
+	1: Include the phrase "Use DACS." in your story setup.
+	2: Update the "love interest" list property of the involved persons to include each other; this can be done dynamically during play.
 
-	1: Add the actors to the love interests of each other.
-	2: Increase the arousal of any NPC to slightly aroused, or lower the threshold of an action to unaroused.
-
-Example B shows a simple DACS setup with some customizations.
+Example B shows a simple DACS setup with some customizations, and the system is explained in more detail in section 5.4.
 
 (*): I believe Moist was the first game to implement arousal, but feel free to correct me if you know of an earlier example than 1996.
 
@@ -375,13 +385,12 @@ Section 2.1 - Limiting Factors
 It's unrealistic (and rather boring) to expect that every erotic action would succeed in every occasion.
 The actions go through a similar set of checks (with some exceptions) to verify that the action is feasible:
 
-[TODO: Rewrite these to not all start with 'the']
-	The body part isn't part of the actor. Exceptions: touching/rubbing/spanking/dancing. Fucking is also a special case.
-	The noun is the correct type (person/body part); some action tries to redirect to a noun of the correct type.
-	The noun supports the action, through the adjectives listed below.
-	The clothing of the person allows access to the noun
-	The action is decent enough for the location
-	The person related to the noun consents
+	Ensure that the body part isn't part of the actor, with some exceptions: touching/rubbing/spanking/dancing. Fucking is also a special case.
+	Applied to the correct kind of noun (person/body part); some action tries to redirect to a noun of the correct type.
+	Action support for the noun, defined through the adjectives listed below.
+	Curent clothing state of of the relevant person allows access to the noun.
+	Decency threshold of the current location allows the action to take place.
+	Consent for the action is granted.
 
 The check to se whether the noun supports an action is done through a set of adjectives, which by default are defined for body parts.
 These adjectives are named according to the related action, and the default negated form is the un- prefix.
@@ -421,8 +430,8 @@ Actions applying to body parts or persons are also compared to the threshold, an
 	The touching decency is initially immodest.
 
 The last check is to see if all involved parties consent to the action, which is a separate rulebook described in section 5.1.
-If no consent rules are written and the DACS system is not enabled, the default consent rule will deny consent and state the uninterested response for the person.
-It's possible to use the builtin (optional) Discrete Arousal-based Consent and Stimulation system (DACS), which is described in Section 5.4.
+If no consent rules are written (and the DACS system is not enabled) the default consent rule will deny consent and state the uninterested response for the person.
+The optional Discrete Arousal-based Consent and Stimulation system (DACS), described in Section 5.4, can be used in lieu of writing your own consent rules.
 
 As mentioned earlier, the actions are split into those who expects a person as the noun, and those that expect a body part.
 The other checks are written to not assume that this check has been performed, in order for them to be reworked to allow more targets.
@@ -431,15 +440,17 @@ This should make it possible to rework these limitations, but if you do choose t
 
 Section 2.2 - Clothing-related
 
-In order to make garments work as a special form of wearable things, some alterations to the standard actions dealing with wearing and taking off was needed.
-In order to allow undressing by other parties than the wearer, some changes to the taking action was also needed.
-These actions are covered in this section, while chapter 3 will describe how coverage works in more detail.
+To provide layered clothing with garments we need to modify some existing actions and define some that didn't exist before.
+All of these actions also require the consent of the (potential) wearer of the garment.
+The standard actions dealing with wearing and taking off clothing obviously needed to be updated, but wWe also want to allow undressing by other parties than the wearer which necessitates some alterations to the standard taking action.
+These actions (along with the new actions) are covered in this section, while chapter 3 will describe howthe system for layered clothing coverage works in more detail.
 
 When wearing a garment, we check that the current clothing coverage state allows the garment to be put on.
-We also check that the size of the garment matches the wearer, which is purely a cosmetic check intended to easily limit garments to a certain person.
+To allow garments to only fit a defined subset of people, we also check that the clothing size of the garment matches the wearer.
+By default all people and garments have the same clothing size, so this check only interferes when the author has altered the standard values.
+
 For removing garments, we check that current clothing coverage state allows sufficient access to take off the garment, and that the decency revealed by taking it off doesn't conflict with the location's decency threshold.
 In order to allow the taking action to remove worn garments from others, we had to make a small exception in the can't take people's possessions rule, to not block worn garments.
-All of these actions also require the consent of the (potential) wearer of the garment.
 Lastly, a person taking off garments usually keeps them afterwards, but this behavior can be changed to dropping the clothes by stating that they are 'not keep clothes after undress'.
 
 There is also two helper actions for wholesale changing of clothes.
@@ -473,8 +484,9 @@ For all three actions, the decency of the action is checked against the location
 
 The helping action fucking goes through a rather complex algorithm to try to determine what are the relevant penetrator and orifice, and then redirects to that.
 Assfucking and titfucking however already have the orifice specified, and only tries to find a relevant penetrator.
-Note that the breasts template is not orificial by default, which will stop titfucking from taking place.
+Note that the breasts template does not have the orificial keyword by default, which will stop titfucking from taking place.
 The titfucking command is provided regardless as an option for authors, and provide proper error messages for players.
+It is then up to the story author to define which pairs of breasts should be orificial to allow the action to take place.
 
 Section 2.4 - Body Part-related
 
@@ -515,7 +527,7 @@ Partial coverage also becomes very problematic without impressing an unwanted am
 If a person was wearing a long coat and a pair of pants, then these would overlap in the crotch and thigh, but if those were the only parts implemented that the pants covered, they would turn invisible for the player.
 
 The first version of this framework tried to turn example 242 into a full blown clothing model, but in the end it was better to start from scratch using the cover area model that's been used in TADS.
-By using cover area to link body parts with garments and defining a depth/clothing level for garments, it's possible to calculate coverage based on what is worn without costly all-to-all relations.
+By using cover area to link body parts with garments and defining a depth/clothing level for garments, it's possible to calculate coverage based on what is worn without costly everyone-to-everything relations.
 This approach is less flexible than using relations, but it's more workable even though it results in some oddities.
 For instance, socks are defined as normalwear instead of underwear in order to make them incompatible with pantyhose, which has to be able to be worn over underwear.
 A case could me made for a hybrid model, using cover areas for coverage and relations for depth, but that is left as an excercise for the reader.
@@ -603,7 +615,7 @@ The following templates are shiftable in a given way and will reveal:
 Section 3.4 - Customization
 
 If a story has a need that's not covered by the templates, it's easy to create new garments, body parts or even cover areas.
-Example D shows how one might add a tail, which includes creating a custom cover area, body part and garment.
+This customization is shown in example D, which includes creating a custom cover area, body part and garment to add support for tails.
 
 Body parts and garments are the easiest to customize, and you have the option of adapting one of the templates or using the base kind as a reference.
 For one-off items you can just create a new thing of the base kind, but most times it's best to create a new template kind.
@@ -622,9 +634,11 @@ This can be done by either adding it to the list when play begins (or dynamicall
 Chapter 4 - Descriptions in Detail
 
 While it's possible to use multimedia resources in interactive fiction, the main medium is still the written word.
-Inform 7 has a good built-in support for varying textual descriptions, with several chapters of Writing with Inform devoted to variations.
+Inform 7 has a good built-in support for varying textual descriptions, with several chapters of "Writing with Inform" devoted to variations.
 The depiction of persons in traditional interactive fiction is usually more focused on conversation than clothing and body parts.
 This extension tries to make it easier to write good descriptions of persons, their parts and clothing based on their current state.
+
+Several of the examples include descriptions, but example D shows this very effectively despite focusing on customization.
 
 Section 4.1 - Body Parts
 
@@ -724,7 +738,7 @@ Section 4.4 - Responses
 
 Action responses should be written using the standard Inform 7 rulebooks After, Before and Instead.
 As the names imply, after rules are for after an action suceeds, before are for before the action is checked for validity, and instead rules block the action from taking place.
-Writing with Inform has literally chapters devoted to this, so instead this part will focus on tips, tricks and recreating TADS library features.
+Ther are literally chapters in "Writing with Inform" devoted to this, so instead this section will focus on tips, tricks and recreating TADS library features.
 
 Perhaps one of the best underused features of Inform is scenes, which allow you to tightly group together the narrative and it's consequences.
 One immediate application in AIF is controling the sex scenes.
@@ -732,9 +746,10 @@ By implementing these as scenes, you can ensure it that starts when the requisit
 You can then tie in any consent and persuasion rules to only apply during that scene, as well as action responses.
 The real benefit comes when a person is involved in several sex scenes, by tying responses to the individual scenes you can be certain to avoid printing responses for the wrong scene.
 
-To emulate the action repeat functionality, you can use the 'for X time' or 'for x turns' clauses.
+Another staple of the TADS libraries is action responses that vary when the action is repeated.
+This extension does not emulate this functionality as it's built into Inform 7 through the 'for X time' or 'for x turns' clauses.
 Both take into account repeating actions, but 'times' is the total number of times, while 'turns' is the number of times/turns in a row.
-Randomly alternating text is also very simple, using the 'one of' constructs described in chapter 5.7 of Writing with Inform.
+Randomly alternating text is also very simple, using the 'one of' constructs described in chapter 5.7 of "Writing with Inform".
 The following short example highlights some of the these tricks:
 
 *:
@@ -780,7 +795,7 @@ Don't be afraid to assign labels to your characters that the player can use as a
 
 Section 5.1 - Consent and Persusasion
 
-Asking other characters to perform actions is well supported by Inform 7, and any writer of AIF should be well acquainted with the Advanced Actions chapter of Writing with Inform (Chapter 12).
+Asking other characters to perform actions is well supported by Inform 7, and any writer of AIF should be well acquainted with Chapter 12 of "Writing with Inform" that deal with Advanced Actions.
 While chapters 12.3 to 12.5 cover persuasion in detail, a quick recap is called for.
 Whenever the player asks another character to do something in the form of MARY, KISS ME, Inform consults the persuasion rules to see if the action should be attempted.
 The author is then free to devise arbitrarily complex rules for determining if the actor should attempt the given action.
@@ -867,7 +882,7 @@ Section 5.4 - Discrete Arousal-based Consent and Stimulation
 Chapter 7 - Expanded Tutorial
 
 A complete tutorial on using Inform 7 to write AIF games is a rather ambitious project.
-There are several good tutorials available for writing in I7, and the bundled Writing with Inform is a good starting point.
+There are several good tutorials available for writing in I7, and the bundled "Writing with Inform" is a good starting point.
 However the only tutorials that deal with both AIF and I7 have become rather aged, and it's good form for an extension such as this to showcase how it might be used in practice.
 But first, some pointers to other readings on I7 that are worthwhile:
 
@@ -883,6 +898,8 @@ It's not yet updataded for the very last version of I7 but it should be current 
 Inside Erin was a magazine dedicated to AIF, and in it's time contained several articles on the topic of writing AIF.
 The Inside Erin newsletter at http://newsletter.aifcommunity.org/index.php?id=writing.html contains a topical overview of these articles.
 It's highly suggested to read through the generic articles, the I7 tutorials are outdated on the technical topics but are still worth reading.
+
+The site for the extension at https://informedaif.wordpress.com/tutorial/ also contains a copy of this tutorial.
 
 Chapter 8 - Technical Reference
 
