@@ -66,6 +66,7 @@ Section - Sex Scenes
 Section - Actions, Continued
 Section - Character Depth
 Section - Mechanics
+Section - Multiple Partners (Orgies)
 
 Chapter 8 - Technical Reference
 Section 8.1 - New Kinds of Value
@@ -813,8 +814,6 @@ All of the actions in this extension goes through the consent rulebook, includin
 Writing consent rules are done in a similar way as for persuasion, but instead of the outcomes 'persuasion succeeds' or 'persuasion fails' we have 'give consent' and 'deny consent'.
 The default outcome of a rule is to deny consent, but it's also possible to 'make no decision' to give control back to the rulebook for further processing.
 The rulebook includes a 'default consent rule' that will be consulted if no other rule is found, which will stop the action with a generic 'They aren't consenting to that (action)'.
-Currently there is also a check that the persons involved in the action are in each other's love interests list-property, but this is something that might be revised.
-[TODO: Revise this]
 
 We previously mentioned (in Section 4.4 - Responses) that the scene function of Inform should be to control sex scenes.
 It's also possible to split one sex scene into several scenes, to allow consent for various new actions as the sex scene progresses.
@@ -847,37 +846,54 @@ Section 5.2 - Agency
 One of the most important ways to distinguish characters is to give them the agency to act on their own.
 While characters in traditional AIF is mainly stationary, it's easy to use Inform's every turn rules to make them act on their own.
 The mechanisms for providing agency in this extension is based on the every turn rules with some extra scaffolding to make it easier to control interactions between multiple actors and the player.
-
 Agency is implemented as a new stage in the turn sequence rules, similar to how the player's action and the every turn rules are processed.
 We divide an actors agency into three categories that must be treated differently, each of which get their own rulebook that the agency stage rule will process as appropriate.
 
+Each person get some new properties to help control agency which the author can use.
+Most important of these is the 'agency-enabled' (neg: agency-disabled) property, which switches agency processing on for a given person.
+By implementing this as a property we make it easy for the author to dynamically switch on/off the agency for a person as needed.
+Some execution efficiency is gained by not processing agency rules for people that don't have any.
+To allow the author to control the order in which agency is performed we can use the 'priority' property, with people with a higher number being processed first.
+In order to communicate back to the player what a person is doing we can use the 'agency state description' which is printed when the player examines a person, but one should also update the initial appearance of the person.
 
-[From intro:
-From the frustrations we can infer that a NPC has three different modes of agency that require different treatment:
-At the most basic stage, a NPC without a goal might want to print a randomized text message ('idle') to show that they aren't just static scenery.
-For characters that have a goal, we want to distinguish between planned and urgent agency, with the difference being that 'normal' planned agency will be delayed by player interactions while urgent agency being executed regardless.
-To facilitate this, the extension introduces a new stage in the turn processing rules, called the agency stage, where we consult the urgent, planned and idle agency rules for agency-enabled persons.
-]
+Of special importance is the 'occupied' (neg: unoccupied) flag which indicates if a person has been involved in activity this turn and is used to decide which agency rules are applicable for that person.
+This flag is automatically set (by using the before rules) when the player the player orders a person around or interacts with a person, their body parts or their garments.
+The author is free (and encouraged) to set this flag manually when an agency rule (or action response) implicates that another person is also involved in the action taking place.
+This should make it easier to write sex-scenes with several actors, where the unoccupied actors can seek out actions with each other.
+Lastly, the turn sequence processing will clear the flag after the every turn stage, making it available for use in the very turn rules.
 
-[The difference between the agency rulebooks]
+To account for varying degrees of urgency in a character's agency, we define three levels that are processed differently but all have the same outcomes:
+The default outcome is 'agency performed' which stops processing with success, while 'agency postponed' can be used to decide on no outcome to allow other rules to be consulted and 'agency cancelled' will stop the processing of a given rulebook in failure.
 
-[How the agency rulebooks are processed]
+'Urgent agency' is for agency that's time-sensitive and shouldn't be interrupted by the player's interactions.
+These rules therefore ignore the occupied flag and are processed regardless, and if the rule succeeded the person is flagged as occupied.
+'Planned agency' should be the main rules implementing a character's active behavior.
+Similar to urgent agency, the person is flagged as occupied if the rule succeeded.
+'Idleness' on the other hand is mainly for saying messages that indicate what the person is doing rather than performing actions.
+These rules are therefore only processed if the player can see that person when they are still unoccupied.
 
-[Interactions between several actors, and with every turn rules]
-
-
-
-
-A person can be occupied or unoccupied. A person is usually unoccupied.
-A person can be agency-enabled or agency-disabled. A person is usually agency-disabled.
-A person has a number called priority.
-A person has some text called the agency state description.
-
-
+Example D shows how agency can be implemented, and the tutorial contains a section on how multiple sex partners may be implemented.
 
 Section 5.3 - Conversation
 
 Section 5.4 - Discrete Arousal-based Consent and Stimulation
+
+*:
+	Include Erotic Storytelling by Fictitious Frode.
+
+	Bedroom is a room. The decency threshold of Bedroom is indecent.
+	Adam is a man in Bedroom. The player is Adam.
+	Beatrice is a woman in Bedroom.
+	A penis is a part of every man.
+	A vagina is a part of every woman.
+
+	Beatrice's Encounter is a scene. Beatrice's Encounter begins when the player is in Bedroom for the fifth turn. [* This is to account for a bug in 6M62 that makes the scene trigger a turn early]
+	When Beatrice's Encounter begins:
+		Say "'Oh, all right then, let's get this over with,' Beatrice sighs."
+		Add Adam to the love interests of Beatrice.
+	
+	Test me with "kiss Beatrice / lick Beatrice / fuck Beatrice / z / kiss Beatrice / lick Beatrice / fuck Beatrice".
+[TODO: Add more actions do move up the arousal levels]
 
 Chapter 7 - Expanded Tutorial
 
@@ -1034,9 +1050,9 @@ Persons also have quite a few arousals for use with DACS; How these work are des
 
 	Clothing threshold: Slightly Aroused.
 	Soft-play:
-		Threshold: Slightly Aroused.
-		Performer Limit: Aroused.
-		Recipient Limit: Aroused.
+		Threshold: Unaroused.
+		Performer Limit: Slightly Aroused.
+		Recipient Limit: Slightly Aroused.
 	Rough-play:
 		Threshold: Very Aroused.
 		Performer Limit: Very Aroused.
