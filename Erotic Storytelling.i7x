@@ -5,6 +5,7 @@ Also includes an optional customizable ready-to-use Discrete-Arousal-based Conse
 Future plans include conversation and posturing, as well as out-of-game features such as content limits, completion tracking and hints."
 
 Use MAX_STATIC_DATA of 300000.
+Include Basic Screen Effects by Emily Short.
 
 Volume 0 - New Verbs
 
@@ -269,7 +270,18 @@ Chapter 1.2.0a - Startup Procedures
 
 Section - Info/Warning Screen
 
-[TODO]
+The adult introduction rule is listed before the when play begins stage rule in the startup rulebook.
+This is the adult introduction rule:
+	Say "[bold type]WARNING[roman type]: This is a game of [bold type]Adult[roman type] Interactive Fiction. It contains scenes and imagery of an explicit sexual nature intended for a mature audience. If you are underaged, easily offended or not interested in this kind of material, [bold type]please quit now[roman type].[paragraph break]";
+	[TODO: List the contents of the game, based on the limits defined, such as:
+	The content is purely heterosexual in nature, but can include imagery of fetishism.]
+	Say "(-more-)[paragraph break]";
+	Wait for any key;
+	Say "The story makes use of concepts and actions related to the adult nature of the story in addition to the usual Interactive Fiction commands.[paragraph break]";
+	Say "Type '[bold type]HELP[roman type]' to access the built-in help system for more on how to use clothing, body parts and erotic actions.";
+	Say "(-more-)[paragraph break]";
+	Wait for any key;
+	Clear the screen;
 
 Section - Initiation
 
@@ -878,6 +890,16 @@ Check an actor wearing something (This is the check garment size rule):
 				Say "[We] [can't] wear [noun], [it's] the wrong size." (A);
 			Else if the player can see the actor and the action is not silent:
 				Say "[The actor] [can't] wear [noun], [it's] the wrong size." (B);
+			Stop the action;
+
+Check an actor wearing something (This is the wearing decency rule):
+	Let L be the location of the actor;
+	If noun is a garment (called G):
+		If the decency threshold of L is greater than the cloth decency of G:
+			If the player is the actor:
+				Say "It [are] too public for [us] to wear [the noun] here." (A);
+			Else if the player can see the actor:
+				Say "It [are] too public for [the actor] to wear [the noun] here." (B);
 			Stop the action;
 
 Check an actor wearing something (This is the wearing requires consent rule):
@@ -3084,6 +3106,9 @@ Book 4.1 - Debug Functions - Not for release
 
 Part 4.1.1 - Debug Examine (DEX)
 
+[Status: Partially implemented
+This is intended to display all the information that SHOWME doesn't.]
+
 Chapter 4.1.1a - Action Default
 
 Debug examining is an action out of world applying to one thing.
@@ -3141,13 +3166,59 @@ Chapter 4.1.1d - Person
 
 [TODO]
 
-Book 4.2 - Hint System
+Book 4.2 - Menu Based Systems
 
-Book 4.3 - Content Limits
+Part 4.2.1 - Content Limits
+
+[Status: TODO/Not implemented]
+
+Part 4.2.2 - Help and Hint
+
+[Status: TODO/Not implemented]
+
+Part 4.2.3 - Default Help Topics
+
+[Status: TODO
+We want to provide help topics for Basic IF, Adult IF, Clothing, Body Parts]
+
+Book 4.3 - Commentary System
+
+Part 4.3.1 - Inspirational Amusement
+
+[Status: TODO/Not implemented
+Amuse the victorious player by revealing the inspiration.]
+
+Chapter 4.3.1a - Final Question Option
+
+[Add the revealing option to the final question options]
+
+Table of Final Question Options (continued)
+final question wording	only if victorious	topic	final response rule	final response activity
+ "REVEAL the inspiration for something or somewhere"	true	"reveal [any thing]"	reveal inspiration for something rule	--
+ --	true	"reveal [any room]"	reveal inspiration for something rule	--
+
+Chapter 4.3.1b - Reveal Inspiration
+
+[We use a table-based approach as taken from Example 383: Jamaica 1688
+TODO: Move this to an attribute based approach instead?]
+
+This is the reveal inspiration for something rule: 
+	repeat through the Table of Inspirations:
+		if the player's command matches the topic entry: 
+			say "[revelation entry][paragraph break]"; 
+			rule succeeds; 
+	say "I'm afraid I have no revelation to vouchsafe there." 
+
+Table of Inspirations
+topic (a topic)	revelation (some text)
+--	--
+[TODO: Incorporate this into the documentation so we can remove it from here.
+"reveal [Lucius]"	"Lucius is based on a historical buccaneer who sailed with William Dampier. The original did carry a Greek New Testament, from which he read aloud when the men were stranded in the jungles near Panama."
+"reveal [Upper Deck]"	"The Callisto is a simplified and tidied representation of a pirate sloop ca. 1688."]
 
 Book 4.4 - Completion Tracking
 
-Book 4.5 - Commentary System
+[Status: TODO/Not implemented]
 	
 Volume 5 - Templates
 
