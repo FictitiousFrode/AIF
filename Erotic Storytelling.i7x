@@ -270,15 +270,16 @@ Chapter 1.2.0a - Startup Procedures
 
 Section - Info/Warning Screen
 
-The adult introduction rule is listed before the when play begins stage rule in the startup rulebook.
+The adult introduction rule is listed before the start in the correct scenes rule in the startup rulebook.
 This is the adult introduction rule:
-	Say "[bold type]WARNING[roman type]: This is a game of [bold type]Adult[roman type] Interactive Fiction. It contains scenes and imagery of an explicit sexual nature intended for a mature audience. If you are underaged, easily offended or not interested in this kind of material, [bold type]please quit now[roman type].[paragraph break]";
+	Say "[bold type]WARNING[roman type][paragraph break]";
+	Say "This is a game of [bold type]Adult[roman type] Interactive Fiction. It contains scenes and imagery of an explicit sexual nature intended for a mature audience. If you are underaged, easily offended or not interested in this kind of material, [bold type]please quit now[roman type].[paragraph break]";
 	[TODO: List the contents of the game, based on the limits defined, such as:
 	The content is purely heterosexual in nature, but can include imagery of fetishism.]
 	Say "(-more-)[paragraph break]";
 	Wait for any key;
-	Say "The story makes use of concepts and actions related to the adult nature of the story in addition to the usual Interactive Fiction commands.[paragraph break]";
-	Say "Type '[bold type]HELP[roman type]' to access the built-in help system for more on how to use clothing, body parts and erotic actions.";
+	Say "The story makes use of concepts and actions related to the adult nature of the story in addition to the usual Interactive Fiction commands.";
+	Say "Type '[bold type]HELP[roman type]' to access the built-in help system for details on how the erotic actions, cloth and body parts functions.[paragraph break]";
 	Say "(-more-)[paragraph break]";
 	Wait for any key;
 	Clear the screen;
