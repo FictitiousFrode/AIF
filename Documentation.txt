@@ -6,6 +6,8 @@ Section 1.1 - Documentation Overview
 Section 1.2 - Responses and Descriptions
 Section 1.3 - Action Overview
 	TODO: Add Posturing
+	TODO: Add Conversation
+	TODO: Add reference to support functions
 Section 1.4 - Layering and Templates
 	Example A - Templates
 Section 1.5 - Discrete Arousal-based Consent and Stimulation
@@ -174,6 +176,7 @@ Persuasion/Consent: Persuasion is a built-in rulebook, and is invoked when the p
 This can be a common occurence in AIFs, so it's important to include (or at least provide better rules to govern failed persuasion attempts).
 Chapter 12.4 of "Writing with Inform" covers the use of persuasion.
 Consent is a new rulebook for this extension, and works in a similar way to make it possible for persons to object to the player's actions if they are directly involved.
+To avoid having to write both consent and persuasion rules for the same action, persuasion for the actions included can be granted from the consent rules.
 Note that it is also possible to take advantage of the bundled Discrete-Arousal-based Consent and Stimulation (DACS) system.
 Both consent in general and DACS are covered in more detail in chapter 5.
 
@@ -805,8 +808,8 @@ If no consent rules are written and the DACS system is not enabled, the default 
 The approach works well for when the actor is the main participant in an action, but it doesn't really handle interactions with multiple parties.
 Taking kissing as an example, what is really the difference between MARY, KISS ME and KISS MARY?
 The first would be governed by the persuasion rules but the second would succeed unless the author intervened with an instead rule.
-[TODO: Grant persuasion based on consent?]
 To make it easier for the author to control when a character consents to being a part of such actions the consent rules are processed in a similar fashion as the persuasion rules.
+To avoid having to write both consent and persuasion rules for the same action, persuasion for the actions included can be granted from the consent rules.
 The Discrete-Arousal-based Consent and Stimulation (DACS) system included with the extension provides an option to grant consent based on the current arousal of the character.
 Using DACS to handle consent is explained in more detail in section 5.4, while this section is more focused on how to write custom consent rules.
 
@@ -838,8 +841,6 @@ Note that any attempts to ask Beatrice to do something will not work as we haven
 	Consent rule for fucking something enclosed by Beatrice with something during Beatrice's Encounter: Give consent.
 	
 	Test me with "kiss Beatrice / lick Beatrice / fuck Beatrice / z / kiss Beatrice / lick Beatrice / fuck Beatrice".
-
-[Reuse this with DACS, using love interests to enable consent.]
 
 Section 5.2 - Agency
 
@@ -876,7 +877,23 @@ Example D shows how agency can be implemented, and the tutorial contains a secti
 
 Section 5.3 - Conversation
 
+Conversations are usually an important part of character-driven IF, but it's also one of the hardest parts to get right.
+Because the player is free to converse about anything that strikes their fancy, a good conversation system must both understand what topic the player is refering to and have a response for it.
+Most of the time we also need to keep track of which topics are available, depending on many factors such the knowledge of both the player and the characters.
 
+Because of the varying needs Inform 7 does not include any systematic way to handle conversation, instead providing a framework that can be extended upon.
+Various conversation systems are available in Inform's built-in extension library to provide system for various needs.
+[TODO: Update this when conversation is more complete]
+This extension intends to provide a conversation framework that is suitable for AIF, which is currently in the process of being developed.
+Regardless of how they choose to approach conversation, the author should exercise great care and thought when implementing it.
+Inform's included "Recipe Book" covers the topic of conversation in quite detail, starting from chapter 7.6.
+
+[TODO: A brief introduction on the various styles of conversation, converging on why we've chosen the approach we have.
+Over time, IF has evolved into two main styles of conversation, either using a branching tree of options to converse about or a keyword based approach.
+
+TODO: How the conversation model works
+
+TODO: Examples of the conversation model in play]
 
 Section 5.4 - Discrete Arousal-based Consent and Stimulation
 
@@ -897,6 +914,8 @@ Section 5.4 - Discrete Arousal-based Consent and Stimulation
 	Test me with "kiss Beatrice / lick Beatrice / fuck Beatrice / z / kiss Beatrice / lick Beatrice / fuck Beatrice".
 [TODO: Add more actions do move up the arousal levels]
 
+Chapter 6 - Support Functions
+
 Chapter 7 - Expanded Tutorial
 
 A complete tutorial on using Inform 7 to write AIF games is a rather ambitious project.
@@ -907,8 +926,6 @@ But first, some pointers to other readings on I7 that are worthwhile:
 Ron Newcomb has a guide at http://www.plover.net/~pscion/inform7.html that explains I7 from a tradional programmer's perspective.
 It's still the best summary of classic programming techniques in I7 despite being based on a rather outdated version of I7.
 
-Carolyn VanEseltine hosts a tutorial at http://www.sibylmoon.com/welcome-to-adventure/ which reimplements the original Adventure game.
-
 Jim Aikin has a handbook available at http://www.musicwords.net/if/i7hb.htm which is an alternative to Writing with Inform.
 It tackles the same topics in a different fashion and order, and it's aimed at students.
 It's not yet updataded for the very last version of I7 but it should be current enough for most purposes.
@@ -917,7 +934,7 @@ Inside Erin was a magazine dedicated to AIF, and in it's time contained several 
 The Inside Erin newsletter at http://newsletter.aifcommunity.org/index.php?id=writing.html contains a topical overview of these articles.
 It's highly suggested to read through the generic articles, the I7 tutorials are outdated on the technical topics but are still worth reading.
 
-The site for the extension at https://informedaif.wordpress.com/tutorial/ also contains a copy of this tutorial.
+Finally, this tutorial is also available at https://informedaif.wordpress.com/tutorial/ for access outside Inform.
 
 Chapter 8 - Technical Reference
 
@@ -1258,7 +1275,6 @@ Note that because this only covers the tail, a person without a tail will be una
 
 We grant consent for some actions so the player can test the differences.
 
-	The love interests of Kitsune is {Adam}.
 	Consent for shifting a garment worn by Kitsune: Give consent.
 	Consent for taking ribbon: Give consent.
 	

@@ -1763,14 +1763,40 @@ A default description generation rule for a person (called P) (this is the gener
 
 Section - State summary (4)
 
-[The purpose of this rule is to give a quick status of what the person is doing, or rather the state snapshot of their AI script.]
+[The purpose of this rule is to give a snapshot of their agency state.]
 A default description generation rule for a person (called P) (this is the generate script description rule):
 	If P provides the property agency state description and the agency state description is not the default value of text:
 		Say the agency state description of P;
 
 Book 2.3 - Conversation
 
-[TODO]
+[This book deals with setting up a conversation system that's based on topics the player can know about, and for which people have various responses.]
+
+Use topical conversation translates as (- Constant ENABLE_TOPIC_CONVERSATION; -).
+
+Part 2.3.1 - Concepts
+
+[Status: TODO/In progress]
+
+Chapter 2.3.1a - Topics
+
+Chapter - Knowledge
+
+Chapter - Responses
+
+Part 2.3.2 - Talking Actions
+
+Chapter 2.3.2a - Talk To
+
+Chapter 2.3.2b - Talk About
+
+Part 2.3.3 - Modified Actions
+
+Chapter 2.3.3a - Asking
+
+Chapter 2.3.3b - Telling
+
+
 
 Book 2.4 - Posturing
 
