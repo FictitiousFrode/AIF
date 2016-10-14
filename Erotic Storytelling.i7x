@@ -886,14 +886,20 @@ Check an actor wearing something (This is the wearing requires consent rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone wearing something when the reason the action failed is the wearing requires consent rule: Rule succeeds;
-
 Chapter 1.3.1b - Carry Out
 
 Carry out an actor wearing (this is the wearing garments rule):
 	If the noun is a garment:
 		Update decency for the actor;
+
+Chapter 1.3.1c - Persuasion
+
+Persuasion for asking someone to try wearing something:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone wearing something when the reason the action failed is the wearing requires consent rule: Rule succeeds;
 
 Part 1.3.2 - Taking Off Garments
 
@@ -934,9 +940,6 @@ Check an actor taking off something (This is the taking off garments requires co
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone taking off something when the reason the action failed is the taking off garments requires consent rule: Rule succeeds;
-
 Chapter 1.3.2b - Carry Out
 
 The modified taking off rule substitutes for the standard taking off rule.
@@ -948,13 +951,22 @@ Carry out an actor taking off (this is the modified taking off rule):
 		If G is shifted, now G is unshifted;
 		Update decency for the wearer;
 
+Chapter 1.3.2c - Persuasion
+
+Persuasion for asking someone to try taking off something:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone taking off something when the reason the action failed is the taking off garments requires consent rule: Rule succeeds;
+
 Part 1.3.3 - Taking Off Others
 
 [Status: Complete
 By default, taking clothing that others are wearing is blocked. This is something that should be allowed in certain situations, so we need to make some changes to the standard rules.
 See also the consent and arousal sections.]
 
-Section - Removing Existing Blocks
+Chapter 1.3.3a - Removing Existing Blocks
 
 The revised can't remove from people rule substitutes for the can't remove from people rule.
 Check an actor removing something from (this is the revised can't remove from people rule):
@@ -978,7 +990,7 @@ Check an actor taking (this is the revised can't take people's possessions rule)
 				Stop the action;
 			Let the owner be the not-counting-parts holder of the owner;
 
-Section - Implementing Taking
+Chapter 1.3.3b - Implementing Taking
 
 Check an actor taking a garment (this is the can't take covered items rule):
 	Abide by the can't take off covered items rule;
@@ -990,9 +1002,6 @@ Check an actor taking something (This is the taking garments requires consent ru
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone taking something when the reason the action failed is the taking garments requires consent rule: Rule succeeds;
-
 The taking garments rule is listed first in the carry out taking rulebook.
 Carry out an actor taking a garment (called G) (this is the taking garments rule):
 	If G is worn by someone:
@@ -1000,6 +1009,15 @@ Carry out an actor taking a garment (called G) (this is the taking garments rule
 		Now the actor carries G;
 		If G is shifted, now G is unshifted;
 		Update decency for the wearer;
+
+Chapter 1.3.3c - Persuasion
+
+Persuasion for asking someone to try taking a garment:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone taking a garment when the reason the action failed is the taking garments requires consent rule: Rule succeeds;
 
 Part 1.3.4 - Dressing
 
@@ -1234,9 +1252,6 @@ Check an actor shifting something (This is the shifting garments requires consen
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone shifting something when the reason the action failed is the shifting garments requires consent rule: Rule succeeds;
-
 Chapter 1.4.1c - Carry Out
 		
 Carry out an actor shifting (this is the standard shifting rule):
@@ -1261,7 +1276,16 @@ Report an actor shifting (this is the standard report shifting rule):
 			Say "[The actor] [the describe shifting of the shiftyness of the noun] [the noun]." (E);
 		Else if the player can see the noun:
 			Say "[The noun] [are] [the describe shifting of the shiftyness of the noun]." (F);
+
+Chapter 1.4.1e - Persuasion
+
+Persuasion for asking someone to try shifting something:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
 	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone shifting something when the reason the action failed is the shifting garments requires consent rule: Rule succeeds;
+
 Part 1.4.2 - Unshifting
 
 [Status: Complete
@@ -1335,9 +1359,6 @@ Check an actor unshifting something (This is the unshifting garments requires co
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone unshifting something when the reason the action failed is the unshifting garments requires consent rule: Rule succeeds;
-
 Chapter 1.4.2c - Carry Out
 		
 Carry out an actor unshifting (this is the standard unshifting rule):
@@ -1352,6 +1373,15 @@ Report an actor unshifting (this is the standard report unshifting rule):
 	Else if the player can see the actor:
 		say "[The actor] [the describe unshifting of the shiftyness of the noun] [the noun]." (B);
 
+Chapter 1.4.2e - Persuasion
+
+Persuasion for asking someone to try unshifting something:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone unshifting something when the reason the action failed is the unshifting garments requires consent rule: Rule succeeds;
+
 Part 1.4.3 - Ripping
 
 [Status: Complete
@@ -1360,12 +1390,12 @@ This part implements the ripping ability of garments, as detailed in 1.1.2a]
 Ripping is an action applying to one touchable thing.
 The specification of the ripping action is "Ripping is the act of tearing a piece of garment apart. A ripped garment can no longer be shifted, but it can be worn."
 
-Chapter 1.4.2a - Understanding
+Chapter 1.4.3a - Understanding
 
 Understand "rip open/off/up/-- [garment]" as ripping.
 Understand "tear open/off/up/-- [garment]" as ripping.
 
-Chapter 1.4.2b - Check
+Chapter 1.4.3b - Check
 
 Check an actor ripping (this is the can't rip covered items rule):
 	If noun is a garment (called G):
@@ -1409,10 +1439,7 @@ Check an actor ripping something (This is the ripping garments requires consent 
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone ripping something when the reason the action failed is the ripping garments requires consent rule: Rule succeeds;
-
-Chapter 1.4.2c - Carry Out
+Chapter 1.4.3c - Carry Out
 
 Carry out an actor ripping (this is the standard ripping rule):
 	If the noun provides the property ripped, now the noun is ripped;
@@ -1421,7 +1448,7 @@ Carry out an actor ripping (this is the standard ripping rule):
 Carry out an actor ripping (this is the ripping replaces shifting rule):
 	If the noun provides the property shifted and the noun is shifted, now the noun is unshifted;
 
-Chapter 1.4.2d - Report
+Chapter 1.4.3d - Report
 
 Report an actor ripping (this is the standard report ripping rule):
 	If the noun is a garment:
@@ -1439,6 +1466,15 @@ Report an actor ripping (this is the standard report ripping rule):
 			Say "[The actor] [the describe shifting of the shiftyness of the noun] [the noun]." (E);
 		Else if the player can see the noun:
 			Say "[The noun] [are] ripped apart." (F);
+
+Chapter 1.4.3e - Persuasion
+
+Persuasion for asking someone to try ripping something:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone ripping something when the reason the action failed is the ripping garments requires consent rule: Rule succeeds;
 
 Volume 2 - Actors
 
@@ -1824,7 +1860,7 @@ Book 3.2 - Body Part Actions
 
 Part 3.2.1 - Touching
 
-[Status: Complete; Consent and stimulation defered to later chapter
+[Status: Complete
 Touching is already covered in the Standard Rules, but it doesn't do much. We add some checks for touching people and body parts, and because we don't allow touching people directly we can keep the standard reports.]
 
 The specification of the touching action is "Touching is just that, touching something without applying pressure: a touch-sensitive screen or a living creature might react, but a standard push-button or lever will probably not.
@@ -1886,18 +1922,24 @@ Check an actor touching (this is the seek consent for touching rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone touching something when the reason the action failed is the seek consent for touching rule: Rule succeeds;
-
 Chapter 3.2.1c - Carry Out
 
 Carry out an actor touching (this is the seek stimulation for touching rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
 
+Chapter 3.2.1e - Persuasion
+
+Persuasion for asking someone to try touching something:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone touching something when the reason the action failed is the seek consent for touching rule: Rule succeeds;
+
 Part 3.2.2 - Rubbing
 
-[Status: Complete; Consent and stimulation defered to later chapter
+[Status: Complete
 Rubbing is already covered in the Standard Rules, but it's disabled by default. We add some checks for rubbing people and body parts, and we can keep the standard reports.]
 
 The specification of the rubbing action is "The Standard Rules define this action in only a minimal way, blocking it with a check rule which stops it in all cases. It exists so that before or instead rules can be written to make it do interesting things in special cases. (Or to reconstruct the action as something more substantial, unlist the block rule and supply carry out and report rules, together perhaps with some further check rules.)
@@ -1959,18 +2001,24 @@ Check an actor rubbing (this is the seek consent for rubbing rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone rubbing something when the reason the action failed is the seek consent for rubbing rule: Rule succeeds;
-
 Chapter 3.2.2c - Carry Out
 
 Carry out an actor rubbing (this is the seek stimulation for rubbing rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
 
+Chapter 3.2.2e - Persuasion
+
+Persuasion for asking someone to try rubbing something:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone rubbing something when the reason the action failed is the seek consent for rubbing rule: Rule succeeds;
+
 Part 3.2.3 - Tickling
 
-[Status: Complete; Consent and stimulation defered to later chapter
+[Status: Complete
 Tickling is a new action. It takes into account that only other people's body parts can be tickled, decency and consent/arousal, and handle reporting.]
 
 Tickling is an action applying to one touchable thing.
@@ -2036,9 +2084,6 @@ Check an actor tickling (this is the seek consent for tickling rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone tickling something when the reason the action failed is the seek consent for tickling rule: Rule succeeds;
-
 Chapter 3.2.3c - Carry Out
 
 Carry out an actor tickling (this is the seek stimulation for tickling rule):
@@ -2056,9 +2101,18 @@ Report an actor tickling (this is the report tickling rule):
 	Else if the player can see the noun:
 		Say "[The noun] [are] tickled." (C);
 
-Part 3.2.4 - Slapping/Spanking
+Chapter 3.2.3e - Persuasion
 
-[Status: Complete; Consent and stimulation defered to later chapter
+Persuasion for asking someone to try tickling something:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone tickling something when the reason the action failed is the seek consent for tickling rule: Rule succeeds;
+
+Part 3.2.4 - Spanking
+
+[Status: Complete
 Spanking is a new action. It takes into account that other people's body parts can be spanked, decency and consent/arousal, and handle reporting. Unlike other new actions, we will allow self-spanking.]
 
 Spanking is an action applying to one touchable thing.
@@ -2116,9 +2170,6 @@ Check an actor spanking (this is the seek consent for spanking rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone spanking something when the reason the action failed is the seek consent for spanking rule: Rule succeeds;
-
 Chapter 3.2.4c - Carry Out
 
 Carry out an actor spanking (this is the seek stimulation for spanking rule):
@@ -2136,9 +2187,18 @@ Report an actor spanking (this is the report spanking rule):
 	Else if the player can see the noun:
 		Say "[The noun] [are] spanked." (C);
 
+Chapter 3.2.4e - Persuasion
+
+Persuasion for asking someone to try spanking something:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone spanking something when the reason the action failed is the seek consent for spanking rule: Rule succeeds;
+
 Part 3.2.5 - Pinching
 
-[Status: Complete; Consent and stimulation defered to later chapter
+[Status: Complete
 Pinching is a new action. It takes into account that only other people's body parts can be pinched, decency and consent/arousal, and handle reporting.]
 
 Pinching is an action applying to one touchable thing.
@@ -2204,9 +2264,6 @@ Check an actor pinching (this is the seek consent for pinching rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone pinching something when the reason the action failed is the seek consent for pinching rule: Rule succeeds;
-
 Chapter 3.2.5c - Carry Out
 
 Carry out an actor pinching (this is the seek stimulation for pinching rule):
@@ -2224,9 +2281,18 @@ Report an actor pinching (this is the report pinching rule):
 	Else if the player can see the noun:
 		Say "[The noun] [are] pinched." (C);
 
+Chapter 3.2.5e - Persuasion
+
+Persuasion for asking someone to try pinching something:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone pinching something when the reason the action failed is the seek consent for pinching rule: Rule succeeds;
+
 Part 3.2.6 - Licking
 
-[Status: Complete; Consent and stimulation defered to later chapter
+[Status: Complete
 Licking is a new action, used only on body parts but attempts to redirect from persons. It handles decency, access.]
 
 Licking is an action applying to one touchable thing.
@@ -2298,9 +2364,6 @@ Check an actor licking (this is the seek consent for licking rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone licking something when the reason the action failed is the seek consent for licking rule: Rule succeeds;
-
 Chapter 3.2.6c - Carry Out
 
 Carry out an actor licking (this is the seek stimulation for licking rule):
@@ -2318,9 +2381,18 @@ Report an actor licking (this is the report licking rule):
 	Else if the player can see the noun:
 		Say "[The noun] [are] licked." (C);
 
+Chapter 3.2.5e - Persuasion
+
+Persuasion for asking someone to try licking something:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone licking something when the reason the action failed is the seek consent for licking rule: Rule succeeds;
+
 Part 3.2.7 - Biting
 
-[Status: Complete; Consent and stimulation defered to later chapter
+[Status: Complete
 Biting is a new action, used only on body parts, but attempts to bit something edible is eating. It handles decency, access.]
 
 Biting is an action applying to one touchable thing.
@@ -2388,9 +2460,6 @@ Check an actor biting (this is the seek consent for biting rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone biting something when the reason the action failed is the seek consent for biting rule: Rule succeeds;
-
 Chapter 3.2.7c - Carry Out
 
 Carry out an actor biting (this is the seek stimulation for biting rule):
@@ -2407,6 +2476,15 @@ Report an actor biting (this is the report biting rule):
 		Say "[The actor] [bite] [the noun]." (B);
 	Else if the player can see the noun:
 		Say "[The noun] [are] bitten." (C);
+
+Chapter 3.2.5e - Persuasion
+
+Persuasion for asking someone to try biting something:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone biting something when the reason the action failed is the seek consent for biting rule: Rule succeeds;
 
 Part 3.2.8 - Fucking It With
 
@@ -2512,13 +2590,22 @@ Report an actor fucking something with (this is the report fucking rule):
 	Else if the player can see the noun:
 		Say "[The noun] [are] fucked." (C);
 
+Chapter 3.2.5e - Persuasion
+
+Persuasion for asking someone to try fucking something with:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone fucking something with when the reason the action failed is the seek consent for fucking rule: Rule succeeds;
+
 Book 3.3 - Person Actions
 
 [These actions only take another person as the noun, but some redirect if used on body parts.]
 
 Part 3.3.1 - Kissing
 
-[Status: Complete; Consent and stimulation defered to later chapter
+[Status: Complete
 Kissing is already covered in the Standard Rules, but it's disabled by default.
 We replace the blocks with our own checks, taking into account that only other people can be kissed, decency and consent/arousal, and handle action reporting.]
 
@@ -2529,7 +2616,7 @@ The kissing decency is initially casual.
 
 Chapter 3.3.1a - Understanding
 
-Understand "kiss [body part]" as kissing.
+Understand "kiss [something]" as kissing.
 
 Does the player mean kissing a person: It is likely.
 Does the player mean kissing the player: It is very unlikely.
@@ -2572,9 +2659,6 @@ Check an actor kissing (this is the seek consent for kissing rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone kissing something when the reason the action failed is the seek consent for kissing rule: Rule succeeds;
-
 Chapter 3.3.1c - Carry Out
 
 Carry out an actor kissing (this is the seek stimulation for kissing rule):
@@ -2592,9 +2676,18 @@ Report an actor kissing (this is the report kissing rule):
 	Else if the player can see the noun:
 		Say "[The noun] [are] kissed." (C);
 
+Chapter 3.3.1e - Persuasion
+
+Persuasion for asking someone to try kissing something:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone kissing something when the reason the action failed is the seek consent for kissing rule: Rule succeeds;
+
 Part 3.3.2 - Hugging
 
-[Status: Complete; Consent and stimulation defered to later chapter
+[Status: Complete
 Hugging is a new action. It takes into account that only other people can be hugged, decency and consent/arousal, and handle reporting.]
 
 Hugging is an action applying to one touchable thing.
@@ -2604,7 +2697,10 @@ The hugging decency is initially formal.
 
 Chapter 3.3.2a - Understanding
 
+Understand the command "hug" as something new.
 Understand "hug [something]" as hugging.
+Understand the command "embrace" as something new.
+Understand "embrace [something]" as hugging.
 
 Does the player mean hugging a person: It is likely.
 Does the player mean hugging the player: It is very unlikely.
@@ -2645,9 +2741,6 @@ Check an actor hugging (this is the seek consent for hugging rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone hugging something when the reason the action failed is the seek consent for hugging rule: Rule succeeds;
-
 Chapter 3.3.2c - Carry Out
 
 Carry out an actor hugging (this is the seek stimulation for hugging rule):
@@ -2665,9 +2758,18 @@ Report an actor hugging (this is the report hugging rule):
 	Else if the player can see the noun:
 		Say "[The noun] [are] hugged." (C);
 
+Chapter 3.3.2e - Persuasion
+
+Persuasion for asking someone to try hugging something:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone hugging something when the reason the action failed is the seek consent for hugging rule: Rule succeeds;
+
 Part 3.3.3 - Dancing 
 
-[Status: Complete; Consent and stimulation defered to later chapter
+[Status: Complete
 Dancing with is a new action. It takes into account that only other people can be danced with, decency and consent/arousal, and handle action reporting.]
 
 The dancing decency is initially formal.
@@ -2712,9 +2814,6 @@ Check an actor dancing (this is the seek consent for dancing rule):
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone dancing something when the reason the action failed is the seek consent for dancing rule: Rule succeeds;
-
 Chapter 3.3.3c - Carry Out
 
 Carry out an actor dancing (this is the seek stimulation for dancing rule):
@@ -2731,6 +2830,15 @@ Report an actor dancing (this is the report dancing rule):
 		Say "[The actor] [dance] with [the noun]." (B);
 	Else if the player can see the noun:
 		Say "[The noun] [are] danced with." (C);
+
+Chapter 3.3.3e - Persuasion
+
+Persuasion for asking someone to try dancing something:
+	Follow the consent rules;
+	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
+	
+[Persuasion failed messages for when seek consent fails is unneccessary.]
+Unsuccessful attempt by someone dancing something when the reason the action failed is the seek consent for dancing rule: Rule succeeds;
 
 Book 3.4 - Redirect Helpers
 
