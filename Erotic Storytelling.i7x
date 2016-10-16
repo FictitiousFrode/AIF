@@ -1873,6 +1873,12 @@ A consent rule (this is the default consent rule):
 			Say the uninterested response of P;
 [			Say "[The P] [aren't] consenting to that ([current action])." (C);]
 			Deny consent;
+	Else if the noun is a garment worn by someone (called P):
+		If P is not the player:
+			Say the uninterested response of P;
+[			Say "[The P] [aren't] consenting to that ([current action])." (C);]
+			Deny consent;
+	Give consent;
 
 Part 3.1.3 - Properties
 
@@ -2828,8 +2834,9 @@ The specification of the dancing action is "Dancing with is the act of dancing w
 
 Chapter 3.3.3a - Understanding
 
-Understand "dance" as dancing.
 Understand "dance with [something]" as dancing.
+Understand "dance" as dancing.
+Understand "dance for me" as dancing.
 
 Does the player mean dancing a person: It is likely.
 Does the player mean dancing the player: It is very unlikely.
