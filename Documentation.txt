@@ -48,11 +48,11 @@ Section 5.4 - Discrete Arousal-based Consent and Stimulation
 	Example B - DACS
 
 Chapter 6 - Support Functions
-Section 6.1 - Debug Functions
+Section 6.1 - Story Content
 Section 6.2 - Hint System
-Section 6.3 - Content Limits
-Section 6.4 - Completion Tracking
-Section 6.5 - Commentary System
+Section 6.3 - Completion Tracking
+Section 6.4 - Commentary System
+Section 6.5 - Debug Functions
 
 Chapter 7 - Expanded Tutorial: Writing Erotic Stories
 Section - Setting and Characters
@@ -85,11 +85,12 @@ Section 8.10 - Rulebooks
 
 
 Examples
-A (*): Templates: Mould Away - Using the provided templates to flesh out actors.
-B: DACS
-C: Agency (***): Intelligent Agency - 
-D (***): Customization: A Furry Tale - How to create custom body parts.
-	Complete
+A (**)		Templates: Factory Mould - Using the provided templates to flesh out actors.
+	Complete, unverified
+B (**)		DACS
+C (***)		Agency: Intelligent Agency - 
+D (***)		Customization: A Furry Tale - How to create custom body parts.
+	Complete, verified
 E: Dialogue
 
 
@@ -105,18 +106,18 @@ To use this framework, you need to download and install it (which you probably h
 
 By including this extension, you will enable most of what's necessary to write erotic stories.
 Most of the content is not automatically available out-of-the-box, but has to be specifically included by the author for the player to notice.
-The only parts available by default, are the expanded actions (listed in the action overview below), but these don't do anything without proper targets such as the templated garments and body parts.
-There is also an introductory warning/information screen at the start of the story, which is governed by the 'warn of adult content' activity.
-[TODO: Implement said activity]
+Only the expanded actions (listed in the action overview below) are available by default, but these don't do anything without proper targets such as the templated garments and body parts.
+There is also an introductory warning/information screen at the start of the story in the form of the 'adult introduction' rule.
+This rule will also inform the player about the contents that can be expected from the story if these are defined (Section 6.3 explains how this can be used).
 
 The sections of this chapter introduces the various concepts available within the extension, and subsequent chapters will go into further detail.
 Towards the end of the documentation you will find a fully fleshed out tutorial and sample adventure, and a complete technical reference.
 All kinds and actions are also documented inside the Inform IDE.
 
 Note; Inform can behave slightly odd regarding the naming (and creation) of things which are part of the character, this is described in chapter 4.15 of "Writing with Inform".
-If the player is declared after the creation of the body part, then the body part will be named after what the character was named.
-Also, any gender-specific creations might not occur if the gender of the player was undetermined at that point.
-Likewise, changing the identity of the player during play might give interesting results.
+As long as the player is declared after the creation of the body part, then the body part will be named after what the character was named.
+Any gender-specific creations might not occur if the gender of the player was undetermined at that point.
+Likewise, changing the identity of the player during play might give unexpected results.
 
 In short, declare the persons (i.e. characters), especially the player character, with gender before invoking body part creation.
 
@@ -234,7 +235,7 @@ Garments that are not visible are considered to be concealed and un-interactive 
 For example, a player may not know whether a person is wearing a bra, but the player does know that that person has breasts.
 
 While you're free to create your own body parts as you please, this extension comes with a variety of ready-made template parts you can use.
-Here is an overview, with the most pertinent properties controlling which actions are possible (see section 2.1) and the default decency (as implied by their cover locations):
+Below is an overview of the body part templates, with the most pertinent properties controlling which actions are possible (see section 2.1) and the default decency (as implied by their cover locations):
 
 	Ass (Indecent): touchable, rubbable, spankable, pinchable, lickable, orificial.
 	pair of Ankles (Immodest): plural; 
@@ -916,6 +917,37 @@ Section 5.4 - Discrete Arousal-based Consent and Stimulation
 
 Chapter 6 - Support Functions
 
+[TODO: Introduction to support functions]
+
+Section 6.1 - Story Content
+
+It would be rather boring if every adult story contained the same elements, as not every player has the same appreciation for the various types of content.
+In order to alert players to the type of content they can expect from a story, this extension allows the author to specify the 'content types' included.
+The 'adult introduction rule' is processed before the story starts to warn the player, and all the content types that are defined for the story are listed.
+If any of these content types are optiontal, the player is then given a choice of enabling them.
+
+Taking advantage of this options is as easy as defining content types; none are provided by default allowing the author free reign.
+Their behavior is controlled by the two properties enabled/disabled and mandatory/optional; the default behavior is that they are enabled and mandatory but a disabled content defaults to being optional.
+It's possible to set a content type to disabled and mandatory, which in effect hides it from the player.
+Content types also have a description which is printed when the player chooses which optional content types to experience.
+Below is a short example of how content types can be used:
+
+*:
+	Include Erotic Storytelling by Fictitious Frode.
+	
+	Male Heterosexuality is a content type.
+	Female Heterosexuality is a content type.
+	Voyeurism is a disabled content type.
+	
+	Security Office is a room. "This state-of-the-art Security Office contains row upon row of monitors for the security cameras which are deployed to protect the hotel's guests."
+	
+	Some security monitors is backdrop in Security Office.
+	The description is "You scan over the familiar images of people going about their business in the privacy of their hotel rooms[if Voyeurism is enabled], catching a glimpse of a couple engaged in some early-afternoon sex[else]."
+
+
+
+
+
 Chapter 7 - Expanded Tutorial
 
 A complete tutorial on using Inform 7 to write AIF games is a rather ambitious project.
@@ -940,6 +972,11 @@ Chapter 8 - Technical Reference
 
 Contained in this chapter is a technical description of all the new and altered mechanics for the extension, divided by type.
 It's intended as a companion to the other chapters, although an experienced author could glean much of the previous information from this chapter alone.
+
+Some parts of the extension are manually toggled by the 'use' phrase:
+
+	Use DACS: Enable the built-in Discrete Arousal-based Consent and Stimulation system.
+	Use topical conversation: Enable the built-in menu topic conversation system.
 
 Section 8.1 - New Kinds of Value
 
@@ -1194,12 +1231,113 @@ These phrases deals with arousal and orgasms:
 	COOL (person) DOWN TO (arousal): Change the current arousal of the person to the previous level, but not past the specified arousal. If the unattainable arousal is specified as input, no change will happen.
 	whether (person) ORGASMS: Uses the Orgasmic Attempts and Orgasms properties of the person to decide whether the person has an orgasm, and if it succeeds it sets the current arousal of the person to the Orgasm Reset Arousal. The formula is based on the ratio of attempts to orgasms.
 
+Example: ** Factory Mould - Using the provided templates to flesh out actors.
+
+When experiencing an adult story most players expect to be able to refer to clothing and individual body parts, and enabling this experience is one of the key features of this extension.
+A set of templates for common body parts and garments are provided to avoid authors having to re-implement these in every game.
+The templates are ready for use with relevant properties (such as action keywords) defined.
+Inform has two main methods for using these templates, and this example will detail how both methods work and when to use them.
+
+In order to properly apply the creation rules, it's imperative to create the actors of the story early on with all relevant information.
+We also create a property to differentiate between major and minor players in the story so we can treat them differently.
+
+	*: "Factory Mould"
+
+	Include Erotic Storytelling by Fictitious Frode.
+	Use unabbreviated object names.
+	
+	A person can be major or minor. A person is usually major.
+	Adam is a man. The player is Adam.
+	Bob is a minor man.
+	Carrie is a woman.
+	Denise is a minor woman.
+
+Every story also needs to take place somewhere.
+
+	Factory Floor is a room. "The factory floor is bustling with machines."
+	Bob is in Factory Floor. "Bob is bustling to and fro, carrying boxes."
+
+	Office is up from Factory Floor.
+	Denise is in Office. "Denise is at her desk."
+	
+	Operator Booth is inside from Office. "The Operator Booth contains the control machinery for the factory floor it overlooks. It's boxed in, providing some privacy."
+	The decency threshold of Operator Booth is indecent.
+	Carrie is in Operator Booth. "Carrie is here, operating the factory machinery."
+
+While it's possible to create body parts individually, most people will have the same features based on their traits.
+We can then use these traits to selectively create body parts: every man should have the same parts, which is slightly different from the parts a woman should have.
+As we don't implement all the templates, we can add some synonyms (through the 'understand' phrase) to cover their absence.
+
+	A head is a part of every person. Understand "face", "mouth", "eye/eyes" and "hair" as head.
+	A pair of legs is a part of every person. Understand "feet" and "thighs" as pair of legs.
+	A pair of hands is a part of every person. Understand "arms" as pair of hands.
+	An ass is a part of every person.
+
+	A vagina is a part of every woman.
+	A pair of breasts is a part of every woman.
+
+	A penis is a part of every man.
+
+These parts are now available for the player to examine, but for now they don't have any descriptions.
+When we use the "part of every" construct the parts will be named after the person they are attached to, except the player's parts which are called yours.
+
+	The description of your head is "As one would expect, your head has the usual fixtures: two eyes and ears, a mouth and tussled black hair."
+	The description of your pair of legs is "Good to have for walking."
+	The description of your pair of hands is "Strong and firm from lifting heavy crates."
+	The description of your ass is "Nice and taut."
+	The covered description of your penis is "You're packing some junk in your trousers."
+	The uncovered description of your penis is "Isn't it nice?"
+	
+	The description of Carrie's head is "Carrie has long blonde hair, lucious red lips and deep blue eyes."
+	The description of Carrie's pair of legs is "Her legs are long and slim."
+	The description of Carrie's pair of hands is "As a machine operator, her delicate hands are unsullied by hard labor."
+	The description of Carrie's ass is "Her backside is nice and firm."
+	The covered description of Carrie's pair of breasts is "Her breasts might be small, but they do fill out her clothes nicely."
+	The uncovered description of Carrie's pair of breasts is "Carrie's showing off her maginificent breasts."
+	The covered description of Carrie's vagina is "You can only dream of what it looks like."
+	The uncovered description of Carrie's vagina is "Her vagina is nice and smooth."
+
+It's also possible to use a person's traits to create mass descriptions for unimportant parts:
+
+	Definition: A body part is nondescript if it is part of a minor person.
+	Instead of doing something to a nondescript body part, say "That's not important to the story."
+
+While we created body parts en masse, clothing is something that one would usually create piece by piece.
+
+	Some sandals is a pair of shoes worn by Carrie. They are plural-named. The indefinite article is "some".
+	A grey dress is a dress worn by Carrie.
+	A lacy red bra is a bra worn by Carrie.
+	A lacy red thong is a pair of panties worn by Carrie. It is singular-named.
+
+	Some heavy boots is a pair of shoes worn by Adam. They are plural-named. The indefinite article is "some".
+	Some black pants is a pair of trousers worn by Adam.
+	A white blouse is a shirt worn by Adam.
+
+To avoid spending too much time detailing the clothing of minor characters we let them wear an outfit.
+This can then be customized with description and synonyms.
+
+	An oily grey cover-all is an outfit worn by Bob.
+	The description is "Bob is wearing a grey cover-all, stained with oil and other unnameable substances."
+
+	A navy blue pantsuit is an outfit worn by Denise.
+	The description of Denise's outfit is "Denise is wearing a [printed name]."
+
+We allow Carrie to take off clothes to iillustrate how this works in practice.
+
+	Persuasion for asking carrie to try taking off something: Persuasion succeeds. [TODO: Remove this when we get consent based persuasion to work]
+	Consent for Carrie taking off something:
+		Say "Carrie dutifully obeys.";
+		Give consent;
+
+	Test me with "x bob / x cover-all / up / x Denise / x pantsuit / in / x Carrie / x dress / x bra / Carrie, take of dress / x Carrie"
 
 
-
-Example: * Moulded and Stamped - Using the provided templates to flesh out actors.
 
 Example: ** DACS
+
+Defining rules for consent is a very important part of writing a successful AIF story.
+For authors that don't have the interest in writing their own rules, the Discrete Arousal-based Consent and Stimulation System can be used to provide consent based on the current stimulation of the related actors.
+This examples shows how this can be set up as well as tailored to fit specific needs.
 
 Example: *** Intelligent Agency
 
@@ -1216,6 +1354,7 @@ This example shows how a new type of body part requiring it's own cover area can
 	Use unabbreviated object names.
 
 It's best to define the actors (including the player) with gender as early as possible.
+We also need a location with a decency threshold low enough to allow experimentation.
 
 	Lounge is a room. "Despite the name, the lounge is rather boring and devoid of any furniture. It seems as though it serves no real purpose."
 	Kitsune is a woman in Lounge.
