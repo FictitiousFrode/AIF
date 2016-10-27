@@ -7,7 +7,6 @@ Section 1.2 - Responses and Descriptions
 Section 1.3 - Action Overview
 	TODO: Add Posturing
 	TODO: Add Conversation
-	TODO: Add reference to support functions
 Section 1.4 - Layering and Templates
 	Example A - Templates
 Section 1.5 - Discrete Arousal-based Consent and Stimulation
@@ -55,20 +54,8 @@ Section 6.4 - Commentary System
 Section 6.5 - Debug Functions
 
 Chapter 7 - Expanded Tutorial: Writing Erotic Stories
-Section - Setting and Characters
-Section - Introduction to Inform
-Section - Geography (Locations)
-Section - Storyfile Layout (Organizing Inform)
-Section - Testing
-Section - Items
-Section - Programming Inform
-Section - Chronology (Scenes)
-Section - Character Facades
-Section - Sex Scenes
-Section - Actions, Continued
-Section - Character Depth
-Section - Mechanics
-Section - Multiple Partners (Orgies)
+Section 7.1 - Getting Started
+Section 7.2 - Geography
 
 Chapter 8 - Technical Reference
 Section 8.1 - New Kinds of Value
@@ -108,7 +95,7 @@ By including this extension, you will enable most of what's necessary to write e
 Most of the content is not automatically available out-of-the-box, but has to be specifically included by the author for the player to notice.
 Only the expanded actions (listed in the action overview below) are available by default, but these don't do anything without proper targets such as the templated garments and body parts.
 There is also an introductory warning/information screen at the start of the story in the form of the 'adult introduction' rule.
-This rule will also inform the player about the contents that can be expected from the story if these are defined (Section 6.3 explains how this can be used).
+This rule will also inform the player about the contents that can be expected from the story if these are defined (Section 6.1 explains how this can be used).
 
 The sections of this chapter introduces the various concepts available within the extension, and subsequent chapters will go into further detail.
 Towards the end of the documentation you will find a fully fleshed out tutorial and sample adventure, and a complete technical reference.
@@ -191,7 +178,8 @@ For reference, the exact rules used to sort rulebooks are described in 19.16 of 
 
 Section 1.3 - Action Overview
 
-The following table lists all the actions that are defined or modified in the extension:
+The extension provides or modifies a few actions, listed in the table below.
+These are detailed both in the IDE, and covered in Chapter 2 of this documentation.
 [Comment:
 RalphWiggumPhD: I wish there were a better way to format this table...
 FictitiousFrode: Tables are auto-formated when viewed inside Inform.]
@@ -221,7 +209,7 @@ FictitiousFrode: Tables are auto-formated when viewed inside Inform.]
 	Unshifting	Clothing	New
 	Wearing	Clothing	Modified
 
-These are detailed both in the IDE, and covered in Chapter 2 of this documentation.
+There are also some actions for support functions, described in chapter 6.
 
 Section 1.4 - Layering and Templates
 
@@ -966,7 +954,113 @@ Inside Erin was a magazine dedicated to AIF, and in it's time contained several 
 The Inside Erin newsletter at http://newsletter.aifcommunity.org/index.php?id=writing.html contains a topical overview of these articles.
 It's highly suggested to read through the generic articles, the I7 tutorials are outdated on the technical topics but are still worth reading.
 
+Brass Lantern has several articles available http://www.brasslantern.org/writers/ which deal with both general IF-theory, game design and some Inform tutorials.
+
 Finally, this tutorial is also available at https://informedaif.wordpress.com/tutorial/ for access outside Inform.
+
+Section 7.1 - Getting Started
+
+The first part of writing a new story is coming up with something to write about.
+Inspirations for stories come from multiple sources; you might have an idea of an intriguing character to explore, or a physical location or setting to (literally) explore.
+
+Perhaps the most important thing to note here is that over-ambition is the real project-killer: 
+Don't start with a concept you can't finish.
+For your first story you should try to keep it small, especially in the amount of characters the player should be allowed to interact with.
+A good guideline is the rules for the mini-comp which limits the story to one interactive character and a maximum of three locations.
+
+Another large project killer is scope-creep; during writing one often finds inspiration for other concepts that can fit in.
+It's often better write down these ideas in a separate document, it might be better to let these grow into their own story or incorporate into another story.
+Similarly an idea that doesn't work out as a story on it's own might still be usable in another story.
+In order to maximize re-use it might be best to focus on descriptions of people and locaions rather than implementations of mechanics.
+
+A good source of inspiration for settings is writing fan-fiction stories for established fandom.
+There is a well established precedent for this, the AIF community has a long and proud history of fan-fiction, evolving out of a newsgroup devoted to adult Star Trek fan-fiction.
+This approach has some advantages in that the player is hopefully familiar with both the setting and characters, but it's easy to break immersion if the characters are not portrayed correctly.
+An established setting also gives some directions for which puzzles and events that might be encountered.
+
+So far in this tutorial we haven't actually touched on anything directly related to Inform.
+Perhaps the most striking (and talked about) feature of Inform is the choice of using natural language as a programming language.
+This has led to claims that Inform is not 'programmer friendly' because it isn't object-oriented, but is instead being based on predicate logic.
+While it's true that I7 isn't a classic object-oriented language, it still retains many of the features such as strong typing, properties and inheritance.
+Perhaps the biggest difference is that instead of methods we have rulebooks and phrases which are more static in design.
+In practice though this works rather well, as the pragma is built around modelling and manipulating a world state which is the premise of interactive fiction.
+The end result is code that is extremely readable and to a certain degree self documenting, leading to greater maintainability and understanding.
+
+Next up is a look at actually writing some code in Inform.
+
+Section 7.2 - Geography
+
+Upon starting Inform for the first time, you're prompted to create your first project by entering a title and author for your story as well as a place to store it.
+The title and author is used to create the title line of your new story, which is one half of Inform's absolute minimum for a story.
+Every story needs somewhere to take place and a player to experience it, Inform is happy to supply you with a default player but you need to define atleast one room.
+Thankfully, due to Inform's natural language syntax this is as simple as writing a declaration that something is a room, such as stating that 'Library is a room.'
+Unless informed otherwise, Inform assumes that the first room created is the starting location for the story.
+While this will compile (try copying the text over to your story, and press F5 to run), it makes for perhaps the most boring story ever written.
+The only description present is the title of the room, and while Inform has a built-in understanding of quite a few verbs, they won't do anything interesting.
+
+Before we start making the world more interesting, it's time to introduce some of the basic properties in Inform.
+We've actually already seen two of them in action despite only writing the single statement 'Library is a room.' 
+This statement creates the object name which we use to refer to the object in the source code, and is also used as the default value of the 'printed name' property which is printed to the player.
+By default Inform allows the author to use abbreviated object names, but can be forced to only accept fully qualified names through the 'Use unabbreviated object names' phrase.
+Going one step further, the object's name is also what the parser tries to match the player's input to.
+This can be altered in two ways; either by using the 'understand' phrase to assign synonyms for the player or by declaring the object to be privately-named to prevent the player from refering to it by object name.
+This latter purpose is an advanced effect mostly for objects that have complicated names that would otherwise confuse Inform.
+
+There are two other properties which are similar but different, and are very important: Description and initial appearance.
+Initial appearance is how the item is presented to the player during the story, and for a room this is actually the description.
+Similarly to declaring objects properties values are set by statements that simply state what they are, like 'The initial appearance of Library is "Seemingly endless rows of bookshelves fill the room."'
+Writing the initial appearance of a room is such a common occurence that Inform has a special syntax for it:
+Text enclosed in double-quotes just after the object declaration is interpreted as the initial appearance property.
+
+Writing good descriptions for the locations in a story is not an easy task, even trying to define what is a good description is tricky as not every location has the same requirements.
+A lot can be written about descriptions, and Stephen Granade has written an excellent article on the subject. (*)
+Long descriptions aren't necessarily better than short, it's usually better to focus on what you intend the story to tell the player and how to draw attention to the correct objects.
+It's also important to keep a consistent level of detail, or atleast only deviate from the default level with a conscious decision.
+Another issue to consider is that while Library's appearance implies the existence of bookshelves, the player can't interact with them in any way because they aren't defined in any way.
+Defining new things is once again as simple as stating where they are, anything that isn't given a kind is implied to be a thing.
+With this in mind we can create a slightly more interesting library (Click the icon to copy the text below into your story):
+
+*:
+	Library is a room. "Seemingly endless rows of bookshelves fill the room."
+	Some bookshelves are in Library.
+
+Testing this short story will show that we can indeed interact with the bookshelves, but there are two problems:
+Firstly, the bookshelves are also listed both in the room's appearance and indepentendly afterwards.
+Although we refered to the bookshelves in the appearance, we did so in a way that was only humanly readable, and Inform lists any unmentioned objects that are present in the room separately.
+In order to let Inform know that the object has been mentioned, we can use what's called text substitution:
+By making Inform print the name of the object that object will be flagged as mentioned so there's no need for a second mention.
+Text substitutions are made by writing the substitution inside square brackets inside the text string, and writing the object name will substitute in the printed name.
+I find it a good practice to write in these substitutions while writing the initial appearance of the room as a reminder to create the mentioned objects.
+
+The second problem is less immediately apparant, as all things are by default portable, the player can pick up the bookshelves.
+This is easily remedied by setting the already mentioned 'portable' property and it's opposite 'fixed in place', but there is another solution.
+For things that are intended to decorate a room, we have the aptly named 'scenery' which defaults to being fixed in place.
+More importantly though, a scenery is usually omitted from the listing of unmentioned things in a room and thus is an alternative solution to the duplicate mentions we discussed above.
+If we need a scenery to be in multiple places at once (such as the sky or the ground, or the vision of something far away) we can use backdrop instead of scenery.
+
+For all of what we've written so far we still only have the one room, albeit with some scenery.
+Unsurprisingly we can add new rooms in relation to existing rooms by stating where they are in relation, and because only rooms can be related to each other by directions we don't even have to state that they are room.
+By default Inform is aware of the eight cardinal directions, as well as up/down and inside/outside.
+Inform also assumes that directions are two-way, and automatically creates the reverse for you unless told otherwise.
+Creating twisting, secret or one-way passages is an advanced topic we're leaving for another time.
+
+(*) http://www.brasslantern.org/writers/iftheory/descriptions.html
+
+
+[Overview:
+Section 7.1 - Getting Started
+Section 7.2 - Geography
+Section - Storyfile Layout (Organizing Inform)
+Section - Testing
+Section - Items
+Section - Programming Inform
+Section - Chronology (Scenes)
+Section - Character Facades
+Section - Sex Scenes
+Section - Actions, Continued
+Section - Character Depth
+Section - Mechanics
+Section - Multiple Partners (Orgies)]
 
 Chapter 8 - Technical Reference
 
