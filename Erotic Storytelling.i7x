@@ -1,4 +1,4 @@
-Version 1/161013 of Erotic Storytelling by Fictitious Frode begins here.
+Version 1/161025 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF). Includes erotic actions, components and mechanics for layered clothing with distinct body parts, as well as consent system for actions involving others. 
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for npc agency.
 
@@ -270,15 +270,30 @@ Chapter 1.2.0a - Startup Procedures
 
 Section - Info/Warning Screen
 
-The adult introduction rule is listed before the when play begins stage rule in the startup rulebook.
+The adult introduction rule is listed before the start in the correct scenes rule in the startup rulebook.
 This is the adult introduction rule:
-	Say "[bold type]WARNING[roman type]: This is a game of [bold type]Adult[roman type] Interactive Fiction. It contains scenes and imagery of an explicit sexual nature intended for a mature audience. If you are underaged, easily offended or not interested in this kind of material, [bold type]please quit now[roman type].[paragraph break]";
-	[TODO: List the contents of the game, based on the limits defined, such as:
-	The content is purely heterosexual in nature, but can include imagery of fetishism.]
+	Say "[bold type]WARNING[roman type][paragraph break]";
+	Say "This is a game of [bold type]Adult[roman type] Interactive Fiction. It contains scenes and imagery of an explicit sexual nature intended for a mature audience. If you are underaged, easily offended or not interested in this kind of material, [bold type]please quit now[roman type].[paragraph break]";
 	Say "(-more-)[paragraph break]";
 	Wait for any key;
-	Say "The story makes use of concepts and actions related to the adult nature of the story in addition to the usual Interactive Fiction commands.[paragraph break]";
-	Say "Type '[bold type]HELP[roman type]' to access the built-in help system for more on how to use clothing, body parts and erotic actions.";
+	Let contents be the list of story contents;
+	If contents is not empty:
+		Let repeating be true;
+		Let optional be the list of optional story contents;
+		While repeating is true:
+			Display story contents;
+			If optional is not empty:
+				Say "Would you like to modify which of the optional content types to experience? (Y/N)";
+				If player consents:
+					Say paragraph break;
+					Verify story contents;
+				Else:
+					Now repeating is false;
+					Say paragraph break;
+			Else:
+				Now repeating is false;
+	Say "The story makes use of concepts and actions related to the adult nature of the story in addition to the usual Interactive Fiction commands.";
+	Say "Type '[bold type]HELP[roman type]' to access the built-in help system for details on how the erotic actions, cloth and body parts functions.[paragraph break]";
 	Say "(-more-)[paragraph break]";
 	Wait for any key;
 	Clear the screen;
@@ -1818,11 +1833,24 @@ Chapter 2.3.3a - Asking
 
 Chapter 2.3.3b - Telling
 
-
-
 Book 2.4 - Posturing
 
-[TODO]
+[Status: TODO]
+
+Part 2.4.1 - Concepts
+
+Chapter 2.4.1a - Postures
+
+[TODO: This should probably be defined with a table.
+A posture is a kind of value. 
+The postures are standing, sitting, kneeling, bending, prone and supine.
+A person has a posture.]
+
+Chapter 2.4.1b - Checking for Postures
+
+Part 2.4.2 - Action Integration
+
+Part 2.4.3 - Changing Postures
 
 Volume 3 - Erotic Actions
 
@@ -1872,6 +1900,12 @@ A consent rule (this is the default consent rule):
 			Say the uninterested response of P;
 [			Say "[The P] [aren't] consenting to that ([current action])." (C);]
 			Deny consent;
+	Else if the noun is a garment worn by someone (called P):
+		If P is not the player:
+			Say the uninterested response of P;
+[			Say "[The P] [aren't] consenting to that ([current action])." (C);]
+			Deny consent;
+	Give consent;
 
 Part 3.1.3 - Properties
 
@@ -2827,8 +2861,9 @@ The specification of the dancing action is "Dancing with is the act of dancing w
 
 Chapter 3.3.3a - Understanding
 
-Understand "dance" as dancing.
 Understand "dance with [something]" as dancing.
+Understand "dance" as dancing.
+Understand "dance for me" as dancing.
 
 Does the player mean dancing a person: It is likely.
 Does the player mean dancing the player: It is very unlikely.
@@ -3166,57 +3201,125 @@ Chapter 4.1.1d - Person
 
 [TODO]
 
-Book 4.2 - Menu Based Systems
 
-Part 4.2.1 - Content Limits
+Book 4.2 - Story Contents
 
-[Status: TODO/Not implemented]
+[Status: TODO/In development
+A system for the story author to announce to the player which types of content the story contains, with the possibility of some types being optional based on the player's preferences.]
 
-Part 4.2.2 - Help and Hint
+Part 4.2.1 - Concepts
 
-[Status: TODO/Not implemented]
+[Status: Complete
+This part deals with the concepts of story contents and their properties.]
 
-Part 4.2.3 - Default Help Topics
+Chapter 4.2.1a - Types
+
+A story content is a kind.
+A story content has some text called the description.
+A story content can be enabled or disabled. [Controls if the content type is currently enabled for the story.]
+A story content can be mandatory or optional. [Controls if the content type can be toggled by the player.]
+
+Chapter 4.2.1b - Inferences
+
+A story content is usually enabled.
+A story content is usually mandatory.
+A disabled story content is usually optional.
+
+Part 4.2.2 - Manipulation
+
+[Status: In development
+This part deals with the player's interaction of the story contents, including viewing which content is included and toggling anything that's optional.]
+
+Chapter 4.2.2a - Displaying Contents
+
+[List out the contents included in the story, categorized by mandatory/optional]
+To display story contents:
+	Let contents be the list of story contents;
+	If contents is not empty:
+		Let mandatory be the list of mandatory enabled story contents;
+		Let options be the list of optional story contents;
+		Say "This story includes the following types of content:[paragraph break]";
+		If mandatory is not empty:
+			Say "[bold type]Mandatory[roman type]:[line break]";
+			Let size be the number of entries in mandatory;
+			Let counter be 0;
+			Repeat with content running through mandatory:
+				Increase counter by 1;
+				Say "[fixed letter spacing](*) [roman type][content]";
+				If size is counter, say paragraph break;
+				Else say line break;
+		If options is not empty:
+			Say "[bold type]Optional[roman type]:[line break]";
+			Let size be the number of entries in options;
+			Let counter be 0;
+			Repeat with content running through options:
+				Increase counter by 1;
+				Say "[fixed letter spacing][if content is enabled](*)[else]( )[end if] [roman type][content]";
+				If size is counter, say paragraph break;
+				Else say line break;
+
+Chapter 4.2.2b - Verifying Contents
+
+[Give the player the opportunity to verify which optional content types they want to experience]
+To verify story contents:
+	Let options be the list of optional story contents;
+	If options is not empty:
+		Say "Please make a choice on which of the following optional content types you would like to experience:";
+		Say paragraph break;
+		Repeat with content running through options:
+			Say "Would you like to experience [content] (currently [if content is enabled]enabled[else]disabled[end if])?[run paragraph on]";
+			If the description of content is not the default value of text:
+				Say paragraph break;
+				Say description of content;
+			Say line break;
+			Say "(Y/N)";
+			If player consents:
+				Now content is enabled;
+			Else:
+				Now content is disabled;
+	Else:
+		Say "There is no optional content to choose from in this story.";
+		Say paragraph break;
+
+
+Book 4.3 - Help System
 
 [Status: TODO
 We want to provide help topics for Basic IF, Adult IF, Clothing, Body Parts]
 
-Book 4.3 - Commentary System
+Book 4.4 - Commentary System
 
-Part 4.3.1 - Inspirational Amusement
+Part 4.4.1 - Inspirational Amusement
 
 [Status: TODO/Not implemented
-Amuse the victorious player by revealing the inspiration.]
+We create a method for entering amusing anectdotes that can be displayed to a victorious player.
+This is inspired by Example 383: Jamaica 1688.]
 
-Chapter 4.3.1a - Final Question Option
+Chapter 4.4.1a - Final Question Option
 
 [Add the revealing option to the final question options]
 
 Table of Final Question Options (continued)
 final question wording	only if victorious	topic	final response rule	final response activity
- "REVEAL the inspiration for something or somewhere"	true	"reveal [any thing]"	reveal inspiration for something rule	--
- --	true	"reveal [any room]"	reveal inspiration for something rule	--
+"REVEAL the inspiration for something or somewhere"	true	"reveal [any person]"	reveal inspiration for something rule	--
+--	true	"reveal [any room]"	reveal inspiration for something rule	--
 
-Chapter 4.3.1b - Reveal Inspiration
-
-[We use a table-based approach as taken from Example 383: Jamaica 1688
-TODO: Move this to an attribute based approach instead?]
+Chapter 4.4.1b - Revealing Inspiration
 
 This is the reveal inspiration for something rule: 
-	repeat through the Table of Inspirations:
-		if the player's command matches the topic entry: 
-			say "[revelation entry][paragraph break]"; 
-			rule succeeds; 
-	say "I'm afraid I have no revelation to vouchsafe there." 
+	Repeat through the Table of Inspirations:
+		If the player's command matches the topic entry: 
+			Say "[revelation entry][paragraph break]"; 
+			Rule succeeds; 
+	Say "There is no recored inspiration to reveal for that.";
 
 Table of Inspirations
 topic (a topic)	revelation (some text)
 --	--
-[TODO: Incorporate this into the documentation so we can remove it from here.
-"reveal [Lucius]"	"Lucius is based on a historical buccaneer who sailed with William Dampier. The original did carry a Greek New Testament, from which he read aloud when the men were stranded in the jungles near Panama."
+["reveal [Lucius]"	"Lucius is based on a historical buccaneer who sailed with William Dampier. The original did carry a Greek New Testament, from which he read aloud when the men were stranded in the jungles near Panama."
 "reveal [Upper Deck]"	"The Callisto is a simplified and tidied representation of a pirate sloop ca. 1688."]
 
-Book 4.4 - Completion Tracking
+Book 4.5 - Completion Tracking
 
 [Status: TODO/Not implemented]
 	
@@ -3371,7 +3474,7 @@ The specification of bra is "Bras are usually indecent underwear, and go on the 
 A bra is usually underwear.
 The cloth decency of a bra is usually indecent.
 A bra is usually allow touching through.
-The cover areas of a pair of panties is usually {upper torso area, upper back area}.
+The cover areas of a bra is usually {upper torso area, upper back area}.
 
 An undershirt is a kind of garment.
 The indefinite article is usually "an".
@@ -3424,7 +3527,7 @@ A pair of stockings is usually normalwear.
 The cloth decency of a pair of stockings is usually formal.
 A pair of stockings is usually allow touching through.
 The cover areas of a pair of stockings is usually {feet area, leg area, thigh area}.
-A pair of panties is usually rippable. The ripping revealed cover areas of a pair of panties is usually {thigh area}.
+A pair of stockings is usually rippable. The ripping revealed cover areas of a pair of stockings is usually {thigh area}.
 
 A pair of pantyhose is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of pantyhose is pairs of pantyhose.
@@ -3632,15 +3735,6 @@ Consent is given if the actors have each other as love-interests, and the curren
 Stimulation is similarly handled, being increased one level up to the cap for the group. For body parts, the higher of the person's and the body part's cap is used. There are two caps for each group, one for being the active participant and one for being the passive.
 
 Additionally, there's a check to see if the two actors want to interact with each other, which is used as a default deny rule.]
-
-[DEPRECATED: We can avoid these seperate rulebooks by stashing the rules last, so the default rule will be processed before them.
-We also create a seperate rulebook to pack the default rules into, that we only want called explicitly.
-The default-consent rules is a rulebook.
-The default-consent rules have outcomes give consent (success - the default) and deny consent (failure).
-We also create a seperate rulebook to pack the default rules into, that we only want called explicitly.
-The default-stimulation rules is a rulebook.
-The default-stimulation rules have outcomes stimulated (success - the default) and unstimulated (failure).
-]
 
 Chapter 5.2.2a - General Requirements
 
@@ -4248,8 +4342,6 @@ The oral-play recipient limit of a vagina is usually orgasmic.
 [No Change: The fuck-play threshold of a vagina is usually very aroused.]
 The fuck-play performer limit of a vagina is usually orgasmic.
 The fuck-play recipient limit of a vagina is usually orgasmic.
-
-
 
 Erotic Storytelling ends here.
 
