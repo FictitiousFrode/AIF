@@ -1,8 +1,6 @@
-Version 1/161025 of Erotic Storytelling by Fictitious Frode begins here.
-"An extension focused on writing Adult Interactive Fiction (AIF). Includes erotic actions, components and mechanics for layered clothing with distinct body parts, as well as consent system for actions involving others. 
-Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for npc agency.
-
-Future plans include conversation and posturing, as well as out-of-game features such as content limits, completion tracking and hints."
+Version 1/161203 of Erotic Storytelling by Fictitious Frode begins here.
+"An extension focused on writing Adult Interactive Fiction (AIF) providing a framework for layered clothing with body parts, erotic actions with a consent system for actions involving others. 
+Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for NPC agency and optional story contents."
 
 Use MAX_STATIC_DATA of 300000.
 Include Basic Screen Effects by Emily Short.
@@ -326,14 +324,31 @@ To decide which decency is the base decency of (P - a body part):
 Section - Person
 
 To update decency for (P - a person):
+[	Say "DEBUG: Calculating for [P] - [current decency of P]:[line break]";]
 	Now the current decency of P is undefined decency;
 	Repeat with area running through the body areas of P:
-		Let considered be undefined decency;
-		Repeat with G running through the garments worn by P:
-			If G is visible and G is opaque and area is listed in the body areas of P:
-				Let considered be the cloth decency of G;
-		If considered is undefined decency, let considered be the decency of area;
+		Let considered be the exposed by area on P;
+[DEBUG		Say "[Area] - [considered][line break]";]
 		If considered is less than the current decency of P, now the current decency of P is considered;
+
+	
+[OLD CODE: This bugs out on  the check for whether G is visible; the new code is safer and cleaner
+To update decency for (P - a person):
+	Say "DEBUG: Calculating for [P] - [current decency of P]:[line break]";
+	Now the current decency of P is undefined decency;
+	Let clothing be the list of garments worn by P;
+	Repeat with area running through the body areas of P:
+		Say "For [area]: ";
+		Let considered be undefined decency;
+		Repeat with G running through clothing:
+			If area is listed in modified cover areas of G and cloth decency of G is less than considered and G is visible:
+				Let considered be the cloth decency of G;
+				Say "[G] ([cloth decency of G]) ";
+		If considered is undefined decency:
+			Say "No clothing, going by base - [decency of area]";
+			Let considered be the decency of area;
+		If considered is less than the current decency of P, now the current decency of P is considered;
+		Say line break;]
 
 Chapter 1.2.1b - Privacy
 
@@ -700,7 +715,6 @@ To decide whether (G - a garment) can be ripped:
 				If A is listed in the blocked cover areas of cloth, decide no;
 	Decide yes;
 
-
 To decide which list of garments is preventing ripping of (G - a garment):
 	Let preventers be a list of garments;
 	If G is not worn by someone:
@@ -848,7 +862,6 @@ Chapter 1.3.1a - Check
 Check an actor wearing something (This is the check wearing garments rule):
 	If the noun is a garment (called G):
 		[Check that G and the person have atleast one area of overlap]
-		Let intersect be a list of cover areas;
 		Let areas be the cover areas of G;
 		Let matches be 0;
 		Repeat with A running through areas:
@@ -949,7 +962,8 @@ Check an actor taking off something (This is the taking off garments requires co
 
 Chapter 1.3.2b - Carry Out
 
-The modified taking off rule substitutes for the standard taking off rule.
+The standard taking off rule is not listed in any rulebook.
+[The modified taking off rule substitutes for the standard taking off rule.]
 Carry out an actor taking off (this is the modified taking off rule):
 	Let wearer be the holder of the noun;
 	Now the actor carries the noun;
@@ -975,7 +989,8 @@ See also the consent and arousal sections.]
 
 Chapter 1.3.3a - Removing Existing Blocks
 
-The revised can't remove from people rule substitutes for the can't remove from people rule.
+The can't remove from people rule is not listed in any rulebook.
+[The revised can't remove from people rule substitutes for the can't remove from people rule.]
 Check an actor removing something from (this is the revised can't remove from people rule):
 	Let the owner be the holder of the noun;
 	If the owner is a person:
@@ -985,7 +1000,8 @@ Check an actor removing something from (this is the revised can't remove from pe
 			Say "[regarding the noun][Those] [seem] to belong to [the owner]." (A);
 		Stop the action.
 
-The revised can't take people's possessions rule substitutes for the can't take people's possessions rule.
+The can't take people's possessions rule is not listed in any rulebook.
+[The revised can't take people's possessions rule substitutes for the can't take people's possessions rule.]
 Check an actor taking (this is the revised can't take people's possessions rule):
 	Unless the noun is a garment and the noun is worn by someone:
 		Let the local ceiling be the common ancestor of the actor with the noun;
@@ -3631,8 +3647,8 @@ A pair of shoes is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of shoes is pairs of shoes.
 The specification of pair of shoes is "Shoes are formal outerwear worn on the feet."
 A pair of shoes is usually outerwear.
-The cloth decency of pair of shorts is usually formal.
-The cover areas of a pair of glasses is usually {feet area}.
+The cloth decency of pair of shoes is usually formal.
+The cover areas of a pair of shoes is usually {feet area}.
 
 A pair of boots is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of boots is pairs of boots.
@@ -3640,7 +3656,7 @@ The specification of pair of boots is "Boots are formal outerwear like shoes, bu
 Note; take care to use boots with dresses, as they technically go on the outside of a long dress."
 A pair of boots is usually outerwear.
 The cloth decency of pair of boots is usually formal.
-The cover areas of a pair of glasses is usually {feet area, leg area}.
+The cover areas of a pair of boots is usually {feet area, leg area}.
 
 A hat is a kind of garment.
 The indefinite article is usually "a".
@@ -5195,15 +5211,16 @@ Below is a short example of how content types can be used:
 	Some security monitors is backdrop in Security Office.
 	The description is "You scan over the familiar images of people going about their business in the privacy of their hotel rooms[if Voyeurism is enabled], catching a glimpse of a couple engaged in some early-afternoon sex[else]."
 
-
+	test me with "x monitors".
 
 
 
 Chapter 7 - Expanded Tutorial
 
 A complete tutorial on using Inform 7 to write AIF games is a rather ambitious project.
-There are several good tutorials available for writing in I7, and the bundled "Writing with Inform" is a good starting point.
-However the only tutorials that deal with both AIF and I7 have become rather aged, and it's good form for an extension such as this to showcase how it might be used in practice.
+There are several good tutorials available for writing in I7, and the bundled 'Writing with Inform' documentation is a good starting point.
+However the only tutorials that deal with both AIF and I7 have become rather aged and don't take full advantage of recent advances.
+It's also good form for an extension such as this to showcase how it might be used in practice.
 But first, some pointers to other readings on I7 that are worthwhile:
 
 Ron Newcomb has a guide at http://www.plover.net/~pscion/inform7.html that explains I7 from a tradional programmer's perspective.
@@ -5215,7 +5232,7 @@ It's not yet updataded for the very last version of I7 but it should be current 
 
 Inside Erin was a magazine dedicated to AIF, and in it's time contained several articles on the topic of writing AIF.
 The Inside Erin newsletter at http://newsletter.aifcommunity.org/index.php?id=writing.html contains a topical overview of these articles.
-It's highly suggested to read through the generic articles, the I7 tutorials are outdated on the technical topics but are still worth reading.
+It's highly suggested to read through the generic articles; the I7 tutorials are outdated on the technical topics but are still worth reading.
 
 Brass Lantern has several articles available http://www.brasslantern.org/writers/ which deal with both general IF-theory, game design and some Inform tutorials.
 
@@ -5226,6 +5243,11 @@ Section 7.1 - Getting Started
 The first part of writing a new story is coming up with something to write about.
 Inspirations for stories come from multiple sources; you might have an idea of an intriguing character to explore, or a physical location or setting to (literally) explore.
 
+A good source of inspiration for settings is writing fan-fiction stories for established fandom.
+There is a well established precedent for this, the AIF community has a long and proud history of fan-fiction, evolving out of a newsgroup devoted to adult Star Trek fan-fiction.
+This approach has some advantages in that the player is hopefully familiar with both the setting and characters, but it's easy to break immersion if the characters are not portrayed correctly.
+An established setting also gives some directions for which puzzles and events that might be encountered.
+
 Perhaps the most important thing to note here is that over-ambition is the real project-killer: 
 Don't start with a concept you can't finish.
 For your first story you should try to keep it small, especially in the amount of characters the player should be allowed to interact with.
@@ -5234,12 +5256,10 @@ A good guideline is the rules for the mini-comp which limits the story to one in
 Another large project killer is scope-creep; during writing one often finds inspiration for other concepts that can fit in.
 It's often better write down these ideas in a separate document, it might be better to let these grow into their own story or incorporate into another story.
 Similarly an idea that doesn't work out as a story on it's own might still be usable in another story.
-In order to maximize re-use it might be best to focus on descriptions of people and locaions rather than implementations of mechanics.
-
-A good source of inspiration for settings is writing fan-fiction stories for established fandom.
-There is a well established precedent for this, the AIF community has a long and proud history of fan-fiction, evolving out of a newsgroup devoted to adult Star Trek fan-fiction.
-This approach has some advantages in that the player is hopefully familiar with both the setting and characters, but it's easy to break immersion if the characters are not portrayed correctly.
-An established setting also gives some directions for which puzzles and events that might be encountered.
+It' best to initially focus on descriptions of people and locations rather than implementations of mechanics, as these can be re-used in other settings and engines more easily.
+It's good to get into the habit of spending a little time each day just writing short descriptions that you find relevant to the story.
+Two or three sentences are enough for most responses, more text might actually be a hindrance for the player.
+Save the long steamy descriptions for what's important in your story, which for the most part will be the sex scenes.
 
 So far in this tutorial we haven't actually touched on anything directly related to Inform.
 Perhaps the most striking (and talked about) feature of Inform is the choice of using natural language as a programming language.
@@ -5249,7 +5269,7 @@ Perhaps the biggest difference is that instead of methods we have rulebooks and 
 In practice though this works rather well, as the pragma is built around modelling and manipulating a world state which is the premise of interactive fiction.
 The end result is code that is extremely readable and to a certain degree self documenting, leading to greater maintainability and understanding.
 
-Next up is a look at actually writing some code in Inform.
+We'll come back to the more technical aspects of Inform later on, but next up is a look at actually writing some code in Inform.
 
 Section 7.2 - Geography
 
