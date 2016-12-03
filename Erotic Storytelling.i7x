@@ -324,14 +324,31 @@ To decide which decency is the base decency of (P - a body part):
 Section - Person
 
 To update decency for (P - a person):
+[	Say "DEBUG: Calculating for [P] - [current decency of P]:[line break]";]
 	Now the current decency of P is undefined decency;
 	Repeat with area running through the body areas of P:
-		Let considered be undefined decency;
-		Repeat with G running through the garments worn by P:
-			If G is visible and G is opaque and area is listed in the body areas of P:
-				Let considered be the cloth decency of G;
-		If considered is undefined decency, let considered be the decency of area;
+		Let considered be the exposed by area on P;
+[DEBUG		Say "[Area] - [considered][line break]";]
 		If considered is less than the current decency of P, now the current decency of P is considered;
+
+	
+[OLD CODE: This bugs out on  the check for whether G is visible; the new code is safer and cleaner
+To update decency for (P - a person):
+	Say "DEBUG: Calculating for [P] - [current decency of P]:[line break]";
+	Now the current decency of P is undefined decency;
+	Let clothing be the list of garments worn by P;
+	Repeat with area running through the body areas of P:
+		Say "For [area]: ";
+		Let considered be undefined decency;
+		Repeat with G running through clothing:
+			If area is listed in modified cover areas of G and cloth decency of G is less than considered and G is visible:
+				Let considered be the cloth decency of G;
+				Say "[G] ([cloth decency of G]) ";
+		If considered is undefined decency:
+			Say "No clothing, going by base - [decency of area]";
+			Let considered be the decency of area;
+		If considered is less than the current decency of P, now the current decency of P is considered;
+		Say line break;]
 
 Chapter 1.2.1b - Privacy
 
@@ -698,7 +715,6 @@ To decide whether (G - a garment) can be ripped:
 				If A is listed in the blocked cover areas of cloth, decide no;
 	Decide yes;
 
-
 To decide which list of garments is preventing ripping of (G - a garment):
 	Let preventers be a list of garments;
 	If G is not worn by someone:
@@ -946,7 +962,8 @@ Check an actor taking off something (This is the taking off garments requires co
 
 Chapter 1.3.2b - Carry Out
 
-The modified taking off rule substitutes for the standard taking off rule.
+The standard taking off rule is not listed in any rulebook.
+[The modified taking off rule substitutes for the standard taking off rule.]
 Carry out an actor taking off (this is the modified taking off rule):
 	Let wearer be the holder of the noun;
 	Now the actor carries the noun;
@@ -972,7 +989,8 @@ See also the consent and arousal sections.]
 
 Chapter 1.3.3a - Removing Existing Blocks
 
-The revised can't remove from people rule substitutes for the can't remove from people rule.
+The can't remove from people rule is not listed in any rulebook.
+[The revised can't remove from people rule substitutes for the can't remove from people rule.]
 Check an actor removing something from (this is the revised can't remove from people rule):
 	Let the owner be the holder of the noun;
 	If the owner is a person:
@@ -982,7 +1000,8 @@ Check an actor removing something from (this is the revised can't remove from pe
 			Say "[regarding the noun][Those] [seem] to belong to [the owner]." (A);
 		Stop the action.
 
-The revised can't take people's possessions rule substitutes for the can't take people's possessions rule.
+The can't take people's possessions rule is not listed in any rulebook.
+[The revised can't take people's possessions rule substitutes for the can't take people's possessions rule.]
 Check an actor taking (this is the revised can't take people's possessions rule):
 	Unless the noun is a garment and the noun is worn by someone:
 		Let the local ceiling be the common ancestor of the actor with the noun;
