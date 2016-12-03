@@ -1,4 +1,4 @@
-Version 1/161129 of Erotic Storytelling by Fictitious Frode begins here.
+Version 1/161203 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF) providing a framework for layered clothing with body parts, erotic actions with a consent system for actions involving others. 
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for NPC agency and optional story contents."
 
@@ -846,7 +846,6 @@ Chapter 1.3.1a - Check
 Check an actor wearing something (This is the check wearing garments rule):
 	If the noun is a garment (called G):
 		[Check that G and the person have atleast one area of overlap]
-		Let intersect be a list of cover areas;
 		Let areas be the cover areas of G;
 		Let matches be 0;
 		Repeat with A running through areas:
@@ -3629,8 +3628,8 @@ A pair of shoes is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of shoes is pairs of shoes.
 The specification of pair of shoes is "Shoes are formal outerwear worn on the feet."
 A pair of shoes is usually outerwear.
-The cloth decency of pair of shorts is usually formal.
-The cover areas of a pair of glasses is usually {feet area}.
+The cloth decency of pair of shoes is usually formal.
+The cover areas of a pair of shoes is usually {feet area}.
 
 A pair of boots is a kind of garment.
 They are usually plural-named. The indefinite article is usually "a". The plural of boots is pairs of boots.
@@ -3638,7 +3637,7 @@ The specification of pair of boots is "Boots are formal outerwear like shoes, bu
 Note; take care to use boots with dresses, as they technically go on the outside of a long dress."
 A pair of boots is usually outerwear.
 The cloth decency of pair of boots is usually formal.
-The cover areas of a pair of glasses is usually {feet area, leg area}.
+The cover areas of a pair of boots is usually {feet area, leg area}.
 
 A hat is a kind of garment.
 The indefinite article is usually "a".
