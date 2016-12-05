@@ -1,57 +1,59 @@
 "Story" by Author
 
-The story headline is "title".
+Volume 0 - Setup
+
+Use American dialect, full-length room descriptions, and the serial comma.
+Use unabbreviated object names.
+
+Include Directionality by Fictitious Frode.
+Include Erotic Storytelling by Fictitious Frode.
+
+Book 0.1 - Titlepage
+
+Part 0.1.1 - Metadata
+
+The story headline is "Byline".
 The story genre is "Erotica".
 The release number is 0.
 The story description is "Short introduction." 
 The story creation year is 2016.
 
-Volume 0 - Setup
+Part 0.1.2 - Contents
 
-Book 0.1 - Dramatis Personae
+[Heterosexuality is a story content.
+Bondage is a disabled story content.]
+
+Part 0.1.3 - Dramatis Personae
 
 [Create the persons of the story here]
 
-Book 0.2 - Defaults
+Part 0.2 - Declarations
 
-Use American dialect, full-length room descriptions, and the serial comma.
-
-Use unabbreviated object names.
-
-Book 0.3 - Imports
-
-Include Directionality by Fictitious Frode.
-Include Erotic Storytelling by Fictitious Frode.
-
-Include Basic Screen Effects by Emily Short.
-
-Part 0.4 - Declarations
-
-Book 0.4.1 - Body Part Creation
+Book 0.2.1 - Body Part Creation
 
 A head is a part of every person. Understand "face" as head.
 A mouth is a part of every person.
-A pair of eyes is a part of every person.
+Some eyes is a part of every person.
 Some hair is a part of every person.
-A pair of feet is a part of every person.
-A pair of legs is a part of every person. Understand "thighs" as pair of legs.
-A pair of hands is a part of every person. Understand "arms" as pair of hands.
+Some feet is a part of every person.
+Some legs is a part of every person. Understand "thighs" as legs.
+Some hands is a part of every person. Understand "arms" as hands.
 An ass is a part of every person.
 
 A vagina is a part of every woman.
-A pair of breasts is a part of every woman.
+Some breasts is a part of every woman.
 
 A chest is a part of every man.
 A penis is a part of every man.
 
-Book 0.4.2 - Properties
+Book 0.2.2 - Properties
 
 A body part can be spermed. A body part is usually not spermed.
 A person can be proper-named. A person is usually not proper-named.
 
-Book 0.5 - A Helping Hand
+Book 0.3 - A Helping Hand
 
-Book 0.5.1 - Text
+Book 0.3.1 - Text
 
 To say break: say line break.
 To say nobreak: say run paragraph on;
@@ -61,13 +63,13 @@ To say /i -- ending say_i -- running on: (- style roman; -).
 To say b -- beginning say_b -- running on: (- style bold; -). 
 To say /b -- ending say_b -- running on: (- style roman; -). 
 
-Book 0.5.2 - Movement
+Book 0.3.2 - Movement
 
 [Make exit mean go outside.]
 Instead of exiting when the player is not in something:
 	Try going outside instead;
 	
-Book 0.5.3 - Math
+Book 0.3.3 - Math
 
 To decide if (X - A number) is between (low - a number) and (high - a number):
 	if X >= low and X <= high, decide yes;
@@ -129,16 +131,16 @@ Chapter 1.3.1b - Body Parts
 
 The short description of your head is "".
 The short description of your mouth is "".
-The short description of your pair of eyes is "".
+The short description of your eyes is "".
 The short description of your hair is "".
-The short description of your pair of feet is "".
-The short description of your pair of legs is "".
-The short description of your pair of hands is "".
+The short description of your feet is "".
+The short description of your legs is "".
+The short description of your hands is "".
 The short description of your ass is "".
 
 [If female:
 The short description of your vagina is "".
-The short description of your pair of breasts is "".]
+The short description of your breasts is "".]
 
 [If male:
 The short description of your chest is "".

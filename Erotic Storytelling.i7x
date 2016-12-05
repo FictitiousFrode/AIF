@@ -3017,15 +3017,15 @@ The specification of the titfucking action is "Titfucking is a helper action tha
 Chapter 3.4.3a - Understanding
 
 Understand "titfuck [something]" as titfucking.
-Does the player mean titfucking a person: It is likely.
-Does the player mean titfucking a pair of breasts: It is likely.
+Does the player mean titfucking a person enclosing some breasts: It is likely.
+Does the player mean titfucking some breasts: It is likely.
 
 Chapter 3.4.3b - Redirecting
 
 Check an actor titfucking (This is the titfucking redirect rule):
-	If the noun is a a pair of breasts:
+	If the noun is a some breasts:
 		Try the actor fucking the noun instead;
-	Else if the noun is a person enclosing a pair of breasts (called B):
+	Else if the noun is a person enclosing some breasts (called B):
 		Try the actor fucking the B instead;
 	If the actor is the player:
 		Say "[We] [can't] find a way to do that." (A);
@@ -3354,8 +3354,7 @@ The indefinite article is usually "a".
 The cover locations of a head is usually {the head area}.
 
 Some hair is a kind of body part.
-The indefinite article is usually "some".
-It is ambiguously plural.
+It is usually ambiguously plural. The indefinite article is usually "some".
 The cover locations of hair is usually {the head area}.
 
 A face is a kind of body part.
@@ -3367,48 +3366,48 @@ The indefinite article is usually "a".
 The cover locations of mouth is usually {the face area}.
 Understand "lip", "lips" as mouth.
 
-A pair of eyes is a kind of body part.
-They are usually plural-named. The indefinite article is usually "a". The plural of pair of eyes is pairs of eyes.
-The cover locations of pair of eyes is usually {the face area}.
+Some eyes is a kind of body part.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some eyes is pairs of eyes.
+The cover locations of some eyes is usually {the face area}.
 
 Chapter 5.1.1b - Limbs
 
 Section - Legs
 
-A pair of thighs is a kind of body part.
-They are usually plural-named. The indefinite article is usually "a". The plural of pair of thighs is pairs of thighs.
-The cover locations of a pair of thighs is usually {the thigh area}. 
-A pair of thighs is usually touchable. A pair of thighs is usually rubbable.
+Some thighs is a kind of body part.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some thighs is pairs of thighs.
+The cover locations of some thighs is usually {the thigh area}. 
+Some thighs is usually touchable. Some thighs is usually rubbable.
 
-A pair of legs is a kind of body part.
-They are usually plural-named. The indefinite article is usually "a". The plural of pair of legs is pairs of legs.
-The cover locations of a pair of legs is usually {the leg area}.
-A pair of legs is usually touchable. A pair of legs is usually rubbable.
+Some legs is a kind of body part.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some legs is pairs of legs.
+The cover locations of some legs is usually {the leg area}.
+Some legs is usually touchable. Some legs is usually rubbable.
 
-A pair of ankles is a kind of body part.
-They are usually plural-named. The indefinite article is usually "a". The plural of pair of ankles is pairs of ankles.
-The cover locations of a pair of ankles is usually {the feet area, the leg area}.
+Some ankles is a kind of body part.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some ankles is pairs of ankles.
+The cover locations of some ankles is usually {the feet area, the leg area}.
 
-A pair of feet is a kind of body part.
-They are usually plural-named. The indefinite article is usually "a". The plural of pair of feet is pairs of feet.
-The cover locations of a pair of feet is usually {the feet area}.
-A pair of feet is usually touchable. A pair of feet is usually rubbable. A pair of feet is usually tickleable. A pair of feet is usually lickable. A pair of feet is usually biteable.
+Some feet is a kind of body part.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some feet is pairs of feet.
+The cover locations of some feet is usually {the feet area}.
+Some feet is usually touchable. Some feet is usually rubbable. Some feet is usually tickleable. Some feet is usually lickable. Some feet is usually biteable.
 
 Section - Arms
 
-A pair of arms is a kind of body part.
-They are usually plural-named. The indefinite article is usually "a". The plural of pair of arms is pairs of arms.
-The cover locations of a pair of arms is usually {the arm area}.
-A pair of arms is usually touchable. A pair of arms is usually rubbable.
+Some arms is a kind of body part.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some arms is pairs of arms.
+The cover locations of some arms is usually {the arm area}.
+Some arms is usually touchable. Some arms is usually rubbable.
 
-A pair of wrists is a kind of body part.
-They are usually plural-named. The indefinite article is usually "a". The plural of pair of wrists is pairs of wrists.
-The cover locations of a pair of wrists is usually {the hand area, the arm area}.
+Some wrists is a kind of body part.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some wrists is pairs of wrists.
+The cover locations of some wrists is usually {the hand area, the arm area}.
 
-A pair of hands is a kind of body part.
-The cover locations of a pair of arms is usually {the hand area}.
-They are usually plural-named. The indefinite article is usually "a". The plural of pair of hands is pairs of hands.
-A pair of hands is usually touchable. A pair of hands is usually rubbable.
+Some hands is a kind of body part.
+The cover locations of some hands is usually {the hand area}.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some hands is pairs of hands.
+Some hands is usually touchable. Some hands is usually rubbable.
 
 Chapter 5.1.1c - Torso
 
@@ -3417,21 +3416,21 @@ The indefinite article is usually "a".
 The cover locations of a neck is usually {the shoulder area}.
 A neck is usually lickable. A neck is usually biteable.
 
-A pair of shoulders is a kind of body part.
-They are usually plural-named. The indefinite article is usually "a". The plural of pair of shoulders is pairs of shoulders.
-The cover locations of a pair of shoulders is usually {the shoulder area}.
-A pair of shoulders is usually rubbable. 
+Some shoulders is a kind of body part.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some shoulders is pairs of shoulders.
+The cover locations of some shoulders is usually {the shoulder area}.
+Some shoulders is usually rubbable. 
 
 A chest is a kind of body part.
 The indefinite article is usually "a".
 The cover locations of a chest is usually {the upper torso area}.
 A chest is usually touchable. A chest is usually rubbable. A chest is usually tickleable. A chest is usually lickable. A chest is usually biteable.
 
-A pair of breasts is a kind of body part.
-They are usually plural-named. The indefinite article is usually "a". The plural of pair of breasts is pairs of breasts. 
-The cover locations of a pair of breasts is usually {the upper torso area}. 
-Understand "tit", "tits", "breast", "boob", "boobs", "tittie", "titties" and "juggs" as a pair of breasts.
-A pair of breasts is usually touchable. A pair of breasts is usually rubbable. A pair of breasts is usually tickleable. A pair of breasts is usually lickable. A pair of breasts is usually biteable. A pair of breasts is usually pinchable.
+Some breasts is a kind of body part.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some breasts is pairs of breasts. 
+The cover locations of some breasts is usually {the upper torso area}. 
+Understand "tit", "tits", "breast", "boob", "boobs", "tittie", "titties" and "juggs" as some breasts.
+Some breasts is usually touchable. Some breasts is usually rubbable. Some breasts is usually tickleable. Some breasts is usually lickable. Some breasts is usually biteable. Some breasts is usually pinchable.
 
 A midriff is a kind of body part.
 The indefinite article is usually "a".
@@ -3473,16 +3472,16 @@ Chapter 5.1.2a - Underwear
 
 [Underwear is as the name implies, clothing that goes under. Socks are not considered underwear, for reasons explained in next chapter.]
 
-A pair of panties is a kind of garment.
-They are usually plural-named. The indefinite article is usually "a". The plural of panties is pairs of panties.
-Understand "underwear", "undie", "undies" as pair of panties.
-The specification of pair of panties is "Panties (for both sexes, despite the name) cover the crotch. They can be moved aside and ripped apart, and are usually indecent normalwear."
-A pair of panties is usually underwear.
-The cloth decency of pair of panties is usually indecent.
-A pair of panties is usually allow touching through.
-The cover areas of a pair of panties is usually {crotch area}.
-A pair of panties is usually shiftable. The shiftyness of a pair of panties is usually moveable. The shifting revealed cover areas of pair of panties is usually {crotch area}.
-A pair of panties is usually rippable. The ripping revealed cover areas of pair of panties is usually {crotch area}.
+Some panties is a kind of garment.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some panties is pairs of panties.
+Understand "underwear", "undie", "undies" as some panties.
+The specification of some panties is "Panties (for both sexes, despite the name) cover the crotch. They can be moved aside and ripped apart, and are usually indecent normalwear."
+Some panties is usually underwear.
+The cloth decency of some panties is usually indecent.
+Some panties is usually allow touching through.
+The cover areas of some panties is usually {crotch area}.
+Some panties is usually shiftable. The shiftyness of some panties is usually moveable. The shifting revealed cover areas of some panties is usually {crotch area}.
+Some panties is usually rippable. The ripping revealed cover areas of some panties is usually {crotch area}.
 
 A bra is a kind of garment.
 The indefinite article is usually "a".
@@ -3528,31 +3527,31 @@ Chapter 5.1.2b - Normalwear
 
 [Normalwear is clothing that go on the "normal" layer, above underwear but under overwear. Because pantyhose needs to go over underwear and be on the same layer as socks, socks also sort here.]
 
-A pair of socks is a kind of garment.
-They are usually plural-named. The indefinite article is usually "a". The plural of socks is pairs of socks.
-The specification of pair of socks is "Socks cover the feet, and is usually formal and normalwear (in order to match stockings and pantyhose)."
-A pair of socks is usually normalwear.
-The cloth decency of a pair of socks is usually formal.
-A pair of socks is usually allow touching through.
-The cover areas of a pair of socks is usually {feet area}.
+Some socks is a kind of garment.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some is pairs of socks.
+The specification of some socks is "Socks cover the feet, and is usually formal and normalwear (in order to match stockings and pantyhose)."
+Some socks is usually normalwear.
+The cloth decency of some socks is usually formal.
+Some socks is usually allow touching through.
+The cover areas of some socks is usually {feet area}.
 
-A pair of stockings is a kind of garment.
-They are usually plural-named. The indefinite article is usually "a". The plural of stockings is pairs of stockings.
-The specification of pair of stockings is "Stockings covers feet, legs and thighs, and does not fit over anything. It is not compatible with pantyhose (which also covers the crotch). They are usually formal."
-A pair of stockings is usually normalwear.
-The cloth decency of a pair of stockings is usually formal.
-A pair of stockings is usually allow touching through.
-The cover areas of a pair of stockings is usually {feet area, leg area, thigh area}.
-A pair of stockings is usually rippable. The ripping revealed cover areas of a pair of stockings is usually {thigh area}.
+Some stockings is a kind of garment.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some stockings is pairs of stockings.
+The specification of some stockings is "Stockings covers feet, legs and thighs, and does not fit over anything. It is not compatible with pantyhose (which also covers the crotch). They are usually formal."
+Some stockings is usually normalwear.
+The cloth decency of some stockings is usually formal.
+Some stockings is usually allow touching through.
+The cover areas of some stockings is usually {feet area, leg area, thigh area}.
+Some stockings is usually rippable. The ripping revealed cover areas of some stockings is usually {thigh area}.
 
-A pair of pantyhose is a kind of garment.
-They are usually plural-named. The indefinite article is usually "a". The plural of pantyhose is pairs of pantyhose.
-The specification of pair of pantyhose is "Pantyhose is similar to stockings, but also covers the crotch, which means they both have to be normalwear to fit over panties. It is usually formal, and can be ripped to expose the crotch."
-A pair of pantyhose is usually normalwear.
-The cloth decency of a pair of pantyhose is usually formal.
-A pair of pantyhose is usually allow touching through.
-The cover areas of a pair of pantyhose is usually {feet area, leg area, thigh area, crotch area}.
-A pair of pantyhose is usually rippable. The ripping revealed cover areas of a pair of pantyhose is usually {crotch area}.
+Some pantyhose is a kind of garment.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some pantyhose is pairs of pantyhose.
+The specification of some pantyhose is "Pantyhose is similar to stockings, but also covers the crotch, which means they both have to be normalwear to fit over panties. It is usually formal, and can be ripped to expose the crotch."
+Some pantyhose is usually normalwear.
+The cloth decency of a some pantyhose is usually formal.
+Some pantyhose is usually allow touching through.
+The cover areas of some pantyhose is usually {feet area, leg area, thigh area, crotch area}.
+Some pantyhose is usually rippable. The ripping revealed cover areas of some pantyhose is usually {crotch area}.
 
 A shirt is a kind of garment.
 The indefinite article is usually "a".
@@ -3564,13 +3563,13 @@ A shirt is usually default cover blocking.
 A shirt is usually shiftable. The shiftyness of a shirt is usually buttonable. The shifting revealed cover areas of a shirt is usually {shoulder area, upper torso area, lower torso area}.
 A shirt is usually rippable. The ripping revealed cover areas of a shirt is usually {shoulder area, upper torso area, lower torso area}.
 
-A pair of glasses is a kind of garment.
-They are usually plural-named. The indefinite article is usually "a". The plural of glasses is pairs of glasses.
-Understand "goggles", "eyewear" as pair of glasses.
-The specification of pair of glasses is "Glasses go on the face, and are usually formal normalwear. Because of this, they will block direct access and view to face parts (such as the mouth); this is usually not a problem as kissing redirects to the person."
-A pair of glasses is usually normalwear.
-The cloth decency of pair of glasses is usually formal.
-The cover areas of a pair of glasses is usually {face area}.
+Some glasses is a kind of garment.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some glasses is pairs of glasses.
+Understand "goggles", "eyewear" as some glasses.
+The specification of some glasses is "Glasses go on the face, and are usually formal normalwear. Because of this, they will block direct access and view to face parts (such as the mouth); this is usually not a problem as kissing redirects to the person."
+Some glasses is usually normalwear.
+The cloth decency of some glasses is usually formal.
+The cover areas of some glasses is usually {face area}.
 
 Chapter 5.1.2c - Overwear
 
@@ -3594,24 +3593,24 @@ The cloth decency of minidress is usually immodest.
 The cover areas of a minidress is usually {shoulder area, arm area, upper torso area, lower torso area, upper back area, lower back area, crotch area, thigh area}.
 A minidress is usually shiftable. The shiftyness of a dress is usually raisable. The shifting revealed cover areas of a dress is usually {crotch area, thigh area}.
 
-A pair of trousers is a kind of garment.
-They are usually plural-named. The indefinite article is usually "a". The plural of trousers is pairs of trousers.
-Understand "pants", "jeans", "pair of pants/jeans" as pair of trousers.
-The specification of pair of trousers is "Trousers (or pants/jeans) are casual clothes worn over the legs/thighs and crotch. They can usually be unzipped to allow access to the crotch."
-A pair of trousers is usually overwear.
-The cloth decency of pair of trousers is usually casual.
-The cover areas of a pair of trousers is usually {leg area, thigh area, crotch area}.
-A pair of trousers is usually default cover blocking.
-A pair of trousers is usually shiftable. The shiftyness of a pair of trousers is usually zipable. The shifting revealed cover areas of a pair of trousers is usually {crotch area}.
+Some trousers is a kind of garment.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some trousers is pairs of trousers.
+Understand "pants", "jeans", "pair of pants/jeans" as some trousers.
+The specification of some trousers is "Trousers (or pants/jeans) are casual clothes worn over the legs/thighs and crotch. They can usually be unzipped to allow access to the crotch."
+Some trousers is usually overwear.
+The cloth decency of some trousers is usually casual.
+The cover areas of some trousers is usually {leg area, thigh area, crotch area}.
+Some trousers is usually default cover blocking.
+Some trousers is usually shiftable. The shiftyness of some trousers is usually zipable. The shifting revealed cover areas of some trousers is usually {crotch area}.
 
-A pair of shorts is a kind of garment.
-They are usually plural-named. The indefinite article is usually "a". The plural of shorts is pairs of shorts.
-The specification of pair of shorts is "Shorts are (as the name implies) short pants that don't cover the legs. As such they are casual overwear that cover the thighs and crotch. They can usually be unzipped to allow access to the crotch."
-A pair of shorts is usually overwear.
-The cloth decency of pair of shorts is usually casual.
-The cover areas of a pair of shorts is usually {thigh area, crotch area}.
-A pair of shorts is usually default cover blocking.
-A pair of shorts is usually shiftable. The shiftyness of a pair of shorts is usually zipable. The shifting revealed cover areas of a pair of shorts is usually {crotch area}.
+Some shorts is a kind of garment.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some shorts is pairs of shorts.
+The specification of some shorts is "Shorts are (as the name implies) short pants that don't cover the legs. As such they are casual overwear that cover the thighs and crotch. They can usually be unzipped to allow access to the crotch."
+Some shorts is usually overwear.
+The cloth decency of some shorts is usually casual.
+The cover areas of some shorts is usually {thigh area, crotch area}.
+Some shorts is usually default cover blocking.
+Some shorts is usually shiftable. The shiftyness of some shorts is usually zipable. The shifting revealed cover areas of some shorts is usually {crotch area}.
 
 A skirt is a kind of garment.
 The indefinite article is usually "a".
@@ -3643,20 +3642,20 @@ Chapter 5.1.2d - Outerwear
 
 [Outerwear is the topmost layer of clothing, and consists of clothing that would normally be suitable for outdoor use, over your normal clothes.]
 
-A pair of shoes is a kind of garment.
-They are usually plural-named. The indefinite article is usually "a". The plural of shoes is pairs of shoes.
-The specification of pair of shoes is "Shoes are formal outerwear worn on the feet."
-A pair of shoes is usually outerwear.
-The cloth decency of pair of shoes is usually formal.
-The cover areas of a pair of shoes is usually {feet area}.
+Some shoes is a kind of garment.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some shoes is pairs of shoes.
+The specification of some shoes is "Shoes are formal outerwear worn on the feet."
+Some shoes is usually outerwear.
+The cloth decency of some shoes is usually formal.
+The cover areas of some shoes is usually {feet area}.
 
-A pair of boots is a kind of garment.
-They are usually plural-named. The indefinite article is usually "a". The plural of boots is pairs of boots.
-The specification of pair of boots is "Boots are formal outerwear like shoes, but are higher and cover both feet and legs.
+Some boots is a kind of garment.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some boots is pairs of boots.
+The specification of some boots is "Boots are formal outerwear like shoes, but are higher and cover both feet and legs. 
 Note; take care to use boots with dresses, as they technically go on the outside of a long dress."
-A pair of boots is usually outerwear.
-The cloth decency of pair of boots is usually formal.
-The cover areas of a pair of boots is usually {feet area, leg area}.
+Some boots is usually outerwear.
+The cloth decency of some boots is usually formal.
+The cover areas of some boots is usually {feet area, leg area}.
 
 A hat is a kind of garment.
 The indefinite article is usually "a".
@@ -3683,13 +3682,13 @@ The cloth decency of coat is usually formal.
 A coat is usually default cover blocking.
 A coat is usually shiftable. The shiftyness of a coat is usually buttonable. The shifting revealed cover areas of a coat is usually {shoulder area, upper torso area, lower torso area, crotch area, thigh area}.
 
-A pair of gloves is a kind of garment.
+Some gloves is a kind of garment.
 The indefinite article is usually "a".
-They are usually plural-named. The indefinite article is usually "a". The plural of gloves is pairs of gloves.
-The specification of pair of gloves is "Gloves are formal outerwear that go over the hands."
-A pair of gloves is usually outerwear.
-The cloth decency of pair of gloves is usually formal.
-The cover areas of a pair of gloves is usually {hand area}.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some gloves is pairs of gloves.
+The specification of some gloves is "Gloves are formal outerwear that go over the hands."
+Some gloves is usually outerwear.
+The cloth decency of some gloves is usually formal.
+The cover areas of some gloves is usually {hand area}.
 
 Part 5.1.3 - Toy Box
 
@@ -4307,21 +4306,21 @@ The oral-play performer limit of an ass is usually aroused.
 
 Chapter 5.2.3b - Breasts
 
-The soft-play threshold of a pair of breasts is usually aroused.
-The soft-play performer limit of a pair of breasts is usually very aroused.
-The soft-play recipient limit of a pair of breasts is usually very aroused.
+The soft-play threshold of some breasts is usually aroused.
+The soft-play performer limit of some breasts is usually very aroused.
+The soft-play recipient limit of some breasts is usually very aroused.
 
-[No Change: The rough-play threshold of a pair of breasts is usually very aroused.]
-[No Change: The rough-play performer limit of a pair of breasts is usually very aroused.]
-[No Change: The rough-play recipient limit of a pair of breasts is usually very aroused.]
+[No Change: The rough-play threshold of some breasts is usually very aroused.]
+[No Change: The rough-play performer limit of some breasts is usually very aroused.]
+[No Change: The rough-play recipient limit of some breasts is usually very aroused.]
 
-[No Change: The oral-play threshold of a pair of breasts is usually aroused.]
-[No Change: The oral-play performer limit of a pair of breasts is usually very aroused.]
-[No Change: The oral-play recipient limit of a pair of breasts is usually very aroused.]
+[No Change: The oral-play threshold of some breasts is usually aroused.]
+[No Change: The oral-play performer limit of some breasts is usually very aroused.]
+[No Change: The oral-play recipient limit of some breasts is usually very aroused.]
 
-The fuck-play threshold of a pair of breasts is usually aroused.
-[No Change: The fuck-play performer limit of a pair of breasts is usually very aroused.]
-[No Change: The fuck-play recipient limit of a pair of breasts is usually very aroused.]
+The fuck-play threshold of some breasts is usually aroused.
+[No Change: The fuck-play performer limit of some breasts is usually very aroused.]
+[No Change: The fuck-play recipient limit of some breasts is usually very aroused.]
 
 Chapter 5.2.3c - Penis
 
@@ -4505,27 +4504,27 @@ While you're free to create your own body parts as you please, this extension co
 Below is an overview of the body part templates, with the most pertinent properties controlling which actions are possible (see section 2.1) and the default decency (as implied by their cover locations):
 
 	Ass (Indecent): touchable, rubbable, spankable, pinchable, lickable, orificial.
-	pair of Ankles (Immodest): plural; 
-	pair of Arms (Casual): plural; touchable, rubbable
+	Ankles (Immodest): plural; 
+	Arms (Casual): plural; touchable, rubbable
 	Backside (Immodest): rubbable, spankable
-	pair of Breasts (Indecent): plural; touchable, rubbable, lickable, biteable, tickleable, pinchable
+	Breasts (Indecent): plural; touchable, rubbable, lickable, biteable, tickleable, pinchable
 	Chest (Indecent): touchable, rubbable, lickable, biteable, tickleable
-	pair of Eyes (Formal): plural
+	Eyes (Formal): plural
 	Face (Formal): 
-	pair of Feet (Immodest): plural; touchable, rubbable, lickable, biteable, tickleable
+	Feet (Immodest): plural; touchable, rubbable, lickable, biteable, tickleable
 	Hair (Formal): plural (ambigously)
-	pair of Hands (Formal): plural; touchable, rubbable
+	Hands (Formal): plural; touchable, rubbable
 	Head (Formal): 
-	pair of Legs (Casual): plural; touchable, rubbable
+	Legs (Casual): plural; touchable, rubbable
 	Midriff (Immodest): touchable, rubbable, lickable, tickleable
 	Mouth (Formal):
 	Neck (Casual): lickable, biteable
 	Penis (Indecent): touchable, rubbable, pinchable, lickable, biteable, penetrating.
-	pair of Shoulders (Casual): plural; rubbable
-	pair of Thighs (Immodest): plural; touchable, rubbable
+	Shoulders (Casual): plural; rubbable
+	Thighs (Immodest): plural; touchable, rubbable
 	Vagina (Indecent): touchable, rubbable, lickable, orificial.
 	Waist (Immodest): 
-	pair of Wrists (Casual): plural;
+	Wrists (Casual): plural;
 	
 [Comment:
 FictitiousFrode: The following clarification isn't needed, as orificial and penetrating are properties detailed in 2.1, just like the others.
@@ -4539,30 +4538,30 @@ There is also more information available in the kind listing in the IDE.
 	Bodysuit (Indecent Underwear): Covers shoulder area, arm area, upper torso area, upper back area, lower torso area, lower back area, crotch area, thigh area, leg area and feet area (Or, everything except hands, head and face).
 	Bra (Indecent Underwear): Covers upper torso/back; allow touching through.
 	Mask (Immodest Underwear): Covers face and head.
-	pair of Panties (Indecent Underwear): Covers crotch, but can be moved or ripped to reveal crotch; allow touching through; plural.
+	Panties (Indecent Underwear): Covers crotch, but can be moved or ripped to reveal crotch; allow touching through; plural.
 	Swimsuit (Immodest Underwear): Covers upper/lower torso, lower back/crotch, but can be moved aside to reveal upper torso area; allow touching through.
 	Undershirt (Immodest Underwear): Covers upper/lower torso/back, but can be ripped to reveal upper torso; allow touching through.
 	
-	pair of Glasses (Formal Normalwear): Covers the face; plural.
-	pair of Pantyhose (Formal Normalwear): Covers feet, leg, thigh and crotch, but can be ripped to expose crotch; allow touching through; plural.
+	Glasses (Formal Normalwear): Covers the face; plural.
+	Pantyhose (Formal Normalwear): Covers feet, leg, thigh and crotch, but can be ripped to expose crotch; allow touching through; plural.
 	Shirt (Casual Normalwear): Covers upper/lower torso/back, arm and shoulder, but can be unbuttoned or ripped to reveal shoulder and upper/lower torso.
-	pair of Socks (Formal Normalwear): Covers feet; allow touching through; plural.
-	pair of Stockings (Formal Normalwear): Covers feet, leg and thigh, but can be ripped to expose thigh; allow touching through; plural.
+	Socks (Formal Normalwear): Covers feet; allow touching through; plural.
+	Stockings (Formal Normalwear): Covers feet, leg and thigh, but can be ripped to expose thigh; allow touching through; plural.
 	
 	Dress (Casual Overwear): Covers upper/lower torso/back, shoulder, crotch, thigh and leg, but can be unbuttoned to reveal the shoulder and upper/lower torso (without altering full access).
 	Minidress (Immodest Overwear): Covers upper/lower torso/back, shoulder, crotch, and thigh, but can be pulled up to reveal crotch and thigh.
-	pair of Shorts (Casual Overwear): Covers thigh and crotch, but can be unzipped to reveal crotch; plural.
+	Shorts (Casual Overwear): Covers thigh and crotch, but can be unzipped to reveal crotch; plural.
 	Skirt (Casual Overwear): Covers thigh and crotch, but can be lifted up to reveal both.
 	Suit (Casual Overwear): Combination of trousers and jacket, it covers upper/lower torso/back, shoulder, arm, crotch, thigh and leg. Can be unzipped to reveal crotch.
 	Sweater (Casual Overwear): Covers upper/lower torso/back, shoulder and arm. Can be raised up to reveal the upper/lower torso.
-	pair of Trousers (Casual Overwear): Covers leg, thigh and crotch, but can be unzipped to reveal crotch; plural.
+	Trousers (Casual Overwear): Covers leg, thigh and crotch, but can be unzipped to reveal crotch; plural.
 
-	pair of Boots (Formal Outerwear): Covers feet and leg; plural.
+	Boots (Formal Outerwear): Covers feet and leg; plural.
 	Coat (Formal Outerwear): Covers upper/lower torso/back, arm, shoulder, crotch and thigh. Can be unbuttoned to reveal upper/lower torso, crotch, thigh and shoulder.
-	pair of Gloves (Formal Outerwear): Covers hand; plural.
+	Gloves (Formal Outerwear): Covers hand; plural.
 	Hat (Formal Outerwear): Covers head.
 	Jacket (Formal Outerwear): Covers upper/lower torso/back, arm, shoulder. Can be unbuttoned to reveal upper/lower torso.
-	pair of Shoes (Formal Outerwear): Covers feet; plural.
+	Shoes (Formal Outerwear): Covers feet; plural.
 
 Additionally, there are outfits, a special kind of garment designed to be an alternative to individual garment pieces.
 Outfits cover almost all the body areas of a person, except hands and head/face.
@@ -5698,12 +5697,12 @@ We can then use these traits to selectively create body parts: every man should 
 As we don't implement all the templates, we can add some synonyms (through the 'understand' phrase) to cover their absence.
 
 	A head is a part of every person. Understand "face", "mouth", "eye/eyes" and "hair" as head.
-	A pair of legs is a part of every person. Understand "feet" and "thighs" as pair of legs.
-	A pair of hands is a part of every person. Understand "arms" as pair of hands.
+	Some legs is a part of every person. Understand "feet" and "thighs" as pair of legs.
+	Some hands is a part of every person. Understand "arms" as pair of hands.
 	An ass is a part of every person.
 
 	A vagina is a part of every woman.
-	A pair of breasts is a part of every woman.
+	Some breasts is a part of every woman.
 
 	A penis is a part of every man.
 
@@ -5733,13 +5732,13 @@ It's also possible to use a person's traits to create mass descriptions for unim
 
 While we created body parts en masse, clothing is something that one would usually create piece by piece.
 
-	Some sandals is a pair of shoes worn by Carrie. They are plural-named. The indefinite article is "some".
+	Some sandals is shoes worn by Carrie.
 	A grey dress is a dress worn by Carrie.
 	A lacy red bra is a bra worn by Carrie.
-	A lacy red thong is a pair of panties worn by Carrie. It is singular-named.
+	A lacy red thong is some panties worn by Carrie. It is singular-named.
 
-	Some heavy boots is a pair of shoes worn by Adam. They are plural-named. The indefinite article is "some".
-	Some black pants is a pair of trousers worn by Adam.
+	Some heavy boots is shoes worn by Adam.
+	Some black pants is trousers worn by Adam.
 	A white blouse is a shirt worn by Adam.
 
 To avoid spending too much time detailing the clothing of minor characters we let them wear an outfit.
