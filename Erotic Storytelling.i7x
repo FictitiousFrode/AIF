@@ -1,4 +1,4 @@
-Version 1/161203 of Erotic Storytelling by Fictitious Frode begins here.
+Version 1/161212 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF) providing a framework for layered clothing with body parts, erotic actions with a consent system for actions involving others. 
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for NPC agency and optional story contents."
 
@@ -4680,8 +4680,8 @@ The adjectives, along with which templates they are set for, are:
 	Tickleable: Breasts, Chest, Feet, Midriff
 	Touchable: Arms, Ass, Breasts, Chest, Feet, Hands, Legs, Midriff, Penis, Thighs, Vagina
 
-Decency is intended to control what behavior is proper in a given location, and a new kind of value is implemented to control it.
-By default, it has the four values indecent, immodest, casual and formal, as well as the undefined decency which works as a unset/null-values.
+To control what behavior is proper in a given location we introduce Decency as a new kind of value, which is explained in more detail in section 3.2.
+By default decency has the four possible values indecent, immodest, casual and formal, as well as the undefined decency to serve as an unset/null-value.
 Every room has a decency threshold (which defaults to casual) that determines what is allowed in that room.
 For garment related actions, the resulting decency is calculated and compared to the threshold, stopping any actions that would violate the threshold.
 Attempts to violate the threshold by entering in the wrong state of undress is also similarly stopped.
@@ -4837,15 +4837,22 @@ It's very important to note that no garments or body parts are ever created with
 
 Section 3.2 - Access and Visibility
 
-The extension works with three general levels of access to garments and body parts: vision, touching and accessible (manipulation).
-Section 8.9 - Phrases for Deciding on Values covers the phrases that deal with calculating this, and most phrases are pretty self explanatory.
-This section will instead focus on how they are implemented and the differences between them.
-For simplicity sake we'll refer to something as covered if the related person is wearing atleast one garment whose modified cover areas match the compared items' and the clothling level is higher on the worn item.
+Access to garments and body parts is a very important part of a layered clothing system, and this extension divides this access into three general levels: vision, touching and accessible (manipulation).
+This section will focus on the differences between them and how to use them while writing your story.
+The exact phrases to use for determining access are described in section 8.9 - Phrases for Deciding on Values, and should be mostly self-explanatory.
+For simplicity sake we'll refer to something as 'covered' if the related person is wearing atleast one garment whose modified cover areas match the compared items' and the clothling level is higher on the worn item.
 
 The visibility checks require that atleast one cover area is not covered by any garments that are opaque.
 Transparent garments will allow visibility even through multiple layers of garments.
 Touching is similarly calculated if atleast one cover area is not covered by any garments that are not allow touching through.
 Accesibility however is used for 'major' actions such as taking off garments and sexual contact with body parts, and therefore it requires that all the cover areas are not covered and touching through is not considered.
+
+Visibility is further enhanced by the 'decency' value which we briefly introduced in section 2.1 on limiting factors for actions.
+Each person has a property called 'current decency' which stores the calculated value of which decency their current clothing level represents.
+While it's possible to manually set this property, this is not recommended as it will be re-calculated on all actions that change clothing.
+Similarly if you change clothing manually it's important to re-calculate this value using the 'UPDATE DECENCY FOR person' phrasing.
+This calculation uses cover areas instead of body parts as the foundation in order to ensure uniform results regardless of which body parts are un-implemented for a person.
+Section 1.4 contains an overview of the default decency of the included body part templates.
 
 Section 3.3 - Manipulating Garments
 
