@@ -4439,7 +4439,7 @@ Two of the new kinds in this extension, garments and body parts, also have some 
 See the later chapter "Descriptions in Detail" for more on this.
 
 Persuasion/Consent: Persuasion is a built-in rulebook, and is invoked when the player asks another person to do something.
-This can be a common occurence in AIFs, so it's important to include (or at least provide better rules to govern failed persuasion attempts).
+This can be a common occurrence in AIFs, so it's important to include (or at least provide better rules to govern failed persuasion attempts).
 Chapter 12.4 of "Writing with Inform" covers the use of persuasion.
 Consent is a new rulebook for this extension, and works in a similar way to make it possible for persons to object to the player's actions if they are directly involved.
 To avoid having to write both consent and persuasion rules for the same action, persuasion for the actions included can be granted from the consent rules.
@@ -5152,7 +5152,7 @@ Example D shows how agency can be implemented, and the tutorial contains a secti
 Section 5.3 - Conversation
 
 Conversations are usually an important part of character-driven IF, but it's also one of the hardest parts to get right.
-Because the player is free to converse about anything that strikes their fancy, a good conversation system must both understand what topic the player is refering to and have a response for it.
+Because the player is free to converse about anything that strikes their fancy, a good conversation system must both understand what topic the player is referring to and have a response for it.
 Most of the time we also need to keep track of which topics are available, depending on many factors such the knowledge of both the player and the characters.
 
 Because of the varying needs Inform 7 does not include any systematic way to handle conversation, instead providing a framework that can be extended upon.
@@ -5292,13 +5292,13 @@ We've actually already seen two of them in action despite only writing the singl
 This statement creates the object name which we use to refer to the object in the source code, and is also used as the default value of the 'printed name' property which is printed to the player.
 By default Inform allows the author to use abbreviated object names, but can be forced to only accept fully qualified names through the 'Use unabbreviated object names' phrase.
 Going one step further, the object's name is also what the parser tries to match the player's input to.
-This can be altered in two ways; either by using the 'understand' phrase to assign synonyms for the player or by declaring the object to be privately-named to prevent the player from refering to it by object name.
+This can be altered in two ways; either by using the 'understand' phrase to assign synonyms for the player or by declaring the object to be privately-named to prevent the player from referring to it by object name.
 This latter purpose is an advanced effect mostly for objects that have complicated names that would otherwise confuse Inform.
 
 There are two other properties which are similar but different, and are very important: Description and initial appearance.
 Initial appearance is how the item is presented to the player during the story, and for a room this is actually the description.
 Similarly to declaring objects properties values are set by statements that simply state what they are, like 'The initial appearance of Library is "Seemingly endless rows of bookshelves fill the room."'
-Writing the initial appearance of a room is such a common occurence that Inform has a special syntax for it:
+Writing the initial appearance of a room is such a common occurrence that Inform has a special syntax for it:
 Text enclosed in double-quotes just after the object declaration is interpreted as the initial appearance property.
 
 Writing good descriptions for the locations in a story is not an easy task, even trying to define what is a good description is tricky as not every location has the same requirements.
@@ -5314,14 +5314,14 @@ With this in mind we can create a slightly more interesting library (Click the i
 	Some bookshelves are in Library.
 
 Testing this short story will show that we can indeed interact with the bookshelves, but there are two problems:
-Firstly, the bookshelves are also listed both in the room's appearance and indepentendly afterwards.
+Firstly, the bookshelves are also listed both in the room's appearance and independently afterwards.
 Although we refered to the bookshelves in the appearance, we did so in a way that was only humanly readable, and Inform lists any unmentioned objects that are present in the room separately.
 In order to let Inform know that the object has been mentioned, we can use what's called text substitution:
 By making Inform print the name of the object that object will be flagged as mentioned so there's no need for a second mention.
 Text substitutions are made by writing the substitution inside square brackets inside the text string, and writing the object name will substitute in the printed name.
 I find it a good practice to write in these substitutions while writing the initial appearance of the room as a reminder to create the mentioned objects.
 
-The second problem is less immediately apparant, as all things are by default portable, the player can pick up the bookshelves.
+The second problem is less immediately apparent, as all things are by default portable, the player can pick up the bookshelves.
 This is easily remedied by setting the already mentioned 'portable' property and it's opposite 'fixed in place', but there is another solution.
 For things that are intended to decorate a room, we have the aptly named 'scenery' which defaults to being fixed in place.
 More importantly though, a scenery is usually omitted from the listing of unmentioned things in a room and thus is an alternative solution to the duplicate mentions we discussed above.
@@ -5335,12 +5335,14 @@ It's possible to create twisting, secret or one-way passages as well, but this i
 
 Settling on the correct amount of locations for a story is a hard challenge.
 When mapping out a 'known' location such as a house, there are certain locations the player would expect to find but that serve no real purpose.
-Another challenge is 'connetion' rooms whose main purpose is to link together the more interesting locations.
+Another challenge is 'connection' rooms whose main purpose is to link together the more interesting locations.
 By clever use of room descriptions and the 'before' and 'instead' rulebooks it's possible to give the player the impression of a larger world than what is implemented.
 
 *:
+	Include Erotic Storytelling by Fictitious Frode.
+	
 	Living Room is a room.
-	"At the heart of your house is your living room, with it's large flatscreen TV and soft couch. Refreshments can be had in the kitchen to the north, and a small hallway leads east towards the bedroom. A small bathroom lies to the west, and the front door is to the south."
+	"At the heart of your house is your living room, with its large flatscreen TV and soft couch. Refreshments can be had in the kitchen to the north, and a small hallway leads east towards the bedroom. A small bathroom lies to the west, and the front door is to the south."
 	
 	Before going east in Living Room, say "You pass through the hallway and enter your bedroom."
 	Instead of going west in Living Room, say "You don't have a pressing need to go visit the bathroom."
