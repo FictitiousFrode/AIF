@@ -5314,14 +5314,14 @@ With this in mind we can create a slightly more interesting library (Click the i
 	Some bookshelves are in Library.
 
 Testing this short story will show that we can indeed interact with the bookshelves, but there are two problems:
-Firstly, the bookshelves are also listed both in the room's appearance and indepentendly afterwards.
+Firstly, the bookshelves are also listed both in the room's appearance and independently afterwards.
 Although we refered to the bookshelves in the appearance, we did so in a way that was only humanly readable, and Inform lists any unmentioned objects that are present in the room separately.
 In order to let Inform know that the object has been mentioned, we can use what's called text substitution:
 By making Inform print the name of the object that object will be flagged as mentioned so there's no need for a second mention.
 Text substitutions are made by writing the substitution inside square brackets inside the text string, and writing the object name will substitute in the printed name.
 I find it a good practice to write in these substitutions while writing the initial appearance of the room as a reminder to create the mentioned objects.
 
-The second problem is less immediately apparant, as all things are by default portable, the player can pick up the bookshelves.
+The second problem is less immediately apparent, as all things are by default portable, the player can pick up the bookshelves.
 This is easily remedied by setting the already mentioned 'portable' property and it's opposite 'fixed in place', but there is another solution.
 For things that are intended to decorate a room, we have the aptly named 'scenery' which defaults to being fixed in place.
 More importantly though, a scenery is usually omitted from the listing of unmentioned things in a room and thus is an alternative solution to the duplicate mentions we discussed above.
@@ -5335,14 +5335,14 @@ It's possible to create twisting, secret or one-way passages as well, but this i
 
 Settling on the correct amount of locations for a story is a hard challenge.
 When mapping out a 'known' location such as a house, there are certain locations the player would expect to find but that serve no real purpose.
-Another challenge is 'connetion' rooms whose main purpose is to link together the more interesting locations.
+Another challenge is 'connection' rooms whose main purpose is to link together the more interesting locations.
 By clever use of room descriptions and the 'before' and 'instead' rulebooks it's possible to give the player the impression of a larger world than what is implemented.
 
 *:
 	Include Erotic Storytelling by Fictitious Frode.
 	
 	Living Room is a room.
-	"At the heart of your house is your living room, with it's large flatscreen TV and soft couch. Refreshments can be had in the kitchen to the north, and a small hallway leads east towards the bedroom. A small bathroom lies to the west, and the front door is to the south."
+	"At the heart of your house is your living room, with its large flatscreen TV and soft couch. Refreshments can be had in the kitchen to the north, and a small hallway leads east towards the bedroom. A small bathroom lies to the west, and the front door is to the south."
 	
 	Before going east in Living Room, say "You pass through the hallway and enter your bedroom."
 	Instead of going west in Living Room, say "You don't have a pressing need to go visit the bathroom."
