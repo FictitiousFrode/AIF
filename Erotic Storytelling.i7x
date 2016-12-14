@@ -5016,18 +5016,12 @@ Section 4.4 - Responses
 
 Action responses should be written using the standard Inform 7 rulebooks After, Before and Instead.
 As the names imply, after rules are for after an action suceeds, before are for before the action is checked for validity, and instead rules block the action from taking place.
-Ther are literally chapters in "Writing with Inform" devoted to this, so instead this section will focus on tips, tricks and recreating TADS library features.
+Ther are literally chapters in 'Writing with Inform' devoted to this, so instead this section will focus on tips, tricks and recreating TADS library features.
 
-Perhaps one of the best underused features of Inform is scenes, which allow you to tightly group together the narrative and it's consequences.
-One immediate application in AIF is controling the sex scenes.
-By implementing these as scenes, you can ensure it that starts when the requisite unlocking puzzle(s) are completed, and ends when a set condition is met.
-You can then tie in any consent and persuasion rules to only apply during that scene, as well as action responses.
-The real benefit comes when a person is involved in several sex scenes, by tying responses to the individual scenes you can be certain to avoid printing responses for the wrong scene.
-
-Another staple of the TADS libraries is action responses that vary when the action is repeated.
-This extension does not emulate this functionality as it's built into Inform 7 through the 'for X time' or 'for x turns' clauses.
+One common feature in good AIF is action responses that vary when the action is repeated.
+Inform 7 supports this functionality natively through the 'for the Xth time' or 'for x turns' clauses to response rules.
 Both take into account repeating actions, but 'times' is the total number of times, while 'turns' is the number of times/turns in a row.
-Randomly alternating text is also very simple, using the 'one of' constructs described in chapter 5.7 of "Writing with Inform".
+Creating text responses that vary are also very simple, using the 'one of' text substitutions described in chapter 5.7 of "Writing with Inform".
 The following short example highlights some of the these tricks:
 
 *:
@@ -5038,10 +5032,43 @@ The following short example highlights some of the these tricks:
 	After waiting for more than six times, say "Get on with it!"
 	Test me with "z / z / z / z / z / z / z"
 
+One feature of Inform that often gets overlooked is scenes, which allow you to tightly group together the narrative and it's consequences.
+One immediate application in AIF is controling the sex scenes, which when implemented as scenes allows for easily defining the start and end conditions.
+You can then bind the action responses as well as any consent and persuasion rules to only apply during that scene.
+The real benefit comes when a person is involved in several sex scenes; by tying responses to the individual scenes you can be certain to avoid printing responses for the wrong scene.
+
+The story author is entirely free to decide how and when orgasms occur.
+One optional feature of the extension is a mechanism to check for orgasms that make each successive orgasm harder to achieve.
+The algorithm used is the attempt number of of the given orgasm divided by the orgasm number.
+This makes the first orgasm 'free' (a 1 in 1 chance), while the second orgasm has a 1 in 2 chance (and then a 2 in 2 chance if the first attempt failed), and so on.
+The phrase to use to invoke this check is 'person ORGASMS', and the example below shows how this can be implemented.
+When writing responses for actions with multiple actors to check for simultaneous orgams it's important to remember that each successive call will update the underlying variables.
+
+*:
+	After rubbing a vagina enclosed by a person (called owner):
+		If the owner orgasms: [This runs the calculation, including updates.]
+			Say "The orgamic response for the action should go here.";
+		Else:
+			Say "The normal response for the action should go here.";
+	
+	After fucking a a vagina enclosed by a person (called recipient) with a penis enclosed by a person (called penetrator):
+		Let recipient-orgasm be false;
+		Let penetrator-orgasm be false;
+		If recipient orgasms, let recipient-orgasm be true;
+		If penetrator orgasms, let penetrator-orgasm be true;
+		If recipient-orgasm is true and penetrator-orgasm is true:
+			Say "The response for simultaneous orgasm should go here.";
+		Else if recipient-orgasm is true:
+			Say "The response for when recipient orgasms should go here.";
+		Else if penetrator-orgasm is true:
+			Say "The response for when penetrator orgasms should go here.";
+		Else:
+			Say "The normal response for the action should go here.";
+
 Chapter 5 - NPCs
 
-Let's be blunt: Non-Player Characters in Interactive Fiction are hard to get right.
-The common approach (* as described at SibylMoon) is to limit the player's interaction with NPCs to as little as you can get away with. 
+Let's be blunt: Non-Player Characters are hard to get right in Interactive Fiction.
+The common approach (as described at SibylMoon *) is to limit the player's interaction with NPCs to as little as you can get away with. 
 Unfortunately that approach doesn't work well for AIF where NPCs can be said to be the main goal of the experience.
 Instead we have to be more careful in the design of our NPCs to make them appear more advanced than they really are.
 SibylMoon (**) list four qualities that increase the illusion of intelligent NPCs: Active, reactive, goal-oriented and randomized.
@@ -5371,7 +5398,7 @@ Section 7.3 - Technicalities
 Your regular programming will resume shortly, but first a short interlude on some of the technicalities and peculiarities of Inform 7.
 Inform's IDE has some handy shortcuts (on Windows atleast): F5 will compile and launch your story, while F9 will compile and replay the last game: Excellent for debugging.
 F7 on the other hand will just compile and rebuild the built-in index tab which is a great resource while developing.
-It's a good habit to compile often, although the compile is good at pointing out what went wrong it can still be daunting to debug larger code changes.
+It's a good habit to compile often as it can be daunting to debug larger code changes even if the compiler is good at pointing out what went wrong.
 
 Unlike many other programming languages (such as TADS, other C-like derivations, and even Inform 6), Inform 7 is limited to only one source file.
 In lieu of dividing the source into several files, I7 uses five 'header' types for organizing your code into modules.
@@ -5379,16 +5406,16 @@ In decreasing order of magnitude, these headers are Volume - Book - Part - Chapt
 Exactly how to divide your code with these headings is largely up to each author, but a template project setup based on my personal preferences is included herein.
 My personal preference is to use 'chapter' as the main holder of sourcecode, divided into sections as needed and using 'volume/book/part' for hierarchial organization.
 
-Structuring the sourcecode with these headers has three main effects, the first of which should be pretty obvious.
+Structuring the source code with these headers has three main effects, the first of which should be pretty obvious.
 By building a hierarchy of headings it's easy to place related content near each other, using the interface's overview to jump around.
 The second effect is less obvious, and related to a feature we briefly covered before:  the 'Use unabbreviated object names' phrase.
-When this use option is not enabled we're allowed to refer to objects in our source by abbreviated names.
-If an abbreviated name could be taken to refer to multiple objects, Inform uses the hierarchy of headings to select the closest match.
-I would still recommend using unabbreviated object names though.
-Lastly Inform also uses these header to tell you where a compile error was detected.
+When this use option is not enabled we're allowed to refer to objects in our source by abbreviated names, such as referencing the 'kitchen table' by just 'table'.
+If an abbreviated name could be taken to refer to multiple objects (for instance a 'coffee table' as well), Inform uses the hierarchy of headings to select the closest match.
+My personal preference is using unabbreviated object names, which avoids mishaps when re-arranging code.
+Lastly, Inform also uses these header to tell you where a compile error was detected.
 
 To help debugging your story Inform supplies a variety of testing commands as well as the option of easily creating test cases and special actions that are removed from the final release.
-Let's cover the testing actions first:
+The default testing actions included in Inform is:
 
 	ACTIONS on/off: Toggles the printing of exactly which actions are processed, as well as printing the name of any failed rules without swamping the output.
 	RULES on/off: Toggles the printing of all rules being consulted for a very detailed and verbose feedback only recommended for ferreting out tricky bugs.
@@ -5399,11 +5426,12 @@ Let's cover the testing actions first:
 	RELATIONS: Lists out all the various kinds of relations that are in use in the game.
 	SHOW RELATION relationship: Lists out the details of a specific relations, as detailed in 13.7 of 'Writing with Inform'.
 
+This extension also provides a 'debug examine' action (shortened to 'DEX') to provide detailed information on the kinds most relevant to AIF: garments, body parts and persons.
 It's also possible to write both test cases and special commands only available during testing, which can be used to artificially set story progression variables.
-Test cases can be written by the phrase 'TEST testname WITH "actions / separated / by /slashes".', allowing you to write 'TEST testname' during play to execute the given actions in order.
+Test cases can be written by the phrase 'TEST testname WITH "actions / separated / by / slashes".', allowing you to write 'TEST testname' during play to execute the given actions in order.
 To create commands only available for testing you can mark one of the source headers as 'Not For Release', which is described in chapter 2.9 of 'Writing with Inform'.
 
-Before moving on to some more programming in Inform I would recommend to explore the 'Index' tab in the IDE, which gives a very good overview of your story world.
+Before moving on to some more programming in Inform, I would recommend exploring various tabs in the IDE, especially 'Index' which gives a helpful overview of your story world.
 
 Chapter 8 - Technical Reference
 
