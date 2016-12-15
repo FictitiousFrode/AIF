@@ -1,4 +1,4 @@
-Version 1/161212 of Erotic Storytelling by Fictitious Frode begins here.
+Version 1/161215 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF) providing a framework for layered clothing with body parts, erotic actions with a consent system for actions involving others. 
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for NPC agency and optional story contents."
 
@@ -1791,25 +1791,6 @@ A default description generation rule for a person (called P) (this is the gener
 	If P provides the property agency state description and the agency state description is not the default value of text:
 		Say the agency state description of P;
 
-Book 2.4 - Posturing
-
-[Status: TODO]
-
-Part 2.4.1 - Concepts
-
-Chapter 2.4.1a - Postures
-
-[TODO: This should probably be defined with a table.
-A posture is a kind of value. 
-The postures are standing, sitting, kneeling, bending, prone and supine.
-A person has a posture.]
-
-Chapter 2.4.1b - Checking for Postures
-
-Part 2.4.2 - Action Integration
-
-Part 2.4.3 - Changing Postures
-
 Volume 3 - Erotic Actions
 
 Book 3.1 - Concepts
@@ -3157,12 +3138,16 @@ Carry out debug examining something (this is the debug examine garments rule):
 
 Chapter 4.1.1d - Person
 
-[TODO]
-
+Carry out debug examining something (this is the debug examine people rule):
+	If noun is a person:
+		Now debug text printed is true;
+		Repeat with area running through the body areas of the noun:
+			Let considered be the exposed by area on the noun;
+			Say "[Area] - [considered][line break]";
 
 Book 4.2 - Story Contents
 
-[Status: TODO/In development
+[Status: In development/Stable-Unfinished
 A system for the story author to announce to the player which types of content the story contains, with the possibility of some types being optional based on the player's preferences.]
 
 Part 4.2.1 - Concepts
@@ -3185,7 +3170,7 @@ A disabled story content is usually optional.
 
 Part 4.2.2 - Manipulation
 
-[Status: In development
+[Status: In development/Stable-Unfinished
 This part deals with the player's interaction of the story contents, including viewing which content is included and toggling anything that's optional.]
 
 Chapter 4.2.2a - Displaying Contents
@@ -3682,11 +3667,6 @@ The cloth decency of a strap-on is usually indecent.
 A strap-on is usually allow touching through.
 The cover areas of a strap-on is usually {crotch area}.
 A strap-on can be penetrating. A strap-on is usually penetrating.
-
-Part 5.1.4 - Furniture
-
-[Status: Awaiting implementation of posturing.
-TODO]
 
 Book 5.2 - Discrete Arousal-based Consent and Stimulation
 
@@ -4586,7 +4566,7 @@ The later chapter on NPCs covers this topic in detail, and Example C shows some 
 
 Section 1.7 - Version History
 
-Release 1 (v2.0):
+20XX-XX-XX: Remake-Beta-1 (Release 1)
 
 	Remake of the old AIF framework, reworking the previous extensions body parts, garments, outfits, erotic story actions and consent into one.
 
@@ -5393,6 +5373,10 @@ This extension also provides a 'debug examine' action (shortened to 'DEX') to pr
 It's also possible to write both test cases and special commands only available during testing, which can be used to artificially set story progression variables.
 Test cases can be written by the phrase 'TEST testname WITH "actions / separated / by / slashes".', allowing you to write 'TEST testname' during play to execute the given actions in order.
 To create commands only available for testing you can mark one of the source headers as 'Not For Release', which is described in chapter 2.9 of 'Writing with Inform'.
+
+It's very important to take the time to explore your world and experience it as a player would.
+One of the harder parts to test is when connections between room differs from the room description.
+To help test this you could use the included extension 'Directionality' which auto-generates a description of the available exits in a room.
 
 Before moving on to some more programming in Inform, I would recommend exploring various tabs in the IDE, especially 'Index' which gives a helpful overview of your story world.
 
