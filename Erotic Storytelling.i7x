@@ -1504,8 +1504,8 @@ Volume 2 - Actors
 [This volume deals with fleshing out actors.
 The first book deals with automating agency of actors to make them more life-like.
 The second book deals with ways to automatically flesh out the description of people.
-The third book is an attempt at an improved conversation system.
-The last book deals with posturing.]
+The third book is an attempt at an improved conversation system - Excised into its own extension.
+The last book deals with posturing - Excised into its own extension.]
 
 Book 2.1 - Agency
 
@@ -1790,34 +1790,6 @@ Section - State summary (4)
 A default description generation rule for a person (called P) (this is the generate script description rule):
 	If P provides the property agency state description and the agency state description is not the default value of text:
 		Say the agency state description of P;
-
-Book 2.3 - Conversation
-
-[This book deals with setting up a conversation system that's based on topics the player can know about, and for which people have various responses.]
-
-Use topical conversation translates as (- Constant ENABLE_TOPIC_CONVERSATION; -).
-
-Part 2.3.1 - Concepts
-
-[Status: TODO/In progress]
-
-Chapter 2.3.1a - Topics
-
-Chapter - Knowledge
-
-Chapter - Responses
-
-Part 2.3.2 - Talking Actions
-
-Chapter 2.3.2a - Talk To
-
-Chapter 2.3.2b - Talk About
-
-Part 2.3.3 - Modified Actions
-
-Chapter 2.3.3a - Asking
-
-Chapter 2.3.3b - Telling
 
 Book 2.4 - Posturing
 
@@ -5183,18 +5155,9 @@ Because the player is free to converse about anything that strikes their fancy, 
 Most of the time we also need to keep track of which topics are available, depending on many factors such the knowledge of both the player and the characters.
 
 Because of the varying needs Inform 7 does not include any systematic way to handle conversation, instead providing a framework that can be extended upon.
-Various conversation systems are available in Inform's built-in extension library to provide system for various needs.
-[TODO: Update this when conversation is more complete]
-This extension intends to provide a conversation framework that is suitable for AIF, which is currently in the process of being developed.
-Regardless of how they choose to approach conversation, the author should exercise great care and thought when implementing it.
-Inform's included "Recipe Book" covers the topic of conversation in quite detail, starting from chapter 7.6.
-
-[TODO: A brief introduction on the various styles of conversation, converging on why we've chosen the approach we have.
-Over time, IF has evolved into two main styles of conversation, either using a branching tree of options to converse about or a keyword based approach.
-
-TODO: How the conversation model works
-
-TODO: Examples of the conversation model in play]
+Various conversation systems are available in Inform's built-in extension library, and instead of locking the extension to a particular conversation model the conversation system favored is provided in a separate extension.
+Regardless of how the author choose to approach conversation, great care and thought should go into the implementation.
+Inform's included 'Recipe Book' covers the topic of conversation in quite detail, starting from chapter 7.6.
 
 Section 5.4 - Discrete Arousal-based Consent and Stimulation
 
@@ -5433,6 +5396,66 @@ To create commands only available for testing you can mark one of the source hea
 
 Before moving on to some more programming in Inform, I would recommend exploring various tabs in the IDE, especially 'Index' which gives a helpful overview of your story world.
 
+Section 7.4 - Informed Things
+
+In the previous discussion on geography we briefly talked about the items that populate a story world.
+It's possible to broadly divide these in two main categories: things that exist to describe the story world and things that exist as part of puzzles for the player to solve.
+Hopefully the distinction between these categories should not always be apparent for the player, who would use 'ordinary world' items to solve the challenges presented by the story.
+While it's easy to determine how many puzzle items to include (answer: whatever you feel is necessary), it's much harder to settle on a correct amound of 'normal world' items.
+We briefly covered this when speaking about rooms, but it's important enough to bear repeating.
+My personal preference is that every item that's notable enough to get mentioned in the room description should have a corresponding item.
+The detail level in that item's description should be tailored to how important and relevant it is; it's even ok to have a bland 'That's not very important' description for items that are obvious fluff.
+
+Another consideration is the players behavior: It's hard to anticipate all the crazy stuff your players will try, which is why feedback from testers is very important.
+At the bare minimum you should consider that most players will pick up anything that isn't nailed down, and some will actively try to pry out the nails.
+In other words, make sure that you either account for the player moving stuff around or ensure there is a reason why they can't move it.
+Adult stories have some extra considerations here, namely clothing and body parts.
+Most of the intricacies here are handled by using this extension, and a later chapter dealing with actors will go into more detail on how to implement them.
+For now you should focus mainly on which body parts and garments you want included and how to describe them.
+
+The rest of this tutorial installment goes into rather deep technical detail for Inform 7.
+Most of the subjects brought up here will make more sense later on, but it's still important to be introduced to them in order to recognize the concepts later on.
+Not every thing in a story should be treated the same, and the primary form of differentiation is 'kinds' which closely resemble classes of other languages.
+Besides rooms, the most important kind in Inform is 'thing', and most everything you use will be a kind of thing (with the notable expection of rooms and directions).
+Inform has a concept of the following default kinds:
+
+	persons - including the player
+	containers - can contain other things inside
+	supporters - can support other things on top
+	devices - has a state that can be switched on/off
+	doors - room connector that can impede travel
+	backdrop - distant things that shouldn't be interacted with
+
+These kinds have various properties assigned to them to suit their purpose.
+Not all properties are available for all kinds though, the 'openable' and 'open/closed' properties for instance are only available for containers and doors (by default).
+The following is a short overview of the most important properties and what they apply to, focusing on the properties available in standard Inform7.
+For a full overview of properties you should look at the 'kinds' part of the Index tab.
+
+	Edible: Defined for all things and governs if the thing can be eaten, implemented by the 'eat' action (removing it from play).
+	Portable/fixed in place: Defined for all things and governs if the player can carry the thing in question, as implemented by the 'take' action. Defaults to portable except for doors, scenery, supports and people.
+	Scenery: Defined for all things to mark that which the player is not likely to interact directly with.
+	Wearable: Defined for all things and governs if the thing can be worn, as implemented by the 'wear' and 'take off' actions.
+	Transparent/Opaque: Defined for containers and governs whether the contents of the container is visible even when closed. Also used by this extension to govern if a garment blocks vision to underlying garments.
+	Enterable: Defined for containers and supporters and governs whether a person can use the 'enter' action to be inside of them.
+	Openable: Defined for doors and containers and governs whether the item is a valid target for the 'open' and 'close' actions. Doors default to openable while contains do not, unless it defined as open.
+	Open/closed: A state variable related to 'openable'.
+	Lockable: Defined for doors and containers and governs whether the item is a valid target for the 'lock' and 'unlock with' actions. Defaults to lockable if the item is locked.
+	Locked/unlocked: A state variable related top 'lockable'. 
+	Matching Key: A reference to the item which acts as a key and can be used to unlock.
+
+One feature of many object oriented languages is the ability to inherit properties from from multiple parents, where this ancestry would be a kind of property onto itself.
+Instead of allowing multiple inheritance, Inform treats properties which share the name to be the same property regardless of the kind it is defined for.
+This can be confusing for a programmer who is used to having a thing inherit the 'openable' interface to flag it for the correct actions and inherit the open/closed state.
+In the natural language style it's more intuitive to state that a thing is open and then infer that it must also be able to be opened.
+Actions in Inform (such as 'opening' and 'locking') makes use of properties, with the effect that they work on any thing which provides the correct properties (such as doors and containers).
+
+Inform uses references between compontents called 'relation' to build and maintain its world model, which a story author will mainly used for defining or checking where something is.
+Chapter 13 of 'Writing with Inform' is devoted to relations, and for the most part the names makes them easy to understand, but section 13.3 has a good overview of the most commonly used.
+A person can 'have' a thing, which is actually they union of the two relations 'carry' and 'wear'.
+With containers and supporters things can also be in 'in' or 'on' something else, with 'contained by' as the combined relation that covers both.
+We can also have assemblies where something is 'part of' something else (in which case it is 'enclosed by' that part), of which body parts is the most pertinent example at hand.
+Inform will assume that you're speaking about the player if you give no reference to which person, so the condition 'if the hat is worn' actually reads 'if the hat is worn by the player'.
+
 Chapter 8 - Technical Reference
 
 Contained in this chapter is a technical description of all the new and altered mechanics for the extension, divided by type.
@@ -5441,7 +5464,6 @@ It's intended as a companion to the other chapters, although an experienced auth
 Some parts of the extension are manually toggled by the 'use' phrase:
 
 	Use DACS: Enable the built-in Discrete Arousal-based Consent and Stimulation system.
-	Use topical conversation: Enable the built-in menu topic conversation system.
 
 Section 8.1 - New Kinds of Value
 
