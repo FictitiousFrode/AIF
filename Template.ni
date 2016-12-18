@@ -12,11 +12,11 @@ Book 0.1 - Titlepage
 
 Part 0.1.1 - Metadata
 
-The story headline is "Byline".
+The story creation year is 2017.
 The story genre is "Erotica".
+The story headline is "The byline printed when the story begins."
+The story description is "A short introduction giving the premise of the story. Will be used in the out-of-game titlecard." 
 The release number is 0.
-The story description is "Short introduction." 
-The story creation year is 2016.
 
 Part 0.1.2 - Contents
 
@@ -26,6 +26,10 @@ Bondage is a disabled story content.]
 Part 0.1.3 - Dramatis Personae
 
 [Create the persons of the story here]
+
+Part 0.1.4 - Conversation Topics
+
+[Define conversation topics that are common for multiple actors here.]
 
 Part 0.2 - Declarations
 
@@ -46,18 +50,15 @@ Some breasts is a part of every woman.
 A chest is a part of every man.
 A penis is a part of every man.
 
-Book 0.2.2 - Properties
+Book 0.2.2 - Custom Properties
 
-A body part can be spermed. A body part is usually not spermed.
-A person can be proper-named. A person is usually not proper-named.
+[A body part can be spermed. A body part is usually not spermed.
+A person can be proper-named. A person is usually not proper-named.]
 
 Book 0.3 - A Helping Hand
 
-Book 0.3.1 - Text
+Book 0.3.1 - Text Substitutions
 
-To say break: say line break.
-To say nobreak: say run paragraph on;
-To say gap: say paragraph break.
 To say i -- beginning say_i -- running on: (- style underline; -).
 To say /i -- ending say_i -- running on: (- style roman; -). 
 To say b -- beginning say_b -- running on: (- style bold; -). 
@@ -72,8 +73,8 @@ Instead of exiting when the player is not in something:
 Book 0.3.3 - Math
 
 To decide if (X - A number) is between (low - a number) and (high - a number):
-	if X >= low and X <= high, decide yes;
-	decide no;
+	If X >= low and X <= high, decide yes;
+	Decide no;
 
 Volume 1 - Act I
 
@@ -96,8 +97,7 @@ Part 1.2.1 - Scene
 Part 1.2.2 - Sex-Scene
 
 [Contents for the scene, including consent, persuasion, action descriptions
-Head/Mouth/Eyes/Hair: Nothing
-]
+Head/Mouth/Eyes/Hair: Nothing]
 
 Section - Person (kiss/hug/dance)
 
@@ -119,13 +119,13 @@ Section - Vagina (touchable/rubbable/lickable/orificial)
 
 Book 1.3 - Inhabitants
 
-[Characters related to Act I]
+[Characters related to Act I, one part for each person.]
 
 Part 1.3.1 - Person
 
-Chapter 1.3.1a - Activity
+Chapter 1.3.1a - Agency
 
-[Behavior scripts]
+[Scripts controlling behavior]
 
 Chapter 1.3.1b - Body Parts
 
@@ -150,6 +150,8 @@ Chapter 1.3.1c - Clothing
 
 Chapter 1.3.1d - Dialogue
 
+[Responses to topics.]
+
 Book 1.4 - Mechanics
 
-[Any mechanics pertaining to the act]
+[Any mechanics pertaining to the act, one part for each main feature.]

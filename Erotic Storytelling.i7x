@@ -1,4 +1,4 @@
-Version 1/161212 of Erotic Storytelling by Fictitious Frode begins here.
+Version 1/161215 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF) providing a framework for layered clothing with body parts, erotic actions with a consent system for actions involving others. 
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for NPC agency and optional story contents."
 
@@ -101,7 +101,7 @@ Chapter 1.1.1c - Body Part
 Body parts are (as the name implies) parts of a body that the player can interact with.
 It's possible to use body parts directly, but most of the time you would use a specific body part from the template section.]
 
-A body part is a kind of thing.
+A body part is a kind of thing. The indefinite article of a body part is usually "a".
 The specification of body part is "A body part represents a part of a person that the player can interact with. While they can be instantiated directly, it's usually better to use one of the templated subclasses.
 There can be several body parts in any given cover area, and although rare a body part can be in several areas and is only concealed if all of those areas have worn garments. The decency of a body part is determined by the least decent area it's in."
 
@@ -124,7 +124,7 @@ Part 1.1.2 - Clothing
 [Status: Complete
 Garments are implementation of wearable clothing that can be layered over cover areas. They have several complex sub-sets, grouped herein by chapter.]
 
-A garment is a kind of thing.
+A garment is a kind of thing. The indefinite article is usually "a".
 The specification of garment is "A garment is something a person can wear over their body parts and related cover areas. 
 Garments are quite complex, with several distinct sub-features: Some garments can be shiftable in various ways, or even be ripped apart. Transparency determines whether it blocks vision, and they can allow or block touching through. Clothing size is provided to allow garments to only be wearable by matching persons."
 
@@ -854,8 +854,7 @@ Book 1.3 - (Un-) Dressing
 Part 1.3.1 - Wearing Garments
 
 [Status: Complete
-We use the standard wearing action, but add some checks and replace the carry out rule.
-See also the consent and arousal sections.]
+We use the standard wearing action, but add some checks and replace the carry out rule.]
 
 Chapter 1.3.1a - Check
 
@@ -912,22 +911,12 @@ Carry out an actor wearing (this is the wearing garments rule):
 	If the noun is a garment:
 		Update decency for the actor;
 
-Chapter 1.3.1c - Persuasion
-
-Persuasion for asking someone to try wearing something:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone wearing something when the reason the action failed is the wearing requires consent rule: Rule succeeds;
-
 Part 1.3.2 - Taking Off Garments
 
 [Status: Complete.
 For an actor taking off their own garments, we can use the standard taking off action, but add some checks and replace the carry out rule.
 The drop undressed garments property of a person decided if the items taken off a dropped or kept by the actor.
-Part 1.3.3 deals with an actor taking someone elses clothes.
-See also the consent and arousal sections.]
+Part 1.3.3 deals with an actor taking someone elses clothes.]
 
 A person can be keep clothes after undress. A person is usually keep clothes after undress.
 
@@ -971,15 +960,6 @@ Carry out an actor taking off (this is the modified taking off rule):
 	If the noun is a garment (called G):
 		If G is shifted, now G is unshifted;
 		Update decency for the wearer;
-
-Chapter 1.3.2c - Persuasion
-
-Persuasion for asking someone to try taking off something:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone taking off something when the reason the action failed is the taking off garments requires consent rule: Rule succeeds;
 
 Part 1.3.3 - Taking Off Others
 
@@ -1032,15 +1012,6 @@ Carry out an actor taking a garment (called G) (this is the taking garments rule
 		Now the actor carries G;
 		If G is shifted, now G is unshifted;
 		Update decency for the wearer;
-
-Chapter 1.3.3c - Persuasion
-
-Persuasion for asking someone to try taking a garment:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone taking a garment when the reason the action failed is the taking garments requires consent rule: Rule succeeds;
 
 Part 1.3.4 - Dressing
 
@@ -1114,16 +1085,15 @@ Part 1.3.5 - Stripping
 Stripping is just as the name implies the act of stripping out of the currently worn clothes.
 This is done through recursive calls to take off, in the correct order.]
 
-Stripping is an action applying to nothing or one touchable thing and abbreviable.
-The specification of the stripping action is "Stripping is the act of removing all clothing worn. To accomplish this, all garments are first undressed in descending order of layer, before any other wearables are removed."
+Stripping is an action applying to one touchable thing.
+The specification of the stripping action is "Stripping is the act of removing all clothing worn. To accomplish this all garments are undressed in descending order of layer."
+
+Implicit stripping is an action applying to nothing.
 
 Chapter 1.3.5a - Understanding
 
 Understand "strip [something]", "undress [something]" as stripping.
-Understand "strip", "undress", "get undressed", "disrobe" as stripping.
-
-Rule for supplying a missing noun while stripping (this is the implicit stripping rule):
-	Now the noun is the person asked;
+Understand "strip", "undress", "get undressed", "disrobe" as implicit stripping.
 
 Chapter 1.3.5b - Check
 
@@ -1146,29 +1116,35 @@ Check an actor stripping something (this is the can't strip naked people rule):
 
 Chapter 1.3.5c - Carry Out
 
+Carry out an actor implicit stripping (this is the implicit stripping redirect rule):
+	Try the actor stripping the actor instead;
+
 Carry out an actor stripping (this is the default stripping rule):
 	Let clothing be the list of garments worn by noun;
 	Sort clothing in reverse clothing layer order;
-	Repeat with C running through clothing:
+	Let stoppage be false;
+	Repeat with garment running through clothing:
 		If the actor is the noun:
-			Silently try the actor taking off C;
+			If stoppage is false, silently try the actor taking off garment;
 		Else:
-			Silently try the actor taking C;
-		If the noun is wearing C, stop the action;
+			If stoppage is false, silently try the actor taking garment;
+		If the noun is wearing garment:
+			If the actor is not the player, say "[The actor] [are] unable to take off [the garment]." (A);
+			Let stoppage be true;
 
 Chapter 1.3.5d - Report
 
 Report an actor stripping (this is the report stripping rule):
-	If the actor is not wearing any garments:
+	If the noun is not wearing any garments:
 		If the player is the actor:
-			Say "[We] [take] off all [their] clothes and is now completely naked." (A);
+			Say "[We] [take] off all [their] clothes and [are] now completely naked." (A);
 		Else if the player can see the actor and the actor is the noun:
-			Say "[The actor] [take] off all [their] clothes and is now completely naked." (B);
+			Say "[The actor] [take] off all [their] clothes and [are] now completely naked." (B);
 		Else if the player can see the noun:
 			If the player can see the actor:
-				Say "[The noun] has all of [their] clothes removed by [the actor], and is now completely naked." (C);
+				Say "[The noun] has all of [their] clothes removed by [the actor], and [are] now completely naked." (C);
 			Else:
-				Say "[The noun] has all of [their] clothes removed, and is now completely naked." (D);
+				Say "[The noun] has all of [their] clothes removed, and [are] now completely naked." (D);
 	Else:
 		If the player is the actor:
 			Say "[We] [are] unable to take off [regarding the noun][their] clothes." (E);
@@ -1300,15 +1276,6 @@ Report an actor shifting (this is the standard report shifting rule):
 		Else if the player can see the noun:
 			Say "[The noun] [are] [the describe shifting of the shiftyness of the noun]." (F);
 
-Chapter 1.4.1e - Persuasion
-
-Persuasion for asking someone to try shifting something:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone shifting something when the reason the action failed is the shifting garments requires consent rule: Rule succeeds;
-
 Part 1.4.2 - Unshifting
 
 [Status: Complete
@@ -1396,15 +1363,6 @@ Report an actor unshifting (this is the standard report unshifting rule):
 	Else if the player can see the actor:
 		say "[The actor] [the describe unshifting of the shiftyness of the noun] [the noun]." (B);
 
-Chapter 1.4.2e - Persuasion
-
-Persuasion for asking someone to try unshifting something:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone unshifting something when the reason the action failed is the unshifting garments requires consent rule: Rule succeeds;
-
 Part 1.4.3 - Ripping
 
 [Status: Complete
@@ -1490,22 +1448,13 @@ Report an actor ripping (this is the standard report ripping rule):
 		Else if the player can see the noun:
 			Say "[The noun] [are] ripped apart." (F);
 
-Chapter 1.4.3e - Persuasion
-
-Persuasion for asking someone to try ripping something:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone ripping something when the reason the action failed is the ripping garments requires consent rule: Rule succeeds;
-
 Volume 2 - Actors
 
 [This volume deals with fleshing out actors.
 The first book deals with automating agency of actors to make them more life-like.
 The second book deals with ways to automatically flesh out the description of people.
-The third book is an attempt at an improved conversation system.
-The last book deals with posturing.]
+The third book is an attempt at an improved conversation system - Excised into its own extension.
+The last book deals with posturing - Excised into its own extension.]
 
 Book 2.1 - Agency
 
@@ -1527,20 +1476,20 @@ It can also be set manually as needed to delay agency for a turn, but if longer 
 
 A person can be occupied or unoccupied. A person is usually unoccupied.
 
-Before asking someone (called P) to try doing something:
+Before asking someone (called P) to try doing something (this is the mark instruced person as occupied rule):
 	Now P is occupied;
 	Continue the action;
 
-Before doing something to someone (called P):
+Before doing something to someone (called P) (this is the mark person as occupied rule):
 	Now P is occupied;
 	Continue the action;
 
-Before doing something to a body part (called B):
+Before doing something to a body part (called B) (this is the mark body part holder as occupied rule):
 	If B is part of a person (called P):
 		Now P is occupied;
 	Continue the action;
 
-Before doing something to a garment (called G):
+Before doing something to a garment (called G) (this is the mark clothing wearer as occupied rule):
 	If G is worn by person (called P):
 		Now P is occupied;
 	Continue the action;
@@ -1710,11 +1659,13 @@ A default description generation for a person (called P) (This is the generate s
 	Repeat with cloth running through clothing:
 		Follow the description notability rules for cloth;
 		If the outcome of the rulebook is the distinct outcome:
-			If cloth provides the property short description 
-			and the short description of the cloth is not the default value of text:
-				Add "[indefinite article of cloth] [short description of cloth]" to the notable clothing descriptions;
+			Let cloth-status be "";
+			If cloth provides the property ripped and the cloth is ripped, let cloth-status be " (ripped)";
+			If cloth provides the property shifted and the cloth is shifted, let cloth-status be " ([describe shifted of the shiftyness of cloth])";
+			If cloth provides the property short description and the short description of the cloth is not the default value of text:
+				Add "[indefinite article of cloth] [short description of cloth][cloth-status]" to the notable clothing descriptions;
 			Else:
-				Add "[a cloth]" to the notable clothing descriptions;
+				Add "[a cloth][cloth-status]" to the notable clothing descriptions;
 	Let possessions be the list of things carried by P;
 	Repeat with possession running through possessions:
 		Follow the description notability rules for possession;
@@ -1769,7 +1720,10 @@ A default description generation rule for a person (called P) (this is the gener
 	Repeat with cloth running through clothing:
 		Follow the description notability rules for cloth;
 		If the outcome of the rulebook is the grouped outcome:
-			Add "[a cloth]" to the grouped clothing descriptions;
+			Let cloth-status be "";
+			If cloth provides the property ripped and the cloth is ripped, let cloth-status be " (ripped)";
+			If cloth provides the property shifted and the cloth is shifted, let cloth-status be " ([describe shifted of the shiftyness of cloth])";
+			Add "[a cloth][cloth-status]" to the grouped clothing descriptions;
 	Let possessions be the list of things carried by P;
 	Repeat with possession running through possessions:
 		Follow the description notability rules for possession;
@@ -1790,53 +1744,6 @@ Section - State summary (4)
 A default description generation rule for a person (called P) (this is the generate script description rule):
 	If P provides the property agency state description and the agency state description is not the default value of text:
 		Say the agency state description of P;
-
-Book 2.3 - Conversation
-
-[This book deals with setting up a conversation system that's based on topics the player can know about, and for which people have various responses.]
-
-Use topical conversation translates as (- Constant ENABLE_TOPIC_CONVERSATION; -).
-
-Part 2.3.1 - Concepts
-
-[Status: TODO/In progress]
-
-Chapter 2.3.1a - Topics
-
-Chapter - Knowledge
-
-Chapter - Responses
-
-Part 2.3.2 - Talking Actions
-
-Chapter 2.3.2a - Talk To
-
-Chapter 2.3.2b - Talk About
-
-Part 2.3.3 - Modified Actions
-
-Chapter 2.3.3a - Asking
-
-Chapter 2.3.3b - Telling
-
-Book 2.4 - Posturing
-
-[Status: TODO]
-
-Part 2.4.1 - Concepts
-
-Chapter 2.4.1a - Postures
-
-[TODO: This should probably be defined with a table.
-A posture is a kind of value. 
-The postures are standing, sitting, kneeling, bending, prone and supine.
-A person has a posture.]
-
-Chapter 2.4.1b - Checking for Postures
-
-Part 2.4.2 - Action Integration
-
-Part 2.4.3 - Changing Postures
 
 Volume 3 - Erotic Actions
 
@@ -1996,15 +1903,6 @@ Carry out an actor touching (this is the seek stimulation for touching rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
 
-Chapter 3.2.1e - Persuasion
-
-Persuasion for asking someone to try touching something:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone touching something when the reason the action failed is the seek consent for touching rule: Rule succeeds;
-
 Part 3.2.2 - Rubbing
 
 [Status: Complete
@@ -2074,15 +1972,6 @@ Chapter 3.2.2c - Carry Out
 Carry out an actor rubbing (this is the seek stimulation for rubbing rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
-
-Chapter 3.2.2e - Persuasion
-
-Persuasion for asking someone to try rubbing something:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone rubbing something when the reason the action failed is the seek consent for rubbing rule: Rule succeeds;
 
 Part 3.2.3 - Tickling
 
@@ -2169,15 +2058,6 @@ Report an actor tickling (this is the report tickling rule):
 	Else if the player can see the noun:
 		Say "[The noun] [are] tickled." (C);
 
-Chapter 3.2.3e - Persuasion
-
-Persuasion for asking someone to try tickling something:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone tickling something when the reason the action failed is the seek consent for tickling rule: Rule succeeds;
-
 Part 3.2.4 - Spanking
 
 [Status: Complete
@@ -2254,15 +2134,6 @@ Report an actor spanking (this is the report spanking rule):
 		Say "[The actor] [spank] [the noun]." (B);
 	Else if the player can see the noun:
 		Say "[The noun] [are] spanked." (C);
-
-Chapter 3.2.4e - Persuasion
-
-Persuasion for asking someone to try spanking something:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone spanking something when the reason the action failed is the seek consent for spanking rule: Rule succeeds;
 
 Part 3.2.5 - Pinching
 
@@ -2348,15 +2219,6 @@ Report an actor pinching (this is the report pinching rule):
 		Say "[The actor] [pinch] [the noun]." (B);
 	Else if the player can see the noun:
 		Say "[The noun] [are] pinched." (C);
-
-Chapter 3.2.5e - Persuasion
-
-Persuasion for asking someone to try pinching something:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone pinching something when the reason the action failed is the seek consent for pinching rule: Rule succeeds;
 
 Part 3.2.6 - Licking
 
@@ -2449,15 +2311,6 @@ Report an actor licking (this is the report licking rule):
 	Else if the player can see the noun:
 		Say "[The noun] [are] licked." (C);
 
-Chapter 3.2.5e - Persuasion
-
-Persuasion for asking someone to try licking something:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone licking something when the reason the action failed is the seek consent for licking rule: Rule succeeds;
-
 Part 3.2.7 - Biting
 
 [Status: Complete
@@ -2545,15 +2398,6 @@ Report an actor biting (this is the report biting rule):
 	Else if the player can see the noun:
 		Say "[The noun] [are] bitten." (C);
 
-Chapter 3.2.5e - Persuasion
-
-Persuasion for asking someone to try biting something:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone biting something when the reason the action failed is the seek consent for biting rule: Rule succeeds;
-
 Part 3.2.8 - Fucking It With
 
 [Status: Complete
@@ -2639,9 +2483,6 @@ Check an actor fucking something with (this is the seek consent for fucking rule
 	Unless the outcome of the rulebook is the give consent outcome:
 		Stop the action;
 		
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone fucking something with when the reason the action failed is the seek consent for fucking rule: Rule succeeds;
-
 Chapter 3.2.8c - Carry Out
 
 Carry out an actor fucking something with (this is the seek stimulation for fucking rule):
@@ -2657,15 +2498,6 @@ Report an actor fucking something with (this is the report fucking rule):
 		Say "[The actor] [fuck] [the noun] with [the second noun]." (B);
 	Else if the player can see the noun:
 		Say "[The noun] [are] fucked." (C);
-
-Chapter 3.2.5e - Persuasion
-
-Persuasion for asking someone to try fucking something with:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone fucking something with when the reason the action failed is the seek consent for fucking rule: Rule succeeds;
 
 Book 3.3 - Person Actions
 
@@ -2744,15 +2576,6 @@ Report an actor kissing (this is the report kissing rule):
 	Else if the player can see the noun:
 		Say "[The noun] [are] kissed." (C);
 
-Chapter 3.3.1e - Persuasion
-
-Persuasion for asking someone to try kissing something:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone kissing something when the reason the action failed is the seek consent for kissing rule: Rule succeeds;
-
 Part 3.3.2 - Hugging
 
 [Status: Complete
@@ -2826,15 +2649,6 @@ Report an actor hugging (this is the report hugging rule):
 	Else if the player can see the noun:
 		Say "[The noun] [are] hugged." (C);
 
-Chapter 3.3.2e - Persuasion
-
-Persuasion for asking someone to try hugging something:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone hugging something when the reason the action failed is the seek consent for hugging rule: Rule succeeds;
-
 Part 3.3.3 - Dancing 
 
 [Status: Complete
@@ -2844,12 +2658,13 @@ The dancing decency is initially formal.
 
 Dancing is an action applying to one touchable thing.
 The specification of the dancing action is "Dancing with is the act of dancing with a someone, including dancing with yourself."
+Implicit dancing is an action applying to nothing.
 
 Chapter 3.3.3a - Understanding
 
 Understand "dance with [something]" as dancing.
-Understand "dance" as dancing.
-Understand "dance for me" as dancing.
+Understand "dance" as implicit dancing.
+Understand "dance for me" as implicit dancing.
 
 Does the player mean dancing a person: It is likely.
 Does the player mean dancing the player: It is very unlikely.
@@ -2885,6 +2700,9 @@ Check an actor dancing (this is the seek consent for dancing rule):
 
 Chapter 3.3.3c - Carry Out
 
+Carry out an actor implicit dancing (this is the implicit dancing redirect rule):
+	Try the actor dancing the actor instead;
+
 Carry out an actor dancing (this is the seek stimulation for dancing rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
@@ -2899,15 +2717,6 @@ Report an actor dancing (this is the report dancing rule):
 		Say "[The actor] [dance] with [the noun]." (B);
 	Else if the player can see the noun:
 		Say "[The noun] [are] danced with." (C);
-
-Chapter 3.3.3e - Persuasion
-
-Persuasion for asking someone to try dancing something:
-	Follow the consent rules;
-	If the outcome of the rulebook is the give consent outcome, persuasion succeeds;
-	
-[Persuasion failed messages for when seek consent fails is unneccessary.]
-Unsuccessful attempt by someone dancing something when the reason the action failed is the seek consent for dancing rule: Rule succeeds;
 
 Book 3.4 - Redirect Helpers
 
@@ -3119,6 +2928,139 @@ To decide whether (P - a person) orgasms:
 			Decide yes;
 	Decide no;
 
+Book 3.6 - Default Persuasion
+
+[Ideally we would find a way to use the consent rules to grant persuasion. 
+Unfortunately the action of asking another person to do something is not easily converted to the person doing the action. Instead we grant default persuasion success for the actions that require consent, and let the consent rules stop the action instead.
+Because this is a rather big change, we make it an optional toggle.]
+
+Use consensual persuasion translates as (- Constant IMPLIED_PERSUASION; -). 
+
+Part 3.6.1 - Clothing Actions
+
+Chapter 3.6.1a - Wearing Garments
+
+Persuasion for asking someone to try wearing a garment (this is the consensual wearing persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone wearing something when the reason the action failed is the wearing requires consent rule: Rule succeeds;
+
+Chapter 3.6.1b - Taking Off Garments
+
+Persuasion for asking someone to try taking off a garment (this is the consensual taking garments persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone taking off something when the reason the action failed is the taking off garments requires consent rule: Rule succeeds;
+
+Chapter 3.6.1c - Taking Garments Off Others
+
+Persuasion for asking someone to try taking a garment (this is the consensual taking off garments persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone taking a garment when the reason the action failed is the taking garments requires consent rule: Rule succeeds;
+
+Chapter 3.6.1d - Shifting Garments
+
+Persuasion for asking someone to try shifting a garment (this is the consensual shifting garments persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone shifting something when the reason the action failed is the shifting garments requires consent rule: Rule succeeds;
+
+Chapter 3.6.1e - Unshifting Garments
+
+Persuasion for asking someone to try unshifting a garment (this is the consensual unshifting garments persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone unshifting something when the reason the action failed is the unshifting garments requires consent rule: Rule succeeds;
+
+Chapter 3.6.1f - Ripping Garments
+
+Persuasion for asking someone to try ripping a garment (this is the consensual ripping garments persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone ripping something when the reason the action failed is the ripping garments requires consent rule: Rule succeeds;
+
+Chapter 3.6.1g - Dressing
+
+Persuasion for asking someone to try dressing (this is the consensual dressing persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+
+Chapter 3.6.1h - Stripping
+
+Persuasion for asking someone to try stripping (this is the consensual stripping persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Persuasion for asking someone to try implicit stripping (this is the consensual implicit stripping persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+
+Part 3.6.2 - Body Part Actions
+
+Chapter 3.6.2a - Touching
+
+Persuasion for asking someone to try touching a person (this is the consensual touching people persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Persuasion for asking someone to try touching something enclosed by a person (this is the consensual touching persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone touching something when the reason the action failed is the seek consent for touching rule: Rule succeeds;
+
+Chapter 3.6.2b - Rubbing
+
+Persuasion for asking someone to try rubbing a person (this is the consensual rubbing people persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Persuasion for asking someone to try rubbing something enclosed by a person (this is the consensual rubbing persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone rubbing something when the reason the action failed is the seek consent for rubbing rule: Rule succeeds;
+
+Chapter 3.6.2c - Tickling
+
+Persuasion for asking someone to try tickling a person (this is the consensual tickling people persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Persuasion for asking someone to try tickling something enclosed by a person (this is the consensual tickling persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone tickling something when the reason the action failed is the seek consent for tickling rule: Rule succeeds;
+
+Chapter 3.6.2d - Spanking
+
+Persuasion for asking someone to try spanking a person (this is the consensual spanking people persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Persuasion for asking someone to try spanking something enclosed by a person (this is the consensual spanking persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone spanking something when the reason the action failed is the seek consent for spanking rule: Rule succeeds;
+
+Chapter 3.6.2e - Pinching
+
+Persuasion for asking someone to try pinching a person (this is the consensual pinching people persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Persuasion for asking someone to try pinching something enclosed by a person (this is the consensual pinching persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone pinching something when the reason the action failed is the seek consent for pinching rule: Rule succeeds;
+
+Chapter 3.6.2f - Licking
+
+Persuasion for asking someone to try licking a person (this is the consensual licking people persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Persuasion for asking someone to try licking something enclosed by a person (this is the consensual licking persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone licking something when the reason the action failed is the seek consent for licking rule: Rule succeeds;
+
+Chapter 3.6.2g - Biting
+
+Persuasion for asking someone to try biting a person (this is the consensual biting people persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Persuasion for asking someone to try biting something enclosed by a person (this is the consensual biting persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone biting something when the reason the action failed is the seek consent for biting rule: Rule succeeds;
+
+Chapter 3.6.2h - Fucking It With
+
+Persuasion for asking someone to try fucking something with something (this is the consensual fucking persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone fucking something with when the reason the action failed is the seek consent for fucking rule: Rule succeeds;
+
+Part 3.6.3 - Person Actions
+
+Chapter 3.6.3a - Kissing
+
+Persuasion for asking someone to try kissing a person (this is the consensual kissing people persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Persuasion for asking someone to try kissing something enclosed by a person (this is the consensual kissing persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone kissing something when the reason the action failed is the seek consent for kissing rule: Rule succeeds;
+
+Chapter 3.6.3b - Hugging
+
+Persuasion for asking someone to try hugging a person (this is the consensual hugging people persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Persuasion for asking someone to try hugging something enclosed by a person (this is the consensual hugging persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone hugging something when the reason the action failed is the seek consent for hugging rule: Rule succeeds;
+
+Chapter 3.6.3c - Dancing
+
+Persuasion for asking someone to try implicit dancing (this is the consensual implicit dancing persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Persuasion for asking someone to try dancing a person (this is the consensual dancing people persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Persuasion for asking someone to try dancing something enclosed by a person (this is the consensual dancing persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone dancing something when the reason the action failed is the seek consent for dancing rule: Rule succeeds;
+
+Part 3.6.4 - Redirect Actions
+
+Chapter 3.6.4a - Fucking
+
+Persuasion for asking someone to try fucking something (this is the consensual implicit fucking persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+
+Chapter 3.6.4b - Assfucking
+
+Persuasion for asking someone to try assfucking something (this is the consensual implicit assfucking persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+
+Chapter 3.6.4c - Titfucking
+
+Persuasion for asking someone to try titfucking something (this is the consensual implicit titfucking persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+
 Volume 4 - Support Systems
 
 [This volume deals with out-of-game support systems to improve the experience for both the player and the author.]
@@ -3185,12 +3127,16 @@ Carry out debug examining something (this is the debug examine garments rule):
 
 Chapter 4.1.1d - Person
 
-[TODO]
-
+Carry out debug examining something (this is the debug examine people rule):
+	If noun is a person:
+		Now debug text printed is true;
+		Repeat with area running through the body areas of the noun:
+			Let considered be the exposed by area on the noun;
+			Say "[Area] - [considered][line break]";
 
 Book 4.2 - Story Contents
 
-[Status: TODO/In development
+[Status: In development/Stable-Unfinished
 A system for the story author to announce to the player which types of content the story contains, with the possibility of some types being optional based on the player's preferences.]
 
 Part 4.2.1 - Concepts
@@ -3213,7 +3159,7 @@ A disabled story content is usually optional.
 
 Part 4.2.2 - Manipulation
 
-[Status: In development
+[Status: In development/Stable-Unfinished
 This part deals with the player's interaction of the story contents, including viewing which content is included and toggling anything that's optional.]
 
 Chapter 4.2.2a - Displaying Contents
@@ -3350,7 +3296,6 @@ Part 5.1.1 - Anatomy
 Chapter 5.1.1a - Head
 
 A head is a kind of body part.
-The indefinite article is usually "a".
 The cover locations of a head is usually {the head area}.
 
 Some hair is a kind of body part.
@@ -3358,11 +3303,9 @@ It is usually ambiguously plural. The indefinite article is usually "some".
 The cover locations of hair is usually {the head area}.
 
 A face is a kind of body part.
-The indefinite article is usually "a".
 The cover locations of face is usually {the face area}.
 
 A mouth is a kind of body part.
-The indefinite article is usually "a".
 The cover locations of mouth is usually {the face area}.
 Understand "lip", "lips" as mouth.
 
@@ -3412,7 +3355,6 @@ Some hands is usually touchable. Some hands is usually rubbable.
 Chapter 5.1.1c - Torso
 
 A neck is a kind of body part.
-The indefinite article is usually "a".
 The cover locations of a neck is usually {the shoulder area}.
 A neck is usually lickable. A neck is usually biteable.
 
@@ -3422,7 +3364,6 @@ The cover locations of some shoulders is usually {the shoulder area}.
 Some shoulders is usually rubbable. 
 
 A chest is a kind of body part.
-The indefinite article is usually "a".
 The cover locations of a chest is usually {the upper torso area}.
 A chest is usually touchable. A chest is usually rubbable. A chest is usually tickleable. A chest is usually lickable. A chest is usually biteable.
 
@@ -3433,17 +3374,14 @@ Understand "tit", "tits", "breast", "boob", "boobs", "tittie", "titties" and "ju
 Some breasts is usually touchable. Some breasts is usually rubbable. Some breasts is usually tickleable. Some breasts is usually lickable. Some breasts is usually biteable. Some breasts is usually pinchable.
 
 A midriff is a kind of body part.
-The indefinite article is usually "a".
 The cover locations of a midriff is usually {the lower torso area}.
 Understand "stomach", "tummy" as midriff.
 A midriff is usually touchable. A midriff is usually rubbable. A midriff is usually tickleable. A midriff is usually lickable.
 
 A waist is a kind of body part.
-The indefinite article is usually "a".
 The cover locations of a waist is usually {the lower torso area, the lower back area}.
 
 A backside is a kind of body part.
-The indefinite article is usually "a".
 The cover locations of a backside is usually {the upper back area, the lower back area}.
 
 Chapter 5.1.1d - Crotch
@@ -3455,13 +3393,11 @@ Understand "asshole", "anus", "rear", "rear end", "butt", "bottom", "rump" as as
 An ass is usually touchable. An ass is usually rubbable. An ass is usually spankable. An ass is usually pinchable. An ass is usually lickable. An ass is usually orificial.
 
 A penis is a kind of body part.
-The indefinite article is usually "a".
 The cover locations of a penis is usually {the crotch area}.
 Understand "cock", "dick", "wang", "dong", "wiener", "willy", "schlong", "boner", "pecker" as penis.
 A penis is usually touchable. A penis is usually rubbable. A penis is usually pinchable. A penis is usually lickable. A penis is usually biteable. A penis is usually penetrating.
 
 A vagina is a kind of body part.
-The indefinite article is usually "a".
 The cover locations of a vagina is usually {the crotch area}.
 Understand "pussy", "cunt", "slit", "crotch", "snatch", "clitoris", "clit", "twat" as vagina.
 A vagina is usually touchable. A vagina is usually rubbable. A vagina is usually lickable. A vagina is usually orificial.
@@ -3484,7 +3420,6 @@ Some panties is usually shiftable. The shiftyness of some panties is usually mov
 Some panties is usually rippable. The ripping revealed cover areas of some panties is usually {crotch area}.
 
 A bra is a kind of garment.
-The indefinite article is usually "a".
 The specification of bra is "Bras are usually indecent underwear, and go on the upper torso/back."
 A bra is usually underwear.
 The cloth decency of a bra is usually indecent.
@@ -3501,7 +3436,6 @@ The cover areas of an undershirt is usually {upper torso area, lower torso area,
 An undershirt is usually rippable. The ripping revealed cover areas of an undershirt is usually a {upper torso area}.
 
 A swimsuit is a kind of garment.
-The indefinite article is usually "a".
 The specification of swimsuit is "A swimsuit is immodest underwear that covers the upper torso, lower back/torso and crotch. It doesn't necessarily have to be for swimming; teddies and similar underwear can also use the same template. It can usually be moved aside to expose upper torso."
 A swimsuit is usually underwear.
 The cloth decency of a swimsuit is usually immodest.
@@ -3510,14 +3444,12 @@ The cover areas of a swimsuit is usually {upper torso area, lower torso area, lo
 A swimsuit is usually shiftable. The shiftyness of a swimsuit is usually moveable. The shifting revealed cover areas of a swimsuit is usually a {upper torso area}.
 
 A bodysuit is a kind of garment.
-The indefinite article is usually "a".
 The specification of bodysuit is "A bodysuit is a special form of indecent underwear that covers most of a person, only leaving the hands and head/face uncovered."
 A bodysuit is usually underwear.
 The cloth decency of a bodysuit is usually indecent.
 The cover areas of a bodysuit is usually {shoulder area, arm area, upper torso area, upper back area, lower torso area, lower back area, crotch area, thigh area, leg area, feet area}.
 
 A mask is a kind of garment.
-The indefinite article is usually "a".
 The specification of mask is "A mask covers a persons face and head, and is usually immodest. This is a piece of garment that should be used with care, as it will block access to a person's mouth."
 A mask is usually underwear.
 The cloth decency of a mask is usually immodest.
@@ -3554,7 +3486,6 @@ The cover areas of some pantyhose is usually {feet area, leg area, thigh area, c
 Some pantyhose is usually rippable. The ripping revealed cover areas of some pantyhose is usually {crotch area}.
 
 A shirt is a kind of garment.
-The indefinite article is usually "a".
 The specification of shirt is "Shirt covers the entire back and torso, as well as shoulders and arms. It is usually casual and normalwear."
 A shirt is usually normalwear.
 The cloth decency of shirt is usually casual.
@@ -3576,7 +3507,6 @@ Chapter 5.1.2c - Overwear
 [Overwear is the outer layer of clothing, and is only covered by outerwear (clothing that is meant for outside use).]
 
 A dress is a kind of garment.
-The indefinite article is usually "a".
 The specification of a dress is "A dress covers the entire torso (front and back), as well as the arms/shoulders and thighs/legs. It is usually formal and outerwear. This means a shirt under it, but not a sweater can be worn over it. Making it normalwear would also make for some interesting interactions with pantyhose and trousers. By default a dress can be unbuttoned to access the upper torso; to change this to make it raisable to access the crotch see the definition of minidress (you might also want to change default cover blocking).
 Note; Dresses go under boots, which might cause some issues if boots are modified to cover legs/thighs."
 A dress is usually overwear.
@@ -3586,7 +3516,6 @@ A dress is usually default cover blocking.
 A dress is usually shiftable. The shiftyness of a dress is usually buttonable. The shifting revealed cover areas of a dress is usually {shoulder area, upper torso area, lower torso area}.
 
 A minidress is a kind of garment.
-The indefinite article is usually "a".
 The specification of a minidress is "A minidress is a short dress that doesn't cover the legs; see dress for more details. It's usually casual and normalwear. It's can usually be raised to gain access to the crotch."
 A minidress is usually overwear.
 The cloth decency of minidress is usually immodest.
@@ -3613,7 +3542,6 @@ Some shorts is usually default cover blocking.
 Some shorts is usually shiftable. The shiftyness of some shorts is usually zipable. The shifting revealed cover areas of some shorts is usually {crotch area}.
 
 A skirt is a kind of garment.
-The indefinite article is usually "a".
 The specification of skirt is "A skirt is usually a casual overwear that covers the crotch and thighs, and can easily be made longer by changing the default cover areas. It's usually liftable to expose everything."
 A skirt is usually overwear.
 The cloth decency of skirt is usually casual.
@@ -3621,7 +3549,6 @@ The cover areas of a skirt is usually {thigh area, crotch area}.
 A skirt is usually shiftable. The shiftyness of a skirt is usually raisable. The shifting revealed cover areas of a skirt is usually a {thigh area, crotch area}.
 
 A sweater is a kind of garment.
-The indefinite article is usually "a".
 The specification of a sweater is "A sweater is a casual overwear that covers the entire upper body and arms. It can be pulled up to expose the upper and lower torso."
 A sweater is usually overwear.
 The cloth decency of sweater is usually casual.
@@ -3630,7 +3557,6 @@ A sweater is usually default cover blocking.
 A sweater is usually shiftable. The shiftyness of a sweater is usually raisable. The shifting revealed cover areas of a sweater is usually a {upper torso area, lower torso area}.
 
 A suit is a kind of garment.
-The indefinite article is usually "a".
 The specification of a suit is "A suit is really a combination of a sweater-jacket and pants. It's usually formal overwear, and covers the  front and back of the torso, arms, legs/thighs and crotch. It can be unzipped to access the crotch."
 The cover areas of a suit is usually {upper torso area, lower torso area, arm area, shoulder area, upper back area, lower back area, leg area, thigh area, crotch area}.
 A suit is usually overwear.
@@ -3658,14 +3584,12 @@ The cloth decency of some boots is usually formal.
 The cover areas of some boots is usually {feet area, leg area}.
 
 A hat is a kind of garment.
-The indefinite article is usually "a".
 The specification of hat is "A hat goes on the head, and is usually formal outerwear. Because a hat covers the head area, it will block direct view of hair."
 A hat is usually outerwear.
 The cloth decency of a hat is usually formal.
 The cover areas of a hat is usually {head area}.
 
 A jacket is a kind of garment.
-The indefinite article is usually "a".
 The specification of jacket is "A jacket is usually formal outerwear that is worn over the torso. It can be unbuttoned to expose the front."
 The cover areas of a jacket is usually {arm area, shoulder area, upper torso area, lower torso area, upper back area, lower back area}.
 A jacket is usually outerwear.
@@ -3674,7 +3598,6 @@ A jacket is usually default cover blocking.
 A jacket is usually shiftable. The shiftyness of a jacket is usually buttonable. The shifting revealed cover areas of a jacket is usually {upper torso area, lower torso area}.
 
 A coat is a kind of garment.
-The indefinite article is usually "a".
 The specification of coat is "A coat a longer version of a jacket, that also covers the thighs and crotch. It can be unbuttoned to expose the front and thighs/crotch."
 The cover areas of a coat is usually {arm area, shoulder area, upper torso area, lower torso area, upper back area, lower back area, crotch area, thigh area}.
 A coat is usually outerwear.
@@ -3683,7 +3606,6 @@ A coat is usually default cover blocking.
 A coat is usually shiftable. The shiftyness of a coat is usually buttonable. The shifting revealed cover areas of a coat is usually {shoulder area, upper torso area, lower torso area, crotch area, thigh area}.
 
 Some gloves is a kind of garment.
-The indefinite article is usually "a".
 It is usually ambiguously plural. The indefinite article is usually "some". The plural of some gloves is pairs of gloves.
 The specification of some gloves is "Gloves are formal outerwear that go over the hands."
 Some gloves is usually outerwear.
@@ -3710,11 +3632,6 @@ The cloth decency of a strap-on is usually indecent.
 A strap-on is usually allow touching through.
 The cover areas of a strap-on is usually {crotch area}.
 A strap-on can be penetrating. A strap-on is usually penetrating.
-
-Part 5.1.4 - Furniture
-
-[Status: Awaiting implementation of posturing.
-TODO]
 
 Book 5.2 - Discrete Arousal-based Consent and Stimulation
 
@@ -4379,8 +4296,8 @@ The sections of this chapter introduces the various concepts available within th
 Towards the end of the documentation you will find a fully fleshed out tutorial and sample adventure, and a complete technical reference.
 All kinds and actions are also documented inside the Inform IDE.
 
-Note; Inform can behave slightly odd regarding the naming (and creation) of things which are part of the character, this is described in chapter 4.15 of "Writing with Inform".
-As long as the player is declared after the creation of the body part, then the body part will be named after what the character was named.
+Note; Inform can behave slightly odd regarding the naming (and creation) of things which are part of the character, this is described in chapter 4.15 of 'Writing with Inform'.
+As long as the player is declared after the creation of the body part, then the body part will be named after what the character was named instead of 'your part'.
 Any gender-specific creations might not occur if the gender of the player was undetermined at that point.
 Likewise, changing the identity of the player during play might give unexpected results.
 
@@ -4392,14 +4309,20 @@ As this is a large and complex, a proper overview of what can be found in the do
 
 	Chapter 1: An overview of the included concepts, necessary reading for using the extension.
 	Chapter 2: A deeper look at the actions available, and how to make them work.
-	Chapter 3: In-depth explanation of how the layered clothing system works. Mostly intended for advanced users who want customization.
+	Chapter 3: In-depth explanation of how the layered clothing system works.
 	Chapter 4: Guidelines on how to write better descriptions, using both the hooks in the extension and Inform's standard rules.
 	Chapter 5: Techniques for writing better Non-Player Characters (NPCs) using the extension.
 	Chapter 6: The various out-of-world functions, such as completion tracking, hint system and debugging.
 	Chapter 7: A tutorial on how to write Erotic Stories in Inform.
-	Chapter 8: A complete technical reference for everything changed or added with this extension.
+	Chapter 8: A complete technical reference for everything added or changed with this extension.
 
-[TODO: List of examples]
+The following examples are included:
+
+	A: Templates: Factory Mould - Using the provided templates to flesh out actors.
+	B: DACS - Not yet written.
+	C: Agency: Intelligent Agency - Not yet written.
+	D: Customization: A Furry Tale - How to create custom body parts.
+	E: Scenes - Not yet written.
 
 Section 1.2 - Responses and Descriptions
 
@@ -4408,7 +4331,7 @@ It follows that an extension should focus on making it easier for the story auth
 This allows the author to focus on the creative work, like the plot, characters, and stylistic writing.
 
 Inform offers several ways of altering responses for specific actions.
-Inform's standard documentation "Writing with Inform" has several examples on how to vary text, and chapter 12.2 ("How actions are processed") goes into some detail on how action responses are chosen.
+Inform's standard documentation 'Writing with Inform' has several examples on how to vary text, and chapter 12.2 ("How actions are processed") goes into some detail on how action responses are chosen.
 What follows is a quick overview of how to best utilize this extension to generate responses and description:
 
 After: As the name implies, these rules are processed after the action has taken place, in place of the default action report rules.
@@ -4440,7 +4363,7 @@ See the later chapter "Descriptions in Detail" for more on this.
 
 Persuasion/Consent: Persuasion is a built-in rulebook, and is invoked when the player asks another person to do something.
 This can be a common occurrence in AIFs, so it's important to include (or at least provide better rules to govern failed persuasion attempts).
-Chapter 12.4 of "Writing with Inform" covers the use of persuasion.
+Chapter 12.4 of 'Writing with Inform' covers the use of persuasion.
 Consent is a new rulebook for this extension, and works in a similar way to make it possible for persons to object to the player's actions if they are directly involved.
 To avoid having to write both consent and persuasion rules for the same action, persuasion for the actions included can be granted from the consent rules.
 Note that it is also possible to take advantage of the bundled Discrete-Arousal-based Consent and Stimulation (DACS) system.
@@ -4452,7 +4375,7 @@ In general, the more specific the parameters are, the higher priority the rule g
 (E.g., a named person beats a generic person, and a templated body part beats the generic body part.)
 Handily, if a scene is listed (with the "during" keyword), it is considered more specific than without.
 This makes it very easy to give different responses for the same action but at different times (scenes) in the story.
-For reference, the exact rules used to sort rulebooks are described in 19.16 of "Writing with Inform".
+For reference, the exact rules used to sort rulebooks are described in 19.16 of 'Writing with Inform'.
 
 Section 1.3 - Action Overview
 
@@ -4614,7 +4537,7 @@ The later chapter on NPCs covers this topic in detail, and Example C shows some 
 
 Section 1.7 - Version History
 
-Release 1 (v2.0):
+20XX-XX-XX: Remake-Beta-1 (Release 1)
 
 	Remake of the old AIF framework, reworking the previous extensions body parts, garments, outfits, erotic story actions and consent into one.
 
@@ -4912,7 +4835,7 @@ This can be done by either adding it to the list when play begins (or dynamicall
 Chapter 4 - Descriptions in Detail
 
 While it's possible to use multimedia resources in interactive fiction, the main medium is still the written word.
-Inform 7 has a good built-in support for varying textual descriptions, with several chapters of "Writing with Inform" devoted to variations.
+Inform 7 has a good built-in support for varying textual descriptions, with several chapters of 'Writing with Inform' devoted to variations.
 The depiction of persons in traditional interactive fiction is usually more focused on conversation than clothing and body parts.
 This extension tries to make it easier to write good descriptions of persons, their parts and clothing based on their current state.
 
@@ -5016,18 +4939,12 @@ Section 4.4 - Responses
 
 Action responses should be written using the standard Inform 7 rulebooks After, Before and Instead.
 As the names imply, after rules are for after an action suceeds, before are for before the action is checked for validity, and instead rules block the action from taking place.
-Ther are literally chapters in "Writing with Inform" devoted to this, so instead this section will focus on tips, tricks and recreating TADS library features.
+Ther are literally chapters in 'Writing with Inform' devoted to this, so instead this section will focus on tips, tricks and recreating TADS library features.
 
-Perhaps one of the best underused features of Inform is scenes, which allow you to tightly group together the narrative and it's consequences.
-One immediate application in AIF is controling the sex scenes.
-By implementing these as scenes, you can ensure it that starts when the requisite unlocking puzzle(s) are completed, and ends when a set condition is met.
-You can then tie in any consent and persuasion rules to only apply during that scene, as well as action responses.
-The real benefit comes when a person is involved in several sex scenes, by tying responses to the individual scenes you can be certain to avoid printing responses for the wrong scene.
-
-Another staple of the TADS libraries is action responses that vary when the action is repeated.
-This extension does not emulate this functionality as it's built into Inform 7 through the 'for X time' or 'for x turns' clauses.
+One common feature in good AIF is action responses that vary when the action is repeated.
+Inform 7 supports this functionality natively through the 'for the Xth time' or 'for x turns' clauses to response rules.
 Both take into account repeating actions, but 'times' is the total number of times, while 'turns' is the number of times/turns in a row.
-Randomly alternating text is also very simple, using the 'one of' constructs described in chapter 5.7 of "Writing with Inform".
+Creating text responses that vary are also very simple, using the 'one of' text substitutions described in chapter 5.7 of 'Writing with Inform'.
 The following short example highlights some of the these tricks:
 
 *:
@@ -5038,10 +4955,43 @@ The following short example highlights some of the these tricks:
 	After waiting for more than six times, say "Get on with it!"
 	Test me with "z / z / z / z / z / z / z"
 
+One feature of Inform that often gets overlooked is scenes, which allow you to tightly group together the narrative and it's consequences.
+One immediate application in AIF is controling the sex scenes, which when implemented as scenes allows for easily defining the start and end conditions.
+You can then bind the action responses as well as any consent and persuasion rules to only apply during that scene.
+The real benefit comes when a person is involved in several sex scenes; by tying responses to the individual scenes you can be certain to avoid printing responses for the wrong scene.
+
+The story author is entirely free to decide how and when orgasms occur.
+One optional feature of the extension is a mechanism to check for orgasms that make each successive orgasm harder to achieve.
+The algorithm used is the attempt number of of the given orgasm divided by the orgasm number.
+This makes the first orgasm 'free' (a 1 in 1 chance), while the second orgasm has a 1 in 2 chance (and then a 2 in 2 chance if the first attempt failed), and so on.
+The phrase to use to invoke this check is 'person ORGASMS', and the example below shows how this can be implemented.
+When writing responses for actions with multiple actors to check for simultaneous orgams it's important to remember that each successive call will update the underlying variables.
+
+*:
+	After rubbing a vagina enclosed by a person (called owner):
+		If the owner orgasms: [This runs the calculation, including updates.]
+			Say "The orgamic response for the action should go here.";
+		Else:
+			Say "The normal response for the action should go here.";
+	
+	After fucking a a vagina enclosed by a person (called recipient) with a penis enclosed by a person (called penetrator):
+		Let recipient-orgasm be false;
+		Let penetrator-orgasm be false;
+		If recipient orgasms, let recipient-orgasm be true;
+		If penetrator orgasms, let penetrator-orgasm be true;
+		If recipient-orgasm is true and penetrator-orgasm is true:
+			Say "The response for simultaneous orgasm should go here.";
+		Else if recipient-orgasm is true:
+			Say "The response for when recipient orgasms should go here.";
+		Else if penetrator-orgasm is true:
+			Say "The response for when penetrator orgasms should go here.";
+		Else:
+			Say "The normal response for the action should go here.";
+
 Chapter 5 - NPCs
 
-Let's be blunt: Non-Player Characters in Interactive Fiction are hard to get right.
-The common approach (* as described at SibylMoon) is to limit the player's interaction with NPCs to as little as you can get away with. 
+Let's be blunt: Non-Player Characters are hard to get right in Interactive Fiction.
+The common approach (as described at SibylMoon *) is to limit the player's interaction with NPCs to as little as you can get away with. 
 Unfortunately that approach doesn't work well for AIF where NPCs can be said to be the main goal of the experience.
 Instead we have to be more careful in the design of our NPCs to make them appear more advanced than they really are.
 SibylMoon (**) list four qualities that increase the illusion of intelligent NPCs: Active, reactive, goal-oriented and randomized.
@@ -5062,7 +5012,7 @@ A character's purpose is embodied through their persuasion and consent rules whi
 The conversation system tries to help with creating meaningful choices, and the description system (detailed in chapter 4) tries to highlight the memorable physical features of each person.
 
 Some final thoughts on memorable characters: 
-If one takes too drastic measures to make every character stand out as memorable, the net effect is usually that the all the characters drown each other out and.
+If one takes too drastic measures to make every character stand out as memorable, the net effect is usually that all the characters drown each other out.
 Instead one should focus on the player's experience, which is more focused on some way of telling the characters apart from each other.
 My personal preference is to avoid names that start on the same letter or otherwise sound similar, unless it's for the effect of making two characters linked.
 Don't be afraid to assign labels to your characters that the player can use as a reference, just try to avoid sterotyping too much.
@@ -5073,24 +5023,31 @@ Don't be afraid to assign labels to your characters that the player can use as a
 
 Section 5.1 - Consent and Persusasion
 
-Asking other characters to perform actions is well supported by Inform 7, and any writer of AIF should be well acquainted with Chapter 12 of "Writing with Inform" that deal with Advanced Actions.
+Asking other characters to perform actions is well supported by Inform 7, and any writer of AIF should be well acquainted with Chapter 12 of 'Writing with Inform' that deal with Advanced Actions.
 While chapters 12.3 to 12.5 cover persuasion in detail, a quick recap is called for.
 Whenever the player asks another character to do something in the form of MARY, KISS ME, Inform consults the persuasion rules to see if the action should be attempted.
 The author is then free to devise arbitrarily complex rules for determining if the actor should attempt the given action.
-If no consent rules are written and the DACS system is not enabled, the default consent rule will deny consent and state the uninterested response for the person.
 
 The approach works well for when the actor is the main participant in an action, but it doesn't really handle interactions with multiple parties.
 Taking kissing as an example, what is really the difference between MARY, KISS ME and KISS MARY?
 The first would be governed by the persuasion rules but the second would succeed unless the author intervened with an instead rule.
 To make it easier for the author to control when a character consents to being a part of such actions the consent rules are processed in a similar fashion as the persuasion rules.
-To avoid having to write both consent and persuasion rules for the same action, persuasion for the actions included can be granted from the consent rules.
-The Discrete-Arousal-based Consent and Stimulation (DACS) system included with the extension provides an option to grant consent based on the current arousal of the character.
-Using DACS to handle consent is explained in more detail in section 5.4, while this section is more focused on how to write custom consent rules.
+When asking a person to perform an action that's governed by the consent rules, both rulebooks will be consulted.
+If you want to avoid having to write both types of rules, the extension has an option for granting persuasion to all actions that are also governed by the consent rules:
+
+*:
+	Use consensual persuasion.
+
+Another option is to use the included Discrete-Arousal-based Consent and Stimulation (DACS) system to grant consent based on the current arousal of the character.
+Using DACS to handle consent is explained in more detail in section 5.4.
 
 All of the actions in this extension goes through the consent rulebook, including the single actor actions such as wearing and taking off garments.
 Writing consent rules are done in a similar way as for persuasion, but instead of the outcomes 'persuasion succeeds' or 'persuasion fails' we have 'give consent' and 'deny consent'.
 The default outcome of a rule is to deny consent, but it's also possible to 'make no decision' to give control back to the rulebook for further processing.
-The rulebook includes a 'default consent rule' that will be consulted if no other rule is found, which will stop the action with a generic 'They aren't consenting to that (action)'.
+If no consent rules are written and the DACS system is not enabled, the default consent rule will deny consent and state the uninterested response for the person.
+When writing consent and persuasion rules it's very important to include the actor in the description of the action; if it's omitted then inform assumes that the player is the actor.
+Other values are 'someone' which means 'someone other than the player', and 'an actor' which means 'any actor'.
+The example below partly illustrates this.
 
 We previously mentioned (in Section 4.4 - Responses) that the scene function of Inform should be to control sex scenes.
 It's also possible to split one sex scene into several scenes, to allow consent for various new actions as the sex scene progresses.
@@ -5100,6 +5057,7 @@ Note that any attempts to ask Beatrice to do something will not work as we haven
 
 *:
 	Include Erotic Storytelling by Fictitious Frode.
+	Use consensual persuasion.
 
 	Bedroom is a room. The decency threshold of Bedroom is indecent.
 	Adam is a man in Bedroom. The player is Adam.
@@ -5112,9 +5070,11 @@ Note that any attempts to ask Beatrice to do something will not work as we haven
 
 	Consent rule for doing something to Beatrice during Beatrice's Encounter: Give consent.
 	Consent rule for doing something to something enclosed by Beatrice during Beatrice's Encounter: Give consent.
-	Consent rule for fucking something enclosed by Beatrice with something during Beatrice's Encounter: Give consent.
+	Consent rule for someone doing something to Adam during Beatrice's Encounter: Give consent.
+	Consent rule for someone doing something to something enclosed by Adam during Beatrice's Encounter: Give consent.
+	Consent rule for an actor fucking something enclosed by Beatrice with something during Beatrice's Encounter: Give consent.
 	
-	Test me with "kiss Beatrice / lick Beatrice / fuck Beatrice / z / kiss Beatrice / lick Beatrice / fuck Beatrice".
+	Test me with "kiss Beatrice / lick Beatrice / fuck Beatrice / z / kiss Beatrice / lick Beatrice / fuck Beatrice / Beatrice, rub cock".
 
 Section 5.2 - Agency
 
@@ -5156,18 +5116,9 @@ Because the player is free to converse about anything that strikes their fancy, 
 Most of the time we also need to keep track of which topics are available, depending on many factors such the knowledge of both the player and the characters.
 
 Because of the varying needs Inform 7 does not include any systematic way to handle conversation, instead providing a framework that can be extended upon.
-Various conversation systems are available in Inform's built-in extension library to provide system for various needs.
-[TODO: Update this when conversation is more complete]
-This extension intends to provide a conversation framework that is suitable for AIF, which is currently in the process of being developed.
-Regardless of how they choose to approach conversation, the author should exercise great care and thought when implementing it.
-Inform's included "Recipe Book" covers the topic of conversation in quite detail, starting from chapter 7.6.
-
-[TODO: A brief introduction on the various styles of conversation, converging on why we've chosen the approach we have.
-Over time, IF has evolved into two main styles of conversation, either using a branching tree of options to converse about or a keyword based approach.
-
-TODO: How the conversation model works
-
-TODO: Examples of the conversation model in play]
+Various conversation systems are available in Inform's built-in extension library, and instead of locking the extension to a particular conversation model the conversation system favored is provided in a separate extension.
+Regardless of how the author choose to approach conversation, great care and thought should go into the implementation.
+Inform's included 'Recipe Book' covers the topic of conversation in quite detail, starting from chapter 7.6.
 
 Section 5.4 - Discrete Arousal-based Consent and Stimulation
 
@@ -5371,7 +5322,7 @@ Section 7.3 - Technicalities
 Your regular programming will resume shortly, but first a short interlude on some of the technicalities and peculiarities of Inform 7.
 Inform's IDE has some handy shortcuts (on Windows atleast): F5 will compile and launch your story, while F9 will compile and replay the last game: Excellent for debugging.
 F7 on the other hand will just compile and rebuild the built-in index tab which is a great resource while developing.
-It's a good habit to compile often, although the compile is good at pointing out what went wrong it can still be daunting to debug larger code changes.
+It's a good habit to compile often as it can be daunting to debug larger code changes even if the compiler is good at pointing out what went wrong.
 
 Unlike many other programming languages (such as TADS, other C-like derivations, and even Inform 6), Inform 7 is limited to only one source file.
 In lieu of dividing the source into several files, I7 uses five 'header' types for organizing your code into modules.
@@ -5379,16 +5330,16 @@ In decreasing order of magnitude, these headers are Volume - Book - Part - Chapt
 Exactly how to divide your code with these headings is largely up to each author, but a template project setup based on my personal preferences is included herein.
 My personal preference is to use 'chapter' as the main holder of sourcecode, divided into sections as needed and using 'volume/book/part' for hierarchial organization.
 
-Structuring the sourcecode with these headers has three main effects, the first of which should be pretty obvious.
+Structuring the source code with these headers has three main effects, the first of which should be pretty obvious.
 By building a hierarchy of headings it's easy to place related content near each other, using the interface's overview to jump around.
 The second effect is less obvious, and related to a feature we briefly covered before:  the 'Use unabbreviated object names' phrase.
-When this use option is not enabled we're allowed to refer to objects in our source by abbreviated names.
-If an abbreviated name could be taken to refer to multiple objects, Inform uses the hierarchy of headings to select the closest match.
-I would still recommend using unabbreviated object names though.
-Lastly Inform also uses these header to tell you where a compile error was detected.
+When this use option is not enabled we're allowed to refer to objects in our source by abbreviated names, such as referencing the 'kitchen table' by just 'table'.
+If an abbreviated name could be taken to refer to multiple objects (for instance a 'coffee table' as well), Inform uses the hierarchy of headings to select the closest match.
+My personal preference is using unabbreviated object names, which avoids mishaps when re-arranging code.
+Lastly, Inform also uses these header to tell you where a compile error was detected.
 
 To help debugging your story Inform supplies a variety of testing commands as well as the option of easily creating test cases and special actions that are removed from the final release.
-Let's cover the testing actions first:
+The default testing actions included in Inform is:
 
 	ACTIONS on/off: Toggles the printing of exactly which actions are processed, as well as printing the name of any failed rules without swamping the output.
 	RULES on/off: Toggles the printing of all rules being consulted for a very detailed and verbose feedback only recommended for ferreting out tricky bugs.
@@ -5399,11 +5350,76 @@ Let's cover the testing actions first:
 	RELATIONS: Lists out all the various kinds of relations that are in use in the game.
 	SHOW RELATION relationship: Lists out the details of a specific relations, as detailed in 13.7 of 'Writing with Inform'.
 
+This extension also provides a 'debug examine' action (shortened to 'DEX') to provide detailed information on the kinds most relevant to AIF: garments, body parts and persons.
 It's also possible to write both test cases and special commands only available during testing, which can be used to artificially set story progression variables.
-Test cases can be written by the phrase 'TEST testname WITH "actions / separated / by /slashes".', allowing you to write 'TEST testname' during play to execute the given actions in order.
+Test cases can be written by the phrase 'TEST testname WITH "actions / separated / by / slashes".', allowing you to write 'TEST testname' during play to execute the given actions in order.
 To create commands only available for testing you can mark one of the source headers as 'Not For Release', which is described in chapter 2.9 of 'Writing with Inform'.
 
-Before moving on to some more programming in Inform I would recommend to explore the 'Index' tab in the IDE, which gives a very good overview of your story world.
+It's very important to take the time to explore your world and experience it as a player would.
+One of the harder parts to test is when connections between room differs from the room description.
+To help test this you could use the included extension 'Directionality' which auto-generates a description of the available exits in a room.
+
+Before moving on to some more programming in Inform, I would recommend exploring various tabs in the IDE, especially 'Index' which gives a helpful overview of your story world.
+
+Section 7.4 - Informed Things
+
+In the previous discussion on geography we briefly talked about the items that populate a story world.
+It's possible to broadly divide these in two main categories: things that exist to describe the story world and things that exist as part of puzzles for the player to solve.
+Hopefully the distinction between these categories should not always be apparent for the player, who would use 'ordinary world' items to solve the challenges presented by the story.
+While it's easy to determine how many puzzle items to include (answer: whatever you feel is necessary), it's much harder to settle on a correct amound of 'normal world' items.
+We briefly covered this when speaking about rooms, but it's important enough to bear repeating.
+My personal preference is that every item that's notable enough to get mentioned in the room description should have a corresponding item.
+The detail level in that item's description should be tailored to how important and relevant it is; it's even ok to have a bland 'That's not very important' description for items that are obvious fluff.
+
+Another consideration is the players behavior: It's hard to anticipate all the crazy stuff your players will try, which is why feedback from testers is very important.
+At the bare minimum you should consider that most players will pick up anything that isn't nailed down, and some will actively try to pry out the nails.
+In other words, make sure that you either account for the player moving stuff around or ensure there is a reason why they can't move it.
+Adult stories have some extra considerations here, namely clothing and body parts.
+Most of the intricacies here are handled by using this extension, and a later chapter dealing with actors will go into more detail on how to implement them.
+For now you should focus mainly on which body parts and garments you want included and how to describe them.
+
+The rest of this tutorial installment goes into rather deep technical detail for Inform 7.
+Most of the subjects brought up here will make more sense later on, but it's still important to be introduced to them in order to recognize the concepts later on.
+Not every thing in a story should be treated the same, and the primary form of differentiation is 'kinds' which closely resemble classes of other languages.
+Besides rooms, the most important kind in Inform is 'thing', and most everything you use will be a kind of thing (with the notable expection of rooms and directions).
+Inform has a concept of the following default kinds:
+
+	persons - including the player
+	containers - can contain other things inside
+	supporters - can support other things on top
+	devices - has a state that can be switched on/off
+	doors - room connector that can impede travel
+	backdrop - distant things that shouldn't be interacted with
+
+These kinds have various properties assigned to them to suit their purpose.
+Not all properties are available for all kinds though, the 'openable' and 'open/closed' properties for instance are only available for containers and doors (by default).
+The following is a short overview of the most important properties and what they apply to, focusing on the properties available in standard Inform7.
+For a full overview of properties you should look at the 'kinds' part of the Index tab.
+
+	Edible: Defined for all things and governs if the thing can be eaten, implemented by the 'eat' action (removing it from play).
+	Portable/fixed in place: Defined for all things and governs if the player can carry the thing in question, as implemented by the 'take' action. Defaults to portable except for doors, scenery, supports and people.
+	Scenery: Defined for all things to mark that which the player is not likely to interact directly with.
+	Wearable: Defined for all things and governs if the thing can be worn, as implemented by the 'wear' and 'take off' actions.
+	Transparent/Opaque: Defined for containers and governs whether the contents of the container is visible even when closed. Also used by this extension to govern if a garment blocks vision to underlying garments.
+	Enterable: Defined for containers and supporters and governs whether a person can use the 'enter' action to be inside of them.
+	Openable: Defined for doors and containers and governs whether the item is a valid target for the 'open' and 'close' actions. Doors default to openable while contains do not, unless it defined as open.
+	Open/closed: A state variable related to 'openable'.
+	Lockable: Defined for doors and containers and governs whether the item is a valid target for the 'lock' and 'unlock with' actions. Defaults to lockable if the item is locked.
+	Locked/unlocked: A state variable related top 'lockable'. 
+	Matching Key: A reference to the item which acts as a key and can be used to unlock.
+
+One feature of many object oriented languages is the ability to inherit properties from from multiple parents, where this ancestry would be a kind of property onto itself.
+Instead of allowing multiple inheritance, Inform treats properties which share the name to be the same property regardless of the kind it is defined for.
+This can be confusing for a programmer who is used to having a thing inherit the 'openable' interface to flag it for the correct actions and inherit the open/closed state.
+In the natural language style it's more intuitive to state that a thing is open and then infer that it must also be able to be opened.
+Actions in Inform (such as 'opening' and 'locking') makes use of properties, with the effect that they work on any thing which provides the correct properties (such as doors and containers).
+
+Inform uses references between compontents called 'relation' to build and maintain its world model, which a story author will mainly used for defining or checking where something is.
+Chapter 13 of 'Writing with Inform' is devoted to relations, and for the most part the names makes them easy to understand, but section 13.3 has a good overview of the most commonly used.
+A person can 'have' a thing, which is actually they union of the two relations 'carry' and 'wear'.
+With containers and supporters things can also be in 'in' or 'on' something else, with 'contained by' as the combined relation that covers both.
+We can also have assemblies where something is 'part of' something else (in which case it is 'enclosed by' that part), of which body parts is the most pertinent example at hand.
+Inform will assume that you're speaking about the player if you give no reference to which person, so the condition 'if the hat is worn' actually reads 'if the hat is worn by the player'.
 
 Chapter 8 - Technical Reference
 
@@ -5413,7 +5429,6 @@ It's intended as a companion to the other chapters, although an experienced auth
 Some parts of the extension are manually toggled by the 'use' phrase:
 
 	Use DACS: Enable the built-in Discrete Arousal-based Consent and Stimulation system.
-	Use topical conversation: Enable the built-in menu topic conversation system.
 
 Section 8.1 - New Kinds of Value
 
@@ -5788,7 +5803,7 @@ This example shows how a new type of body part requiring it's own cover area can
 	*: "A Furry Tale"
 	
 	Include Erotic Storytelling by Fictitious Frode.
-	Use unabbreviated object names.
+	Use consensual persuasion.
 
 It's best to define the actors (including the player) with gender as early as possible.
 We also need a location with a decency threshold low enough to allow experimentation.
@@ -5851,7 +5866,7 @@ Note that because this only covers the tail, a person without a tail will be una
 
 We grant consent for some actions so the player can test the differences.
 
-	Consent for shifting a garment worn by Kitsune: Give consent.
-	Consent for taking ribbon: Give consent.
+	Consent for an actor shifting a garment worn by Kitsune: Give consent.
+	Consent for an taking ribbon: Give consent.
 	
 	Test me with "x kitsune / x tail / x ribbon / lift dress / x kitsune / x tail / x ribbon / take ribbon / wear ribbon"
