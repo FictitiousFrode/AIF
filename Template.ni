@@ -4,6 +4,7 @@ Volume 0 - Setup
 
 Use American dialect, full-length room descriptions, and the serial comma.
 Use unabbreviated object names.
+Use consensual persuasion. [Defer persuasion to consent for the actions that require consent.]
 
 Include Directionality by Fictitious Frode.
 Include Erotic Storytelling by Fictitious Frode.
