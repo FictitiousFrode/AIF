@@ -3,13 +3,9 @@
 
 The Big Hairy Audacious Goal for the Erotic Storytelling extension is to make
 writing AIFs as simple as writing the descriptions of responses and objects.
-While some 
-extension
-To a large extent this is made
-possible by the Erotic Storytelling extension in this framework, although a good game would 
-still need some custom work to create good puzzles and interactions. A large 
-part of this is made possible with the Consent extensions, which makes it easy 
-to block player actions and give properly customized failure messages.
+The actions and layered clothing model provided by the Erotic Storytelling 
+extension goes a long way to accomplishing this goal, although a good game 
+would still need some custom work to create good puzzles and interactions.
 
  The Features
 ==============
@@ -47,7 +43,7 @@ In order to use the extensions in a story, you need to include the extensions
 you want for your story. A full inclusion would look like this:
 
   Include Erotic Storytelling by Fictitious Frode.
-  Include Topical Conversation by Fictitious Frode.
+  Include Simple Conversations by Fictitious Frode.
   Include Directionality by Fictitious Frode.
 
 All of the extensions have proper documentation, available from the Extensions
@@ -60,7 +56,7 @@ features and examples. Erotic Storytelling also includes an in-depth tutorial.
  * Erotic Storytelling contains the functionality that is specific for the 
    adult parts of the game, including the layered clothing model and actions.
  * Template is an example of how a story can be organized.
- * Topical Conversation lets you define a list of conversation topics for the
+ * Simple Conversations lets you define a list of conversation topics for the
    actors to respond to, with functionality to determine which are available.
  * Directionality is a helper extension that automatically lists all visible 
    exits from a room, stating the destination if it is known to the player.
