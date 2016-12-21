@@ -5009,7 +5009,7 @@ These points flow into each other somewhat, but each still encompasses a core tr
 More than anything else the player's experience is what should be guiding the design, and as stated above the player's expectations vary widely by genre.
 The solution for these suggestions lies more in story design than technicalities, but the extension tries to be accomodating where possible.
 A character's purpose is embodied through their persuasion and consent rules while the agency rules handles their active goal-seeking.
-The conversation system tries to help with creating meaningful choices, and the description system (detailed in chapter 4) tries to highlight the memorable physical features of each person.
+The description system (detailed in chapter 4) tries to highlight the memorable physical features of each person, while the chosen conversation system can be used to create meaningful choices.
 
 Some final thoughts on memorable characters: 
 If one takes too drastic measures to make every character stand out as memorable, the net effect is usually that all the characters drown each other out.
@@ -5115,8 +5115,8 @@ Conversations are usually an important part of character-driven IF, but it's als
 Because the player is free to converse about anything that strikes their fancy, a good conversation system must both understand what topic the player is referring to and have a response for it.
 Most of the time we also need to keep track of which topics are available, depending on many factors such the knowledge of both the player and the characters.
 
-Because of the varying needs Inform 7 does not include any systematic way to handle conversation, instead providing a framework that can be extended upon.
-Various conversation systems are available in Inform's built-in extension library, and instead of locking the extension to a particular conversation model the conversation system favored is provided in a separate extension.
+Inform 7 provides various extensions, available in the built-in extension library, to handle conversation.
+Instead of locking the extension to a particular conversation model, the separate Simple Conversations extension can is provided for optional use.
 Regardless of how the author choose to approach conversation, great care and thought should go into the implementation.
 Inform's included 'Recipe Book' covers the topic of conversation in quite detail, starting from chapter 7.6.
 
@@ -5428,6 +5428,7 @@ It's intended as a companion to the other chapters, although an experienced auth
 
 Some parts of the extension are manually toggled by the 'use' phrase:
 
+	Use consensual persuasion: Grants persusasion for all actions that are also covered by consent rules.
 	Use DACS: Enable the built-in Discrete Arousal-based Consent and Stimulation system.
 
 Section 8.1 - New Kinds of Value

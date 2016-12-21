@@ -8,6 +8,7 @@ Use consensual persuasion. [Defer persuasion to consent for the actions that req
 
 Include Directionality by Fictitious Frode.
 Include Erotic Storytelling by Fictitious Frode.
+[Include Simple Conversations by Fictitious Frode.]
 
 Book 0.1 - Titlepage
 

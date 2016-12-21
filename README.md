@@ -8,7 +8,7 @@ Main extension, containing layered clothing model, erotic actions and support fu
 **Template.ni**:
 Sample project layout for an Inform 7 story.
   
-**Topical Conversation.i7x**:
+**Simple Conversations.i7x**:
   Support extension, containing a conversation model.
   
 **Directionality.i7x**:
