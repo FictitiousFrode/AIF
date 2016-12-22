@@ -29,7 +29,7 @@ The extensions in the framework provides:
  * A framework to provide consent for actions affecting other actors, similar
    to how persuasion rules work.
  * Optional framework for arousal based consent, similar to TADS libraries.
- * Optional conversation model.
+ * A model of simple conversations.
 
  Installation
 ==============
@@ -56,8 +56,9 @@ features and examples. Erotic Storytelling also includes an in-depth tutorial.
  * Erotic Storytelling contains the functionality that is specific for the 
    adult parts of the game, including the layered clothing model and actions.
  * Template is an example of how a story can be organized.
- * Simple Conversations lets you define a list of conversation topics for the
-   actors to respond to, with functionality to determine which are available.
+ * Simple Conversations lets you define a list of subjects that your actors
+   can have corresponding dialogue for. Supports varying the availability of
+   dialogue options and cueing the player to viable subjects.
  * Directionality is a helper extension that automatically lists all visible 
    exits from a room, stating the destination if it is known to the player.
 
@@ -66,7 +67,7 @@ features and examples. Erotic Storytelling also includes an in-depth tutorial.
 
 Each individual extension has a more detailed log of changes.
 
-  20XX-XX-XX: Remake-Beta-1
+  2016-12-01: Beta-1
  -------------
   * The previous framework has been completely reworked and rewritten, and
     the release history has been updated to only include the remake.
@@ -75,9 +76,10 @@ Each individual extension has a more detailed log of changes.
 ==============
 
 These are some ideas for future development:
- * Ropework.
- * Posturing.
- * Lasting Penetrations.
+ * Ropework
+ * Posturing
+ * Lasting Penetrations
+ * Numerical Arousal (NACS)
 
  Contact Info
 ==============
