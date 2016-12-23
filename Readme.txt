@@ -67,7 +67,7 @@ features and examples. Erotic Storytelling also includes an in-depth tutorial.
 
 Each individual extension has a more detailed log of changes.
 
-  2016-12-01: Beta-1
+  2016-12-23: Beta-1
  -------------
   * The previous framework has been completely reworked and rewritten, and
     the release history has been updated to only include the remake.

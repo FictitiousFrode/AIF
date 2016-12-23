@@ -1,4 +1,4 @@
-Version 1/161203 of Simple Conversations by Fictitious Frode begins here.
+Version 1/161223 of Simple Conversations by Fictitious Frode begins here.
 
 Include Epistemology by Eric Eve.
 
@@ -208,7 +208,7 @@ Chapter 1.2.3c - Carry Out
 Carry out an actor pondering to someone about something (this is the pondering unknown topics rule):
 	If the actor is the player:
 		If the default dialogue of the noun is the default value of text:
-			Say "[The noun] [don't] know what to say about [the second noun]." (A);
+			Say "[The noun] [don't] know what to say about that." (A);
 		Else:
 			Say "[default dialogue of noun][paragraph break]" (B);
 
@@ -244,17 +244,171 @@ Simple Conversations ends here.
 
 ---- DOCUMENTATION ----
 
-Example 281 (**): Farewell
-Example 282 (**): Sweeney
+Chapter 1 - Using this Extension
+
+To use this framework, you need to download and install it (which you probably have if you're reading this) and include it in your story:
+
+*:
+	Include Simple Conversations by Fictitious Frode.
+
+By including this extension, you will disable the 'ask', 'tell', 'give' and 'show' actions.
+In their place you get two new actions, 'talk to person' and 'talk to person about subject'.
+These are covered in greater detail in chapter 2.
+
+This extension makes use of Eric Eve's Epistemology extension to provide subjects and keep track of the player's knowledge.
+It's bundled with Inform and should already be installed for you.
+
+Section 1.1 - Documentation Overview
+
+The documentation will cover the following subjects:
+
+	Chapter 1: A short overview of the extension.
+	Chapter 2: Techniques and guidelines on how to create simple conversations.
+	Chapter 3: A complete technical reference for everything added or changed with this extension.
+
+The following examples are included:
+
+	A: Hard Rock - A conversational example
+
+Section 1.2 - Version History
+
+2016-12-23: Beta-1 (Release 1)
+
+	Table-based dialogue options for subjects.
+	Individual default dialogue responses for each person.
+	Availability for both subjects and individual dialogues can be toggled.
+	Support for runtime alterations to dialogues.
+
+Section 1.3 - Contact Info
+
+The author of this extension can be reached in the following ways:
+
+	Mail: fictitious.frode@gmail.com
+	Blog: https://informedaif.wordpress.com/ is a blog dedicated to writing AIF with Inform 7, and is the official host of the extension. It contains both dicussions around AIF and tutorials on both Inform in general and this extension in particular.
+	Reddit: https://www.reddit.com/r/AIFCentral/ is the subreddit for the AIF community, and the author checks this regularly.
+	GitHub: https://github.com/FictitiousFrode/AIF Contains the latest version of the extension, possibly including functionality that hasn't been released yet.
+
+Feedback of all varieties is welcome, but constructive criticism and discussion is the most appreciated, along with reports of bugs and other issues.
+For support I would appreciate using public communication, so that other may learn from the request as well.
+
+Chapter 2 - Simple Conversations
+
+When dealing with other characters in Interactive Fiction one of the key challenges is conversations.
+Because the player is free to converse about anything that strikes their fancy, a good conversation system must both understand what topic the player is referring to and have a response for it.
+Over time two main styles of conversation has evolved; the keyword conversation approach which underlies Inform's default conversation actions, or using a branching tree of conversation subjects.
+This extension implements the first approach, simplifying the four default actions ('ask', 'tell', 'give' and 'show') down to the simple 'talk to' and 'talk to about'.
+
+Conceptually we divide the conversation model into two parts, subjects to talk about and the dialogue options of other characters.
+The next two sections will provide detail on how to use these
+
+Section 2.1 - Subjects
+
+Inform's default behavior is to allow conversation on text tokens, which handles just about anything the player types.
+This approach has some downsides besides trying to decipher what the player actually means; we also don't have a simple way to apply properties to a topic.
+The player's knowledge of conversation topics is one such thing that needs to be kept track of, which we do using Eric Eve's Epistemology extension.
+This includes a 'subject' type which we extend with a property marking it the subject is repeatable (the default) or something you can only ask a person about once.
+It's very important to make liberal use of 'understand' statements to link phrases the player might use to talk about the subject.
+
+Section 2.2 - Dialogues
+
+A subject isn't very interesting without a dialogue response for it from the other characters.
+To facilitate this we use a table-based approach, which allows for both shared and individual dialogue options.
+Each person has a 'dialogue' property which points to a table, which should look like the example below:
 
 
-Greeting/Good-Bye when conversation starts and ends
+*:
+	Library is a room.
+	Bob is a person in Library. Bob's dialogue is the Table of Bob's Dialogue.
+	
+	A conversation is a subject.
+	Understand "conversations", "help --/on" and "talking" as conversation.
+	
+	Table of Bob's Dialogue
+	subject (a thing)	availability (a truth state)	cue (a text)	turn stamp (a number)	dialogue (some text)
+	conversation	true	"help on how to talk to other people"	--	"'You should try reading the documentation,' Bob answers. Not much help in that."
+	
+	Test me with "talk to bob / talk to bob about help".
 
+It's important that the table contains the following five columns:
 
+	Subject: The subject (or any other thing) the dialogue is for
+	Availability: True/false for if the option is enabled
+	Cue: If not blank, the text here is listed together to guide the player when using the 'talk to' action
+	Turn stamp: The turn on which the dialogue was last talked about, or blank (--) if it's never been talked about
+	Dialogue: The text to output when talking about the option
+	
+It's also possible to write 'after talking to person about subject' rules.
+Typically these would be to unlock the effects of talking about the subject, such as updating cues and making other dialogues available.
 
-[TODO: A brief introduction on the various styles of conversation, converging on why we've chosen the approach we have.
-Over time, IF has evolved into two main styles of conversation, either using a branching tree of options to converse about or a keyword based approach.
+Section 2.3 - Changing Dialogues
 
-TODO: How the conversation model works
+Dialogue is seldom static, and the author has a few options on how to alter conversations.
+As the dialogues are stored in a table, all the regular table operators in Inform can be used.
+These can be rather cumbersome for updating single values though, so some phrases are provided to simplify matters.
+The most common update is changing the availability of a dialogue, which is done with the 'ACTIVATE/DEACTIVE subject FOR person' phrases.
+Similarly it's also possible to update the cue and dialogue itself, using the 'UPDATE THE CUE/DIALOGUE OF subject FOR person TO text' phrases.
+Note that if you try to update the cue or dialogue for a subject that doesn't exist, these phrases try to create a new record in the table if there is room.
+These are covered in more details in section 3.3
 
-TODO: Examples of the conversation model in play]
+When the story moves to a new act it's often necessary to make larger alterations to dialogue.
+For these occasions you can have a separate table of dialogue for each act, and use the 'when scene begins' rule to change the dialogue of the actors to refer to a new table.
+
+Chapter 3 - Technical Reference
+
+Section 3.1 - New Kind: Subject
+
+Subject is a new kind which is defined by Eric Eve's Epistemology extension, to represent intangible knowledge that the player might want to talk to other characters about.
+By default every subject is familiar to the player, which allows it to be talked about.
+For subjects representing knowledge the player learns during play, you should state that it is initially 'not familiar' and update it at the appropriate time.
+Subjects can also be repeatable (the default) or one-time, which determines if the dialogue is disabled after talking about it.
+This should be mainly used for dialogue options that have some lasting effect on the world model.
+It's also very important to use understand phrases to link the subject to the various words the player might use to refer to the knowledge.
+
+Section 3.2 - The Dialogue Table
+
+Dialogue is stored in table form for each person, which allows us to keep track of dialogue for each person individually while still being flexible.
+It's very important that the table contains the following five columns:
+
+	Subject: Can contain any thing in the story world. Will only be matched against the players query if the thing is 'known', according to the Epistemology extension.
+	Availability: A simple flag to determine if the person has knowledge about the subject. For subjects that are not repeatable, this will be toggled to false after talking about it.
+	Cue: Used to populate the results of the 'talk to' action which cues the player to subjects.
+	Turn stamp: Used to keep track of which dialogue options have been talked about, storing the turn number it was previously talked about.
+	Dialogue: The text to output when talking about the option.
+
+Section 3.3 - Phrases for Updating Values and Deciding On
+
+The following phrases can be used to update the dialogues of a person, by altering the table that the dialogue property points to.
+
+	UPDATE THE CUE OF (thing) FOR (person) TO (text): Sets the cue text of the thing in the person's table to the given text. If the thing isn't listed in the table, it tries to find a blank row to insert a new row with no dialogue and 'false' availability.
+	UPDATE THE DIALOGUE OF (thing) FOR (person) TO (text): Sets the dialogue text of the thing in the person's table to the given text. If the thing isn't listed in the table, it tries to find a blank row to insert a new row with the dialogue and 'false' availability.
+	ACTIVATE (thing) FOR (person): Sets the availability of the thing in the person's table to true.
+	DEACTIVATE (thing) FOR (person): Sets the availability of the thing in the person's table to false.
+
+It's also possible to check if something has been talked about with a given person:
+
+	whether (thing) HAS BEEN TALKED ABOUT TO (person): Checks if the turn stamp entry is filled in the person's dialogue table.
+
+Example: ** Hard Rock - A conversational example
+
+	*: "Hard Rock"
+	
+	Include Simple Conversations by Fictitious Frode.
+	
+	Cavern is a room. Understand "this place" as cavern.
+	A mysterious chest is a a closed container in cavern. It is fixed in place.
+	A stone is in mysterious chest.
+
+	Adam is a person in Cavern. Adam's dialogue is the Table of Adam's Dialogue.
+	
+	Some music is a subject. Understand "sound", "rock" and "roll" as music.
+	
+	Table of Adam's Dialogue
+	subject (a thing)	availability (a truth state)	cue (a text)	turn stamp (a number)	dialogue (some text)
+	cavern	true	"this place"	--	"'This is where I retreat to when the world gets to be too much,' he answers."
+	mysterious chest	true	--	--	"'[if stone is known]It's just where I keep my rock collection[else]It wouldn't be much of a mystery if I told you that[end if],' he answers."
+	stone	true	--	--	"'It's no longer rolling.'"
+	music	true	--	--	"'Sometimes I like to bang the stone against the cave walls.'"
+	
+	After talking to Adam about stone, update the cue of music for Adam to "rock 'n' roll music".
+	
+	Test me with "talk to adam / talk to adam this place / talk to adam about chest / talk to adam about stone / open chest / talk to adam about stone / talk to adam about rock".

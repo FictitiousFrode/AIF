@@ -1,4 +1,4 @@
-Version 1/161222 of Erotic Storytelling by Fictitious Frode begins here.
+Version 1/161223 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF) in Inform.
 The main features are a layered clothing with body parts and erotic actions with system for obtaining consent on actions involving others characters.
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for NPC agency and optional story contents."
@@ -4470,7 +4470,7 @@ Example B shows a simple DACS setup with some customizations, and the system is 
 
 (*): I believe Moist was the first game to implement arousal, but feel free to correct me if you know of an earlier example than 1996.
 
-(**): See 'Anatomy of a Sex Scene', by ExLibris. http://overanalysingaif.blogspot.no/2010/12/anatomy-of-sex-scene.html
+(**): See 'Anatomy of a Sex Scene', by ExLibris. http://overanalysingaif.blogspot.com/2010/12/anatomy-of-sex-scene.html
 
 Section 1.6 - Character Agency
 
@@ -4490,13 +4490,13 @@ The later chapter on NPCs covers this topic in detail, and Example C shows some 
 
 Section 1.7 - Version History
 
-2016-12-22: Beta-1 (Release 1)
+2016-12-23: Beta-1 (Release 1)
 
 	Remake of the old AIF framework, reworking the previous extensions body parts, garments, outfits, erotic story actions and consent into one.
-	Layered clothing system is completed, with templates for garments and body parts.
-	Erotic Actions are completed, but might contain some bugs still.
-	DACS is functional but untested.
-	Some out-of-world actions are not yet implemented.
+	* Layered clothing system is completed, with templates for garments and body parts.
+	* Erotic Actions are completed, but might contain some bugs still.
+	* DACS is functional but untested.
+	* Some out-of-world actions are not yet implemented.
 
 Section 1.8 - Contact Info
 
@@ -5127,8 +5127,6 @@ Below is a short example of how content types can be used:
 	The description is "You scan over the familiar images of people going about their business in the privacy of their hotel rooms[if Voyeurism is enabled], catching a glimpse of a couple engaged in some early-afternoon sex[else]."
 
 	test me with "x monitors".
-
-
 
 Chapter 7 - Expanded Tutorial
 
