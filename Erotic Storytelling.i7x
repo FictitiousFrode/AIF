@@ -1,9 +1,11 @@
-Version 1/161215 of Erotic Storytelling by Fictitious Frode begins here.
-"An extension focused on writing Adult Interactive Fiction (AIF) providing a framework for layered clothing with body parts, erotic actions with a consent system for actions involving others. 
+Version 1/161223 of Erotic Storytelling by Fictitious Frode begins here.
+"An extension focused on writing Adult Interactive Fiction (AIF) in Inform.
+The main features are a layered clothing with body parts and erotic actions with system for obtaining consent on actions involving others characters.
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for NPC agency and optional story contents."
 
-Use MAX_STATIC_DATA of 300000.
+[We use the pause function from Basic Screen Effects.]
 Include Basic Screen Effects by Emily Short.
+Use MAX_STATIC_DATA of 300000.
 
 Volume 0 - New Verbs
 
@@ -39,7 +41,7 @@ Volume 1 - Layered Clothing
 [This volume deals with setting up a system for layered clothing, which includes body parts and garments.
 Note that later volumes will use and expand upon this, i.e. arousal/consent restraints for undressing.]
 
-Book 1.1 - New Kinds and Values
+Book 1.1 - Concepts
 
 [We start by defining the necessary kinds and values we need to make layered clothing work.]
 
@@ -282,7 +284,7 @@ When play begins (this is the initiate erotic storytelling rule):
 	[Set correct pronouns for garments:]
 	Repeat with cloth running through the garments:
 		Update pronoun for cloth;
-	[Calculate the decency for any undefined persons: Small hack here, as Inform won't let us iterate over all persons anymore.]
+	[Calculate the decency for any undefined persons:]
 	Repeat with P running through the persons:
 		If the current decency of P is undefined decency, update decency for P;
 
@@ -324,31 +326,10 @@ To decide which decency is the base decency of (P - a body part):
 Section - Person
 
 To update decency for (P - a person):
-[	Say "DEBUG: Calculating for [P] - [current decency of P]:[line break]";]
 	Now the current decency of P is undefined decency;
 	Repeat with area running through the body areas of P:
 		Let considered be the exposed by area on P;
-[DEBUG		Say "[Area] - [considered][line break]";]
 		If considered is less than the current decency of P, now the current decency of P is considered;
-
-	
-[OLD CODE: This bugs out on  the check for whether G is visible; the new code is safer and cleaner
-To update decency for (P - a person):
-	Say "DEBUG: Calculating for [P] - [current decency of P]:[line break]";
-	Now the current decency of P is undefined decency;
-	Let clothing be the list of garments worn by P;
-	Repeat with area running through the body areas of P:
-		Say "For [area]: ";
-		Let considered be undefined decency;
-		Repeat with G running through clothing:
-			If area is listed in modified cover areas of G and cloth decency of G is less than considered and G is visible:
-				Let considered be the cloth decency of G;
-				Say "[G] ([cloth decency of G]) ";
-		If considered is undefined decency:
-			Say "No clothing, going by base - [decency of area]";
-			Let considered be the decency of area;
-		If considered is less than the current decency of P, now the current decency of P is considered;
-		Say line break;]
 
 Chapter 1.2.1b - Privacy
 
@@ -434,7 +415,15 @@ To decide whether (P - a body part) is accessible:
 			If A is listed in the modified cover areas of cloth, decide no;
 	Decide yes;
 
-[TODO: Preventing access]
+To decide which list of garments is preventing access to (P - a body part):
+	Let preventers be a list of garments;
+	Let clothing be the list of garments worn by the holder of P;
+	Sort clothing in reverse clothing layer order;
+	Repeat with A running through the cover locations of P:
+		Repeat with cloth running through clothing:
+			If A is listed in the modified cover areas of cloth:
+				Add cloth to preventers, if absent;
+	Decide on preventers;
 
 Chapter 1.2.2c - Cover Areas
 
@@ -964,8 +953,7 @@ Carry out an actor taking off (this is the modified taking off rule):
 Part 1.3.3 - Taking Off Others
 
 [Status: Complete
-By default, taking clothing that others are wearing is blocked. This is something that should be allowed in certain situations, so we need to make some changes to the standard rules.
-See also the consent and arousal sections.]
+By default, taking clothing that others are wearing is blocked. This is something that should be allowed in certain situations, so we need to make some changes to the standard rules.]
 
 Chapter 1.3.3a - Removing Existing Blocks
 
@@ -1458,10 +1446,10 @@ The last book deals with posturing - Excised into its own extension.]
 
 Book 2.1 - Agency
 
-[An actor can have three levels of agency:
-Idleness: Messages that are printed when the actor is not actively engaged in something. These are only processed if the player can see the actor.
-Planned: Actions that the actor seeks to perform, but which will be postponed if they are engaged with someone.
-Urgent: Actions that the actor urgently seek to perform, even if engaged with someone.]
+[A person can have three levels of agency:
+Idleness: Messages that are printed when the person is not actively engaged in something. These are only processed if the player can see the person.
+Planned: Actions that the person seeks to perform, but which will be postponed if they are engaged with someone.
+Urgent: Actions that the person urgently seek to perform, even if engaged with someone.]
 
 Part 2.1.1 - Concepts
 
@@ -1576,8 +1564,6 @@ Section - Default Description Generation Rulebook
 
 [The default description generation rules are called by the generate default descriptions rule.]
 The default description generation rules are a person based rulebook.
-[BUGFIX: All the default description rules should be considered!
-The default description generation rules have outcomes undescribable (failure), undescribed (no outcome), and described (success - the default).]
 
 Section - Notability Rulebook
 
@@ -1819,15 +1805,6 @@ Chapter 3.1.3b - Sexual Adjectives
 
 A body part can be penetrating. A body part is usually not penetrating.
 A body part can be orificial. A body part is usually not orificial.
-
-Part 3.1.4 - Body Part Patterns
-
-Chapter 3.1.4a - Erectable
-
-[TODO
-A body part has a an arousal called the erection threshold.
-Definition: A thing is erectable if it provides the property erection threshold and the erection threshold is not the default value of number.
-Definition: A body part is erect if it provides the property erection threshold and the erection threshold is not greater than the arousal of the holder of the body part.]
 
 Book 3.2 - Body Part Actions
 
@@ -3257,30 +3234,6 @@ Part 4.4.1 - Inspirational Amusement
 We create a method for entering amusing anectdotes that can be displayed to a victorious player.
 This is inspired by Example 383: Jamaica 1688.]
 
-Chapter 4.4.1a - Final Question Option
-
-[Add the revealing option to the final question options]
-
-Table of Final Question Options (continued)
-final question wording	only if victorious	topic	final response rule	final response activity
-"REVEAL the inspiration for something or somewhere"	true	"reveal [any person]"	reveal inspiration for something rule	--
---	true	"reveal [any room]"	reveal inspiration for something rule	--
-
-Chapter 4.4.1b - Revealing Inspiration
-
-This is the reveal inspiration for something rule: 
-	Repeat through the Table of Inspirations:
-		If the player's command matches the topic entry: 
-			Say "[revelation entry][paragraph break]"; 
-			Rule succeeds; 
-	Say "There is no recored inspiration to reveal for that.";
-
-Table of Inspirations
-topic (a topic)	revelation (some text)
---	--
-["reveal [Lucius]"	"Lucius is based on a historical buccaneer who sailed with William Dampier. The original did carry a Greek New Testament, from which he read aloud when the men were stranded in the jungles near Panama."
-"reveal [Upper Deck]"	"The Callisto is a simplified and tidied representation of a pirate sloop ca. 1688."]
-
 Book 4.5 - Completion Tracking
 
 [Status: TODO/Not implemented]
@@ -4517,7 +4470,7 @@ Example B shows a simple DACS setup with some customizations, and the system is 
 
 (*): I believe Moist was the first game to implement arousal, but feel free to correct me if you know of an earlier example than 1996.
 
-(**): See 'Anatomy of a Sex Scene', by ExLibris. http://overanalysingaif.blogspot.no/2010/12/anatomy-of-sex-scene.html
+(**): See 'Anatomy of a Sex Scene', by ExLibris. http://overanalysingaif.blogspot.com/2010/12/anatomy-of-sex-scene.html
 
 Section 1.6 - Character Agency
 
@@ -4537,9 +4490,13 @@ The later chapter on NPCs covers this topic in detail, and Example C shows some 
 
 Section 1.7 - Version History
 
-20XX-XX-XX: Remake-Beta-1 (Release 1)
+2016-12-23: Beta-1 (Release 1)
 
 	Remake of the old AIF framework, reworking the previous extensions body parts, garments, outfits, erotic story actions and consent into one.
+	* Layered clothing system is completed, with templates for garments and body parts.
+	* Erotic Actions are completed, but might contain some bugs still.
+	* DACS is functional but untested.
+	* Some out-of-world actions are not yet implemented.
 
 Section 1.8 - Contact Info
 
@@ -4652,6 +4609,7 @@ Stripping is as the name implies the act of taking off every worn garment, in th
 There are no special checks done for stripping, instead relying on each garment being taken off in turn.
 Similarly, dressing makes the person try to put on the garments listed in their preferred clothing property.
 Note that these actions are intended for players; in order to support changing clothes "behind the scenes" you can use the 'force dress' and 'force strip' methods.
+These force methods will ignore all rules to make sure that the person is wearing either nothing or the specificed list of garments.
 
 Garments can also be shifted into other states to allow more access (detailed in Section 3.2), so we need some actions to implement this behavior.
 Shifting is a temporary change into a more open state, while ripping is permanent and not compatible with shifting.
@@ -5170,8 +5128,6 @@ Below is a short example of how content types can be used:
 
 	test me with "x monitors".
 
-
-
 Chapter 7 - Expanded Tutorial
 
 A complete tutorial on using Inform 7 to write AIF games is a rather ambitious project.
@@ -5324,11 +5280,16 @@ Inform's IDE has some handy shortcuts (on Windows atleast): F5 will compile and 
 F7 on the other hand will just compile and rebuild the built-in index tab which is a great resource while developing.
 It's a good habit to compile often as it can be daunting to debug larger code changes even if the compiler is good at pointing out what went wrong.
 
+As we've seen earlier, source code in Inform is written in natural language, but that doesn't mean it actually understands English.
+Just like any other programming language Inform has a rather strict syntax to follow, it's just that Inform's syntax is easy to read.
+Anything Inform should recognize as text should be written inside double-quotes, and single quotes inside a text is converted to double-quotes when bordering whitespace.
+Anything written inside square brackets in a text is considered to be substitutions, while square brackets elsewhere is considered to be comments.
+
 Unlike many other programming languages (such as TADS, other C-like derivations, and even Inform 6), Inform 7 is limited to only one source file.
 In lieu of dividing the source into several files, I7 uses five 'header' types for organizing your code into modules.
 In decreasing order of magnitude, these headers are Volume - Book - Part - Chapter - Section, or in a easy-to-remember mnemonic: Very Bad People Choose Satan.
 Exactly how to divide your code with these headings is largely up to each author, but a template project setup based on my personal preferences is included herein.
-My personal preference is to use 'chapter' as the main holder of sourcecode, divided into sections as needed and using 'volume/book/part' for hierarchial organization.
+My personal preference is to use 'chapter' as the main holder of sourcecode, divided into sections as needed and using 'volume/book/part' for hierarchical organization.
 
 Structuring the source code with these headers has three main effects, the first of which should be pretty obvious.
 By building a hierarchy of headings it's easy to place related content near each other, using the interface's overview to jump around.

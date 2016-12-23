@@ -29,9 +29,9 @@ Part 0.1.3 - Dramatis Personae
 
 [Create the persons of the story here]
 
-Part 0.1.4 - Conversation Topics
+Part 0.1.4 - Conversation Subject
 
-[Define conversation topics that are common for multiple actors here.]
+[Define conversation subjects that are common for multiple actors here.]
 
 Part 0.2 - Declarations
 
@@ -90,15 +90,63 @@ Part 1.1.1 - Region
 
 Chapter 1.1.1a - Room
 
-Book 1.2 - Chronology
+Book 1.2 - Inhabitants
+
+[Characters related to Act I, one part for each person.]
+
+Part 1.2.1 - Person
+
+Chapter 1.2.1a - Agency
+
+[Scripts controlling behavior]
+
+Chapter 1.2.1b - Body Parts
+
+The short description of your head is "".
+The short description of your mouth is "".
+The short description of your eyes is "".
+The short description of your hair is "".
+The short description of your feet is "".
+The short description of your legs is "".
+The short description of your hands is "".
+The short description of your ass is "".
+
+[If female:
+The short description of your vagina is "".
+The short description of your breasts is "".]
+
+[If male:
+The short description of your chest is "".
+The short description of your penis is "".]
+
+Chapter 1.2.1c - Clothing
+
+Chapter 1.2.1d - Dialogue
+
+[The dialogue of person-name is the Table of Person-name's Dialogue.
+
+Table of Person-name's Dialogue
+subject (a thing)	availability (a truth state)	cue (a text)	turn stamp (a number)	dialogue (some text)
+--	--	--	--	--]
+
+Book 1.3 - Mechanics
+
+[Any mechanics pertaining to the act, one part for each main feature.]
+
+Book 1.4 - Chronology
 
 [Break the act into scenes]
 
-Part 1.2.1 - Scene
+Part 1.4.1 - Scene
 
-Part 1.2.2 - Sex-Scene
+Prologue is a scene.
+Prologue begins when play begins.
+When prologue begins:
+	Say "Do what it takes to set the scene here.";
 
-[Contents for the scene, including consent, persuasion, action descriptions
+Part 1.4.2 - Sex-Scene
+
+[Contents for the scene, including consent, persuasion, action responses.
 Head/Mouth/Eyes/Hair: Nothing]
 
 Section - Person (kiss/hug/dance)
@@ -118,42 +166,3 @@ Section - Penis (touchable/rubbable/pinchable/lickable/biteable/penetrating)
 Section - Breasts (touchable/rubbable/tickleable/lickable/biteable/pinchable)
 
 Section - Vagina (touchable/rubbable/lickable/orificial)
-
-Book 1.3 - Inhabitants
-
-[Characters related to Act I, one part for each person.]
-
-Part 1.3.1 - Person
-
-Chapter 1.3.1a - Agency
-
-[Scripts controlling behavior]
-
-Chapter 1.3.1b - Body Parts
-
-The short description of your head is "".
-The short description of your mouth is "".
-The short description of your eyes is "".
-The short description of your hair is "".
-The short description of your feet is "".
-The short description of your legs is "".
-The short description of your hands is "".
-The short description of your ass is "".
-
-[If female:
-The short description of your vagina is "".
-The short description of your breasts is "".]
-
-[If male:
-The short description of your chest is "".
-The short description of your penis is "".]
-
-Chapter 1.3.1c - Clothing
-
-Chapter 1.3.1d - Dialogue
-
-[Responses to topics.]
-
-Book 1.4 - Mechanics
-
-[Any mechanics pertaining to the act, one part for each main feature.]
