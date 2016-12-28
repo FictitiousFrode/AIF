@@ -1,4 +1,4 @@
-Version 1/161223 of Simple Conversations by Fictitious Frode begins here.
+Version 2/161228 of Simple Conversations by Fictitious Frode begins here.
 
 Include Epistemology by Eric Eve.
 
@@ -49,6 +49,11 @@ To update the cue of (subject - a thing) for (conversationalist - a person) to (
 			Now cue entry is cue;
 			Now dialogue entry is "";
 
+To clear the cue of (subject - a thing) for (conversationalist - a person):
+	Repeat through dialogue of the conversationalist:
+		If there is a subject entry and the subject entry is subject:
+			Blank out the cue entry;
+
 Chapter 1.1.2c - Updating Dialogue
 
 To update the dialogue of (subject - a thing) for (conversationalist - a person) to (dialogue - some text):
@@ -65,6 +70,11 @@ To update the dialogue of (subject - a thing) for (conversationalist - a person)
 			Now availability entry is false;
 			Now subject entry is subject;
 			Now dialogue entry is dialogue;
+
+To clear the dialogue of (subject - a thing) for (conversationalist - a person):
+	Repeat through dialogue of the conversationalist:
+		If there is a subject entry and the subject entry is subject:
+			Blank out the dialogue entry;
 
 Chapter 1.1.2d - Toggling Availability
 
@@ -278,6 +288,10 @@ Section 1.2 - Version History
 	Individual default dialogue responses for each person.
 	Availability for both subjects and individual dialogues can be toggled.
 	Support for runtime alterations to dialogues.
+	
+Release 2 (In Development)
+
+	Support for clearing cue and dialogue entries.
 
 Section 1.3 - Contact Info
 
@@ -379,8 +393,10 @@ Section 3.3 - Phrases for Updating Values and Deciding On
 
 The following phrases can be used to update the dialogues of a person, by altering the table that the dialogue property points to.
 
-	UPDATE THE CUE OF (thing) FOR (person) TO (text): Sets the cue text of the thing in the person's table to the given text. If the thing isn't listed in the table, it tries to find a blank row to insert a new row with no dialogue and 'false' availability.
+	UPDATE THE CUE OF (thing) FOR (person) TO (text): Sets the cue text of the thing in the person's table to the given text. If the thing isn't listed in the table, it tries to find a blank row to insert a new row with no dialogue and 'false' availability. Often used after talking about something that no longer requires cueing.
+	CLEAR THE CUE OF (thing) FOR (person): Blanks out the cue of the thing in the person's table.
 	UPDATE THE DIALOGUE OF (thing) FOR (person) TO (text): Sets the dialogue text of the thing in the person's table to the given text. If the thing isn't listed in the table, it tries to find a blank row to insert a new row with the dialogue and 'false' availability.
+	CLEAR THE DIALOGUE OF (thing) FOR (person) : Blanks out the dialogue of the thing in the person's table. Rarely needed but provided for completion.
 	ACTIVATE (thing) FOR (person): Sets the availability of the thing in the person's table to true.
 	DEACTIVATE (thing) FOR (person): Sets the availability of the thing in the person's table to false.
 
