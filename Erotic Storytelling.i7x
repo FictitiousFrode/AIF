@@ -1,4 +1,4 @@
-Version 1/161223 of Erotic Storytelling by Fictitious Frode begins here.
+Version 2/16122 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF) in Inform.
 The main features are a layered clothing with body parts and erotic actions with system for obtaining consent on actions involving others characters.
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for NPC agency and optional story contents."
@@ -4497,6 +4497,12 @@ Section 1.7 - Version History
 	* Erotic Actions are completed, but might contain some bugs still.
 	* DACS is functional but untested.
 	* Some out-of-world actions are not yet implemented.
+
+Release 2 (In Development)
+
+	* Bug fixes on mini dress (courtesy of allisonedwards)
+	* Clothing layer fix (courtesy of allisonedwards)
+
 
 Section 1.8 - Contact Info
 
