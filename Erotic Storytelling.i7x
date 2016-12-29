@@ -555,7 +555,7 @@ To decide whether (G - a garment) can be worn by (P - a person):
 	Sort clothing in reverse clothing layer order;
 	Repeat with A running through cover:
 		Repeat with cloth running through clothing:
-			If clothing layer of cloth is greater than clothing layer of G:
+			If clothing layer of cloth >= clothing layer of G:
 				If A is listed in the modified cover areas of cloth, decide no;
 	Decide yes;
 	
@@ -568,7 +568,7 @@ To decide which list of garments is preventing wearing of (G - a garment) by (P 
 	Sort clothing in reverse clothing layer order;
 	Repeat with A running through cover:
 		Repeat with cloth running through clothing:
-			If clothing layer of cloth is greater than clothing layer of G:
+			If clothing layer of cloth >= clothing layer of G:
 				If A is listed in modified cover areas of cloth:
 					Add cloth to preventers, if absent;
 	Decide on preventers;
