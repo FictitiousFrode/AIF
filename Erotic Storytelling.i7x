@@ -3455,6 +3455,13 @@ Some glasses is usually normalwear.
 The cloth decency of some glasses is usually formal.
 The cover areas of some glasses is usually {face area}.
 
+A minidress is a kind of garment.
+The specification of a minidress is "A minidress is a short dress that doesn't cover the legs; see dress for more details. It's usually casual and normalwear. It's can usually be raised to gain access to the crotch."
+A minidress is usually normalwear.
+The cloth decency of minidress is usually immodest.
+The cover areas of a minidress is usually {shoulder area, arm area, upper torso area, lower torso area, upper back area, lower back area, crotch area, thigh area}.
+A minidress is usually shiftable. The shiftyness of a minidress is usually raisable. The shifting revealed cover areas of a minidress is usually {crotch area, thigh area}.
+
 Chapter 5.1.2c - Overwear
 
 [Overwear is the outer layer of clothing, and is only covered by outerwear (clothing that is meant for outside use).]
@@ -3467,13 +3474,6 @@ The cloth decency of dress is usually casual.
 The cover areas of a dress is usually {shoulder area, arm area, upper torso area, lower torso area, upper back area, lower back area, crotch area, thigh area, leg area}.
 A dress is usually default cover blocking.
 A dress is usually shiftable. The shiftyness of a dress is usually buttonable. The shifting revealed cover areas of a dress is usually {shoulder area, upper torso area, lower torso area}.
-
-A minidress is a kind of garment.
-The specification of a minidress is "A minidress is a short dress that doesn't cover the legs; see dress for more details. It's usually casual and normalwear. It's can usually be raised to gain access to the crotch."
-A minidress is usually overwear.
-The cloth decency of minidress is usually immodest.
-The cover areas of a minidress is usually {shoulder area, arm area, upper torso area, lower torso area, upper back area, lower back area, crotch area, thigh area}.
-A minidress is usually shiftable. The shiftyness of a dress is usually raisable. The shifting revealed cover areas of a dress is usually {crotch area, thigh area}.
 
 Some trousers is a kind of garment.
 It is usually ambiguously plural. The indefinite article is usually "some". The plural of some trousers is pairs of trousers.
