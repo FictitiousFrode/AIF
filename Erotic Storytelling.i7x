@@ -4237,7 +4237,7 @@ Chapter 1 - Using this Extension
 To use this framework, you need to download and install it (which you probably have if you're reading this) and include it in your story:
 
 *:
-	Include Adult Framework by Fictitious Frode.
+	Include Erotic Storytelling by Fictitious Frode.
 
 By including this extension, you will enable most of what's necessary to write erotic stories.
 Most of the content is not automatically available out-of-the-box, but has to be specifically included by the author for the player to notice.
