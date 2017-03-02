@@ -1,4 +1,4 @@
-Version 2/160111 of Erotic Storytelling by Fictitious Frode begins here.
+Version 2/170302 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF) in Inform.
 The main features are a layered clothing with body parts and erotic actions with system for obtaining consent on actions involving others characters.
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for NPC agency and optional story contents."
@@ -5272,7 +5272,6 @@ By clever use of room descriptions and the 'before' and 'instead' rulebooks it's
 	
 	The player is wearing an outfit called your clothes.
 
-
 This example illustrates another small complication introduced by this extension, as it contains the notion of decency.
 In order to stop the player from running around in an inappropriate state of dress, each room has a decency threshold which defaults to 'casual' but the naked player is 'indecent'.
 This can make testing the game a small annoyance at first, but one that can be easily remedied by giving the player an outfit to wear.
@@ -5328,12 +5327,12 @@ To help test this you could use the included extension 'Directionality' which au
 
 Before moving on to some more programming in Inform, I would recommend exploring various tabs in the IDE, especially 'Index' which gives a helpful overview of your story world.
 
-Section 7.4 - Informed Things
+Section 7.4 - Assorted Things
 
 In the previous discussion on geography we briefly talked about the items that populate a story world.
 It's possible to broadly divide these in two main categories: things that exist to describe the story world and things that exist as part of puzzles for the player to solve.
 Hopefully the distinction between these categories should not always be apparent for the player, who would use 'ordinary world' items to solve the challenges presented by the story.
-While it's easy to determine how many puzzle items to include (answer: whatever you feel is necessary), it's much harder to settle on a correct amound of 'normal world' items.
+While it's easy to determine how many puzzle items to include (answer: whatever you feel is necessary), it's much harder to settle on a correct amount of 'normal world' items.
 We briefly covered this when speaking about rooms, but it's important enough to bear repeating.
 My personal preference is that every item that's notable enough to get mentioned in the room description should have a corresponding item.
 The detail level in that item's description should be tailored to how important and relevant it is; it's even ok to have a bland 'That's not very important' description for items that are obvious fluff.
@@ -5387,6 +5386,62 @@ A person can 'have' a thing, which is actually they union of the two relations '
 With containers and supporters things can also be in 'in' or 'on' something else, with 'contained by' as the combined relation that covers both.
 We can also have assemblies where something is 'part of' something else (in which case it is 'enclosed by' that part), of which body parts is the most pertinent example at hand.
 Inform will assume that you're speaking about the player if you give no reference to which person, so the condition 'if the hat is worn' actually reads 'if the hat is worn by the player'.
+
+Section 7.5 - Storycrafting
+
+This tutorial has so far been mostly focused on the technical aspects of how to implement a story in Inform through locations with inventory.
+This will continue in the next installment which will deal with how Inform uses rules to implement logic programming.
+First we'll take a look at how to get started with writing the actual story.
+There are some questions you should ask yourself when starting out:
+
+	What is your setting, and what mood and level of detail fits?
+	How should the player's interest and focus be maintained during the story?
+	How should I start writing the story?
+
+Let's start with the last question first, as it's perhaps the easiest to understand and it lays the foundation for your workflow.
+Every author has their own workflow so you need to find what works for you, but there are some general approaches.
+Implementation is the process of converting your ideas into code, and Emily Short has written a good article (*) covering some strategies for implementing interactive fiction.
+I recommend you take the time to read the article, as although this text is inspired by it we're not going to cover it in detail.
+
+(*) Available at https://emshort.blog/2009/08/23/idea-to-implementation/
+
+The most basic strategy (which Emily calls 'Implement first! Design later!') is just to start at the beginning, implementing the ideas as they come to you.
+This can be a great process for learning how to work with your tools, but as a storycrafting workflow it has some issues.
+Maintaining forward momentum in the story is hard without a properly defined flow to the story, and it's easy to get lost in all the alternative story branches you can see.
+The easy fix is to decide on the ending and start working backwards, but it can still be challenging to make it back to the start.
+Another issue that's common to both all linear workflows regardless of direction is that the first parts written usually have greater descriptive detail but less mechanical detail, while the opposite is true for the latter stages.
+This is a result of your skills improving with experience, leading to more satisfying mechanics.
+At the same time your focus shifts to 'what else can I add' to 'getting it done'.
+It's therefore important to return to the early parts later on to ensure some consistency in details across the story.
+
+At the other end is writing out the entire transcript for your story; what should the player type to progress and what are the responses?
+The major benefit of this approach is that you always have a clear idea of what the player *should* be doing to progress at any stage, but it's easy to overlook what the player *could* be doing.
+The downside is that you're basically writing the entire story before you know what mechanics you're capable of implementing.
+
+In practice your process would probably lie somewhere in between these two extremes, but some form of planning is essential.
+Personally I prefer to start by writing the walkthrough for the game, InvisiClues-style (**).
+This helps me focus on the player's experience; what are the obstacles to overcome and how should the solution be hinted at, while still leaving room for misdirects and optional sub-plots.
+It also naturally breaks down the story into manageable chunks and puts some distance between your intentions and the implementing mechanics.
+This last point is important as you're not wasting energy writing descriptions for actions you're unable to implement or change your mind about.
+
+(**) A form of walkthrough focused on giving hints instead of a step-by-step solution.
+See http://www.ifarchive.org/indexes/if-archiveXinfocomXhintsXinvisiclues.html for some examples.
+
+If you've come this far into the tutorial you most likely have some ideas about the story you want to write.
+Before starting implementation it's important to know what you want to achieve and what's fitting for the story.
+This could be either specific characters (real or fictional) or entire settings (fan-fiction or your own), or even more abstract concepts you want to explore.
+
+The mood of the story is one of the easier considerations which has far reaching consequences.
+A realistic story has to employ different techniques and effects to appear serious than a comedic story which can afford to be more loose.
+Regardless of the mood it's still important for the logic to stay consistent within the context of the story.
+Related to this is finding the correct level of detail for your story.
+There are no simple and correct answers to what is correct, both in regards to rooms and contents.
+
+Lastly we'll try to answer the important but difficult question of how to maintain the player's interest.
+Unfortunately there is no single answer as every player is different, but it's still very important to keep the player's motivation in mind.
+While some freeform exploration can be interesting, the player should always have an idea of what they are trying to achieve as well as what's keeping that from happening.
+Searching for the solution to puzzles can be frustrating enough without first having to find out what the puzzle is.
+A good approach is to consider both what is a good puzzle with a solution that makes sense in the context of the story, as well as how the player should be clued in to discovering the solution.
 
 Chapter 8 - Technical Reference
 
