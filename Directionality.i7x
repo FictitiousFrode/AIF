@@ -1,4 +1,4 @@
-Version 2/161228 of Directionality by Fictitious Frode begins here.
+Version 2/170327 of Directionality by Fictitious Frode begins here.
 
 "Provides automated listing of all exits from a room."
 
@@ -10,11 +10,12 @@ Carry out looking (This is the direction listing rule):
 	Repeat with direction running through directions:
 		Let destination be the room-or-door direction from location;
 		If destination is a door:
-			Let throughfare be destination;
-			Let destination be the other side of destination from location;
-			If destination is visited or destination is known, add "[Destination] is [direction] (through [throughfare])" to known-exits;
+			Unless destination is undescribed: [This should cover the Standard Rules' implementation of hidden doors]
+				Let throughfare be destination;
+				Let destination be the other side of destination from location;
+				If destination is visited or destination is known, add "[Destination] [are] [direction] (through [throughfare])" to known-exits;
 		Else:
-			If destination is visited or destination is known, add "[Destination] is [direction]" to known-exits;
+			If destination is visited or destination is known, add "[Destination] [are] [direction]" to known-exits;
 		If destination is not known and destination is unvisited, add "[direction]" to unknown-exits;
 	If number of entries in known-exits is 0:
 		If number of entries in unknown-exits is 0, say "There are no clear exits from here.";
@@ -62,6 +63,7 @@ Section 1.2 - Version History
 Release 2 (In development)
 
 	Incorporated Eric Eve's Epistemology instead of the custom 'known/unknown' property.
+	Support for hidden doors, as implemented in the Standard Rules (using undescribed to imply the player is unaware they exist)
 	Minor documentation changes.
 
 Section 1.3 - Contact Info
