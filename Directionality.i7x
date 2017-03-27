@@ -43,7 +43,7 @@ Note that this does not check that the player knows that this exits leads to the
 
 Section 1.1 - Exploration
 
-For games where the player is "exploring" an area that is know to the character, it's possible to set rooms as familiar, in order to have them show up in the destination listing.
+For games where the player is "exploring" an area that is known to the character, it's possible to set rooms as familiar, in order to have them show up in the destination listing.
 Eric Eve's Epistemology extension is used to provide this support.
 
 	The Library is north of the Hallway.
@@ -51,8 +51,7 @@ Eric Eve's Epistemology extension is used to provide this support.
 
 When determining wether an exit is known or unknown, it's not the exit that's being evaluated but the destination. 
 This has some implications for rooms that are accessible from multiple directions, and shortcuts.
-
-Secret/hidden connections are not handled, but is a point for future updates.
+Secret doors are handled according to the Standard Rules; a door that is not described is not listed.
 
 Section 1.2 - Version History
 
