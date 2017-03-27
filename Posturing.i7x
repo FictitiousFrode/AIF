@@ -133,7 +133,7 @@ Report an actor posturing (this is the report posturing rule):
 		If the actor is the player:
 			Say "[We] [assume posture of P]." (A);
 		Else if the player can see the actor and the action is not silent:
-			Say "[The actor] [can't] [assume posture of P]." (B);
+			Say "[The actor] [assume posture of P]." (B);
 	Else if the holder of the actor is a container:
 		If the actor is the player:
 			Say "[We] [assume posture of P] in [the holder of the actor]." (C);
@@ -345,9 +345,29 @@ Check an actor turning around (this is the must lie down to turn around rule):
 Chapter 1.2.8c - Carry Out
 
 [Redirect to assuming the prone or supine posture]
-Carry out an actor dropping down (this is the turning around redirect rule):
-	If the actor is currently supine, try the actor posturing prone;
-	Else try the actor posturing supine;
+Carry out an actor turning around (this is the turning around redirect rule):
+	If the actor is currently supine, silently try the actor posturing prone;
+	Else silently try the actor posturing supine;
+
+Chapter 1.2.8c - Report
+
+Report an actor turning around (this is the report turning around rule):
+	Let P be the current posture of the actor;
+	If the holder of the actor is a room:
+		If the actor is the player:
+			Say "[We] [turn] around and are now [assume posture of P]." (A);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [turn] around and are now [assume posture of P]." (B);
+	Else if the holder of the actor is a container:
+		If the actor is the player:
+			Say "[We] [turn] around and are now [assume posture of P] in [the holder of the actor]." (C);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [turn] around and are now [assume posture of P] in [the holder of the actor]." (D);
+	Else:
+		If the actor is the player:
+			Say "[We] [turn] around and are now [assume posture of P] on [the holder of the actor]." (E);
+		Else if the player can see the actor and the action is not silent:
+			Say "[The actor] [turn] around and are now [assume posture of P] on [the holder of the actor]." (F);
 
 Book 1.3 - Action Integration
 
@@ -471,9 +491,34 @@ Posturing ends here.
 	
 Chapter 1 - Using this Extension
 
+To use this extension, you need to download and install it (which you probably have if you're reading this) and include it in your story:
+
+*:
+	Include Posturing by Fictitious Frode.
+
+
+
 Section 1.1 - Documentation Overview
 
+The documentation will cover the following subjects:
+
+	Chapter 1: A short overview of the extension.
+	Chapter 2: Techniques and guidelines on how to use postures.
+	Chapter 3: A complete technical reference for everything added or changed with this extension.
+
+The following examples are included:
+
+TODO
+
 Section 1.2 - Version History
+
+2015-01-26: AIF Framework Extension (Release 1)
+
+	
+
+
+2016-12-23: Beta-1 (Release 1)
+
 
 Section 1.3 - Contact Info
 
