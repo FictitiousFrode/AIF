@@ -1,4 +1,4 @@
-Version 2/161228 of Simple Conversations by Fictitious Frode begins here.
+Version 2/170329 of Simple Conversations by Fictitious Frode begins here.
 
 Include Epistemology by Eric Eve.
 
@@ -329,7 +329,6 @@ A subject isn't very interesting without a dialogue response for it from the oth
 To facilitate this we use a table-based approach, which allows for both shared and individual dialogue options.
 Each person has a 'dialogue' property which points to a table, which should look like the example below:
 
-
 *:
 	Library is a room.
 	Bob is a person in Library. Bob's dialogue is the Table of Bob's Dialogue.
@@ -354,6 +353,10 @@ It's important that the table contains the following five columns:
 It's also possible to write 'after talking to person about subject' rules.
 Typically these would be to unlock the effects of talking about the subject, such as updating cues and making other dialogues available.
 
+Each person also have their own default dialogue property, which will be used as the response to all subjects that are not listed in the dialogue table.
+Only subjects that the player knows about (which is handled using Eric Eve's Epistemology extension) can be talked about in this manner.
+Attempts to converse about an unknown thing will be caught by the pondering to it about action, which when the noun is a person will also use the default dialogue.
+
 Section 2.3 - Changing Dialogues
 
 Dialogue is seldom static, and the author has a few options on how to alter conversations.
@@ -368,6 +371,9 @@ When the story moves to a new act it's often necessary to make larger alteration
 For these occasions you can have a separate table of dialogue for each act, and use the 'when scene begins' rule to change the dialogue of the actors to refer to a new table.
 
 Chapter 3 - Technical Reference
+
+Contained in this chapter is a technical description of all the new and altered mechanics for the extension, divided by type.
+It's intended as a companion to the other chapters, although an experienced author could glean much of the previous information from this chapter alone.
 
 Section 3.1 - New Kind: Subject
 
@@ -389,7 +395,7 @@ It's very important that the table contains the following five columns:
 	Turn stamp: Used to keep track of which dialogue options have been talked about, storing the turn number it was previously talked about.
 	Dialogue: The text to output when talking about the option.
 
-Section 3.3 - Phrases for Updating Values and Deciding On
+Section 3.3 - Phrases
 
 The following phrases can be used to update the dialogues of a person, by altering the table that the dialogue property points to.
 
