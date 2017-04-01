@@ -1,4 +1,4 @@
-Version 2/170327 of Directionality by Fictitious Frode begins here.
+Version 2/170401 of Directionality by Fictitious Frode begins here.
 
 "Provides automated listing of all exits from a room."
 
@@ -9,20 +9,20 @@ Carry out looking (This is the direction listing rule):
 	Let unknown-exits be a list of text;
 	Repeat with direction running through directions:
 		Let destination be the room-or-door direction from location;
+		If destination is a door and destination is undescribed, next; [This should cover the Standard Rules' implementation of hidden doors]
 		If destination is a door:
-			Unless destination is undescribed: [This should cover the Standard Rules' implementation of hidden doors]
-				Let throughfare be destination;
-				Let destination be the other side of destination from location;
-				If destination is visited or destination is known, add "[Destination] [are] [direction] (through [throughfare])" to known-exits;
+			Let throughfare be destination;
+			Let destination be the other side of destination from location;
+			If destination is visited or destination is known, add "[Destination] [are] [direction] (through [throughfare])" to known-exits;
 		Else:
 			If destination is visited or destination is known, add "[Destination] [are] [direction]" to known-exits;
 		If destination is not known and destination is unvisited, add "[direction]" to unknown-exits;
 	If number of entries in known-exits is 0:
 		If number of entries in unknown-exits is 0, say "There are no clear exits from here.";
-		else say "There are exits [unknown-exits].";
-	else:
+		Else say "There are exits [unknown-exits].";
+	Else:
 		If number of entries in unknown-exits is 0, say "[Known-exits].";
-		else say "[Known-exits]. There are also exits [unknown-exits].";
+		Else say "[Known-exits]. There are also exits [unknown-exits].";
 
 Directionality ends here.
 
