@@ -1,4 +1,4 @@
-Version 2/170325 of Posturing by Fictitious Frode begins here.
+Version 2/170401 of Posturing by Fictitious Frode begins here.
 
 Volume 0 - New Verbs
 
@@ -20,10 +20,10 @@ Part 1.1.1 - Postures
 
 Chapter 1.1.1a - Kind of Value
 
-A posture is a kind of value. The postures are defined by the Table of Posture.
+A posture is a kind of value. The postures are defined by the Table of Postures.
 The specification of posture is "A posture is the position or bearing of a person. It can as an example be used to distinguish between sitting, standing or lying down."
 
-Table of Posture
+Table of Postures
 Posture	describe posture (text)	assume posture (text)
 standing	"standing"	"[stand] up"
 sitting	"sitting"	"[sit] down"
@@ -33,13 +33,13 @@ prone	"laying prone"	"[lie] prone"
 supine	"supine"	"[lie] supine"
 
 To say describe posture of (P - a posture):
-	Repeat with N running from 1 to the number of rows in the Table of Posture:
-		Choose row N in the Table of Posture;
+	Repeat with N running from 1 to the number of rows in the Table of Postures:
+		Choose row N in the Table of Postures;
 		If P is the Posture entry, say the describe posture entry;
 
 To say assume posture of (P - a posture):
-	Repeat with N running from 1 to the number of rows in the Table of Posture:
-		Choose row N in the Table of Posture;
+	Repeat with N running from 1 to the number of rows in the Table of Postures:
+		Choose row N in the Table of Postures;
 		If P is the Posture entry, say the assume posture entry;
 
 Chapter 1.1.1b - Property Integrations
@@ -53,30 +53,36 @@ A container has a number called the occupant limit. The occupant limit of a cont
 Chapter 1.1.1c - Checking for Posture
 
 [Checks if a given individual is in a given posture]
-To decide whether (individual - a person) is currently (position - a posture):
+To decide whether (individual - a person) is posing (position - a posture):
 	If the current posture of the individual is the position, decide yes;
 	Else decide No;
 
 [Checks if a given individual is in a given posture for a given location]
-To decide whether (individual - a person) is currently (position - a posture) on (location - an object):
+To decide whether (individual - a person) is posing (position - a posture) on (location - an object):
 	If the current posture of the individual is the position and the individual is enclosed by the location, decide yes;
 	Else decide no;
 
 [Checks if *any* person is in a given posture for a given location]
-To decide whether someone is currently (position - a posture) on (location - an object):
+To decide whether someone is posing (position - a posture) on (location - an object):
 	If the location is enterable:
 		Repeat with individual running through the list of persons enclosed by the location:
 			If the current posture of the individual is the position, decide yes;
 	Decide no;
 
 [Determines if a location allows a posture]
-To decide if (location - an object) allows (position - a posture):
+To decide whether (location - an object) allows (position - a posture) posture:
 	If location provides the property compatible postures:
 		If position is listed in the compatible postures of location, decide yes;
 	Decide no;
 
+[Negation:]
+To decide whether (location - an object) blocks (position - a posture) posture:
+	If location provides the property compatible postures:
+		If position is listed in the compatible postures of location, decide no;
+	Decide yes;
+
 [Determines if a location is filled to it's occupant limit]
-To decide if (location - an object) has vacancy:
+To decide whether (location - an object) has vacancy:
 	If location provides the property occupant limit:
 		If the number of people enclosed by location is not less than the occupant limit of location, decide no;
 	Decide yes;
@@ -107,7 +113,7 @@ Check an actor posturing (this is the changing posture rule):
 Check an actor posturing (this is the verify posture rule):
 	Let P be the posture understood;
 	If the holder of the actor is not a room:
-		If the holder of the actor allows P, continue the action;
+		If the holder of the actor allows P posture, continue the action;
 		If the holder of the actor is a container:
 			If the actor is the player:
 				Say "[We] [can't] [assume posture of P] in [the holder of the actor]." (A);
@@ -148,7 +154,8 @@ Report an actor posturing (this is the report posturing rule):
 Part 1.2.2 - Stand In/On
 
 [Status: Complete
-We need two actions: one for changing to the posture and one for assuming the posture on/in something.]
+We need two actions: one for changing to the posture and one for assuming the posture on/in something.
+Standing can also serve as a redirect to exiting/getting off.]
 
 Standing is an action applying to nothing.
 Standing on is an action applying to one thing.
@@ -165,13 +172,19 @@ Chapter 1.2.2b - Carry Out
 
 [Redirect to assuming the standing posture]
 Carry out an actor standing (this is the implicit standing redirect rule):
+	If the holder of the actor is a supporter (called location) and location blocks standing posture:
+		Say "(getting off [the location])[command clarification break]";
+		Try the actor getting off location instead;
+	If the holder of the actor is a container (called location) and location blocks standing posture:
+		Say "(exiting [the location])[command clarification break]";
+		Try the actor exiting instead;
 	Try the actor posturing standing;
 
 [Try to enter the noun, then redirect to assume the standing posture]
 Carry out an actor standing on (this is the explicit standing redirect rule):
 	If the holder of the actor is not the noun, silently try the actor entering the noun;
 	If the holder of the actor is the noun:
-		Unless the actor is currently standing, try the actor posturing standing;
+		Unless the current posture of the actor is standing, try the actor posturing standing;
 		Else follow the report posturing rules;
 
 Part 1.2.3 - Sit In/On/At
@@ -200,7 +213,7 @@ Carry out an actor sitting (this is the implicit sitting redirect rule):
 Carry out an actor sitting on (this is the explicit sitting redirect rule):
 	If the holder of the actor is not the noun, silently try the actor entering the noun;
 	If the holder of the actor is the noun:
-		Unless the actor is currently sitting, try the actor posturing sitting;
+		Unless the current posture of the actor is sitting, try the actor posturing sitting;
 		Else follow the report posturing rules;
 
 Part 1.2.4 - Kneel Over/On/In
@@ -228,7 +241,7 @@ Carry out an actor kneeling (this is the implicit kneeling redirect rule):
 Carry out an actor kneeling on (this is the explicit kneeling redirect rule):
 	If the holder of the actor is not the noun, silently try the actor entering the noun;
 	If the holder of the actor is the noun:
-		Unless the actor is currently kneeling, try the actor posturing kneeling;
+		Unless the current posture of the actor is kneeling, try the actor posturing kneeling;
 		Else follow the report posturing rules;
 
 Part 1.2.5 - Bend Over/On/In
@@ -256,7 +269,7 @@ Carry out an actor bending (this is the implicit bending redirect rule):
 Carry out an actor bending on (this is the explicit bending redirect rule):
 	If the holder of the actor is not the noun, silently try the actor entering the noun;
 	If the holder of the actor is the noun:
-		Unless the actor is currently bending, try the actor posturing bending;
+		Unless the current posture of the actor is bending, try the actor posturing bending;
 		Else follow the report posturing rules;
 
 Part 1.2.6 - Lie Down On/In (Supine)
@@ -289,7 +302,7 @@ Carry out an actor lying down (this is the implicit lying down redirect rule):
 Carry out an actor lying down on (this is the explicit lying down redirect rule):
 	If the holder of the actor is not the noun, silently try the actor entering the noun;
 	If the holder of the actor is the noun:
-		Unless the actor is currently supine, try the actor posturing supine;
+		Unless the current posture of the actor is supine, try the actor posturing supine;
 		Else follow the report posturing rules;
 
 Part 1.2.7 - Drop Down On/In (Prone)
@@ -317,7 +330,7 @@ Carry out an actor dropping down (this is the implicit dropping down redirect ru
 Carry out an actor dropping down on (this is the explicit dropping down redirect rule):
 	If the holder of the actor is not the noun, silently try the actor entering the noun;
 	If the holder of the actor is the noun:
-		Unless the actor is currently prone, try the actor posturing prone;
+		Unless the current posture of the actor is prone, try the actor posturing prone;
 		Else follow the report posturing rules;
 
 Part 1.2.8 - Turn Around
@@ -346,7 +359,7 @@ Chapter 1.2.8c - Carry Out
 
 [Redirect to assuming the prone or supine posture]
 Carry out an actor turning around (this is the turning around redirect rule):
-	If the actor is currently supine, silently try the actor posturing prone;
+	If the current posture of the actor is supine, silently try the actor posturing prone;
 	Else silently try the actor posturing supine;
 
 Chapter 1.2.8c - Report
@@ -438,6 +451,16 @@ Part 1.3.4 - Describing Postures
 
 [TODO
 Rule for writing a paragraph about someone (called target):
+	say "[The target] is [describe posture of current posture of target] here."
+
+	Rule for writing a paragraph about someone (called target) on a supporter (called location):
+	Say "[The target] is [describe posture of current posture of target] on [the location]."
+
+Rule for writing a paragraph about someone (called target) in a container (called location):
+	say "[The target] is [describe posture of current posture of target] in [the location]."
+
+
+Rule for writing a paragraph about someone (called target):
 	say "[The target] is [posture] [if the holder of the target is the location]nearby[otherwise][in-on the holder of the target][end if]."
 
 Rule for writing a paragraph about something which encloses an unmentioned person (called target):
@@ -473,17 +496,17 @@ The occupant limit of a sofa is usually 3. The compatible postures of a sofa is 
 The specification of a sofa is "Sofas are made for sittin on, but also support laying prone/supine and bending over. It usually has room for three persons."
 Understand "couch" as sofa.
 
-
 Chapter 1.4.1e - Bed
 
 A bed is a kind of supporter. A bed is usually enterable.
 The occupant limit of a bed is usually 3. The compatible postures of a bed is usually {supine, prone, sitting, kneeling}.
 The specification of a bed is "Beds are made for laying (supine) on, but also support laying prone, sitting and kneeling on. It usually has room for three persons."
 
+Chapter 1.4.1f - Cabinet
 
-[TODO: Chapter 1.4.1f - Cabinet]
-
-
+A cabinet is a kind of container. A cabinet is usually enterable. A cabinet is usually openable.
+The occupant limit of a cabinet is usually 2. The compatible postures of a cabinet is usually {standing, sitting, kneeling}.
+The specification of a cabinet is "Cabinets are usually large enough for two people to stand in, but also support sitting and kneeling."
 
 Posturing ends here.
 
@@ -496,7 +519,11 @@ To use this extension, you need to download and install it (which you probably h
 *:
 	Include Posturing by Fictitious Frode.
 
-
+By including this extension you will allow the player (and other actors) to assume postures.
+The included postures are 'standing' (default), 'sitting', 'bending', 'kneeling, 'prone' (laying face-down) and 'supine' (laying face-up).
+Also included are the relevant actions to change into these postures, as well as 'turning around' to change between the two laying down postures.
+It's also possible for actors to posture on and in certain things.
+While the first version of this extension used a special kind of supporter to represent this furniture, this version allows posturing on anything that is enterable and has the 'compatible postures' property.
 
 Section 1.1 - Documentation Overview
 
@@ -504,50 +531,198 @@ The documentation will cover the following subjects:
 
 	Chapter 1: A short overview of the extension.
 	Chapter 2: Techniques and guidelines on how to use postures.
-	Chapter 3: A complete technical reference for everything added or changed with this extension.
+	Chapter 3: A technical reference for everything added or changed with this extension.
 
 The following examples are included:
 
-TODO
+	A: Garden Lounge - 
+	B: Customization: Crawling - How to create new postures
 
 Section 1.2 - Version History
 
 2015-01-26: AIF Framework Extension (Release 1)
 
-	
+	Inflexible posture model based on furniture
 
+2017-04-01: Beta-2 (Release 2)
 
-2016-12-23: Beta-1 (Release 1)
-
+	Complete re-coding, keeping the same postures but using centralized control with posture-specific redirects.
+	Moved from kind-based furniture to property-based checks for greater flexibility.
 
 Section 1.3 - Contact Info
 
+The author of this extension can be reached in the following ways:
+
+	Mail: fictitious.frode@gmail.com
+	Blog: https://informedaif.wordpress.com/ is a blog dedicated to writing AIF with Inform 7, and is the official host of the extension. It contains both dicussions around AIF and tutorials on both Inform in general and this extension in particular.
+	Reddit: https://www.reddit.com/r/AIFCentral/ is the subreddit for the AIF community, and the author checks this regularly.
+	GitHub: https://github.com/FictitiousFrode/AIF Contains the latest version of the extension, possibly including functionality that hasn't been released yet.
+
+Feedback of all varieties is welcome, but constructive criticism and discussion is the most appreciated, along with reports of bugs and other issues.
+For support I would appreciate using public communication, so that other may learn from the request as well.
+
+Section 1.4 - Acknowledgments
+
+This extension probably wouldn't have been remade if it wasn't for Mister Flibble's Photoshoot which showed the power of properly implemented postures.
+The deck chair from the examples is based on his creation.
+
+Example 394 - Slouching provided much of the inspiration for this implementation.
+The relation-based approch is replaced with lists, and everything is implemented in a more robust and customizable fashion.
+
 Chapter 2 - Posturing
+
+Postures provide an option for further depth in how actors are placed in the world model.
+This brings both new opportunity for immersion, but also requires the author to consider more options.
+This chapter will cover how postures can be used in a story, and how to create your own custom postures and furniture.
 
 Section 2.1 - Postures and Actions
 
-Section 2.2 - Furniture
+The extension comes with the most common postures defined, including actions for changing to these postures.
+Changes to a persons posture is generally performed by the posturing action, except for some cases related to entering and exiting locations.
+The following is a list of the postures made available by this extension, and the commands the player can use to reach them:
 
-Section 2.3 - Integrating Postures
+	Standing: stand (on/in something)
+	Sitting: sit (on/in/at something)
+	Kneeling: kneel (on/in/over something)
+	Bending: bend (on/in/over something)
+	Supine: lie/lay (down) (on/in something), or turn (around) when already prone.
+	Prone: drop down (on/in something), or turn (around) when already supine.
 
-Section 2.4 - Customization
+Postures aren't limited to just being in a room however.
+Through Inform's standard rules supporters and containers can be entered, and now also has a property stating which postures are supported on them.
+By using the compatible postures (a list of postures), any enterable object in Inform's world model can now control which postures they allow.
+The first entry in the list is assumed to be the preferred posture, which is taken when a person enters without a valid posture.
+In order to control how many people there is room for, the property occupant limit is also available.
+For convenience, the following ready-to-use furniture templates are provided:
+
+	Chair (supporter): sitting and bending for 1 person
+	Table (supporter): supine, prone, sitting and bending for 2 persons
+	Desk (supporter): sitting, bending, supine and prone for 1 person
+	Sofa (supporter): sitting, bending, supine and prone for 3 persons
+	Bed (supporter): supine, prone, sitting and kneeling for 3 persons
+	Cabinet (openable container): standing, sitting and kneeling for 2 persons
+
+Section 2.2 - Integrating Postures
+
+For postures to have full effect it's important they are integrated with the other actions that are relevant for the story.
+This can be as simple as descriptions taking the posture into account, or more comprehensive where certain postures prevent actions from taking place.
+An example of the latter is something that is out of reach unless the player is standing on something.
+
+While most of this integration is left up to the author to decide on, some of the standard actions are integrated:
+
+	Entering: The entering occupancy control rule ensures that the occupancy limit is observed, and the default posture rule makes an actor conform to the default posture of what is entered.
+	Exiting: The exiting occupancy control rule ensures that the occupancy limit is observed, and the default posture rule makes an actor conform to the default posture of what is exited.
+	Getting off: The getting off occupancy control rule ensures that the occupancy limit is observed, and the default posture rule makes an actor conform to the default posture of what is exited.
+	Going: The control traveling posture rule ensures that an actor can only go somewhere while standing.
+
+Section 2.3 - Customization
+
+Creating custom furniture to pose on is very simple, especially when it's to function like a supporter or container.
+Example A shows how to create a deck chair as a custom furniture, which is as easy setting the compatible postures and occupant limit properties to what is desired.
+In order to create new furniture that is not a supporter or container, your new piece will have to provide the compatible postures or occupant limit properties depending on what functionality you want to enable.
+
+Adding support for new postures can be achieved in a similar fashion.
+The postures are defined by the Table of Postures, which features the columns posture, describe posture (text) and assume posture (text).
+Adding a new posture is as easy as extending this table with a new row, giving a name to the posture as well as some text describing how the postures looks and is assumed.
+In order for players to make use of the new posture we also need some actions that redirect to the posturing action, and you might have to alter some furniture to accomodate the new posture.
+Example B shows how to create a crawling posture.
 
 Chapter 3 - Technical Reference
 
-Section 3.1 - New Kind: Posture
+Contained in this chapter is a technical description of all the new and altered mechanics for the extension, divided by type.
+It's intended as a companion to the other chapters, although an experienced author could glean much of the previous information from this chapter alone.
+
+Section 3.1 - New Kind of Value: Posture
+
+The postures are defined in the Table of Postures, which is reproduced below.
+The text values describe posture and assume posture are used to describe the value of the posture, the first for when a person is in the posture and the other for when a person assumes the posture.
+Postures are used for people, as the current posture, and for containers and supporters as a list called compatible postures.
+For changing the posture of a person in a controlled manner, the posturing action should be used.
+
+	Table of Postures
+	Posture	describe posture (text)	assume posture (text)
+	standing	"standing"	"[stand] up"
+	sitting	"sitting"	"[sit] down"
+	kneeling	"kneeling"	"[kneel]"
+	bending	"bending"	"[bend]"
+	prone	"laying prone"	"[lie] prone"
+	supine	"supine"	"[lie] supine"
 
 Section 3.2 - Phrases 
 
+The following phrases can be used to describe a posture in a text substitution:
 
-Example: Slouching
+	say DESCRIBE POSTURE OF (posture): Uses the describe posture entry in the Table of Postures to describe someone in the posture.
+	say ASSUME POSTURE OF (posture): Uses the assume posture entry in the Table of Postures to describe someone assuming the posture.
 
-*:
+The following phrases can be used to check for postures:
+
+	whether (person) IS POSING (posture): Checks if the current posture of the person is the specified posture.
+	whether (person) IS POSING (posture) ON (object): Checks if the current posture of the person is the specified posture and that the person is enclosed by the given object.
+	whether SOMEONE IS POSING (posture) ON (object): Checks each person enclosed by the object to see if any of them are in the given posture.
+	whether (object) ALLOWS (posture) POSTURE: Checks if the compatible postures of the given object contains the specified posture. If the compatible postures property isn't available, it's assumed to be allowed.
+	whether (object) BLOCKS (posture) POSTURE: Checks if the compatible postures of the given object does not contain the specified posture. If the compatible postures property isn't available, it's assumed to not be blocked.
+	whether (object) HAS VACANCY: Checks if the number of people enclosed by the object is less than the occupant limit. If the object doesn't provide the occupant limit, it's assumed to have vacancy.
+
+Example: * Garden Lounge - Relaxing in various postures
+
+Getting started with postures is as easy as using the furniture templates.
+
+	*: "Garden Lounge"
+	
+	Include Posturing by Fictitious Frode.
+	Garden Patio is a room.
+
+	A hammock is a bed in Garden Patio.
+	A stone bench is a sofa in Garden Patio.
+
+We can also easily create new furniture according to our own needs.
+
+	A deck chair is an enterable supporter in Garden Patio. The compatible postures are {supine, prone, sitting}.
+
+These will work for both the player and other actors.
+
+	Clarice is a woman in Garden Patio.
+	A persuasion rule: persuasion succeeds.
+
+	Test me with "sit on bench / clarice, sit on bench / stand / lie on chair / clarice, enter chair / look"
+
+Example: ** Crawling - Creating new postures
+
+Adding a new posture is rather simple, but we must also remember to add new actions for the actors to use.
+
+	*: "Crawling"
+	
 	Include Posturing by Fictitious Frode.
 	
-	The Resort is a room.
+First we expand the Table of Postures to create the crawling posture.
 
-	The banana hammock is a bed in the Resort. The stone bench is a sofa in the resort.
+	To crawl is a verb.
+	
+	Table of Postures (continued)
+	Posture	describe posture (text)	assume posture (text)
+	crawling	"crawling"	"[crawl] on all four"
+	
+We can then create two new actions, one to crawl and one to crawl on and in something.
 
-	Clark is a man in the Resort. A persuasion rule: persuasion succeeds.
+	Crawling is an action applying to nothing.
+	Understand "crawl" as crawling.
+	Carry out an actor crawling: try the actor posturing crawling.
+	
+	Crawling on is an action applying to one thing.
+	Understand "crawl on/over [a supporter]" as crawling on.
+	Understand "crawl in [a container]" as crawling on.
+	Understand "crawl on/in/over/-- [something]" as crawling on.
 
-	Test me with "sit on bench / stand on bench / get up / lie on hammock / sit up / g / clark, sit on bench / look / clark, lie down / g / look / clark, get up / look / clark, lie down / look / enter bench".
+	Carry out an actor crawling on:
+		If the holder of the actor is not the noun, silently try the actor entering the noun;
+		If the holder of the actor is the noun:
+			Unless the current posture of the actor is crawling, try the actor posturing crawling;
+			Else follow the report posturing rules;
+	
+We can now create containers and supporters that work with crawling.
+
+	Garage is a room.
+	A cardboard box is an enterable container in Garage. The compatible postures is {crawling}.
+	
+	Test me with "enter box / stand / crawl in box"

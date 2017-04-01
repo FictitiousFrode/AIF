@@ -59,7 +59,7 @@ Section 1.2 - Version History
 
 	Initial functionality.
 	
-Release 2 (In development)
+2017-04-01 (Release 2)
 
 	Incorporated Eric Eve's Epistemology instead of the custom 'known/unknown' property.
 	Support for hidden doors, as implemented in the Standard Rules (using undescribed to imply the player is unaware they exist)

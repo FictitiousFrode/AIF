@@ -4499,11 +4499,11 @@ Section 1.7 - Version History
 	* DACS is functional but untested.
 	* Some out-of-world actions are not yet implemented.
 
-Release 2 (In Development)
+2017-04-01: Beta-2 (Release 2)
 
 	* Midriff renamed to abdomen
 	* Bug fixes on mini dress and clothing layer (courtesy of allisonedwards via GitHub)
-	* Updated documentation
+	* Updated documentation and examples
 
 Section 1.8 - Contact Info
 

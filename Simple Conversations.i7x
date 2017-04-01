@@ -1,4 +1,4 @@
-Version 2/170329 of Simple Conversations by Fictitious Frode begins here.
+Version 2/170401 of Simple Conversations by Fictitious Frode begins here.
 
 Include Epistemology by Eric Eve.
 
@@ -289,7 +289,7 @@ Section 1.2 - Version History
 	Availability for both subjects and individual dialogues can be toggled.
 	Support for runtime alterations to dialogues.
 	
-Release 2 (In Development)
+2017-04-01: Beta-2 (Release 2)
 
 	Support for clearing cue and dialogue entries.
 
