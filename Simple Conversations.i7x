@@ -1,4 +1,4 @@
-Version 1/161223 of Simple Conversations by Fictitious Frode begins here.
+Version 2/170401 of Simple Conversations by Fictitious Frode begins here.
 
 Include Epistemology by Eric Eve.
 
@@ -49,6 +49,11 @@ To update the cue of (subject - a thing) for (conversationalist - a person) to (
 			Now cue entry is cue;
 			Now dialogue entry is "";
 
+To clear the cue of (subject - a thing) for (conversationalist - a person):
+	Repeat through dialogue of the conversationalist:
+		If there is a subject entry and the subject entry is subject:
+			Blank out the cue entry;
+
 Chapter 1.1.2c - Updating Dialogue
 
 To update the dialogue of (subject - a thing) for (conversationalist - a person) to (dialogue - some text):
@@ -65,6 +70,11 @@ To update the dialogue of (subject - a thing) for (conversationalist - a person)
 			Now availability entry is false;
 			Now subject entry is subject;
 			Now dialogue entry is dialogue;
+
+To clear the dialogue of (subject - a thing) for (conversationalist - a person):
+	Repeat through dialogue of the conversationalist:
+		If there is a subject entry and the subject entry is subject:
+			Blank out the dialogue entry;
 
 Chapter 1.1.2d - Toggling Availability
 
@@ -278,6 +288,10 @@ Section 1.2 - Version History
 	Individual default dialogue responses for each person.
 	Availability for both subjects and individual dialogues can be toggled.
 	Support for runtime alterations to dialogues.
+	
+2017-04-01: Beta-2 (Release 2)
+
+	Support for clearing cue and dialogue entries.
 
 Section 1.3 - Contact Info
 
@@ -315,7 +329,6 @@ A subject isn't very interesting without a dialogue response for it from the oth
 To facilitate this we use a table-based approach, which allows for both shared and individual dialogue options.
 Each person has a 'dialogue' property which points to a table, which should look like the example below:
 
-
 *:
 	Library is a room.
 	Bob is a person in Library. Bob's dialogue is the Table of Bob's Dialogue.
@@ -340,6 +353,10 @@ It's important that the table contains the following five columns:
 It's also possible to write 'after talking to person about subject' rules.
 Typically these would be to unlock the effects of talking about the subject, such as updating cues and making other dialogues available.
 
+Each person also have their own default dialogue property, which will be used as the response to all subjects that are not listed in the dialogue table.
+Only subjects that the player knows about (which is handled using Eric Eve's Epistemology extension) can be talked about in this manner.
+Attempts to converse about an unknown thing will be caught by the pondering to it about action, which when the noun is a person will also use the default dialogue.
+
 Section 2.3 - Changing Dialogues
 
 Dialogue is seldom static, and the author has a few options on how to alter conversations.
@@ -354,6 +371,9 @@ When the story moves to a new act it's often necessary to make larger alteration
 For these occasions you can have a separate table of dialogue for each act, and use the 'when scene begins' rule to change the dialogue of the actors to refer to a new table.
 
 Chapter 3 - Technical Reference
+
+Contained in this chapter is a technical description of all the new and altered mechanics for the extension, divided by type.
+It's intended as a companion to the other chapters, although an experienced author could glean much of the previous information from this chapter alone.
 
 Section 3.1 - New Kind: Subject
 
@@ -375,12 +395,14 @@ It's very important that the table contains the following five columns:
 	Turn stamp: Used to keep track of which dialogue options have been talked about, storing the turn number it was previously talked about.
 	Dialogue: The text to output when talking about the option.
 
-Section 3.3 - Phrases for Updating Values and Deciding On
+Section 3.3 - Phrases
 
 The following phrases can be used to update the dialogues of a person, by altering the table that the dialogue property points to.
 
-	UPDATE THE CUE OF (thing) FOR (person) TO (text): Sets the cue text of the thing in the person's table to the given text. If the thing isn't listed in the table, it tries to find a blank row to insert a new row with no dialogue and 'false' availability.
+	UPDATE THE CUE OF (thing) FOR (person) TO (text): Sets the cue text of the thing in the person's table to the given text. If the thing isn't listed in the table, it tries to find a blank row to insert a new row with no dialogue and 'false' availability. Often used after talking about something that no longer requires cueing.
+	CLEAR THE CUE OF (thing) FOR (person): Blanks out the cue of the thing in the person's table.
 	UPDATE THE DIALOGUE OF (thing) FOR (person) TO (text): Sets the dialogue text of the thing in the person's table to the given text. If the thing isn't listed in the table, it tries to find a blank row to insert a new row with the dialogue and 'false' availability.
+	CLEAR THE DIALOGUE OF (thing) FOR (person) : Blanks out the dialogue of the thing in the person's table. Rarely needed but provided for completion.
 	ACTIVATE (thing) FOR (person): Sets the availability of the thing in the person's table to true.
 	DEACTIVATE (thing) FOR (person): Sets the availability of the thing in the person's table to false.
 

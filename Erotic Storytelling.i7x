@@ -1,4 +1,4 @@
-Version 2/170302 of Erotic Storytelling by Fictitious Frode begins here.
+Version 2/170401 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF) in Inform.
 The main features are a layered clothing with body parts and erotic actions with system for obtaining consent on actions involving others characters.
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for NPC agency and optional story contents."
@@ -3326,10 +3326,11 @@ The cover locations of some breasts is usually {the upper torso area}.
 Understand "tit", "tits", "breast", "boob", "boobs", "tittie", "titties" and "juggs" as some breasts.
 Some breasts is usually touchable. Some breasts is usually rubbable. Some breasts is usually tickleable. Some breasts is usually lickable. Some breasts is usually biteable. Some breasts is usually pinchable.
 
-A midriff is a kind of body part.
-The cover locations of a midriff is usually {the lower torso area}.
-Understand "stomach", "tummy" as midriff.
-A midriff is usually touchable. A midriff is usually rubbable. A midriff is usually tickleable. A midriff is usually lickable.
+An abdomen is a kind of body part.
+The indefinite article is usually "an".
+The cover locations of an abdomen is usually {the lower torso area}.
+Understand "stomach", "tummy", "belly", "midriff" as abdomen.
+An abdomen is usually touchable. An abdomen is usually rubbable. An abdomen is usually tickleable. An abdomen is usually lickable.
 
 A waist is a kind of body part.
 The cover locations of a waist is usually {the lower torso area, the lower back area}.
@@ -4379,6 +4380,7 @@ For example, a player may not know whether a person is wearing a bra, but the pl
 While you're free to create your own body parts as you please, this extension comes with a variety of ready-made template parts you can use.
 Below is an overview of the body part templates, with the most pertinent properties controlling which actions are possible (see section 2.1) and the default decency (as implied by their cover locations):
 
+	Abdomen (Immodest): touchable, rubbable, lickable, tickleable
 	Ass (Indecent): touchable, rubbable, spankable, pinchable, lickable, orificial.
 	Ankles (Immodest): plural; 
 	Arms (Casual): plural; touchable, rubbable
@@ -4392,7 +4394,6 @@ Below is an overview of the body part templates, with the most pertinent propert
 	Hands (Formal): plural; touchable, rubbable
 	Head (Formal): 
 	Legs (Casual): plural; touchable, rubbable
-	Midriff (Immodest): touchable, rubbable, lickable, tickleable
 	Mouth (Formal):
 	Neck (Casual): lickable, biteable
 	Penis (Indecent): touchable, rubbable, pinchable, lickable, biteable, penetrating.
@@ -4498,11 +4499,11 @@ Section 1.7 - Version History
 	* DACS is functional but untested.
 	* Some out-of-world actions are not yet implemented.
 
-Release 2 (In Development)
+2017-04-01: Beta-2 (Release 2)
 
-	* Bug fixes on mini dress (courtesy of allisonedwards)
-	* Clothing layer fix (courtesy of allisonedwards)
-
+	* Midriff renamed to abdomen
+	* Bug fixes on mini dress and clothing layer (courtesy of allisonedwards via GitHub)
+	* Updated documentation and examples
 
 Section 1.8 - Contact Info
 
@@ -4560,11 +4561,11 @@ The adjectives, along with which templates they are set for, are:
 	Lickable: Ass, Breasts
 	Orificial: Ass, Vagina
 	Penetrating: Penis
-	Pinchable: Ass, Breasts, Chest, Feet, Midriff, Neck, Penis, Vagina
-	Rubbable: Arms, Ass, Backside, Breasts, Chest, Feet, Hands, Legs, Midriff, Penis, Shoulders, Thighs, Vagina
+	Pinchable: Ass, Breasts, Chest, Feet, Abdomen, Neck, Penis, Vagina
+	Rubbable: Arms, Ass, Backside, Breasts, Chest, Feet, Hands, Legs, Abdomen, Penis, Shoulders, Thighs, Vagina
 	Spankable: Ass, Backside
-	Tickleable: Breasts, Chest, Feet, Midriff
-	Touchable: Arms, Ass, Breasts, Chest, Feet, Hands, Legs, Midriff, Penis, Thighs, Vagina
+	Tickleable: Breasts, Chest, Feet, Abdomen
+	Touchable: Arms, Ass, Breasts, Chest, Feet, Hands, Legs, Abdomen, Penis, Thighs, Vagina
 
 To control what behavior is proper in a given location we introduce Decency as a new kind of value, which is explained in more detail in section 3.2.
 By default decency has the four possible values indecent, immodest, casual and formal, as well as the undefined decency to serve as an unset/null-value.
@@ -4756,10 +4757,10 @@ In order to manipulate a garment in this way, these revealed cover areas have to
 
 The following templates are rippable and will reveal:
 
-	pair of Panties: crotch
-	pair of Pantyhose: crotch
+	Panties: crotch
+	Pantyhose: crotch
 	Shirt: shoulder, upper/lower torso
-	pair of Stockings: thigh
+	Stockings: thigh
 	Undershirt: upper torso
 
 The following templates are shiftable in a given way and will reveal:
@@ -4768,14 +4769,14 @@ The following templates are shiftable in a given way and will reveal:
 	Dress (Unbutton): shoulder, upper/lower torso
 	Jacket (Unbutton): upper/lower torso
 	Minidress (Raise): crotch, thigh
-	pair of Panties (Move): crotch
+	Panties (Move): crotch
 	Shirt (Unbutton): shoulder, upper/lower torso
-	pair of Shorts (Unzip): Crotch
+	Shorts (Unzip): Crotch
 	Skirt (Raise): crotch, thigh
 	Suit (Unzip): crotch
 	Sweater (Raise): upper/lower torso
 	Swimsuit (move): upper torso
-	pair of Trousers (Unzip): Crotch
+	Trousers (Unzip): Crotch
 
 Section 3.4 - Customization
 
@@ -4952,7 +4953,7 @@ When writing responses for actions with multiple actors to check for simultaneou
 		Else:
 			Say "The normal response for the action should go here.";
 
-Chapter 5 - NPCs
+Chapter 5 - Improving Non-Player Characters
 
 Let's be blunt: Non-Player Characters are hard to get right in Interactive Fiction.
 The common approach (as described at SibylMoon *) is to limit the player's interaction with NPCs to as little as you can get away with. 
@@ -5040,7 +5041,7 @@ Note that any attempts to ask Beatrice to do something will not work as we haven
 	
 	Test me with "kiss Beatrice / lick Beatrice / fuck Beatrice / z / kiss Beatrice / lick Beatrice / fuck Beatrice / Beatrice, rub cock".
 
-Section 5.2 - Agency
+Section 5.2 - Character Agency
 
 One of the most important ways to distinguish characters is to give them the agency to act on their own.
 While characters in traditional AIF is mainly stationary, it's easy to use Inform's every turn rules to make them act on their own.
@@ -5073,16 +5074,18 @@ These rules are therefore only processed if the player can see that person when 
 
 Example D shows how agency can be implemented, and the tutorial contains a section on how multiple sex partners may be implemented.
 
-Section 5.3 - Conversation
+Section 5.3 - Conversations
 
 Conversations are usually an important part of character-driven IF, but it's also one of the hardest parts to get right.
-Because the player is free to converse about anything that strikes their fancy, a good conversation system must both understand what topic the player is referring to and have a response for it.
-Most of the time we also need to keep track of which topics are available, depending on many factors such the knowledge of both the player and the characters.
-
+As the player is free to converse about anything that strikes their fancy, a good conversation system must both understand what topic the player is referring to and have a proper response for it.
 Inform 7 provides various extensions, available in the built-in extension library, to handle conversation.
-Instead of locking the extension to a particular conversation model, the separate Simple Conversations extension can is provided for optional use.
-Regardless of how the author choose to approach conversation, great care and thought should go into the implementation.
+Regardless of how the author choose to approach conversations, great care and thought should go into the implementation.
 Inform's included 'Recipe Book' covers the topic of conversation in quite detail, starting from chapter 7.6.
+
+Most of the time we also need to keep track of which topics are available, depending on many factors such the knowledge of both the player and the characters.
+This extension doesn't lock the author to a particular conversation model, instead providing the separate Simple Conversations extension as an option.
+The aim of Simple Conversations is to provide a model that is simple to use for both player and author, while still retaining robustness and flexibility.
+For further details see the documentation of the extension itself.
 
 Section 5.4 - Discrete Arousal-based Consent and Stimulation
 
@@ -5102,6 +5105,37 @@ Section 5.4 - Discrete Arousal-based Consent and Stimulation
 	
 	Test me with "kiss Beatrice / lick Beatrice / fuck Beatrice / z / kiss Beatrice / lick Beatrice / fuck Beatrice".
 [TODO: Add more actions do move up the arousal levels]
+
+Section 5.5 - Optional Posture Integration
+
+Another method for adding immersion and detail to your story is to allow for various postures.
+The bundled extension Postures provides some of the most common postures along with basic functionality for changing and checking for postures.
+
+In order for postures to be a positive addition to your story it's necessary to integrate them with the relevant actions and descriptions.
+Body part descriptions can be tailored to hide or highlight details depending on posture, while the description generation rules can be used to highlight the current posture.
+
+*:
+	A status description generation rule for a person (called P) (this is the posture status rule):
+		If P is enclosed by a supporter (called location):
+			Say "[P] [are] [describe posturing of current posture of P] on [location].";
+		Else if P is enclosed by a container (called location):
+			Say "[P] [are] [describe posturing of current posture of P] in [location].";
+		Else:
+			Say "[P] [are] [describe posturing of current posture of P] nearby.";
+
+AS each story might have it's own very different requirements on how postures should affect the actions in this extension, no attempt is made to make rules that cover all eventualities.
+Instead you can use the sample code below to tailor posture limitations to your own story.
+
+	Before doing something to a body part (called part):
+		If part is enclosed by a person (called part-owner) and part-owner is enclosed by something (called owner-location):
+			Let blocked be false;
+			If part-owner is posturing prone or part:
+				If part is an abdomen or part is some breasts or part is a chest or part is a penis or part is a vagina, now blocked is true;
+			If part-owner is posturing supine or part-owner is posturing sitting:
+				If part is a backside or part is an ass, now blocked is true;
+			If blocked is true:
+				Say "[We] [cannot] do that to [part] when [owner-location] is in the way."
+				Stop the action;
 
 Chapter 6 - Support Functions
 
@@ -5744,8 +5778,8 @@ We can then use these traits to selectively create body parts: every man should 
 As we don't implement all the templates, we can add some synonyms (through the 'understand' phrase) to cover their absence.
 
 	A head is a part of every person. Understand "face", "mouth", "eye/eyes" and "hair" as head.
-	Some legs is a part of every person. Understand "feet" and "thighs" as pair of legs.
-	Some hands is a part of every person. Understand "arms" as pair of hands.
+	Some legs is a part of every person. Understand "feet" and "thighs" as legs.
+	Some hands is a part of every person. Understand "arms" as hands.
 	An ass is a part of every person.
 
 	A vagina is a part of every woman.
@@ -5757,18 +5791,18 @@ These parts are now available for the player to examine, but for now they don't 
 When we use the "part of every" construct the parts will be named after the person they are attached to, except the player's parts which are called yours.
 
 	The description of your head is "As one would expect, your head has the usual fixtures: two eyes and ears, a mouth and tussled black hair."
-	The description of your pair of legs is "Good to have for walking."
-	The description of your pair of hands is "Strong and firm from lifting heavy crates."
+	The description of your legs is "Good to have for walking."
+	The description of your hands is "Strong and firm from lifting heavy crates."
 	The description of your ass is "Nice and taut."
 	The covered description of your penis is "You're packing some junk in your trousers."
 	The uncovered description of your penis is "Isn't it nice?"
 	
 	The description of Carrie's head is "Carrie has long blonde hair, lucious red lips and deep blue eyes."
-	The description of Carrie's pair of legs is "Her legs are long and slim."
-	The description of Carrie's pair of hands is "As a machine operator, her delicate hands are unsullied by hard labor."
+	The description of Carrie's legs is "Her legs are long and slim."
+	The description of Carrie's hands is "As a machine operator, her delicate hands are unsullied by hard labor."
 	The description of Carrie's ass is "Her backside is nice and firm."
-	The covered description of Carrie's pair of breasts is "Her breasts might be small, but they do fill out her clothes nicely."
-	The uncovered description of Carrie's pair of breasts is "Carrie's showing off her maginificent breasts."
+	The covered description of Carrie's breasts is "Her breasts might be small, but they do fill out her clothes nicely."
+	The uncovered description of Carrie's breasts is "Carrie's showing off her maginificent breasts."
 	The covered description of Carrie's vagina is "You can only dream of what it looks like."
 	The uncovered description of Carrie's vagina is "Her vagina is nice and smooth."
 
@@ -5804,9 +5838,7 @@ We allow Carrie to take off clothes to iillustrate how this works in practice.
 		Say "Carrie dutifully obeys.";
 		Give consent;
 
-	Test me with "x bob / x cover-all / up / x Denise / x pantsuit / in / x Carrie / x dress / x bra / Carrie, take of dress / x Carrie"
-
-
+	Test me with "x bob / x cover-all / up / x Denise / x pantsuit / in / x Carrie / x dress / x bra / Carrie, take of dress / x Carrie".
 
 Example: ** DACS
 
@@ -5814,9 +5846,88 @@ Defining rules for consent is a very important part of writing a successful AIF 
 For authors that don't have the interest in writing their own rules, the Discrete Arousal-based Consent and Stimulation System can be used to provide consent based on the current stimulation of the related actors.
 This examples shows how this can be set up as well as tailored to fit specific needs.
 
-Example: *** Intelligent Agency
+Example: *** A-maze-ing Temple - Showcasing character agency and path-finding
 
+The agency rules are an easy but powerful tool to make characters act on their own.
+For this example we'll show how a native guide can help the player navigate a not-too-difficult maze.
+First we have to set the stage.
 
+	*: "A-maze-ing Temple"
+
+	Include Erotic Storytelling by Fictitious Frode.
+	Include Simple Conversations by Fictitious Frode.
+	Use unabbreviated object names.
+	
+	When play begins, say "After a long trek alongside your trusty native guide, you finally hack through the final vines to arrive at an opening in the dense jungle."
+
+	Jungle Clearing is a room. "The dense jungle opens up in a circular clearing, centered around a [small mound]. You can make out an entrance in the mound leading inside and down."
+	A small mound is a door. It is inside from Jungle Clearing.
+	Instead of going down in Jungle Clearing, try going down.
+
+	Harry is a man in Jungle Clearing. The player is Harry.
+	Your adventuring clothes is an outfit worn by Harry. 
+	The description is "These is your trusty khaki adventuring outfit; tan trousers and long-sleeved shirt with heavy boots."
+	
+	A native guide is a woman in Jungle Clearing.
+	An skimpy attire is an outfit worn by native guide. The description is "Her clothing offers considerably less protection than yours, consisting of sandals, a short skirt and a loose-fitting blouse."
+	A flaming torch is carried by the native guide. It is lit.
+
+With the stage set we can focus on the guide's agency, which we'll make planned instead of urgent so the doesn't guide run away in the middle of an interaction.
+In order to make it more adaptable we store the guide's target destination as a variable instead of hard-coding it.
+
+	The native guide has a room called target location.
+
+	Planned agency for native guide:
+		If native guide can see Harry:
+			Let the way be the best route from the location of native guide to the target location of native guide, using doors;
+			If the way is a direction:
+				If the player can see native guide, say "'Follow me mister Harry!'";
+				Try the native guide going the way;
+		Else:
+			If target location of native guide is not the location of native guide:
+				Let the way be the best route from the location of native guide to Harry, using doors;
+				If the way is a direction:
+					Try the native guide going the way;
+					If the native guide can see the player, say "'There you are mister Harry! I thought I'd lost you.";
+
+We also need a small maze to be guided through, and to make things interesting we randomize the location of the treasure chamber.
+
+	Entrance Chamber is inside from small mound. "This small chamber lies just inside the [small mound]. A beam of light comes through the opening to the south, illuminating a corridor leading north."
+	Instead of going south in Entrance Chamber, try going outside.
+	Instead of going up in Entrance Chamber, try going outside.
+	
+	Dark Intersection is north of Entrance Chamber. It is dark. "The underground corridor from the entrance to the south splits into two branches going east and west."
+
+	Treasure Chamber is a room. "Sadly this chamber doesn't live up to it's name. Broken caskets and chests lie scattered around the room."
+	Every turn, if Harry is in Treasure Chamber, end the story finally saying "It might not have contained the treasures you were looking for, but you did find a nice girl."
+	
+	Endless Pit is a room. "Just as you feel the corridor walls around you open up, the floor before you also give way to nothingness."
+	Every turn, if Harry is in Endless Pit, end the story saying "You stumble over the edge, hurtling down through the darkness before making a messy spot at the bottom."
+	
+	When play begins:
+		If a random chance of 1 in 2 succeeds:
+			Change east exit of Dark Intersection to Endless Pit;
+			Change west exit of Dark Intersection to Treasure Chamber;
+		Else:
+			Change west exit of Dark Intersection to Endless Pit;
+			Change east exit of Dark Intersection to Treasure Chamber;
+
+Even though the agency code is in place, our guide won't do anything before she's agency-enabled.
+While it's possible to have this enabled from the start, it's often best to have it triggered by the player's actions.
+For our purpose, asking the guide about treasure seems like a reasonable trigger.
+
+	Some treasure is a subject. Understand "gold", "gems" and "secrets" as treasure.
+	The dialogue of the native guide is the Table of Guide's Dialogue.
+	
+	Table of Guide's Dialogue
+	subject (a thing)	availability (a truth state)	cue (a text)	turn stamp (a number)	dialogue (some text)
+	treasure	true	"treasure"	--	"'Yes mister Harry, I know where the treasure is hidden. Follow me and try to keep up!'"
+	
+	After talking to native guide about treasure for the first time:
+		Now the target location of native guide is Treasure Chamber;
+		Now the native guide is agency-enabled;
+
+	Test me with "talk to guide about treasure / z / enter mound / n".
 
 Example: *** A Furry Tale - How to create custom body parts.
 

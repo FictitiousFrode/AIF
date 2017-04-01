@@ -9,6 +9,7 @@ Use consensual persuasion. [Defer persuasion to consent for the actions that req
 Include Directionality by Fictitious Frode.
 Include Erotic Storytelling by Fictitious Frode.
 [Include Simple Conversations by Fictitious Frode.]
+[Include Posturing by Fictitious Frode.]
 
 Book 0.1 - Titlepage
 
@@ -22,16 +23,16 @@ The release number is 0.
 
 Part 0.1.2 - Contents
 
-[Heterosexuality is a story content.
-Bondage is a disabled story content.]
+[Heterosexuality is a story content.]
+[Bondage is a disabled story content.]
 
 Part 0.1.3 - Dramatis Personae
 
-[Create the persons of the story here]
+[Defining the actors taking part in the story.]
 
-Part 0.1.4 - Conversation Subject
+Part 0.1.4 - Conversation Subjects
 
-[Define conversation subjects that are common for multiple actors here.]
+[Defining the general conversation subjects relevant to the story.]
 
 Part 0.2 - Declarations
 
@@ -54,8 +55,10 @@ A penis is a part of every man.
 
 Book 0.2.2 - Custom Properties
 
-[A body part can be spermed. A body part is usually not spermed.
-A person can be proper-named. A person is usually not proper-named.]
+[Any story-wide custom properties should go here.]
+
+[A body part can be spermed. A body part is usually not spermed.]
+[A person can be proper-named. A person is usually not proper-named.]
 
 Book 0.3 - A Helping Hand
 
@@ -84,7 +87,7 @@ Volume 1 - Act I
 
 Book 1.1 - Geology
 
-[The rooms for Act I goes here]
+[The locations related to Act I, divided into parts for regions with chapters for each room.]
 
 Part 1.1.1 - Region
 
@@ -92,7 +95,7 @@ Chapter 1.1.1a - Room
 
 Book 1.2 - Inhabitants
 
-[Characters related to Act I, one part for each person.]
+[The actors related to Act I, one part for each.]
 
 Part 1.2.1 - Person
 
@@ -137,7 +140,11 @@ Book 1.4 - Chronology
 
 [Break the act into scenes]
 
-Part 1.4.1 - Scene
+Part 1.4.1 - Progression
+
+[The scenes dealing with the story progression]
+
+Chapter 1.4.1a - Prologue
 
 Prologue is a scene.
 Prologue begins when play begins.

@@ -29,6 +29,7 @@ The extensions in the framework provides:
  * A framework to provide consent for actions affecting other actors, similar
    to how persuasion rules work.
  * Optional framework for arousal based consent, similar to TADS libraries.
+ * Optional support posturing by actors.
  * A model of simple conversations.
 
  Installation
@@ -44,6 +45,7 @@ you want for your story. A full inclusion would look like this:
 
   Include Erotic Storytelling by Fictitious Frode.
   Include Simple Conversations by Fictitious Frode.
+  Include Posturing by Fictitious Frode.
   Include Directionality by Fictitious Frode.
 
 All of the extensions have proper documentation, available from the Extensions
@@ -72,12 +74,17 @@ Each individual extension has a more detailed log of changes.
   * The previous framework has been completely reworked and rewritten, and
     the release history has been updated to only include the remake.
 
+  2017-04-01: Beta-2
+ -------------
+  * Posturing has been updated and remade.
+  * Bug-fixes and minor updated to other extensions, see documentation in
+    each extension for details.
+
  Future Plans
 ==============
 
 These are some ideas for future development:
  * Ropework
- * Posturing
  * Lasting Penetrations
  * Numerical Arousal (NACS)
 
