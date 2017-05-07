@@ -3414,7 +3414,7 @@ Chapter 5.1.2b - Normalwear
 [Normalwear is clothing that go on the "normal" layer, above underwear but under overwear. Because pantyhose needs to go over underwear and be on the same layer as socks, socks also sort here.]
 
 Some socks is a kind of garment.
-It is usually ambiguously plural. The indefinite article is usually "some". The plural of some is pairs of socks.
+It is usually ambiguously plural. The indefinite article is usually "some". The plural of some socks is pairs of socks.
 The specification of some socks is "Socks cover the feet, and is usually formal and normalwear (in order to match stockings and pantyhose)."
 Some socks is usually normalwear.
 The cloth decency of some socks is usually formal.
