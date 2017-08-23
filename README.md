@@ -14,5 +14,11 @@ Support extension, containing a conversation model.
 **Directionality.i7x**:
 Helper extension for listing out visible exits from a room.
 
+**Moisturizer.i7x**
+Experimental testbed for new features.
+
+**Templates.i7x**
+Documentation extension with copy-paste templates for implementation.
+
 **Template.ni**:
 Sample project layout for an Inform 7 story.
