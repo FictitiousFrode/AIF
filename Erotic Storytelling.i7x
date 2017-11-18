@@ -88,12 +88,6 @@ The thigh area	immodest
 The leg area	casual
 The feet area	immodest
 
-[Extension:
-These are not included by default, but could be:
-The neck area	formal
-The wrist area	formal
-The ankle area	formal]
-
 A person has a list of cover areas called body areas.
 The body areas of a person is usually {head area, face area, shoulder area, arm area, hand area, upper torso area, upper back area, lower torso area, lower back area, crotch area, thigh area, leg area, feet area}.
 
@@ -1996,7 +1990,7 @@ Check an actor tickling (This is the control what can be tickled rule):
 
 Check an actor tickling (this is the tickling reachability rule):
 	If the noun is a body part or noun is a garment:
-		Unless noun is touchable:
+		Unless noun can be touched:
 			If the player is the actor:
 				Say "[We] [can't] reach that." (A);
 			Else if the player can see the actor:
@@ -2073,7 +2067,7 @@ Check an actor spanking (This is the control what can be spanked rule):
 
 Check an actor spanking (this is the spanking reachability rule):
 	If the noun is a body part or the noun is a garment:
-		Unless noun is touchable:
+		Unless noun can be touched:
 			If the player is the actor:
 				Say "[We] [can't] reach that." (A);
 			Else if the player can see the actor:
@@ -2158,7 +2152,7 @@ Check an actor pinching (This is the control what can be pinched rule):
 
 Check an actor pinching (this is the pinching reachability rule):
 	If the noun is a body part or noun is a garment:
-		Unless noun is touchable:
+		Unless noun can be touched:
 			If the player is the actor:
 				Say "[We] [can't] reach that." (A);
 			Else if the player can see the actor:
