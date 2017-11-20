@@ -1,4 +1,4 @@
-Version 3/171118 of Erotic Storytelling by Fictitious Frode begins here.
+Version 3/171120 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF) in Inform.
 The main features are a layered clothing with body parts and erotic actions with system for obtaining consent on actions involving others characters.
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for NPC agency and optional story contents."
@@ -4700,7 +4700,7 @@ These are detailed both in the IDE, and covered in Chapter 2 of this documentati
 
 There are also some actions for support functions, described in chapter 6.
 
-Section 1.4 - Layering and Templates
+Section 1.4 - Templates and Layered Clothing
 
 A common feature to promote realism in AIFs is clothing which can be examined and removed one piece at a time.
 The most common technical implementation of this in libraries is called layered clothing.
@@ -4859,16 +4859,16 @@ The author of this extension would like to acknowledge the influence of several 
 	Scarlet Herring and CCole; for providing the material of my first forays into AIF.
 	Mr Flibble; for his excellent game 'The Magician's Nephew', which provided inspiration for parts of this extension.
 	ExLibris; for sobering discussions on AIF in general.
-	RalphWiggumPhD; for proofreading and commentary on parts of the documentation.
 	AnotherWannabe; whose AIF Library is a worthy alternative to this extension, with different priorities.
 	ABomire and Dudeman; whose early work on AIF in I7 inspired me to start this journey.
+	RalphWiggumPhD; for proofreading and commentary on parts of the documentation.
 
 A hearty round of applause to anyone who has contributed criticism, feedback, discussion, bug reports and the like during the development.
 
 Chapter 2 - Player Actions
 
 For most players, the most visible part of the extension is the erotic actions.
-The chapter is focused on explaining how the actions work while section 4.4 will cover improving action responses.
+The chapter is focused on explaining how the actions work while chapter 4 covers improvemed responses.
 Section 1.3 gave a brief overview of the actions, grouped into three broad categories:
 Those targeting either persons or body parts, and those that are clothing-related.
 Each of these three categories will be explored below, after an introduction to the limiting factors that apply to varying degrees to all of them.
@@ -5139,9 +5139,9 @@ These are defined in the Table of Coverage containing the columns Cover Area and
 Creating a new cover area doesn't do much on it's own though, and it has to be added to the body areas property of the relevant persons.
 If defined in the story file you would need to type out the entire list of cover areas for the person, but it's possible to dynamically alter the list when play begins (or at any other part during play).
 
-Chapter 4 - Descriptions in Detail
+Chapter 4 - Descriptions and Responses
 
-While it's possible to use multimedia resources in interactive fiction, the main medium is still the written word.
+While it's possible to use multimedia resources in interactive fiction, the main medium is still the written word in the form of descriptions and responses.
 Inform 7 has a good built-in support for varying textual descriptions, with several chapters of 'Writing with Inform' devoted to variations.
 The depiction of persons in traditional interactive fiction is usually more focused on conversation than clothing and body parts.
 This extension tries to make it easier to write good descriptions of persons, their parts and clothing based on their current state.
@@ -5157,8 +5157,7 @@ This extension tries to make it easier to write good descriptions of persons, th
 	7.17: Actions on consecutive turns
 
 Substitutions are one of the most powerful tools at our disposal when creating descriptions, as it allows us to trigger a rule in the middle of conditional text.
-A common trick to deal with nested or otherwise complex considerations is to replace the entire description with a substituted text, as shown in the example below.
-
+A common trick to deal with nested or otherwise complex considerations is to replace the entire description with a substituted text, as shown in the example below where we delegate the description to a say rule:
 
 *:
 	The Medusa is a woman.
@@ -5172,6 +5171,13 @@ A common trick to deal with nested or otherwise complex considerations is to rep
 		Else:
 			Say "intense yellow eyes you can't look away from.";
 			End the story saying "You feel your body petrify as the Medusa's gaze petrifies you.";
+
+Action responses are written using the standard Inform 7 rulebooks After, Before and Instead.
+After rules are the most common response, and as the name implies they take effect after the action is checked for validity and performed.
+Instead rules are run instead of the action, and can be used to either give 'error' messages or replace the entire action processing with your own logic.
+Before rules are also run before the action is processed, but unlike instead rules the action will be processed (unless we explicitly stop it).
+One key difference is that before rules are run before any of the validity checks are done, even the basic checks of light and accessibility.
+[This section will focus on using these three rulebooks in the context of this framework, with a focus on tips, tricks and recreating TADS library features.]
 
 
 Section 4.1 - Describing Body Parts
@@ -5273,58 +5279,110 @@ The description notability rules are the cornerstone here, and have five distinc
 The two failure results are technically the same as neither will be printed, and are intended for extendability.
 The only defaults in the rules are that worn garments and carried items which are not concealed default as grouped, and defaults to hidden if they are concealed.
 Body parts have no defaults at all, leaving it to the author to decide which body parts are distinct or grouped.
-Because we are using a rule-based approach you can have some flexibility, allowing us to take world state into account:
+Using a rule-based approach gives us the flexibility to take world state into account:
 
 *:
 	Description notability for your penis: Unless your penis can be seen, hidden; distinct.
 	Description notability for your chest: Unless your chest can be seen, hidden; grouped.
 
 
-Section 4.4 - Action Responses
+Section 4.4 - Repetitive Actions
 
-Action responses are written using the standard Inform 7 rulebooks After, Before and Instead.
-This section will focus on using these three rulebooks in the context of this framework, with a focus on tips, tricks and recreating TADS library features.
-After rules are the most common response, and as the name implies they take effect after the action is checked for validity and performed.
-Instead rules are run instead of the action, and can be used to either give 'error' messages or replace the entire action processing with your own logic.
-Before rules are also run before the action is processed, but unlike instead rules the action will be processed (unless we explicitly stop it).
-One key difference is that before rules are run before any checking is done, even the basic actions checks of light and accessibility.
+As the player navigates the erotic scenes of your story a fair amount of repetitive actions is to be expected, so we should take care to keep the player amused.
+While some variety can be written directly into the response text (as covered in chapters 5.6 and 5.7 of 'Writing with Inform'), it's often easier and simpler and clearer to write variations using the rule syntax.
+Before we dig deeper into how to write rules for this, let's take a moment to discuss what is repetitive.
+Consider the following four action sequences:
 
-[TODO: Update from here]
+	1) kiss Alice / kiss Alice
+	2) kiss Alice / Alice, Kiss me
+	3) kiss Alice / x Alice / kiss Alice
+	4) kiss Alice / rub Alice's ass / kiss Alice
 
-One common feature in good AIF is action responses that vary when the action is repeated.
-Inform 7 supports this functionality natively through the 'for the Xth time' or 'for x turns' clauses to response rules.
-Both take into account repeating actions, but 'times' is the total number of times, while 'turns' is the number of times/turns in a row.
-Creating text responses that vary are also very simple, using the 'one of' text substitutions described in chapter 5.7 of 'Writing with Inform'.
-The following short example highlights some of the these tricks:
+The first is obviously repetitive as the second command could have been replaced with 'g' (short for 'aGain'), but what about the other three options?
+If we were to not take the actor into consideration the second example could also be considered to be the a repetition of the same action.
+In a similar fashion the third example could be considered repetitive if we were only counting erotic actions.
+For the last example we have an action that is repeated but not directly, which can be integrated into the preceding action for a seamless response.
+
+Inform provides two syntaxes for detecting repeating actions, which are described at 7.16 and 7.17 in 'Writing with Inform'.
+The syntax 'for Xth time' creates and updates a counter for how many times the action has been performed, while 'for X turns' keeps a counter on how many consecutive turns (what we called direct repetition earlier) but it gets confused by redirecting actions.
+This extension tries to remedy this by capturing the action resulting from the players command and storing it, ignoring any actions that are marked as redirecting.
+The global variable previous action contains the action for the previous turn, while the action captured this turn is stored in pending previous action.
+
+In order to avoid having to check previous action directly each time, we have a phrase for each erotic action which is simply 'ACTION is repeating'.
+These can be affected by two use options:
+Use 'actor agnostic repetition' makes the fucking and person-level actions be considered repetitive regardless of actor.
+Use 'pure erotic repetition' allows non-erotic actions (like examining, taking, stripping) to take place without resetting repetition.
+In order for this to be possible we can't rely on the previous action alone, but use a myriad of global variables storing the previous actor and noun using names such as 'previous kisser' and 'previous kissed'.
+
+The end result is that to recreate the standard TADS responses for first time, directly repeating (consecutive) and otherwise repetitive, we can use the following three rules:
+
+	After kissing Alice for the first time: Triggers on the very first kiss, and only then.
+	After kissing Alice when kissing is repeating: Triggers when the previous erotic action was kissing Alice, taking into account the two possible use options.
+	After kissing Alice: Triggers when kissing Alice if the previous two rules don't intervene; so it will will not trigger on the first kiss or directly repeating kisses.
+
+We can achieve the exact same effect with slightly different syntax, which I personally find harder to understand:
+
+	After kissing Alice: Triggers when kissing Alice if the next two rules don't intervene; so it will only trigger on the first kiss.
+	After kissing Alice when kissing is repeating: Triggers when the previous erotic action was kissing Alice, taking into account the two possible use options (exactly the same as above).
+	After kissing Alice for two or more times: Triggers when Alice has been kissed, but the previous 'repeating' rule will take precedence.
+
+Another possibility is to write one after rule for each action, using if statements for finer control, as seen in the following more complex and complete example:
 
 *:
-	A Boring Room is a room.
-	After waiting, say "[first time]This will only be printed the first time. [only]You [one of]wait[or]linger[or]sulk[or]skulk[then at random]."
-	After waiting the second time, say "This is getting boring."
-	After waiting for four turns, say "You sneeze. Whoops."
-	After waiting for more than six times, say "Get on with it!"
-	Test me with "z / z / z / z / z / z / z"
+	Include Erotic Storytelling by Fictitious Frode.
+	Use consensual persuasion. Consent rule: Give consent.
+	Use actor agnostic repetition and pure erotic repetition.
+	
+	Test Lab is a room. The decency threshold is indecent.
+	The nameless avatar is a man. The player is the nameless avatar.
+	Alice is a woman in Test Lab.
 
-One feature of Inform that often gets overlooked is scenes, which allow you to tightly group together the narrative and it's consequences.
-One immediate application in AIF is controling the sex scenes, which when implemented as scenes allows for easily defining the start and end conditions.
-You can then bind the action responses as well as any consent and persuasion rules to only apply during that scene.
-The real benefit comes when a person is involved in several sex scenes; by tying responses to the individual scenes you can be certain to avoid printing responses for the wrong scene.
+	A vagina is a part of every woman.
+	A penis is a part of every man.
+	An ass is a part of every person.
 
-The story author is entirely free to decide how and when orgasms occur.
-One optional feature of the extension is a mechanism to check for orgasms that make each successive orgasm harder to achieve.
-The algorithm used is the attempt number of of the given orgasm divided by the orgasm number.
-This makes the first orgasm 'free' (a 1 in 1 chance), while the second orgasm has a 1 in 2 chance (and then a 2 in 2 chance if the first attempt failed), and so on.
-The phrase to use to invoke this check is 'person ORGASMS', and the example below shows how this can be implemented.
-When writing responses for actions with multiple actors to check for simultaneous orgams it's important to remember that each successive call will update the underlying variables.
+	After kissing Alice:
+		Unless Alice has been kissed by the player or the player has been kissed by Alice:
+			Say "You kiss Alice for the first time.";
+		Else if kissing is repeating:
+			Say "You continue to make out with Alice.";
+		Else if the previous action is the action of the player rubbing Alice's ass:
+			Say "You continue to knead her buttocks as you focus on making out with her tongue.";
+		Otherwise:
+			Say "You kiss Alice again.";
+
+	After Alice kissing the player:
+		Unless Alice has been kissed by the player or the player has been kissed by Alice:
+			Say "Alice kisses you for the first time.";
+		Else if kissing is repeating:
+			Say "Alice continues to make out with you.";
+		Else if the previous action is the action of the player rubbing Alice's ass:
+			Say "As she makes out with your tongue you continue to knead her buttocks.";
+		Otherwise:
+			Say "Alice kisses you again.";
+
+	Test me with "kiss Alice / rub Alice's ass / Alice, kiss me / x Alice / kiss Alice".
+
+Section 4.5 - Orgasms in Actions
+
+As the story author it's entirely under your control to decide how and when the actors should attain orgasm(s).
+As a support for this the extension provides syntax for checking orgasms, which build on a mechanism where each successive orgasm harder to achieve.
+The formula used to calculate the odds is simply the number of attempts to achieve orgasm divided by the number of the orgasm being tested for.
+This makes the first orgasm 'free' (a 1 in 1 chance), while the second orgasm has a 1 in 2 chance followed by  2 in 2 chance if the first attempt failed, and so on.
+The short example below shows how this can be used in practice:
 
 *:
-	After rubbing a vagina enclosed by a person (called owner):
-		If the owner orgasms: [This runs the calculation, including updates.]
-			Say "The orgamic response for the action should go here.";
+	After someone rubbing a vagina enclosed by a person (called owner):
+		If the owner orgasms:
+			Say "[The owner] has a shuddering orgasm as [the actor] rubs [regarding the owner][their] vagina.";
 		Else:
 			Say "The normal response for the action should go here.";
 
-	After fucking a a vagina enclosed by a person (called recipient) with a penis enclosed by a person (called penetrator):
+It's important to remember that because the check updates the variables involved for each call it's non-deterministic in nature, so you should only call it once for each person and store the result in a local variable.
+This is very important when dealing with an action that can result in orgasm for multiple actors:
+
+*:
+	After someone fucking a vagina enclosed by a person (called recipient) with a penis enclosed by a person (called penetrator):
 		Let recipient-orgasm be false;
 		Let penetrator-orgasm be false;
 		If recipient orgasms, let recipient-orgasm be true;
@@ -5337,6 +5395,15 @@ When writing responses for actions with multiple actors to check for simultaneou
 			Say "The response for when penetrator orgasms should go here.";
 		Else:
 			Say "The normal response for the action should go here.";
+
+Section 4.6 - Erotic Scenes
+
+One feature of Inform that often gets overlooked is scenes, which allow you to tightly group together the narrative and it's consequences.
+One immediate application in AIF is controling the sex scenes, which when implemented as scenes allows for easily defining the start and end conditions.
+You can then bind the action responses as well as any consent and persuasion rules to only apply during that scene.
+The real benefit comes when a person is involved in several sex scenes; by tying responses to the individual scenes you can be certain to avoid printing responses for the wrong scene.
+
+[TODO]
 
 Chapter 5 - Improving Non-Player Characters
 
@@ -6238,7 +6305,7 @@ Defining rules for consent is a very important part of writing a successful AIF 
 For authors that don't have the interest in writing their own rules, the Discrete Arousal-based Consent and Stimulation System can be used to provide consent based on the current stimulation of the related actors.
 This examples shows how this can be set up as well as tailored to fit specific needs.
 
-Example: *** A-maze-ing Temple - Showcasing character agency and path-finding
+Example: *** A-maze-ing Temple - Path-finding as character agency
 
 The agency rules are an easy but powerful tool to make characters act on their own.
 For this example we'll show how a native guide can help the player navigate a not-too-difficult maze.
