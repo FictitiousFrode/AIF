@@ -2491,9 +2491,9 @@ Check an actor hugging (this is the hugging decency rule):
 	Let L be the location of the actor;
 	If the decency threshold of L is greater than the hugging decency:
 		If the player is the actor:
-			Say "It [are] too public for [us] to kiss here." (A);
+			Say "It [are] too public for [us] to hug here." (A);
 		Else if the player can see the actor:
-			Say "It [are] too public for [the actor] to kiss here." (B);
+			Say "It [are] too public for [the actor] to hug here." (B);
 		Stop the action;
 
 Check an actor hugging (this is the seek consent for hugging rule):
@@ -2802,9 +2802,9 @@ Check an actor fucking something with (this is the fucking decency rule):
 	Let L be the location of the actor;
 	If the decency threshold of L is greater than the fucking decency:
 		If the player is the actor:
-			Say "It [are] too public for [us] to bite [noun] here." (A);
+			Say "It [are] too public for [us] to fuck [the noun] with [the second noun] here." (A);
 		Else if the player can see the actor:
-			Say "It [are] too public for [the actor] to bite [noun] here." (B);
+			Say "It [are] too public for [the actor] to fuck [the noun] with [the second noun] here." (B);
 		Stop the action;
 
 [Ensure that the action is consensual]
@@ -4868,7 +4868,7 @@ A hearty round of applause to anyone who has contributed criticism, feedback, di
 Chapter 2 - Player Actions
 
 For most players, the most visible part of the extension is the erotic actions.
-The chapter is focused on explaining how the actions work while chapter 4 covers improvemed responses.
+The chapter is focused on explaining how the actions work while chapter 4 covers improved responses.
 Section 1.3 gave a brief overview of the actions, grouped into three broad categories:
 Those targeting either persons or body parts, and those that are clothing-related.
 Each of these three categories will be explored below, after an introduction to the limiting factors that apply to varying degrees to all of them.
