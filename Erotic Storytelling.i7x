@@ -5337,9 +5337,7 @@ Another possibility is to write one after rule for each action, using if stateme
 	The nameless avatar is a man. The player is the nameless avatar.
 	Alice is a woman in Test Lab.
 
-	A vagina is a part of every woman.
-	A penis is a part of every man.
-	An ass is a part of every person.
+	A vagina is a part of every woman. A penis is a part of every man. An ass is a part of every person.
 
 	After kissing Alice:
 		Unless Alice has been kissed by the player or the player has been kissed by Alice:
@@ -5398,28 +5396,27 @@ This is very important when dealing with an action that can result in orgasm for
 
 Section 4.6 - Erotic Scenes
 
-One feature of Inform that often gets overlooked is scenes, which allow you to tightly group together the narrative and it's consequences.
-One immediate application in AIF is controling the sex scenes, which when implemented as scenes allows for easily defining the start and end conditions.
-You can then bind the action responses as well as any consent and persuasion rules to only apply during that scene.
-The real benefit comes when a person is involved in several sex scenes; by tying responses to the individual scenes you can be certain to avoid printing responses for the wrong scene.
-
-[TODO]
+Scenes are a feature of Inform that often gets overlooked, which can be used to divided the timeline of the story in a similar way to how rooms divide the geography.
+Our rules can then be set to trigger during a scene, which lets us use the scene starting conditions as a common check.
+Clearly defining the borders of a scene in this way might be slightly more work, but comes with the benefit og having properly thought out edge conditions.
+We can then use the 'when scene begins' rule to ensure that everything is properly prepared, and perform cleanup afterwards using the 'when scene ends' rules.
+If at some later stage we decide to refactor the story and alter the order or conditions of scenes, we have severly limited the amount of changes that are needed.
 
 Chapter 5 - Improving Non-Player Characters
 
 Let's be blunt: Non-Player Characters are hard to get right in Interactive Fiction.
 The common approach (as described at SibylMoon *) is to limit the player's interaction with NPCs to as little as you can get away with.
-Unfortunately that approach doesn't work well for AIF where NPCs can be said to be the main goal of the experience.
+Unfortunately that approach doesn't work well for AIF where NPCs interaction can be said to be the main goal of the experience.
 Instead we have to be more careful in the design of our NPCs to make them appear more advanced than they really are.
 SibylMoon (**) list four qualities that increase the illusion of intelligent NPCs: Active, reactive, goal-oriented and randomized.
 
-All NPCs need not be given the same attention however, it is OK to use the aforementioned methods to avoid interactions for characters that are not the main focus.
+All NPCs need not be given the same attention however, it is OK to use the aforementioned methods to avoid interactions for characters that are not the main focus of the story.
 It's also important to take the tone of the story into account, simplistic NPCs can be forgiven (and perhaps are even expected) in a romp-style story where the player's goal is to rack up as many notches as possible.
 For characters that deserve more attention, I offer the following qualities to strive for:
 
 	1: Purpose - Give the character a reason for existing beyond being the player's plaything, which should be reflected in the latter suggestions.
 	2: Goal-Seeking - The character should actively seek out their goal, even if it's just cleaning up and re-dressing after the scene.
-	3: Choices - Not every character should be 'attainable' in every playthrough, the player's action should lead to meaningful choices.
+	3: Choices - Not every character or outcome should be 'attainable' in every playthrough, the player's action should lead to meaningful choices.
 	4: Memorable - Let every character have something that the player distinguish and remember them by.
 
 These points flow into each other somewhat, but each still encompasses a core truth about the player's experience for a character.
@@ -5431,8 +5428,8 @@ The description system (detailed in chapter 4) tries to highlight the memorable 
 Some final thoughts on memorable characters:
 If one takes too drastic measures to make every character stand out as memorable, the net effect is usually that all the characters drown each other out.
 Instead one should focus on the player's experience, which is more focused on some way of telling the characters apart from each other.
-My personal preference is to avoid names that start on the same letter or otherwise sound similar, unless it's for the effect of making two characters linked.
-Don't be afraid to assign labels to your characters that the player can use as a reference, just try to avoid sterotyping too much.
+My personal preference is to avoid names that start on the same letter or otherwise sound similar, unless it's for the explicit effect of linking characters.
+Don't be afraid to assign labels to your characters that the player can use as a reference, but try to avoid sterotyping too much.
 
 (*) http://www.sibylmoon.com/writing-graceful-parser-npcs/
 
@@ -5442,15 +5439,14 @@ Section 5.1 - Consent and Persusasion
 
 Asking other characters to perform actions is well supported by Inform 7, and any writer of AIF should be well acquainted with Chapter 12 of 'Writing with Inform' that deal with Advanced Actions.
 While chapters 12.3 to 12.5 cover persuasion in detail, a quick recap is called for.
-Whenever the player asks another character to do something in the form of MARY, KISS ME, Inform consults the persuasion rules to see if the action should be attempted.
+Whenever the player asks another character to do something in the form of 'Alice, kiss me', Inform consults the persuasion rules to see if the action should be attempted.
 The author is then free to devise arbitrarily complex rules for determining if the actor should attempt the given action.
 
 The approach works well for when the actor is the main participant in an action, but it doesn't really handle interactions with multiple parties.
-Taking kissing as an example, what is really the difference between MARY, KISS ME and KISS MARY?
-The first would be governed by the persuasion rules but the second would succeed unless the author intervened with an instead rule.
+Taking kissing as an example, what is really the difference between 'Alice, kiss me' and 'kiss Alice'?
+Without this extension the first would be governed by the persuasion rules but the second would succeed unless the author intervened with an instead rule.
 To make it easier for the author to control when a character consents to being a part of such actions the consent rules are processed in a similar fashion as the persuasion rules.
-When asking a person to perform an action that's governed by the consent rules, both rulebooks will be consulted.
-If you want to avoid having to write both types of rules, the extension has an option for granting persuasion to all actions that are also governed by the consent rules:
+When asking a person to perform an action that's governed by the consent rules both rulebooks will be consulted, unless we use the consensual persuasion option which grants persuasion to all actions that are also covered by consent.
 
 *:
 	Use consensual persuasion.
@@ -5461,16 +5457,15 @@ Using DACS to handle consent is explained in more detail in section 5.4.
 All of the actions in this extension goes through the consent rulebook, including the single actor actions such as wearing and taking off garments.
 Writing consent rules are done in a similar way as for persuasion, but instead of the outcomes 'persuasion succeeds' or 'persuasion fails' we have 'give consent' and 'deny consent'.
 The default outcome of a rule is to deny consent, but it's also possible to 'make no decision' to give control back to the rulebook for further processing.
-If no consent rules are written and the DACS system is not enabled, the default consent rule will deny consent and state the uninterested response for the person.
+If no consent rules are written and the DACS system is not enabled, the default consent rule will deny consent and state the uninterested response for the person involved.
 When writing consent and persuasion rules it's very important to include the actor in the description of the action; if it's omitted then inform assumes that the player is the actor.
 Other values are 'someone' which means 'someone other than the player', and 'an actor' which means 'any actor'.
 The example below partly illustrates this.
 
-We previously mentioned (in Section 4.4 - Responses) that the scene function of Inform should be to control sex scenes.
+We previously mentioned how the scene function of Inform should be to control sex scenes.
 It's also possible to split one sex scene into several scenes, to allow consent for various new actions as the sex scene progresses.
 We can then use the 'during' clause when writing rules to tie them to that scene, which allows for the consent rule itself to be very broad.
 Below is a minimal example that illustrates how consent can be tied to a scene.
-Note that any attempts to ask Beatrice to do something will not work as we haven't defined any persuasion or consent rules for this.
 
 *:
 	Include Erotic Storytelling by Fictitious Frode.
@@ -5493,6 +5488,11 @@ Note that any attempts to ask Beatrice to do something will not work as we haven
 
 	Test me with "kiss Beatrice / lick Beatrice / fuck Beatrice / z / kiss Beatrice / lick Beatrice / fuck Beatrice / Beatrice, rub cock".
 
+If for some reason we would like to disable the consent rules, the simplest way is to have a consent rule that gives consent regardless of the current action:
+
+*:
+	A first consent rule: Give consent.
+
 Section 5.2 - Character Agency
 
 One of the most important ways to distinguish characters is to give them the agency to act on their own.
@@ -5502,14 +5502,14 @@ Agency is implemented as a new stage in the turn sequence rules, similar to how 
 We divide an actors agency into three categories that must be treated differently, each of which get their own rulebook that the agency stage rule will process as appropriate.
 
 Each person get some new properties to help control agency which the author can use.
-Most important of these is the 'agency-enabled' (neg: agency-disabled) property, which switches agency processing on for a given person.
-By implementing this as a property we make it easy for the author to dynamically switch on/off the agency for a person as needed.
+Most important of these is the 'agency-enabled' (negated as agency-disabled) property, which switches agency processing on for a given person.
+By implementing this as a property we make it easy for the author to dynamically switch on/off the agency as needed per person.
 Some execution efficiency is gained by not processing agency rules for people that don't have any.
 To allow the author to control the order in which agency is performed we can use the 'priority' property, with people with a higher number being processed first.
 In order to communicate back to the player what a person is doing we can use the 'agency state description' which is printed when the player examines a person, but one should also update the initial appearance of the person.
 
-Of special importance is the 'occupied' (neg: unoccupied) flag which indicates if a person has been involved in activity this turn and is used to decide which agency rules are applicable for that person.
-This flag is automatically set (by using the before rules) when the player the player orders a person around or interacts with a person, their body parts or their garments.
+Of special importance is the 'occupied' (negated as  unoccupied) flag which indicates if a person has been involved in activity this turn and is used to decide which agency rules are applicable for that person.
+This flag is automatically set (by using the before rules) when the player's command is ordering a person, or the player interacts with a person, their body parts, or their garments.
 The author is free (and encouraged) to set this flag manually when an agency rule (or action response) implicates that another person is also involved in the action taking place.
 This should make it easier to write sex-scenes with several actors, where the unoccupied actors can seek out actions with each other.
 Lastly, the turn sequence processing will clear the flag after the every turn stage, making it available for use in the very turn rules.
@@ -5532,7 +5532,7 @@ Conversations are usually an important part of character-driven IF, but it's als
 As the player is free to converse about anything that strikes their fancy, a good conversation system must both understand what topic the player is referring to and have a proper response for it.
 Inform 7 provides various extensions, available in the built-in extension library, to handle conversation.
 Regardless of how the author choose to approach conversations, great care and thought should go into the implementation.
-Inform's included 'Recipe Book' covers the topic of conversation in quite detail, starting from chapter 7.6.
+The Inform 'Recipe Book' covers the topic of conversation in quite detail, starting from chapter 7.6.
 
 Most of the time we also need to keep track of which topics are available, depending on many factors such the knowledge of both the player and the characters.
 This extension doesn't lock the author to a particular conversation model, instead providing the separate Simple Conversations extension as an option.
@@ -5575,13 +5575,13 @@ Body part descriptions can be tailored to hide or highlight details depending on
 		Else:
 			Say "[P] [are] [describe posturing of current posture of P] nearby.";
 
-AS each story might have it's own very different requirements on how postures should affect the actions in this extension, no attempt is made to make rules that cover all eventualities.
+As each story might have very different requirements on how postures should affect the actions in this extension, no attempt is made to make rules that cover all eventualities.
 Instead you can use the sample code below to tailor posture limitations to your own story.
 
 	Before doing something to a body part (called part):
 		If part is enclosed by a person (called part-owner) and part-owner is enclosed by something (called owner-location):
 			Let blocked be false;
-			If part-owner is posturing prone or part:
+			If part-owner is posturing prone:
 				If part is an abdomen or part is some breasts or part is a chest or part is a penis or part is a vagina, now blocked is true;
 			If part-owner is posturing supine or part-owner is posturing sitting:
 				If part is a backside or part is an ass, now blocked is true;
@@ -5938,7 +5938,9 @@ Some parts of the extension are manually toggled by the 'use' phrase:
 
 	Use consensual persuasion: Grants persusasion for all actions that are also covered by consent rules.
 	Use DACS: Enable the built-in Discrete Arousal-based Consent and Stimulation system.
-
+	Use actor agnostic repetition: Ignore the actor (for fucking and person-level actions) when checking for repetition.
+	Use pure erotic repetition: Only consider the erotic actions when checking for repetition.
+	
 Section 8.1 - New Kinds of Value
 
 The extension creates a few new kinds of value to help cohesion.
@@ -6101,6 +6103,41 @@ To make it easy for an author to alter this, they are defined as global variable
 	The tickling decency is initially immodest.
 	The touching decency is initially immodest.
 
+To facilitate repetition detection we use some variable to keep track of the previous action.
+These can be used but should be updated.
+
+	The previous turn count: The turn count that applies for the previous action, used to ensure we capture the first action in a turn.
+	The pending previous action: The action captured this turn, which will be moved over to the previous action at the end of the turn.
+	The previous action: The action that was captured on the previous turn; for the first turn this will be the initial 'looking' action.
+
+In order to support actor agnosticism and non-erotic interjected actions in repetition, we keep track of the previous actor and noun for every erotic action.
+These get reset every turn unless pure pure erotic repetition option is active, when they only reset when an erotic action is performed.
+[NOTE: This might be better to refactor into storing just 'the previous erotic action']
+	
+	The previous kisser: The actor of the previous kissing action.
+	The previous kissed: The noun of the previous kissing action.
+	The previous hugger: The actor of the previous hugging action.
+	The previous hugged: The noun of the previous hugging action.
+	The previous dancer: The actor of the previous dancing action.
+	The previous danced: The noun of the previous dancing action.
+	The previous fucker: The actor of the previous fucking it with action.
+	The previous orifice: The noun of the previous fucking it with action.
+	The previous penetrator: The second noun of the previous fucking it with action.
+	The previous toucher: The actor of the previous touching action.
+	The previous touched: The noun of the previous touching action.
+	The previous rubber: The actor of the previous rubbing action.
+	The previous rubbed: The noun of the previous rubbing action.
+	The previous tickler: The actor of the previous tickling action.
+	The previous tickled: The noun of the previous tickling action.
+	The previous spanker: The actor of the previous spanking action.
+	The previous spanked: The noun of the previous spanking action.
+	The previous pincher: The actor of the previous pinching action.
+	The previous pinched: The noun of the previous pinching action.
+	The previous licker: The actor of the previous licking action.
+	The previous licked: The noun of the previous licking action.
+	The previous biter: The actor of the previous biting action.
+	The previous bitten: The noun of the previous biting action.
+	
 Section 8.6 - Adjectives
 
 The extension provides some adjectives for the story author to take advantage of:
@@ -6192,6 +6229,21 @@ These phrases deals with arousal and orgasms:
 	COOL (person) DOWN TO (arousal): Change the current arousal of the person to the previous level, but not past the specified arousal. If the unattainable arousal is specified as input, no change will happen.
 	whether (person) ORGASMS: Uses the Orgasmic Attempts and Orgasms properties of the person to decide whether the person has an orgasm, and if it succeeds it sets the current arousal of the person to the Orgasm Reset Arousal. The formula is based on the ratio of attempts to orgasms.
 
+These phrases deal with repetition.
+They all checks if the current action is repetitive according to active use options and stored previous action.
+
+	whether KISSING IS REPETITIVE: 
+	whether HUGGING IS REPETITIVE:
+	whether DANCING IS REPETITIVE:
+	whether FUCKING IS REPETITIVE:
+	whether TOUCHING IS REPETITIVE:
+	whether RUBBING IS REPETITIVE:
+	whether TICKLING IS REPETITIVE:
+	whether SPANKING IS REPETITIVE:
+	whether PINCHING IS REPETITIVE:
+	whether LICKING IS REPETITIVE:
+	whether BITING IS REPETITIVE:
+
 Example: ** Factory Mould - Using the provided templates to flesh out actors.
 
 A key expectation for players of adult stories is to experience individual body parts and garments.
@@ -6210,10 +6262,9 @@ These parts are now available for the player to examine, but for now they don't 
 When we use the "part of every" construct the parts will be named after the person they are attached to, with the exception of anything attached to the player which will be called 'yours'.
 The description property will always be printed when examining a bodypart, while the covered and uncovered descriptions are printed when the part is covered (or not) by garment(s).
 
-
-While we created body parts en masse, clothing is something that one would usually create piece by piece.
-To avoid spending too much time detailing the clothing of minor characters we let them wear an outfit.
-This can then be customized with description and synonyms.
+While body parts are created en masse, clothing is something that should be created individually.
+For the minor characters we use outfits to avoid spending too much time on unimportant details.
+These can be further customized with description and synonyms.
 
 Lastly, in order to illustrate how clothing works in practice we grant blanket consent for Carrie to take off her clothing.
 
@@ -6237,10 +6288,8 @@ Lastly, in order to illustrate how clothing works in practice we grant blanket c
 	Some legs is a part of every person. Understand "feet" and "thighs" as legs.
 	Some hands is a part of every person. Understand "arms" as hands.
 	An ass is a part of every person.
-
 	A vagina is a part of every woman.
 	Some breasts is a part of every woman.
-
 	A penis is a part of every man.
 
 	Chapter - Geography
@@ -6276,22 +6325,22 @@ Lastly, in order to illustrate how clothing works in practice we grant blanket c
 
 	Chapter - Clothing
 
-	Some sandals is shoes worn by Carrie.
-	A grey dress is a dress worn by Carrie.
-	A lacy red bra is a bra worn by Carrie.
-	A lacy red thong is panties worn by Carrie. It is singular-named. The indefinite article is "a".
-
-	Some heavy boots is shoes worn by Adam.
-	Some black pants is trousers worn by Adam.
+	Some heavy boots are shoes worn by Adam.
+	Some black pants are trousers worn by Adam.
 	A white blouse is a shirt worn by Adam.
 
 	An oily grey cover-all is an outfit worn by Bob. The indefinite article is "an".
 	The description is "Bob is wearing a grey cover-all, stained with oil and other unnameable substances."
 
+	Some sandals are shoes worn by Carrie.
+	A grey dress is a dress worn by Carrie.
+	A lacy red bra is a bra worn by Carrie.
+	A lacy red thong is panties worn by Carrie. It is singular-named. The indefinite article is "a".
+
 	A navy blue pantsuit is an outfit worn by Denise.
 	The description of navy blue pantsuit is "Denise is wearing a [printed name]."
 
-	Chapter - Stripping
+	Chapter - Consent
 
 	Consent for Carrie taking off something:
 		Say "Carrie dutifully obeys.";
@@ -6307,21 +6356,17 @@ This examples shows how this can be set up as well as tailored to fit specific n
 
 Example: *** A-maze-ing Temple - Path-finding as character agency
 
-The agency rules are an easy but powerful tool to make characters act on their own.
-For this example we'll show how a native guide can help the player navigate a not-too-difficult maze.
-After setting the stage we create a small maze to be guided through, and to make things interesting we randomize the location of the treasure chamber.
+The agency rules are a powerful tool for making characters act on their own.
+This example shows how agency can be used to implement a path-finding character, in the form of a native guide that will help the player through a randomized maze.
 
-With the stage set we can focus on the guide's agency, which we'll make planned instead of urgent so the guide doesn't run away in the middle of an interaction.
-In order to make it more adaptable we store the guide's target destination as a variable instead of hard-coding it.
-
-Even though the agency code is in place, our guide won't do anything before she's agency-enabled.
-While it's possible to have this enabled from the start, it's often best to have it triggered by the player's actions.
-For our purpose asking the guide about treasure seems like a reasonable trigger, so we borrow Simple Conversations' conversation model.
+After setting the stage and creating our small maze we create a clothed player and define the two endings to our adventure.
+With the story foundations in place we can focus on the guide's agency.
+To avoid her running of in the middle of a conversation we used planned instead of urgent agency, and we store her target as a variable for flexibility.
+The last part is making her agency-enabled, which we have trigger of a conversation.
 
 	*: "A-maze-ing Temple"
 
 	Include Erotic Storytelling by Fictitious Frode.
-	Include Simple Conversations by Fictitious Frode.
 	Use unabbreviated object names.
 
 	Chapter - The Maze
@@ -6331,14 +6376,11 @@ For our purpose asking the guide about treasure seems like a reasonable trigger,
 	Jungle Clearing is a room.
 	"The dense jungle opens up in a circular clearing, centered around a [small mound]. You can make out an entrance in the mound leading inside and down."
 	A small mound is a door. It is inside from Jungle Clearing.
-	Instead of going down in Jungle Clearing, try going down.
-
-	Harry is a man in Jungle Clearing. The player is Harry.
-	Your adventuring clothes is an outfit worn by Harry.
-	The description is "These is your trusty khaki adventuring outfit; tan trousers and long-sleeved shirt with heavy boots."
+	Instead of going down in Jungle Clearing, try going inside.
+	Instead of going nowhere in Jungle Clearing, say "There's no treasure that way!"
 
 	Entrance Chamber is inside from small mound.
-	"This small chamber lies just inside the [small mound]. A beam of light comes through the opening to the south, illuminating a corridor leading north."
+	"This small chamber lies just inside the [small mound]. A beam of light comes through the opening to the south, illuminating a corridor leading north into the darkness."
 	Instead of going south in Entrance Chamber, try going outside.
 	Instead of going up in Entrance Chamber, try going outside.
 
@@ -6347,11 +6389,9 @@ For our purpose asking the guide about treasure seems like a reasonable trigger,
 
 	Treasure Chamber is a room.
 	"Sadly this chamber doesn't live up to it's name. Broken caskets and chests lie scattered around the room."
-	Every turn, if Harry is in Treasure Chamber, end the story finally saying "It might not have contained the treasures you were looking for, but you did find a nice girl."
 
 	Endless Pit is a room.
 	"Just as you feel the corridor walls around you open up, the floor before you also give way to nothingness."
-	Every turn, if Harry is in Endless Pit, end the story saying "You stumble over the edge, hurtling down through the darkness before making a messy spot at the bottom."
 
 	When play begins:
 		If a random chance of 1 in 2 succeeds:
@@ -6361,13 +6401,22 @@ For our purpose asking the guide about treasure seems like a reasonable trigger,
 			Change west exit of Dark Intersection to Endless Pit;
 			Change east exit of Dark Intersection to Treasure Chamber;
 
+	Chapter - The Player
+	
+	Harry is a man in Jungle Clearing. The player is Harry.
+	Your adventuring clothes is an outfit worn by Harry. The description is "These is your trusty khaki adventuring outfit; tan trousers and long-sleeved shirt with heavy boots."
+
+	Chapter - Endings
+	
+	Every turn when Harry is in Treasure Chamber, end the story finally saying "It might not have contained the treasures you were looking for, but you did find a nice girl."
+	Every turn when Harry is in Endless Pit, end the story saying "You stumble over the edge, hurtling down through the darkness before making a messy spot at the bottom."
+	
 	Chapter - Guiding
 
 	A native guide is a woman in Jungle Clearing.
+	The native guide has a room called target location.
 	An skimpy attire is an outfit worn by native guide. The description is "Her clothing offers considerably less protection than yours, consisting of sandals, a short skirt and a loose-fitting blouse."
 	A flaming torch is carried by the native guide. It is lit.
-
-	The native guide has a room called target location.
 
 	Planned agency for native guide:
 		If native guide can see Harry:
@@ -6382,16 +6431,16 @@ For our purpose asking the guide about treasure seems like a reasonable trigger,
 					Try the native guide going the way;
 					If the native guide can see the player, say "'There you are mister Harry! I thought I'd lost you.";
 
-	Some treasure is a familiar subject. Understand "gold", "gems" and "secrets" as treasure.
-	The dialogue of the native guide is the Table of Guide's Dialogue.
-
-	Table of Guide's Dialogue
-	subject	availability	cue	turn stamp	response
-	treasure	true	"treasure"	--	"'Yes mister Harry, I know where the treasure is hidden. Follow me and try to keep up!'"
-
-	After talking to native guide about treasure for the first time:
-		Now the target location of native guide is Treasure Chamber;
-		Now the native guide is agency-enabled;
+	After asking the native guide about something:
+		Unless the native guide is agency-enabled:
+			If the topic understood is "treasure / gold / gems / secrets":
+				Say "'Yes mister Harry, I know where the treasure is hidden. Follow me and try to keep up!'"
+				Now the target location of native guide is Treasure Chamber;
+				Now the native guide is agency-enabled;
+			Otherwise:
+				Say "'Que?'";
+		Otherwise:
+			Say "Follow me mister Harry, all will be well.";
 
 	Test me with "z / z / talk to guide about treasure / z / enter mound / n".
 
