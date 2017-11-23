@@ -2526,34 +2526,33 @@ Dancing with is a new action. It takes into account that only other people can b
 
 The dancing decency is initially formal.
 
-Dancing is an action applying to one touchable thing.
-The specification of the dancing action is "Dancing with is the act of dancing with someone, including dancing with yourself."
-Implicit dancing is an action applying to nothing.
+Dancing with is an action applying to nothing or one touchable thing and abbreviable.
+The specification of the dancing with action is "Dancing with is the act of dancing with someone, including dancing with yourself."
 
 Chapter 3.3.3a - Understanding
 
 Understand "dance with [something]" as dancing.
-Understand "dance" as implicit dancing.
-Understand "dance for me" as implicit dancing.
+Understand "dance" as dancing.
+Understand "dance for me" as dancing.
 
-Does the player mean dancing a person: It is likely.
-Does the player mean dancing the player: It is very unlikely.
-Does the player mean dancing something that is part of something: It is very unlikely.
+Does the player mean dancing with a person: It is likely.
+Does the player mean dancing with the player: It is unlikely.
+Does the player mean dancing with something that is part of something: It is very unlikely.
 
-Rule for supplying a missing noun while dancing (this is the dancing alone rule):
+Rule for supplying a missing noun while dancing with (this is the dancing alone rule):
 	Now the noun is the person asked;
 
 Chapter 3.3.3b - Check
 
-Check an actor dancing (This is the control what can be danced with rule):
+Check an actor dancing with (This is the control what can be danced with rule):
 	If the noun is not a person:
 		If the player is the actor:
-			Say "[We] [don't] want to dance with that." (A);
+			Say "[We] [don't] want to dance with [regarding the noun][those]." (A);
 		Else if the player can see the actor and the action is not silent:
-			Say "[The actor] [don't] want to dance with that." (B);
+			Say "[The actor] [don't] want to dance with [regarding the noun][those]." (B);
 		Stop the action;
 
-Check an actor dancing (this is the dancing decency rule):
+Check an actor dancing with (this is the dancing decency rule):
 	Let L be the location of the actor;
 	If the decency threshold of L is greater than formal:
 		If the player is the actor:
@@ -2562,7 +2561,7 @@ Check an actor dancing (this is the dancing decency rule):
 			Say "It [are] too public for [the actor] to dance here." (B);
 		Stop the action;
 
-Check an actor dancing (this is the seek consent for dancing rule):
+Check an actor dancing with (this is the seek consent for dancing rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
@@ -2570,17 +2569,14 @@ Check an actor dancing (this is the seek consent for dancing rule):
 
 Chapter 3.3.3c - Carry Out
 
-Carry out an actor implicit dancing (this is the implicit dancing redirect rule):
-	Try the actor dancing the actor instead;
-
-Carry out an actor dancing (this is the seek stimulation for dancing rule):
+Carry out an actor dancing with (this is the seek stimulation for dancing rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
 
 Chapter 3.3.3d - Reporting
 
 [Default response]
-Report an actor dancing (this is the report dancing rule):
+Report an actor dancing with (this is the report dancing rule):
 	If the player is the actor:
 		Say "[We] [dance] with [the noun]." (A);
 	Else if the player can see the actor:
@@ -3025,9 +3021,8 @@ Unsuccessful attempt by someone hugging something when the reason the action fai
 
 Chapter 3.6.3c - Dancing
 
-Persuasion for asking someone to try implicit dancing (this is the consensual implicit dancing persuasion rule): If consensual persuasion option is active, persuasion succeeds.
-Persuasion for asking someone to try dancing a person (this is the consensual dancing people persuasion rule): If consensual persuasion option is active, persuasion succeeds.
-Unsuccessful attempt by someone dancing something when the reason the action failed is the seek consent for dancing rule: Rule succeeds;
+Persuasion for asking someone to try dancing with a person (this is the consensual dancing people persuasion rule): If consensual persuasion option is active, persuasion succeeds.
+Unsuccessful attempt by someone dancing with something when the reason the action failed is the seek consent for dancing rule: Rule succeeds;
 
 Part 3.6.4 - Redirect Actions
 
@@ -3107,7 +3102,7 @@ The previous danced is initially nothing.
 
 To decide whether dancing is repetitive:
 	[Ensure the correct action is taking place and that the stored variables are filled:]
-	Unless the current action is hugging, decide no;
+	Unless the current action is dancing with, decide no;
 	Unless the previous dancer is a person, decide no;
 	Unless the previous danced is a person, decide no;
 	[Compare stored variables with the current action:]
@@ -3269,7 +3264,6 @@ The previous action is a stored action that varies.
 Fucking is redirecting.
 Assfucking is redirecting.
 Titfucking is redirecting.
-Implicit dancing is redirecting.
 
 First before an actor doing something (this is the set determine previous action rule):
 	Unless the previous turn count is the turn count:
@@ -3292,7 +3286,7 @@ Last every turn rule (this is the update erotic repetition variables rule):
 		Reset erotic repetition variables;
 		Now the previous kisser is the actor part of the previous action;
 		Now the previous kissed is the noun part of the previous action;
-	Else if the previous action is dancing:
+	Else if the previous action is dancing with:
 		Reset erotic repetition variables;
 		Now the previous dancer is the actor part of the previous action;
 		Now the previous danced is the noun part of the previous action;
@@ -4161,7 +4155,7 @@ A consent rule for an actor hugging (this is the default hugging consent rule):
 	Unless DACS option is active, make no decision;
 	Abide by the love interest consent rule;
 	Abide by the soft-playing consent rule;
-A consent rule for an actor dancing (this is the default dancing consent rule):
+A consent rule for an actor dancing with (this is the default dancing consent rule):
 	Unless DACS option is active, make no decision;
 	Abide by the love interest consent rule;
 	Abide by the soft-playing consent rule;
@@ -4196,7 +4190,7 @@ A stimulation rule for an actor kissing (this is the default kissing stimulation
 A stimulation rule for an actor hugging (this is the default hugging stimulation rule):
 	Unless DACS option is active, make no decision;
 	Abide by the soft-playing stimulation rule;
-A stimulation rule for an actor dancing (this is the default dancing stimulation rule):
+A stimulation rule for an actor dancing with (this is the default dancing stimulation rule):
 	Unless DACS option is active, make no decision;
 	Abide by the soft-playing stimulation rule;
 
@@ -4677,7 +4671,7 @@ These are detailed both in the IDE, and covered in Chapter 2 of this documentati
 	Action	Category	Type
 	Assfucking	Person	New	Redirect
 	Biting	Body Part	New	Rough-play
-	Dancing	Person	New	Soft-play
+	Dancing with	Person	New	Soft-play
 	Dressing	Clothing	New
 	Fucking	Person	New	Redirect
 	Fucking it with	Body Part	New	Fuck-play
@@ -4791,6 +4785,8 @@ This extension has opted to use Inform's support for enumerated values to provid
 This has several benefits; the code is easier to read, and fewer discrete values makes it easier to model both for the author and the player exploring it.
 Second, such a system isn't much use if the current arousal of a person is fixed, or left to the author to update manually for each action.
 This led to the stimulation rules, which together with some default consent rules form the Discrete Arousal-based Consent and Stimulation-system (DACS for short).
+Note that the stimulation rules are available without DACS.
+
 In order to avoid unplanned sex-scenes, DACS must be manually enabled:
 
 	1: Include the phrase "Use DACS." in your story setup.
@@ -4995,7 +4991,7 @@ As this action can be initiated by either actor it might be wise to write respon
 Section 2.4 - Person-related Actions
 
 While many erotic actions are very detail oriented (expecting the noun to be body part), there are some actions for which the usual context is the other person itself.
-The most obvious are perhaps hugging and dancing, but kissing is a borderline case in that players would sometimes want to kiss specific body parts as well as the person.
+The most obvious are perhaps hugging and dancing with, but kissing is a borderline case in that players would sometimes want to kiss specific body parts as well as the person.
 In order to keep the required responses at a reasonable level, we assume that kissing a body part is similar to licking it, and redirect to the licking action instead.
 A player might also expect an order to 'fuck someone' to work, even though that action involves body parts.
 We therefore create some helper actions that redirect to using the correct nouns with the fucking it with action.
@@ -6118,8 +6114,8 @@ These get reset every turn unless pure pure erotic repetition option is active, 
 	The previous kissed: The noun of the previous kissing action.
 	The previous hugger: The actor of the previous hugging action.
 	The previous hugged: The noun of the previous hugging action.
-	The previous dancer: The actor of the previous dancing action.
-	The previous danced: The noun of the previous dancing action.
+	The previous dancer: The actor of the previous dancing with action.
+	The previous danced: The noun of the previous dancing with action.
 	The previous fucker: The actor of the previous fucking it with action.
 	The previous orifice: The noun of the previous fucking it with action.
 	The previous penetrator: The second noun of the previous fucking it with action.
