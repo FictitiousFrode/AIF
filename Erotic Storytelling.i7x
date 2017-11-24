@@ -5313,13 +5313,13 @@ In order for this to be possible we can't rely on the previous action alone, but
 The end result is that to recreate the standard TADS responses for first time, directly repeating (consecutive) and otherwise repetitive, we can use the following three rules:
 
 	After kissing Alice for the first time: Triggers on the very first kiss, and only then.
-	After kissing Alice when kissing is repeating: Triggers when the previous erotic action was kissing Alice, taking into account the two possible use options.
+	After kissing Alice when kissing is repetitive: Triggers when the previous erotic action was kissing Alice, taking into account the two possible use options.
 	After kissing Alice: Triggers when kissing Alice if the previous two rules don't intervene; so it will will not trigger on the first kiss or directly repeating kisses.
 
 We can achieve the exact same effect with slightly different syntax, which I personally find harder to understand:
 
 	After kissing Alice: Triggers when kissing Alice if the next two rules don't intervene; so it will only trigger on the first kiss.
-	After kissing Alice when kissing is repeating: Triggers when the previous erotic action was kissing Alice, taking into account the two possible use options (exactly the same as above).
+	After kissing Alice when kissing is repetitive: Triggers when the previous erotic action was kissing Alice, taking into account the two possible use options (exactly the same as above).
 	After kissing Alice for two or more times: Triggers when Alice has been kissed, but the previous 'repeating' rule will take precedence.
 
 Another possibility is to write one after rule for each action, using if statements for finer control, as seen in the following more complex and complete example:
@@ -5338,7 +5338,7 @@ Another possibility is to write one after rule for each action, using if stateme
 	After kissing Alice:
 		Unless Alice has been kissed by the player or the player has been kissed by Alice:
 			Say "You kiss Alice for the first time.";
-		Else if kissing is repeating:
+		Else if kissing is repetitive:
 			Say "You continue to make out with Alice.";
 		Else if the previous action is the action of the player rubbing Alice's ass:
 			Say "You continue to knead her buttocks as you focus on making out with her tongue.";
@@ -5348,7 +5348,7 @@ Another possibility is to write one after rule for each action, using if stateme
 	After Alice kissing the player:
 		Unless Alice has been kissed by the player or the player has been kissed by Alice:
 			Say "Alice kisses you for the first time.";
-		Else if kissing is repeating:
+		Else if kissing is repetitive:
 			Say "Alice continues to make out with you.";
 		Else if the previous action is the action of the player rubbing Alice's ass:
 			Say "As she makes out with your tongue you continue to knead her buttocks.";
