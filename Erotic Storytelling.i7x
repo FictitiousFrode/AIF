@@ -1,4 +1,4 @@
-Version 3/171120 of Erotic Storytelling by Fictitious Frode begins here.
+Version 3/180115 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF) in Inform.
 The main features are a layered clothing with body parts and erotic actions with system for obtaining consent on actions involving others characters.
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for NPC agency and optional story contents."
@@ -837,7 +837,7 @@ Book 1.3 - (Un-) Dressing
 Part 1.3.1 - Wearing Garments
 
 [Status: Complete
-We use the standard wearing action, but add some checks and replace the carry out rule.]
+We use the standard wearing action, but add some check and carry out rules.]
 
 Chapter 1.3.1a - Check
 
@@ -897,7 +897,7 @@ Carry out an actor wearing (this is the wearing garments rule):
 Part 1.3.2 - Taking Off Garments
 
 [Status: Complete.
-For an actor taking off their own garments, we can use the standard taking off action, but add some checks and replace the carry out rule.
+For an actor taking off their own garments, we can use the standard taking off action, but add some checks and modify the carry out rule.
 The drop undressed garments property of a person decided if the items taken off a dropped or kept by the actor.
 Part 1.3.3 deals with an actor taking someone elses clothes.]
 
@@ -934,15 +934,15 @@ Check an actor taking off something (This is the taking off garments requires co
 
 Chapter 1.3.2b - Carry Out
 
-The standard taking off rule is not listed in any rulebook.
-[The modified taking off rule substitutes for the standard taking off rule.]
-Carry out an actor taking off (this is the modified taking off rule):
-	Let wearer be the holder of the noun;
-	Now the actor carries the noun;
-	If actor is not keep clothes after undress, silently try the actor dropping the noun;
-	If the noun is a garment (called G):
-		If G is shifted, now G is unshifted;
-		Update decency for the wearer;
+The standard taking off rule does nothing when taking off a garment.
+Carry out an actor taking off (this is the taking off garments rule):
+	If the noun is a garment:
+		Let wearer be the holder of the noun;
+		Now the actor carries the noun;
+		If actor is not keep clothes after undress, silently try the actor dropping the noun;
+		If the noun is a garment (called G):
+			If G is shifted, now G is unshifted;
+			Update decency for the wearer;
 
 Part 1.3.3 - Taking Off Others
 
@@ -951,29 +951,14 @@ By default, taking clothing that others are wearing is blocked. This is somethin
 
 Chapter 1.3.3a - Removing Existing Blocks
 
-The can't remove from people rule is not listed in any rulebook.
-[The revised can't remove from people rule substitutes for the can't remove from people rule.]
-Check an actor removing something from (this is the revised can't remove from people rule):
-	Let the owner be the holder of the noun;
-	If the owner is a person:
-		If the owner is the actor, convert to the taking off action on the noun;
-		If the noun is a worn garment, try the actor taking the noun instead;
-		If the player is the actor:
-			Say "[regarding the noun][Those] [seem] to belong to [the owner]." (A);
-		Stop the action.
-
-The can't take people's possessions rule is not listed in any rulebook.
-[The revised can't take people's possessions rule substitutes for the can't take people's possessions rule.]
-Check an actor taking (this is the revised can't take people's possessions rule):
-	Unless the noun is a garment and the noun is worn by someone:
-		Let the local ceiling be the common ancestor of the actor with the noun;
-		Let the owner be the not-counting-parts holder of the noun;
-		While the owner is not nothing and the owner is not the local ceiling:
-			If the owner is a person:
-				If the player is the actor:
-					Say "[regarding the noun][Those] [seem] to belong to [the owner]." (A);
-				Stop the action;
-			Let the owner be the not-counting-parts holder of the owner;
+The can't take people's possessions rule does nothing when taking a garment.
+The can't remove from people rule does nothing when removing a garment.
+Check an actor removing something from (this is the removing garments rule):
+	If the noun is a garment:
+		Let the owner be the holder of the noun;
+		If the owner is a person:
+			If the owner is the actor, convert to the taking off action on the noun;
+			Convert to the taking action on the noun;
 
 Chapter 1.3.3b - Implementing Taking
 
@@ -1895,7 +1880,7 @@ Does the player mean rubbing something that is part of the player: It is very un
 
 Chapter 3.2.2b - Check
 
-The rubbing specificity rule is listed instead of the can't rub another person rule in the check rubbing rulebook.
+The can't rub another person rule does nothing.
 Check an actor rubbing (this is the rubbing specificity rule):
 	If the noun is a person:
 		If the player is the actor:
@@ -2394,20 +2379,23 @@ Does the player mean kissing something that is part of the player: It is very un
 
 Chapter 3.3.1b - Check
 
-The self kissing rule is listed instead of the kissing yourself rule in the check kissing rulebook.
+The kissing yourself rule does nothing.
+The block kissing rule does nothing.
+
 Check an actor kissing (this is the self kissing rule):
 	If the noun is the actor:
 		If the player is the actor:
-			say "[We] [don't] get much from that." (A);
+			Say "[We] [don't] get much from that." (A);
 		Else if the player can see the actor and the action is not silent:
 			Say "[The actor] [don't] get much from that." (B);
 		Stop the action;
 
-The control kissed target rule is listed instead of the block kissing rule in the check kissing rulebook.
 Check an actor kissing (This is the control kissed target rule):
+	If the noun is a person:
+		Continue the action;
 	If the noun is a body part:
 		Try the actor licking the noun instead;
-	Else if the noun is not a person:
+	Otherwise:
 		If the player is the actor:
 			Say "[We] [don't] want to kiss that." (A);
 		Else if the player can see the actor and the action is not silent:
@@ -2527,13 +2515,14 @@ Dancing with is a new action. It takes into account that only other people can b
 The dancing decency is initially formal.
 
 Dancing with is an action applying to nothing or one touchable thing and abbreviable.
-The specification of the dancing with action is "Dancing with is the act of dancing with someone, including dancing with yourself."
+[BUG: Unable to set the specification:
+The specification of the dancing with action is "Dancing with is the act of dancing with someone, including dancing with yourself."]
 
 Chapter 3.3.3a - Understanding
 
-Understand "dance with [something]" as dancing.
-Understand "dance" as dancing.
-Understand "dance for me" as dancing.
+Understand "dance with [something]" as dancing with.
+Understand "dance" as dancing with.
+Understand "dance for me" as dancing with.
 
 Does the player mean dancing with a person: It is likely.
 Does the player mean dancing with the player: It is unlikely.
@@ -4830,9 +4819,11 @@ Section 1.7 - Version History
 	* Bug fixes on mini dress and clothing layer (courtesy of allisonedwards via GitHub)
 	* Updated documentation and examples
 
-2017-11-18: v1.0 (Release 3)
+2018-01-15: v1.0 (Release 3)
 
+	* The dancing action has been renamed to dancing with
 	* Rearranged fucking actions, added functionality to check for repeated fucking
+	* Under-the-hood fixes to rules excemptions
 	* Examples reworked to conform with Inform 7 standards
 	* Documentation improvements
 
@@ -5328,7 +5319,7 @@ Another possibility is to write one after rule for each action, using if stateme
 	Include Erotic Storytelling by Fictitious Frode.
 	Use consensual persuasion. Consent rule: Give consent.
 	Use actor agnostic repetition and pure erotic repetition.
-	
+
 	Test Lab is a room. The decency threshold is indecent.
 	The nameless avatar is a man. The player is the nameless avatar.
 	Alice is a woman in Test Lab.
@@ -5936,7 +5927,7 @@ Some parts of the extension are manually toggled by the 'use' phrase:
 	Use DACS: Enable the built-in Discrete Arousal-based Consent and Stimulation system.
 	Use actor agnostic repetition: Ignore the actor (for fucking and person-level actions) when checking for repetition.
 	Use pure erotic repetition: Only consider the erotic actions when checking for repetition.
-	
+
 Section 8.1 - New Kinds of Value
 
 The extension creates a few new kinds of value to help cohesion.
@@ -6109,7 +6100,7 @@ These can be used but should be updated.
 In order to support actor agnosticism and non-erotic interjected actions in repetition, we keep track of the previous actor and noun for every erotic action.
 These get reset every turn unless pure pure erotic repetition option is active, when they only reset when an erotic action is performed.
 [NOTE: This might be better to refactor into storing just 'the previous erotic action']
-	
+
 	The previous kisser: The actor of the previous kissing action.
 	The previous kissed: The noun of the previous kissing action.
 	The previous hugger: The actor of the previous hugging action.
@@ -6133,7 +6124,7 @@ These get reset every turn unless pure pure erotic repetition option is active, 
 	The previous licked: The noun of the previous licking action.
 	The previous biter: The actor of the previous biting action.
 	The previous bitten: The noun of the previous biting action.
-	
+
 Section 8.6 - Adjectives
 
 The extension provides some adjectives for the story author to take advantage of:
@@ -6228,7 +6219,7 @@ These phrases deals with arousal and orgasms:
 These phrases deal with repetition.
 They all checks if the current action is repetitive according to active use options and stored previous action.
 
-	whether KISSING IS REPETITIVE: 
+	whether KISSING IS REPETITIVE:
 	whether HUGGING IS REPETITIVE:
 	whether DANCING IS REPETITIVE:
 	whether FUCKING IS REPETITIVE:
@@ -6398,15 +6389,15 @@ The last part is making her agency-enabled, which we have trigger of a conversat
 			Change east exit of Dark Intersection to Treasure Chamber;
 
 	Chapter - The Player
-	
+
 	Harry is a man in Jungle Clearing. The player is Harry.
 	Your adventuring clothes is an outfit worn by Harry. The description is "These is your trusty khaki adventuring outfit; tan trousers and long-sleeved shirt with heavy boots."
 
 	Chapter - Endings
-	
+
 	Every turn when Harry is in Treasure Chamber, end the story finally saying "It might not have contained the treasures you were looking for, but you did find a nice girl."
 	Every turn when Harry is in Endless Pit, end the story saying "You stumble over the edge, hurtling down through the darkness before making a messy spot at the bottom."
-	
+
 	Chapter - Guiding
 
 	A native guide is a woman in Jungle Clearing.
@@ -6429,8 +6420,8 @@ The last part is making her agency-enabled, which we have trigger of a conversat
 
 	After asking the native guide about something:
 		Unless the native guide is agency-enabled:
-			If the topic understood is "treasure / gold / gems / secrets":
-				Say "'Yes mister Harry, I know where the treasure is hidden. Follow me and try to keep up!'"
+			If the topic understood exactly matches the regular expression "(treasure|gold|gems|secrets)":
+				Say "'Yes mister Harry, I know where the treasure is hidden. Follow me and try to keep up!'";
 				Now the target location of native guide is Treasure Chamber;
 				Now the native guide is agency-enabled;
 			Otherwise:
@@ -6438,7 +6429,7 @@ The last part is making her agency-enabled, which we have trigger of a conversat
 		Otherwise:
 			Say "Follow me mister Harry, all will be well.";
 
-	Test me with "z / z / talk to guide about treasure / z / enter mound / n".
+	Test me with "z / z / ask guide about treasure / z / enter mound / n".
 
 Example: *** A Furry Tale - How to create custom body parts.
 
