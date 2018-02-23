@@ -1,9 +1,7 @@
-Version 1/170819 of Moisturizer by Fictitious Frode begins here.
+Version 2/180131 of Moisturizer by Fictitious Frode begins here.
 "An experimental testbed for Erotic Storytelling, use at your own risk as features can change drastically.
 It started out as a way providing some of the features from Moist, hence the name.
 It currently covers charged items, lubrication, reading, numeric arousal, penetrations."
-
-Include Erotic Storytelling by Fictitious Frode.
 
 Volume 0 - New Verbs
 
@@ -117,10 +115,10 @@ A strap-on has some text called lubrication medium.
 Chapter 1.2.1b - Drying
 
 Every turn (this is the lubricant drying rule):
-	Repeat with T running through things:
-		If T provides the property lubrication time and the lubrication time of T > 0:
+	Repeat with T running through things which provide the property lubrication time:
+		If the lubrication time of T > 0:
 			Decrease the lubrication time of T by 1;
-			If the player can see T:
+			If the player can see T and the lubrication time of T is 0:
 				Let medium be "lubricant";
 				If T provides the property lubrication medium and the lubrication medium of T is not the default value of text, now medium is the lubrication medium of T;
 				Say "The [medium] on [T][if T is in a body part] inside [holder of T][end if] seems to have dried up." (A);
@@ -280,7 +278,7 @@ Check an actor inserting something into (this is the penetrating body parts rule
 [Check that the body part is accessible. We allow for touching rather than requiring full access.]
 Check an actor inserting something into (this is the penetrating accessible body parts rule):
 	If the second noun is a body part:
-		Unless noun can be touched:
+		Unless second noun can be touched:
 			If the actor is the player:
 				Say "[The preventing touching of second noun] [prevent] [us] from reaching [the noun]." (A);
 			Else if the player can see the noun and the action is not silent:
