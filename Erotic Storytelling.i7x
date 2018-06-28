@@ -1,7 +1,9 @@
-Version 3/180115 of Erotic Storytelling by Fictitious Frode begins here.
+Version 3/171226 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF) in Inform.
 The main features are a layered clothing with body parts and erotic actions with system for obtaining consent on actions involving others characters.
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for NPC agency and optional story contents."
+
+[TODO: Replace the last few is listed instead rules]
 
 [We use the pause function from Basic Screen Effects.]
 Include Basic Screen Effects by Emily Short.
@@ -53,13 +55,22 @@ Chapter 1.1.1a - Decency
 Decency is a control mechanism the story author can employ to control what the player should be allowed to do.]
 
 A decency is a kind of value. The decencies are indecent, immodest, casual, formal and undefined decency.
-The specification of decency is "Decency is a measure of what is socially acceptable in a given location. A room has a decency threshold (usually casual)
-For a person, decency is a measure of how much skin that person is showing, and is defined for cover areas and garments. Body parts will inherit the lowest decency of the areas it covers, but this can be 'upgraded' by covering with clothing. The decency of a person is a value that will be referenced more often than it's updated, so we cache it and force the actions that will change it to update the cached value using the provided method 'update decency for Person'. Note; It's possible to manually set the decency of a person to a different value than it would be calculated to be; this value would hold untill the next action that recalculates it. Currently, the actions wearing, taking off, shifting, unshifting and ripping garments will recalculate the decency of the (former) wearer. Before doing any of these actions (as well as going), the person's (updated) decency is compared to the threshold to see if the action should be allowed.
-The erotic actions also have a decency, which is also compared to the threshold. For many actions, this check is somewhat redundant as the action is only meaningful when indecent body parts are visible.
+The specification of decency is "Decency is a measure of what is socially acceptable in a given location, and gives the story author a mechanism to control the player's behavior.
+
+A room has a decency threshold (which defaults to casual), which is used in various rules to control what behavior can occur in that room.
+For a person, decency is a measure of how much skin that person is showing, and is defined for cover areas and garments.
+Body parts will inherit the lowest decency of the areas it covers, but this can be 'upgraded' by covering with clothing.
+The decency of a person is a value that will be referenced more often than it's updated, so we cache it and force the actions that will change it to update the cached value using the provided method 'update decency for Person'.
+Note; It's possible to manually set the decency of a person to a different value than it would be calculated to be; this value would hold untill the next action that recalculates it.
+
+Currently, the actions wearing, taking off, shifting, unshifting and ripping garments will recalculate the decency of the (former) wearer.
+Before doing any of these actions (as well as going), the person's (updated) decency is compared to the threshold to see if the action should be allowed.
+The erotic actions also have a decency, which is also compared to the threshold.
+This check is somewhat redundant for some actions as they are only meaningful when indecent body parts are visible.
+
 The undefined decency is not intended to be used, but is needed to signal that the value hasn't been calculated yet."
 
 A person has a decency called the current decency. The current decency of a person is usually the undefined decency.
-
 A room has a decency called the decency threshold. The decency threshold of a room is usually casual.
 
 Chapter 1.1.1b - Cover Areas
@@ -68,9 +79,15 @@ Chapter 1.1.1b - Cover Areas
 Cover areas are the link between body parts and garments, and are used to defined visibility (with decency) and accesibility.]
 
 A cover area is a kind of value. The cover area are defined by the Table of Coverage.
-The specification of cover area is "Cover areas are the distinct, non-overlapping areas of the body that can be covered by garments. They are needed to provide the link between garments and body parts in order to provide decency, as not all areas on a person might be associated with a body part.
-A body part or garment is considered to be visible if atleast one of it's cover areas is not covered. Visibility of garments are handled by the concealed possessions rulebok, while body parts are obviously present even when covered and as such are handled by descriptions instead. See body parts for more details.
-The cover areas are defined by the Table of Coverage, which can be extended. NOTE: When altering the table, it's also important to update the body areas of people, which state which cover areas are applicable for that person."
+The specification of cover area is "Cover areas are the distinct, non-overlapping areas of the body that can be covered by garments.
+They are needed to provide the link between garments and body parts in order to provide decency, as not all areas on a person might be associated with a body part.
+
+A body part or garment is considered to be visible if atleast one of it's cover areas is not covered.
+Visibility of garments are handled by the concealed possessions rulebok, while body parts are obviously present even when covered and as such are handled by descriptions instead.
+This is described in more detail under body parts.
+
+The cover areas are defined by the Table of Coverage, which can be extended.
+NOTE: When altering the table, it's also important to update the body areas of people, which state which cover areas are applicable for that person."
 
 Table of Coverage
 Cover Area	Uncovered Decency (decency)
@@ -98,17 +115,16 @@ Body parts are (as the name implies) parts of a body that the player can interac
 It's possible to use body parts directly, but most of the time you would use a specific body part from the template section.]
 
 A body part is a kind of thing. The indefinite article of a body part is usually "a".
-The specification of body part is "A body part represents a part of a person that the player can interact with. While they can be instantiated directly, it's usually better to use one of the templated subclasses.
-There can be several body parts in any given cover area, and although rare a body part can be in several areas and is only concealed if all of those areas have worn garments. The decency of a body part is determined by the least decent area it's in."
+The specification of body part is "A body part represents a part of a person that the player can interact with.
+While they can be instantiated directly, it's usually better to use one of the templated subclasses.
+
+There can be several body parts in any given cover area, and although rare a body part can be in several areas and is only concealed if all of those areas have worn garments.
+The decency of a body part is determined by the least decent area in it's cover locations."
 
 A body part has a list of cover areas called cover locations.
 
-Section - Descriptions
-
 A body part has some text called the covered description.
 A body part has some text called the uncovered description.
-
-Section - Understanding
 
 A body part has some text called owner's pronoun. [Note: This will be updated at story start with the initiate erotic storytelling rule to match the person the part belongs to.]
 Understand the owner's pronoun property as describing a body part.
@@ -122,7 +138,10 @@ Garments are implementation of wearable clothing that can be layered over cover 
 
 A garment is a kind of thing. The indefinite article is usually "a".
 The specification of garment is "A garment is something a person can wear over their body parts and related cover areas.
-Garments are quite complex, with several distinct sub-features: Some garments can be shiftable in various ways, or even be ripped apart. Transparency determines whether it blocks vision, and they can allow or block touching through. Clothing size is provided to allow garments to only be wearable by matching persons."
+
+Garments are quite complex, with several distinct sub-features: Some garments can be shiftable in various ways, or even be ripped apart.
+Transparency determines whether it blocks vision, and they can allow or block touching through.
+Clothing size is provided to allow garments to only be wearable by matching persons."
 
 A garment is always wearable.
 A garment has a decency called cloth decency. The cloth decency of a garment is usually casual.
@@ -952,7 +971,7 @@ By default, taking clothing that others are wearing is blocked. This is somethin
 Chapter 1.3.3a - Removing Existing Blocks
 
 The can't take people's possessions rule does nothing when taking a garment.
-The can't remove from people rule does nothing when removing a garment.
+The can't remove from people rule does nothing when removing a garment from.
 Check an actor removing something from (this is the removing garments rule):
 	If the noun is a garment:
 		Let the owner be the holder of the noun;
@@ -2380,8 +2399,6 @@ Does the player mean kissing something that is part of the player: It is very un
 Chapter 3.3.1b - Check
 
 The kissing yourself rule does nothing.
-The block kissing rule does nothing.
-
 Check an actor kissing (this is the self kissing rule):
 	If the noun is the actor:
 		If the player is the actor:
@@ -2390,12 +2407,11 @@ Check an actor kissing (this is the self kissing rule):
 			Say "[The actor] [don't] get much from that." (B);
 		Stop the action;
 
+The control kissed target rule is listed instead of the block kissing rule in the check kissing rulebook.
 Check an actor kissing (This is the control kissed target rule):
-	If the noun is a person:
-		Continue the action;
 	If the noun is a body part:
 		Try the actor licking the noun instead;
-	Otherwise:
+	Else if the noun is not a person:
 		If the player is the actor:
 			Say "[We] [don't] want to kiss that." (A);
 		Else if the player can see the actor and the action is not silent:
@@ -4819,11 +4835,9 @@ Section 1.7 - Version History
 	* Bug fixes on mini dress and clothing layer (courtesy of allisonedwards via GitHub)
 	* Updated documentation and examples
 
-2018-01-15: v1.0 (Release 3)
+2017-11-18: v1.0 (Release 3)
 
-	* The dancing action has been renamed to dancing with
 	* Rearranged fucking actions, added functionality to check for repeated fucking
-	* Under-the-hood fixes to rules excemptions
 	* Examples reworked to conform with Inform 7 standards
 	* Documentation improvements
 
