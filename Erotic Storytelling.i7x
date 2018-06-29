@@ -155,7 +155,7 @@ Shifting and ripping are two related but separate ways to alter the covered area
 
 A shiftyness is a kind of value. The shiftyness are defined by the Table of Shift.
 The specification of shiftyness is "Shiftyness (which isn't really a word) are the positions that a garment can be shifted to in order to allow (usually) more access to underlying parts.
-They are defined in the Table of Shift which can be expanded to allow new modes of shifting.
+They are defined in the Table of Shift which can be expanded to allow new modes of shifting, but you would also need to add new understand phrases.
 
 Mechanic-wise, it functions similarly to open, with the shiftable property determining whether the player can shift it, and shifted determining if it has been.
 The shiftyness determines what verbs the player can use to move the garment as well as the textual responses.
@@ -824,7 +824,8 @@ Part 1.2.4 - Forcing Clothing
 Sometimes it's necessary to forcefully change the clothing of someone, while still doing some rules maintenance. These are not intended to be used by the player, but rather at scene changes.]
 
 [Forcefully strips a person of all worn things. It ignores all rules such as carrying capacity, but will update decency.
-Use with caution!]
+Use with caution!
+Note: It does not take 'keep clothes after undress' into account.]
 To force strip (P - a person):
 	Let clothing be the list of things worn by P;
 	Repeat with cloth running through clothing:
@@ -846,7 +847,7 @@ To force dress (P - a person) in (L - a list of garments):
 		Update pronoun for cloth;
 	Update decency for P;
 
-Book 1.3 - (Un-) Dressing
+Book 1.3 - Clothing Actions
 
 [This book deals with the player actions related to changing clothes.]
 
@@ -857,6 +858,7 @@ We use the standard wearing action, but add some check and carry out rules.]
 
 Chapter 1.3.1a - Check
 
+[Make sure the worn garment would be topmost and there is some overlap in cover areas]
 Check an actor wearing something (This is the check wearing garments rule):
 	If the noun is a garment (called G):
 		[Check that G and the person have atleast one area of overlap]
@@ -879,6 +881,7 @@ Check an actor wearing something (This is the check wearing garments rule):
 				Say "[The actor] [can't] wear [noun] on top of [B]." (D);
 			Stop the action;
 
+[Make sure the clothing size fits]
 Check an actor wearing something (This is the check garment size rule):
 	If the noun provides the property clothing size:
 		If the clothing size of noun is not the clothing size of the actor:
@@ -888,6 +891,7 @@ Check an actor wearing something (This is the check garment size rule):
 				Say "[The actor] [can't] wear [noun], [it's] the wrong size." (B);
 			Stop the action;
 
+[Make sure we obey the decency threshold]
 Check an actor wearing something (This is the wearing decency rule):
 	Let L be the location of the actor;
 	If noun is a garment (called G):
@@ -898,6 +902,7 @@ Check an actor wearing something (This is the wearing decency rule):
 				Say "It [are] too public for [the actor] to wear [the noun] here." (B);
 			Stop the action;
 
+[Make sure the action is consensual]
 Check an actor wearing something (This is the wearing requires consent rule):
 	If the noun is a garment (called G):
 		Follow the consent rules;
@@ -906,6 +911,7 @@ Check an actor wearing something (This is the wearing requires consent rule):
 
 Chapter 1.3.1b - Carry Out
 
+[The actual wearing is covered by default rules; we just need to update decency]
 Carry out an actor wearing (this is the wearing garments rule):
 	If the noun is a garment:
 		Update decency for the actor;
@@ -932,6 +938,7 @@ Check an actor taking off something (this is the can't take off covered items ru
 				Say "[The actor] [can't] take off [noun] due to [blockers with definite articles]." (B);
 			Stop the action;
 
+[Make sure we obey the decency threshold]
 Check an actor taking off something (this is the can't take off in public rule):
 	Let L be the location of the actor;
 	If noun is a garment (called G):
@@ -942,6 +949,7 @@ Check an actor taking off something (this is the can't take off in public rule):
 				Say "It [are] too public for [the actor] to take that off here." (B);
 			Stop the action;
 
+[Make sure the action is consensual]
 Check an actor taking off something (This is the taking off garments requires consent rule):
 	If the noun is a garment and the noun is worn by someone:
 		Follow the consent rules;
@@ -950,12 +958,13 @@ Check an actor taking off something (This is the taking off garments requires co
 
 Chapter 1.3.2b - Carry Out
 
+[We change the default rule so we can make use of who the wearer was]
 The standard taking off rule does nothing when taking off a garment.
 Carry out an actor taking off (this is the taking off garments rule):
 	If the noun is a garment:
 		Let wearer be the holder of the noun;
 		Now the actor carries the noun;
-		If actor is not keep clothes after undress, silently try the actor dropping the noun;
+		Unless actor is keep clothes after undress, silently try the actor dropping the noun;
 		If the noun is a garment (called G):
 			If G is shifted, now G is unshifted;
 			Update decency for the wearer;
@@ -967,6 +976,7 @@ By default, taking clothing that others are wearing is blocked. This is somethin
 
 Chapter 1.3.3a - Removing Existing Blocks
 
+[Remove the blocks on taking garments]
 The can't take people's possessions rule does nothing when taking a garment.
 The can't remove from people rule does nothing when removing a garment from.
 Check an actor removing something from (this is the removing garments rule):
@@ -978,16 +988,19 @@ Check an actor removing something from (this is the removing garments rule):
 
 Chapter 1.3.3b - Implementing Taking
 
+[Make sure the taken garment can be taken off, obeying the decency threshold]
 Check an actor taking a garment (this is the can't take covered items rule):
 	Abide by the can't take off covered items rule;
 	Abide by the can't take off in public rule;
 
+[Make sure the action is consensual]
 Check an actor taking something (This is the taking garments requires consent rule):
 	If the noun is a garment and the noun is worn by someone:
 		Follow the consent rules;
 		Unless the outcome of the rulebook is the give consent outcome:
 			Stop the action;
 
+[Similar implementation to undressing]
 The taking garments rule is listed first in the carry out taking rulebook.
 Carry out an actor taking a garment (called G) (this is the taking garments rule):
 	If G is worn by someone:
@@ -1046,6 +1059,7 @@ Check an actor dressing (this is the actor must be nude for dressing rule):
 
 Chapter 1.3.4c - Carry Out
 
+[Have the actor wear the preferred clothing, in layer order]
 Carry out an actor dressing (this is the default dressing rule):
 	Let clothing be the preferred clothing of actor;
 	Sort clothing in clothing layer order;
@@ -1080,6 +1094,7 @@ Understand "strip", "undress", "get undressed", "disrobe" as implicit stripping.
 
 Chapter 1.3.5b - Check
 
+[Make sure that we only strip people]
 Check an actor stripping something (this is the can only strip people rule):
 	If the noun is not a person:
 		If the player is the actor:
@@ -1088,6 +1103,7 @@ Check an actor stripping something (this is the can only strip people rule):
 			Say "[The actor] [can't] find a way to strip [noun]." (B);
 		Stop the action;
 
+[Make sure there is something to take off]
 Check an actor stripping something (this is the can't strip naked people rule):
 	Let clothing be the list of things worn by noun;
 	If clothing is empty:
@@ -1099,6 +1115,7 @@ Check an actor stripping something (this is the can't strip naked people rule):
 
 Chapter 1.3.5c - Carry Out
 
+[Redirect implicit stripping to explicitly stripping oneself]
 Carry out an actor implicit stripping (this is the implicit stripping redirect rule):
 	Try the actor stripping the actor instead;
 
@@ -1142,7 +1159,8 @@ Part 1.4.1 - Shifting
 This part implements the shifting ability of garments, as detailed in 1.1.2a]
 
 Shifting is an action applying to one touchable thing.
-The specification of the shifting action is "Shifting is the act of putting aside a garment in order to gain more favorable access. It is closely related to the shiftyness value of a garment, which indicates what happens when it is shifted, and the unshifting action which reverses the process.
+The specification of the shifting action is "Shifting is the act of putting aside a garment in order to gain more favorable access.
+It is closely related to the shiftyness value of a garment, which indicates what happens when it is shifted, and the unshifting action which reverses the process.
 
 A garment can only be shifted if it's worn, not ripped and not already shifted."
 
@@ -1176,6 +1194,7 @@ Does the player mean shifting a unshifted garment: It is likely.
 
 Chapter 1.4.1b - Check
 
+[Make sure the noun can be shifted]
 Check an actor shifting (this is the can only shift shifty items rule):
 	Unless the noun provides the property shiftable and the noun is shiftable and the noun provides the property shiftyness:
 		If the player is the actor:
@@ -1184,6 +1203,7 @@ Check an actor shifting (this is the can only shift shifty items rule):
 			Say "[The Actor] [can't] find a way to do that to [the noun]." (B);
 		Stop the action;
 
+[Make sure the noun isn't already ripped]
 Check an actor shifting (this is the can't shift ripped items rule):
 	If the noun provides the property ripped and the noun is ripped:
 		If the player is the actor:
@@ -1192,6 +1212,7 @@ Check an actor shifting (this is the can't shift ripped items rule):
 			Say "[regarding the noun][They're] too ripped up to [describe shifting of the shiftyness of the noun]." (B);
 		Stop the action;
 
+[Make sure the noun isn't already shifted]
 Check an actor shifting (this is the can't shift what's already shifted rule):
 	If the noun is shifted:
 		If the player is the actor:
@@ -1200,6 +1221,7 @@ Check an actor shifting (this is the can't shift what's already shifted rule):
 			Say "[regarding the noun][They're] already [describe shifted of the shiftyness of the noun]." (B);
 		Stop the action;
 
+[Make sure the noun is worn]
 Check an actor shifting (this is the can only shift what's worn rule):
 	If the noun does not provide the property wearable or the noun is not worn by someone:
 		If the player is the actor:
@@ -1208,6 +1230,7 @@ Check an actor shifting (this is the can only shift what's worn rule):
 			Say "[The Actor] [can] only [describe shifting of the shiftyness of the noun] [the noun] when it's worn." (B);
 		Stop the action;
 
+[Make sure the noun can be accessed]
 Check an actor shifting (this is the can't shift covered items rule):
 	If noun is a garment (called G):
 		Unless G can be shifted:
@@ -1218,6 +1241,7 @@ Check an actor shifting (this is the can't shift covered items rule):
 				Say "[The actor] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (B);
 			Stop the action;
 
+[Make sure we obey the decency threshold]
 Check an actor shifting (this is the can't shift in public rule):
 	Let L be the location of the actor;
 	If noun is a garment (called G):
@@ -1228,6 +1252,7 @@ Check an actor shifting (this is the can't shift in public rule):
 				Say "It [are] too public for [the actor] to do that here." (B);
 			Stop the action;
 
+[Make sure the action is consensual]
 Check an actor shifting something (This is the shifting garments requires consent rule):
 	If the noun is a garment and the noun is worn by someone:
 		Follow the consent rules;
@@ -1236,9 +1261,10 @@ Check an actor shifting something (This is the shifting garments requires consen
 
 Chapter 1.4.1c - Carry Out
 
+[Shift the noun and update decency for the wearer]
 Carry out an actor shifting (this is the standard shifting rule):
 	Now the noun is shifted;
-	Update decency for holder of noun;
+	If the holder of the noun is a person, update decency for holder of noun;
 
 Chapter 1.4.1d - Report
 
@@ -1300,6 +1326,7 @@ Does the player mean shifting a unshifted garment: It is unlikely.
 
 Chapter 1.4.2b - Check
 
+[Make sure the noun can be shifted]
 Check an actor unshifting (this is the can only unshift shifty items rule):
 	Unless the noun provides the property shiftable and the noun is shiftable and the noun provides the property shiftyness:
 		If the player is the actor:
@@ -1308,6 +1335,7 @@ Check an actor unshifting (this is the can only unshift shifty items rule):
 			Say "[The Actor] [can't] find a way to do that to [the noun]." (B);
 		Stop the action;
 
+[Make sure the noun is shifted]
 Check an actor unshifting (this is the can only unshift what's already shifted rule):
 	If the noun is not shifted:
 		If the player is the actor:
@@ -1316,6 +1344,7 @@ Check an actor unshifting (this is the can only unshift what's already shifted r
 			Say "[regarding the noun][They're] already [describe unshifted of the shiftyness of the noun]." (B);
 		Stop the action;
 
+[Make sure the noun can be accessed]
 Check an actor unshifting (this is the can't unshift covered items rule):
 	If noun is a garment (called G):
 		Unless G can be shifted:
@@ -1326,6 +1355,7 @@ Check an actor unshifting (this is the can't unshift covered items rule):
 				Say "[The actor] [can't] [describe shifting of the shiftyness of the noun] [noun] when it's covered by [blockers]." (B);
 			Stop the action;
 
+[Make sure the action is consensual]
 Check an actor unshifting something (This is the unshifting garments requires consent rule):
 	If the noun is a garment and the noun is worn by someone:
 		Follow the consent rules;
@@ -1334,9 +1364,10 @@ Check an actor unshifting something (This is the unshifting garments requires co
 
 Chapter 1.4.2c - Carry Out
 
+[Unshift the noun and update decency for the wearer]
 Carry out an actor unshifting (this is the standard unshifting rule):
 	Now the noun is unshifted;
-	Update decency for the holder of noun;
+	If the holder of the noun is a person, update decency for holder of noun;
 
 Chapter 1.4.2d - Report
 
@@ -1352,7 +1383,8 @@ Part 1.4.3 - Ripping
 This part implements the ripping ability of garments, as detailed in 1.1.2a]
 
 Ripping is an action applying to one touchable thing.
-The specification of the ripping action is "Ripping is the act of tearing a piece of garment apart. A ripped garment can no longer be shifted, but it can be worn."
+The specification of the ripping action is "Ripping is the act of tearing a piece of garment apart.
+A ripped garment can no longer be shifted, but it can be worn."
 
 Chapter 1.4.3a - Understanding
 
@@ -1361,6 +1393,7 @@ Understand "tear open/off/up/-- [garment]" as ripping.
 
 Chapter 1.4.3b - Check
 
+[Make sure the noun can be accessed]
 Check an actor ripping (this is the can't rip covered items rule):
 	If noun is a garment (called G):
 		Unless G can be ripped:
@@ -1371,6 +1404,7 @@ Check an actor ripping (this is the can't rip covered items rule):
 				Say "[The actor] [can't] [rip] apart [noun] when it's covered by [blockers]." (B);
 			Stop the action;
 
+[Make sure the noun can be ripped]
 Check an actor ripping (this is the can only rip rippable items rule):
 	Unless the noun provides the property rippable and the noun is rippable:
 		If the player is the actor:
@@ -1379,7 +1413,8 @@ Check an actor ripping (this is the can only rip rippable items rule):
 			Say "[regarding the noun][They're] [are] too strong to rip apart." (B);
 		Stop the action;
 
-Check an actor shifting (this is the can only rip once rule):
+[Make sure the noun isn't already ripped]
+Check an actor ripping (this is the can only rip once rule):
 	If the noun is ripped:
 		If the player is the actor:
 			Say "[regarding the noun][They're] already ripped apart." (A);
@@ -1387,6 +1422,7 @@ Check an actor shifting (this is the can only rip once rule):
 			Say "[regarding the noun][They're] already ripped apart." (B);
 		Stop the action;
 
+[Make sure we obey the decency threshold]
 Check an actor ripping (this is the can't rip in public rule):
 	Let L be the location of the actor;
 	If noun is a garment (called G):
@@ -1397,6 +1433,7 @@ Check an actor ripping (this is the can't rip in public rule):
 				Say "It [are] too public for [the actor] to do that here." (B);
 			Stop the action;
 
+[Make sure the action is consensual]
 Check an actor ripping something (This is the ripping garments requires consent rule):
 	If the noun is a garment and the noun is worn by someone:
 		Follow the consent rules;
@@ -1405,10 +1442,12 @@ Check an actor ripping something (This is the ripping garments requires consent 
 
 Chapter 1.4.3c - Carry Out
 
+[Rip the noun and update decency for the wearer]
 Carry out an actor ripping (this is the standard ripping rule):
 	If the noun provides the property ripped, now the noun is ripped;
-	Update decency for the holder of noun;
+	If the holder of the noun is a person, update decency for holder of noun;
 
+[Unshift a ripped item]
 Carry out an actor ripping (this is the ripping replaces shifting rule):
 	If the noun provides the property shifted and the noun is shifted, now the noun is unshifted;
 
@@ -1455,7 +1494,7 @@ Chapter 2.1.1a - Occupied Flag
 
 [We need a way to stop people from doing several agency actions in a turn, so we set a flag.
 This is also used to suppress planned agency when the player interacts with that person, and can also be used to allow NPCs to interact with each other without acting twice.
-It can also be set manually as needed to delay agency for a turn, but if longer term stopping is needed, use the next property instead.]
+It can also be set manually as needed to delay agency for a turn, but if longer term stopping is needed, use the agency-enabled property instead.]
 
 A person can be occupied or unoccupied. A person is usually unoccupied.
 
@@ -1486,7 +1525,7 @@ A person can be agency-enabled or agency-disabled. A person is usually agency-di
 
 Chapter 2.1.1c - Priority
 
-[In order to control which NPCs script gets called first, we introduce a simple numerical property to order actors by.]
+[In order to control which NPCs script gets called first, we introduce a simple numerical property to order actors by. Higher numbers go first in the agency processing.]
 A person has a number called priority.
 
 Chapter 2.1.1d - Agency State
@@ -1505,6 +1544,7 @@ Chapter 2.1.2a - Turn Sequence
 The agency stage rule is listed before the every turn stage rule in the turn sequence rules.
 The agency cleanup rule is listed after the every turn stage rule in the turn sequence rules.
 
+[Process the agency of all agency-enabled persons; first in rulebook order then by decreasing priority]
 This is the agency stage rule:
 	Let actors be the list of all agency-enabled persons;
 	Sort actors in reverse priority order;
@@ -1523,6 +1563,7 @@ This is the agency stage rule:
 			Follow the idleness rulebook for person;
 			If the rule succeeded, now the person is occupied;
 
+[Reset the occupied flag for all persons]
 This is the agency cleanup rule:
 	Repeat with person running through persons:
 		Now person is unoccupied;
@@ -1544,7 +1585,7 @@ Book 2.2 - Describing People
 
 Part 2.2.1 - Framework
 
-[Status:
+[Status: Complete
 In order to easily expand upon how people are described when examining, we create a new rulebook that's responsible for printing a description, and then hooking this up in the carry out examining rules. In order to create generic description rules, we also have a rulebook for determining how notable a given feature of a person is.]
 
 Chapter 2.2.1a - Rulebooks
@@ -1572,6 +1613,7 @@ The status description generation rules are a person based rulebook.
 
 Chapter 2.2.1b - Examine Integration
 
+[Make examine action hook into our framework]
 The examining people rule is listed after the standard examining rule in the carry out examining rulebook.
 Carry out an actor examining (this is the examining people rule):
 	If noun is a person:
@@ -1581,13 +1623,14 @@ Carry out an actor examining (this is the examining people rule):
 Chapter 2.2.1c - Properties
 
 [The short description should be a short (3-4) word summary of the body part or garment, that will be used in list printing.]
-
 A body part has some text called short description.
 A garment has some text called short description.
 
 Part 2.2.2 - Description Generation Rules
 
 Chapter 2.2.2a - Default Notability Rules
+
+[By default we shouldn't list concealed items]
 
 Description notability for something (called N) worn by someone (this is the worn items notability rule):
 	If N is concealed:
@@ -1631,8 +1674,7 @@ A default description generation for a person (called P) (This is the generate s
 	Repeat with part running through bodyparts:
 		Follow the description notability rules for part;
 		If the outcome of the rulebook is the distinct outcome:
-			If part provides the property short description
-			and the short description of the part is not the default value of text:
+			If part provides the property short description and the short description of the part is not the default value of text:
 				Add "[indefinite article of part] [short description of part]" to the notable body part descriptions;
 			Else:
 				Add "[a part]" to the notable body part descriptions;
@@ -1735,7 +1777,8 @@ Part 3.1.1 - Stimulation
 Chapter 3.1.1a - Stimulation Rulebook
 
 [Stimulation is a rulebook that deals with altering the arousal of participants in erotic actions.
-We create a new rulebook, with outcomes stimulated and unstimulated, and defaulting to being stimulated. Because of the default value, rules will not fall though to the next case unless explicitly told to make no decision. This allows us to populate the rulebook with default rules.]
+We create a new rulebook, with outcomes stimulated and unstimulated, and defaulting to being stimulated. 
+The default return value ensures that rules will not fall though to the next case unless explicitly told to make no decision. This allows us to populate the rulebook with default rules.]
 
 The stimulation rules is a rulebook.
 The stimulation rules have outcomes stimulated (success - the default) and unstimulated (failure).
@@ -1754,7 +1797,7 @@ Chapter 3.1.2a - Consent Rulebook
 The consent rules is a rulebook.
 The consent rules have outcomes give consent (success) and deny consent (failure - the default).
 
-[This default consent rule is as generic as possible, and will be executed last.]
+[This default consent rule is as generic as possible, and will be executed after any more specific rules]
 The default consent rule is listed last in the consent rules.
 A consent rule (this is the default consent rule):
 	[Check consent for the actor first; we assume that the player always consent.]
@@ -1810,8 +1853,11 @@ Part 3.2.1 - Touching
 [Status: Complete
 Touching is already covered in the Standard Rules, but it doesn't do much. We add some checks for touching people and body parts, and because we don't allow touching people directly we can keep the standard reports.]
 
-The specification of the touching action is "Touching is just that, touching something without applying pressure: a touch-sensitive screen or a living creature might react, but a standard push-button or lever will probably not.
+The specification of the touching action is "Touching is just that, touching something without applying pressure: 
+a touch-sensitive screen or a living creature might react, but a standard push-button or lever will probably not.
+
 In the Standard Rules there are no check touching rules, since touchability is already a requirement of the noun for the action anyway, and no carry out rules because nothing in the standard Inform world model reacts to a mere touch - though report rules do mean that attempts to touch other people provoke a special reply.
+
 In Erotic Storytelling however, touching is 'passive' touching where the player softly feels the target, while the related rubbing action is 'active' touching where the player actively massages the target."
 
 The touching decency is initially immodest.
@@ -1827,6 +1873,7 @@ Does the player mean touching something that is part of the player: It is very u
 
 Chapter 3.2.1b - Check
 
+[Make sure we know what the player wants to touch]
 Check an actor touching (this is the touching specificity rule):
 	If the noun is a person:
 		If the player is the actor:
@@ -1835,6 +1882,7 @@ Check an actor touching (this is the touching specificity rule):
 			Say "[We] [have] to be more specific about what [the actor] should touch." (B);
 		Stop the action;
 
+[Make sure only appropriate garments or body parts can be touched]
 Check an actor touching (This is the control what can be touched rule):
 	If the noun is a body part or noun is a garment: [We don't want to block "normal" things here]
 		Unless the noun provides the property touchable and the noun is touchable:
@@ -1844,6 +1892,7 @@ Check an actor touching (This is the control what can be touched rule):
 				Say "[The actor] [can't] touch that." (B);
 			Stop the action;
 
+[Make sure the noun is accessible]
 Check an actor touching (this is the touching reachability rule):
 	If the noun is a body part or noun is a garment:
 		Unless noun can be touched:
@@ -1853,6 +1902,7 @@ Check an actor touching (this is the touching reachability rule):
 				Say "[The actor] [can't] reach that." (B);
 			Stop the action;
 
+[Make sure we obey the decency threshold]
 Check an actor touching (this is the touching decency rule):
 	Let L be the location of the actor;
 	If the noun is enclosed by a person:
@@ -1863,6 +1913,7 @@ Check an actor touching (this is the touching decency rule):
 				Say "It [are] too public for [the actor] to touch that here." (B);
 			Stop the action;
 
+[Make sure the action is consensual]
 Check an actor touching (this is the seek consent for touching rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the consent rules;
@@ -1871,6 +1922,7 @@ Check an actor touching (this is the seek consent for touching rule):
 
 Chapter 3.2.1c - Carry Out
 
+[Apply stimulation as applicable]
 Carry out an actor touching (this is the seek stimulation for touching rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
@@ -1880,8 +1932,12 @@ Part 3.2.2 - Rubbing
 [Status: Complete
 Rubbing is already covered in the Standard Rules, but it's disabled by default. We add some checks for rubbing people and body parts, and we can keep the standard reports.]
 
-The specification of the rubbing action is "The Standard Rules define this action in only a minimal way, blocking it with a check rule which stops it in all cases. It exists so that before or instead rules can be written to make it do interesting things in special cases. (Or to reconstruct the action as something more substantial, unlist the block rule and supply carry out and report rules, together perhaps with some further check rules.)
-For Erotic Story Actions, rubbing is intended for when the actor uses their hands to rub something (as opposed to the softer touch action), and reponds to commands like RUB ANNA, MASSAGE ANNA'S BREASTS, etc. It only works only body parts that are set to rubbable."
+The specification of the rubbing action is "The Standard Rules define this action in only a minimal way, blocking it with a check rule which stops it in all cases.
+It exists so that before or instead rules can be written to make it do interesting things in special cases.
+(Or to reconstruct the action as something more substantial, unlist the block rule and supply carry out and report rules, together perhaps with some further check rules.)
+
+For Erotic Story Actions, rubbing is intended for when the actor uses their hands to rub something (as opposed to the softer touch action), and reponds to commands like RUB ANNA, MASSAGE ANNA'S BREASTS, etc.
+It only works only body parts that are set to rubbable."
 
 The rubbing decency is initially immodest.
 
@@ -1896,6 +1952,7 @@ Does the player mean rubbing something that is part of the player: It is very un
 
 Chapter 3.2.2b - Check
 
+[Make sure we can attempt to rub a person, but also we know which part of the person to rub]
 The can't rub another person rule does nothing.
 Check an actor rubbing (this is the rubbing specificity rule):
 	If the noun is a person:
@@ -1905,6 +1962,7 @@ Check an actor rubbing (this is the rubbing specificity rule):
 			Say "[We] [have] to be more specific about what [the actor] should rub." (B);
 		Stop the action;
 
+[Make sure only appropriate garments or body parts can be rubbed]
 Check an actor rubbing (This is the control what can be rubbed rule):
 	If the noun is a body part or noun is a garment:
 		Unless the noun provides the property rubbable and the noun is rubbable:
@@ -1914,6 +1972,7 @@ Check an actor rubbing (This is the control what can be rubbed rule):
 				Say "[The actor] [can't] rub that." (B);
 			Stop the action;
 
+[Make sure the noun is accessible]
 Check an actor rubbing (this is the rubbing reachability rule):
 	If the noun is a body part or noun is a garment:
 		Unless noun can be touched:
@@ -1923,6 +1982,7 @@ Check an actor rubbing (this is the rubbing reachability rule):
 				Say "[The actor] [can't] reach that." (B);
 			Stop the action;
 
+[Make sure we obey the decency threshold]
 Check an actor rubbing (this is the rubbing decency rule):
 	Let L be the location of the actor;
 	If the noun is enclosed by a person:
@@ -1933,6 +1993,7 @@ Check an actor rubbing (this is the rubbing decency rule):
 				Say "It [are] too public for [the actor] to rub that here." (B);
 			Stop the action;
 
+[Make sure the action is consensual]
 Check an actor rubbing (this is the seek consent for rubbing rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the consent rules;
@@ -1941,6 +2002,7 @@ Check an actor rubbing (this is the seek consent for rubbing rule):
 
 Chapter 3.2.2c - Carry Out
 
+[Apply stimulation as applicable]
 Carry out an actor rubbing (this is the seek stimulation for rubbing rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
@@ -1965,6 +2027,7 @@ Does the player mean tickling something that is part of the player: It is very u
 
 Chapter 3.2.3b - Check
 
+[Make sure we only tickle other persons]
 Check an actor tickling (this is the self tickling rule):
 	If the noun is the actor or the noun is enclosed by the actor:
 		If the player is the actor:
@@ -1973,6 +2036,7 @@ Check an actor tickling (this is the self tickling rule):
 			Say "[The actor] [don't] get much from that." (B);
 		Stop the action;
 
+[Make sure only persons can be tickled]
 Check an actor tickling (This is the tickling specificity rule):
 	If the noun is a person:
 		If the player is the actor:
@@ -1981,6 +2045,7 @@ Check an actor tickling (This is the tickling specificity rule):
 			Say "[We] [have] to be more specific about what [the actor] should tickle." (B);
 		Stop the action;
 
+[Make sure only appropriate things can be tickled]
 Check an actor tickling (This is the control what can be tickled rule):
 	Unless the noun provides the property tickleable and the noun is tickleable:
 		If the player is the actor:
@@ -1989,6 +2054,7 @@ Check an actor tickling (This is the control what can be tickled rule):
 			Say "[The actor] [can't] tickle that." (B);
 		Stop the action;
 
+[Make sure the noun is accessible]
 Check an actor tickling (this is the tickling reachability rule):
 	If the noun is a body part or noun is a garment:
 		Unless noun can be touched:
@@ -1998,6 +2064,7 @@ Check an actor tickling (this is the tickling reachability rule):
 				Say "[The actor] [can't] reach that." (B);
 			Stop the action;
 
+[Make sure we obey the decency threshold]
 Check an actor tickling (this is the tickling decency rule):
 	Let L be the location of the actor;
 	If the decency threshold of L is greater than the tickling decency:
@@ -2007,6 +2074,7 @@ Check an actor tickling (this is the tickling decency rule):
 			Say "It [are] too public for [the actor] to tickle [noun] here." (B);
 		Stop the action;
 
+[Make sure the action is consensual]
 Check an actor tickling (this is the seek consent for tickling rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the consent rules;
@@ -2015,6 +2083,7 @@ Check an actor tickling (this is the seek consent for tickling rule):
 
 Chapter 3.2.3c - Carry Out
 
+[Apply stimulation as applicable]
 Carry out an actor tickling (this is the seek stimulation for tickling rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
@@ -2036,7 +2105,7 @@ Part 3.2.4 - Spanking
 Spanking is a new action. It takes into account that other people's body parts can be spanked, decency and consent/arousal, and handle reporting. Unlike other new actions, we will allow self-spanking.]
 
 Spanking is an action applying to one touchable thing.
-The specification of the spanking action is "Spanking is the act of hitting or slapping a person's body parts. Attempts to spank a person will redirect to the rear end."
+The specification of the spanking action is "Spanking is the act of hitting or slapping a person's body parts."
 
 The spanking decency is initially indecent.
 
@@ -2050,6 +2119,7 @@ Does the player mean spanking something that is part of the player: It is very u
 
 Chapter 3.2.4b - Check
 
+[Make sure we know what part of a person to spank]
 Check an actor spanking (This is the spanking specificity rule):
 	If the noun is a person:
 		If the player is the actor:
@@ -2058,6 +2128,7 @@ Check an actor spanking (This is the spanking specificity rule):
 			Say "[We] [have] to be more specific about what [the actor] should spank." (B);
 		Stop the action;
 
+[Make sure only appropriate things can be spanked]
 Check an actor spanking (This is the control what can be spanked rule):
 	Unless the noun provides the property spankable and the noun is spankable:
 		If the player is the actor:
@@ -2066,6 +2137,7 @@ Check an actor spanking (This is the control what can be spanked rule):
 			Say "[The actor] [can't] spank that." (B);
 		Stop the action;
 
+[Make sure the noun is accessible]
 Check an actor spanking (this is the spanking reachability rule):
 	If the noun is a body part or the noun is a garment:
 		Unless noun can be touched:
@@ -2075,6 +2147,7 @@ Check an actor spanking (this is the spanking reachability rule):
 				Say "[The actor] [can't] reach that." (B);
 			Stop the action;
 
+[Make sure we obey the decency threshold]
 Check an actor spanking (this is the spanking decency rule):
 	Let L be the location of the actor;
 	If the decency threshold of L is greater than the spanking decency:
@@ -2084,6 +2157,7 @@ Check an actor spanking (this is the spanking decency rule):
 			Say "It [are] too public for [the actor] to spank [noun] here." (B);
 		Stop the action;
 
+[Make sure the action is consensual]
 Check an actor spanking (this is the seek consent for spanking rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the consent rules;
@@ -2092,6 +2166,7 @@ Check an actor spanking (this is the seek consent for spanking rule):
 
 Chapter 3.2.4c - Carry Out
 
+[Apply stimulation as applicable]
 Carry out an actor spanking (this is the seek stimulation for spanking rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
@@ -2127,6 +2202,7 @@ Does the player mean pinching something that is part of the player: It is very u
 
 Chapter 3.2.5b - Check
 
+[Make sure we don't pinch ourselves]
 Check an actor pinching (this is the self pinching rule):
 	If the noun is the actor or the noun is enclosed by the actor:
 		If the player is the actor:
@@ -2135,6 +2211,7 @@ Check an actor pinching (this is the self pinching rule):
 			Say "[The actor] [don't] get much from that." (B);
 		Stop the action;
 
+[Make sure we know what part of a person to pinch]
 Check an actor pinching (This is the pinching specificity rule):
 	If the noun is a person:
 		If the player is the actor:
@@ -2143,6 +2220,7 @@ Check an actor pinching (This is the pinching specificity rule):
 			Say "[We] [have] to be more specific about what [the actor] should pinch." (B);
 		Stop the action;
 
+[Make sure only appropriate things can be pinched]
 Check an actor pinching (This is the control what can be pinched rule):
 	Unless the noun provides the property pinchable and the noun is pinchable:
 		If the player is the actor:
@@ -2151,6 +2229,7 @@ Check an actor pinching (This is the control what can be pinched rule):
 			Say "[The actor] [can't] pinch that." (B);
 		Stop the action;
 
+[Make sure the noun is accessible]
 Check an actor pinching (this is the pinching reachability rule):
 	If the noun is a body part or noun is a garment:
 		Unless noun can be touched:
@@ -2160,6 +2239,7 @@ Check an actor pinching (this is the pinching reachability rule):
 				Say "[The actor] [can't] reach that." (B);
 			Stop the action;
 
+[Make sure we obey the decency threshold]
 Check an actor pinching (this is the pinching decency rule):
 	Let L be the location of the actor;
 	If the decency threshold of L is greater than the pinching decency:
@@ -2169,6 +2249,7 @@ Check an actor pinching (this is the pinching decency rule):
 			Say "It [are] too public for [the actor] to pinch [noun] here." (B);
 		Stop the action;
 
+[Make sure the action is consensual]
 Check an actor pinching (this is the seek consent for pinching rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the consent rules;
@@ -2177,6 +2258,7 @@ Check an actor pinching (this is the seek consent for pinching rule):
 
 Chapter 3.2.5c - Carry Out
 
+[Apply stimulation as applicable]
 Carry out an actor pinching (this is the seek stimulation for pinching rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
@@ -2198,7 +2280,8 @@ Part 3.2.6 - Licking
 Licking is a new action, used only on body parts but attempts to redirect from persons. It handles decency, access.]
 
 Licking is an action applying to one touchable thing.
-The specification of the licking action is "This action is intended for when the actor uses their mouth on a body part. Trying to lick a person will try to find a better part of that person to lick."
+The specification of the licking action is "This action is intended for when the actor uses their mouth on a body part.
+Trying to lick a person will try to find a better part of that person to lick."
 
 The licking decency is initially immodest.
 
@@ -2213,6 +2296,7 @@ Does the player mean licking something that is part of the player: It is very un
 
 Chapter 3.2.6b - Check
 
+[Make sure we don't lick ourselves]
 Check an actor licking (this is the self licking rule):
 	If the noun is the actor or the noun is enclosed by the actor:
 		If the player is the actor:
@@ -2221,6 +2305,7 @@ Check an actor licking (this is the self licking rule):
 			Say "[The actor] [don't] get much from that." (B);
 		Stop the action;
 
+[Try to redirect to a better body part to lick]
 Check an actor licking (This is the licking specificity rule):
 	If the noun is a person:
 		If the noun is enclosing a vagina (called target):
@@ -2234,6 +2319,7 @@ Check an actor licking (This is the licking specificity rule):
 				Say "[We] [have] to be more specific about what [the actor] should lick." (B);
 			Stop the action;
 
+[Make sure only appropriate things can be licked]
 Check an actor licking (This is the control what can be licked rule):
 	Unless the noun provides the property lickable and the noun is lickable:
 		If the player is the actor:
@@ -2242,6 +2328,7 @@ Check an actor licking (This is the control what can be licked rule):
 			Say "[The actor] [can't] lick that." (B);
 		Stop the action;
 
+[Make sure the noun is accessible]
 Check an actor licking (this is the licking reachability rule):
 	If the noun is a body part or the noun is a garment:
 		Unless noun is accessible:
@@ -2251,6 +2338,7 @@ Check an actor licking (this is the licking reachability rule):
 				Say "[The actor] [can't] reach that." (B);
 			Stop the action;
 
+[Make sure we obey the decency threshold]
 Check an actor licking (this is the licking decency rule):
 	Let L be the location of the actor;
 	If the decency threshold of L is greater than the licking decency:
@@ -2260,6 +2348,7 @@ Check an actor licking (this is the licking decency rule):
 			Say "It [are] too public for [the actor] to lick [noun] here." (B);
 		Stop the action;
 
+[Make sure the action is consensual]
 Check an actor licking (this is the seek consent for licking rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the consent rules;
@@ -2268,6 +2357,7 @@ Check an actor licking (this is the seek consent for licking rule):
 
 Chapter 3.2.6c - Carry Out
 
+[Apply stimulation as applicable]
 Carry out an actor licking (this is the seek stimulation for licking rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
@@ -2289,7 +2379,8 @@ Part 3.2.7 - Biting
 Biting is a new action, used only on body parts, but attempts to bit something edible is eating. It handles decency, access.]
 
 Biting is an action applying to one touchable thing.
-The specification of the biting action is "This action is intended for when the actor bites on something. Attempts to bite something edible redirects to eating."
+The specification of the biting action is "This action is intended for when the actor bites on something.
+Attempts to bite something edible redirects to eating."
 
 The biting decency is initially indecent.
 
@@ -2303,6 +2394,7 @@ Does the player mean biting something that is part of the player: It is very unl
 
 Chapter 3.2.7b - Check
 
+[Make sure we don't bite ourselves]
 Check an actor biting (this is the self biting rule):
 	If the noun is the actor or the noun is enclosed by the actor:
 		If the player is the actor:
@@ -2311,6 +2403,7 @@ Check an actor biting (this is the self biting rule):
 			Say "[The actor] [don't] get much from that." (B);
 		Stop the action;
 
+[Redirect biting something edible to biting, and get a specific body part for persons]
 Check an actor biting (This is the biting specificity rule):
 	If the noun is edible:
 		Try the actor eating the noun instead;
@@ -2321,6 +2414,7 @@ Check an actor biting (This is the biting specificity rule):
 			Say "[We] [have] to be more specific about what [the actor] should bite." (B);
 		Stop the action;
 
+[Make sure only appropriate things can be bitten]
 Check an actor biting (This is the control what can be bitten rule):
 	Unless the noun provides the property biteable and the noun is biteable:
 		If the player is the actor:
@@ -2329,6 +2423,7 @@ Check an actor biting (This is the control what can be bitten rule):
 			Say "[The actor] [can't] bite that." (B);
 		Stop the action;
 
+[Make sure the noun is accessible]
 Check an actor biting (this is the biting reachability rule):
 	If the noun is a body part or noun is a garment:
 		Unless noun is accessible:
@@ -2338,6 +2433,7 @@ Check an actor biting (this is the biting reachability rule):
 				Say "[The actor] [can't] reach that." (B);
 			Stop the action;
 
+[Make sure we obey the decency threshold]
 Check an actor biting (this is the biting decency rule):
 	Let L be the location of the actor;
 	If the decency threshold of L is greater than the biting decency:
@@ -2347,6 +2443,7 @@ Check an actor biting (this is the biting decency rule):
 			Say "It [are] too public for [the actor] to bite [noun] here." (B);
 		Stop the action;
 
+[Make sure the action is consensual]
 Check an actor biting (this is the seek consent for biting rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the consent rules;
@@ -2355,6 +2452,7 @@ Check an actor biting (this is the seek consent for biting rule):
 
 Chapter 3.2.7c - Carry Out
 
+[Apply stimulation as applicable]
 Carry out an actor biting (this is the seek stimulation for biting rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
@@ -2380,7 +2478,9 @@ Part 3.3.1 - Kissing
 Kissing is already covered in the Standard Rules, but it's disabled by default.
 We replace the blocks with our own checks, taking into account that only other people can be kissed, decency and consent/arousal, and handle action reporting.]
 
-The specification of the kissing action is "Possibly because Inform was originally written by an Englishman, attempts at kissing another person are normally blocked as being unrealistic or not seriously meant. So the Standard Rules simply block attempts to kiss people, but the action exists for rules to make exceptions.
+The specification of the kissing action is "Possibly because Inform was originally written by an Englishman, attempts at kissing another person are normally blocked as being unrealistic or not seriously meant.
+So the Standard Rules simply block attempts to kiss people, but the action exists for rules to make exceptions.
+
 Erotic Storytelling replaces the existing checks that block kissing, replacing them with checks to see that only other people can be kissed, and attempts to kiss body parts are redirected to licking that part."
 
 The kissing decency is initially casual.
@@ -2395,6 +2495,7 @@ Does the player mean kissing something that is part of the player: It is very un
 
 Chapter 3.3.1b - Check
 
+[Make sure we don't kiss ourselves]
 The kissing yourself rule does nothing.
 Check an actor kissing (this is the self kissing rule):
 	If the noun is the actor:
@@ -2405,6 +2506,7 @@ Check an actor kissing (this is the self kissing rule):
 		Stop the action;
 
 
+[Allow us to kiss people, and redirect kissing body parts to licking]
 The block kissing rule does nothing.
 Check an actor kissing (This is the control kissed target rule):
 	If the noun is a body part:
@@ -2416,6 +2518,7 @@ Check an actor kissing (This is the control kissed target rule):
 			Say "[The actor] [don't] want to kiss that." (B);
 		Stop the action;
 
+[Make sure we obey the decency threshold]
 Check an actor kissing (this is the kissing decency rule):
 	Let L be the location of the actor;
 	If the decency threshold of L is greater than the kissing decency:
@@ -2425,6 +2528,7 @@ Check an actor kissing (this is the kissing decency rule):
 			Say "It [are] too public for [the actor] to kiss here." (B);
 		Stop the action;
 
+[Make sure the action is consensual]
 Check an actor kissing (this is the seek consent for kissing rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the consent rules;
@@ -2433,6 +2537,7 @@ Check an actor kissing (this is the seek consent for kissing rule):
 
 Chapter 3.3.1c - Carry Out
 
+[Apply stimulation as applicable]
 Carry out an actor kissing (this is the seek stimulation for kissing rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
@@ -2454,7 +2559,8 @@ Part 3.3.2 - Hugging
 Hugging is a new action. It takes into account that only other people can be hugged, decency and consent/arousal, and handle reporting.]
 
 Hugging is an action applying to one touchable thing.
-The specification of the hugging action is "Shows affection to another person by giving them a hug. Only other people can be hugged, hugging a body part redirects to touching."
+The specification of the hugging action is "Shows affection to another person by giving them a hug.
+Only other people can be hugged, hugging a body part redirects to touching."
 
 The hugging decency is initially formal.
 
@@ -2471,6 +2577,7 @@ Does the player mean hugging something that is part of the player: It is very un
 
 Chapter 3.3.2b - Check
 
+[Make sure we don't hug ourselves]
 Check an actor hugging (this is the self hugging rule):
 	If the noun is the actor:
 		If the player is the actor:
@@ -2479,6 +2586,7 @@ Check an actor hugging (this is the self hugging rule):
 			Say "[The actor] [don't] get much from that." (B);
 		Stop the action;
 
+[Make sure we only hug people; redirecting body parts to touching]
 Check an actor hugging (This is the control what can be hugged rule):
 	If the noun is a body part:
 		Try the actor touching the noun instead;
@@ -2489,6 +2597,7 @@ Check an actor hugging (This is the control what can be hugged rule):
 			Say "[The actor] [don't] want to hug that." (B);
 		Stop the action;
 
+[Make sure we obey the decency threshold]
 Check an actor hugging (this is the hugging decency rule):
 	Let L be the location of the actor;
 	If the decency threshold of L is greater than the hugging decency:
@@ -2498,6 +2607,7 @@ Check an actor hugging (this is the hugging decency rule):
 			Say "It [are] too public for [the actor] to hug here." (B);
 		Stop the action;
 
+[Make sure the action is consensual]
 Check an actor hugging (this is the seek consent for hugging rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the consent rules;
@@ -2506,6 +2616,7 @@ Check an actor hugging (this is the seek consent for hugging rule):
 
 Chapter 3.3.2c - Carry Out
 
+[Apply stimulation as applicable]
 Carry out an actor hugging (this is the seek stimulation for hugging rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
@@ -2547,6 +2658,7 @@ Rule for supplying a missing noun while dancing with (this is the dancing alone 
 
 Chapter 3.3.3b - Check
 
+[Make sure we only dance with people]
 Check an actor dancing with (This is the control what can be danced with rule):
 	If the noun is not a person:
 		If the player is the actor:
@@ -2555,6 +2667,7 @@ Check an actor dancing with (This is the control what can be danced with rule):
 			Say "[The actor] [don't] want to dance with [regarding the noun][those]." (B);
 		Stop the action;
 
+[Make sure we obey the decency threshold]
 Check an actor dancing with (this is the dancing decency rule):
 	Let L be the location of the actor;
 	If the decency threshold of L is greater than formal:
@@ -2564,6 +2677,7 @@ Check an actor dancing with (this is the dancing decency rule):
 			Say "It [are] too public for [the actor] to dance here." (B);
 		Stop the action;
 
+[Make sure the action is consensual]
 Check an actor dancing with (this is the seek consent for dancing rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the consent rules;
@@ -2572,6 +2686,7 @@ Check an actor dancing with (this is the seek consent for dancing rule):
 
 Chapter 3.3.3c - Carry Out
 
+[Apply stimulation as applicable]
 Carry out an actor dancing with (this is the seek stimulation for dancing rule):
 	If the noun is a person or noun is enclosed by a person:
 		Follow the stimulation rules;
@@ -2596,7 +2711,8 @@ These redirects break the 'for X turns' syntax in inform, so we provide our own 
 Part 3.4.1 - Fucking Redirection
 
 Fucking is an action applying to one touchable thing.
-The specification of the fucking action is "Fucking is a helper action that can allows the player to target a person, and logic is applied to decide what parts are supposed to be involved. Redirects to the fucking it with action."
+The specification of the fucking action is "Fucking is a helper action that can allows the player to target a person, and logic is applied to decide what parts are supposed to be involved.
+Redirects to the fucking it with action."
 
 Chapter 3.4.1a - Understanding
 
@@ -2670,7 +2786,8 @@ Check an actor fucking (This is the fucking redirect rule):
 Part 3.4.2 - Assfucking Redirection
 
 Assfucking is an action applying to one touchable thing.
-The specification of the assfucking action is "Assfucking is a helper action that can allows the player to target a person, and logic is applied to decide what parts are supposed to be involved. Redirects to the fucking it with action."
+The specification of the assfucking action is "Assfucking is a helper action that can allows the player to target a person, and logic is applied to decide what parts are supposed to be involved.
+Redirects to the fucking it with action."
 
 Chapter 3.4.2a - Understanding
 
@@ -2698,7 +2815,8 @@ Check an actor assfucking (This is the assfucking redirect rule):
 Part 3.4.3 - Titfucking Redirection
 
 Titfucking is an action applying to one touchable thing.
-The specification of the titfucking action is "Titfucking is a helper action that can allows the player to target a person, and logic is applied to decide what parts are supposed to be involved. Redirects to the fucking it with action."
+The specification of the titfucking action is "Titfucking is a helper action that can allows the player to target a person, and logic is applied to decide what parts are supposed to be involved.
+Redirects to the fucking it with action."
 
 Chapter 3.4.3a - Understanding
 
@@ -2730,7 +2848,9 @@ Fucking it with is a new action with some complexity, and is the act of insertin
 See also the person-oriented redirect actions.]
 
 Fucking it with is an action applying to one touchable thing and one thing.
-The specification of the fucking it with action is "Fucking it with is the action of putting something into something else. By default it expects to receive an orifice to put something penetrating into. See also the person-oriented actions 'fuck', 'assfuck' and 'titfuck' which redirect here."
+The specification of the fucking it with action is "Fucking it with is the action of putting something into something else.
+By default it expects to receive an orifice to put something penetrating into, but it also understands reversed nouns.
+See also the person-oriented actions 'fuck', 'assfuck' and 'titfuck' which redirect here."
 
 The fucking decency is initially indecent.
 
@@ -2745,7 +2865,7 @@ Does the player mean fucking something with something penetrating enclosed by th
 
 Chapter 3.4.4b - Check
 
-[Ensure both the noun and the second noun aren't body parts of the actor; it's ok if one of them are]
+[Make sure both the noun and the second noun aren't body parts of the actor; it's ok if one of them are]
 Check an actor fucking something with (this is the self fucking rule):
 	If the noun is the actor or the noun is part of the actor:
 		If the second noun is the actor or the second noun is part of the actor:
@@ -2755,7 +2875,7 @@ Check an actor fucking something with (this is the self fucking rule):
 				Say "[The actor] [don't] get much from that." (B);
 			Stop the action;
 
-[Ensure the actor is in control of atleast one of the parts, and that all parts are carried or enclosed]
+[Make sure the actor is in control of atleast one of the parts, and that all parts are carried or enclosed]
 Check an actor fucking something with (This is the control what can be fucked rule):
 	Unless the noun is part of the actor or the actor has the noun:
 		Unless the second noun is part of the actor or the actor has the second noun:
@@ -2765,7 +2885,7 @@ Check an actor fucking something with (This is the control what can be fucked ru
 				Say "[The actor] [can't] do that without being a part of it." (B);
 			Stop the action;
 
-[Ensure the first noun is orificial and the second noun is penetrating]
+[Make sure the first noun is orificial and the second noun is penetrating]
 Check an actor fucking something with (This is the fucking specificity rule):
 	If the noun provides the property orificial and the noun is orificial:
 		If the second noun provides the property penetrating and the second noun is penetrating:
@@ -2779,7 +2899,7 @@ Check an actor fucking something with (This is the fucking specificity rule):
 		Say "[We] [have] to be more specific about what [the actor] should put where." (B);
 	Stop the action;
 
-[Ensure that both nouns are accessible through clothing]
+[Make sure that both nouns are accessible]
 Check an actor fucking something with (this is the fucking reachability rule):
 	If the noun is a body part or noun is a garment:
 		Unless noun is accessible:
@@ -2796,7 +2916,7 @@ Check an actor fucking something with (this is the fucking reachability rule):
 				Say "[The actor] [can't] reach that." (D);
 			Stop the action;
 
-[Ensure the location allows the action]
+[Make sure we obey the decency threshold]
 Check an actor fucking something with (this is the fucking decency rule):
 	Let L be the location of the actor;
 	If the decency threshold of L is greater than the fucking decency:
@@ -2806,7 +2926,7 @@ Check an actor fucking something with (this is the fucking decency rule):
 			Say "It [are] too public for [the actor] to fuck [the noun] with [the second noun] here." (B);
 		Stop the action;
 
-[Ensure that the action is consensual]
+[Make sure the action is consensual]
 Check an actor fucking something with (this is the seek consent for fucking rule):
 	Follow the consent rules;
 	Unless the outcome of the rulebook is the give consent outcome:
@@ -2843,14 +2963,18 @@ Part 3.5.1 - Definitions
 Chapter 3.5.1a - Discrete Arousals
 
 An arousal is a kind of value. The arousals are frigid arousal, unaroused, slightly aroused, aroused, very aroused, orgasmic, unattainable arousal.
-The specification of arousal is "Arousal is a discrete measure of how aroused a person is. Unaroused is the neutral zero-point, with frigid arousal as a negative value and the unattainable arousal (as the last value defined) as the unset/null-value. These methods for arousing and cooling of a person will take these into account."
+The specification of arousal is "Arousal is a discrete measure of how aroused a person is.
+Unaroused is the neutral zero-point, with frigid arousal as a negative value and the unattainable arousal (as the last value defined) as the unset/null-value.
+The methods for arousing and cooling of a person will take these into account."
 
 A person has an arousal called current arousal. The current arousal of a person is usually unaroused.
 
 Chapter 3.5.1b - Orgasms
 
+[We keep track of how many orgasms a person has had, how many attempts at the next orgasm, and what to reset their arousal to after an orgasm]
 A person has a number called orgasms. The orgasms of a person is usually 0.
 A person has a number called orgasmic attempts. The orgasmic attempts of a person is usually 0.
+A person has an arousal called the orgasm reset arousal. The orgasm reset arousal of a person is usually aroused.
 
 Part 3.5.2 - Working with Arousals
 
@@ -2870,7 +2994,7 @@ To decide whether (P - a person) is (A - an arousal) or less:
 
 Part 3.5.2b - Arousing
 
-[Increase the arousal of a person by one grade, with a maxmimum level.
+[Increase the arousal of a person by one grade, up to a maxmimum level.
 Note: Unattainable is treated as a null value, and calls to increase to it are ignored.]
 To arouse (P - a person) up to (A - an arousal):
 	If the current arousal of P is less than A and A is not the unattainable arousal:
@@ -2883,7 +3007,7 @@ To arouse (P - a person):
 
 Part 3.5.2c - Cooling Down
 
-[Move the arousal of a person by one grade towards the neutral unaroused, with a minimum level.
+[Move the arousal of a person by one grade towards the neutral unaroused, down to a minimum level.
 Note: Unattainable is treated as a null value, and will not be moved from.]
 To cool (P - a person) down to (A - an arousal):
 	If the current arousal of P is greater than unaroused and the current arousal of P is not the unattainable arousal:
@@ -2893,13 +3017,12 @@ To cool (P - a person) down to (A - an arousal):
 		If the current arousal of P is less than A:
 			Now the current arousal of P is the arousal after the current arousal of P;
 
-[Decrease the arousal of a person by one grade, without a minimum.]
+[Decrease the arousal of a person by one grade, without a minimum.
+Note: Unattainable is treated as a null value, and will not be moved from.]
 To cool down (P - a person):
 	Cool P down to unaroused;
 
 Part 3.5.2d - Attaining Orgasms
-
-A person has an arousal called the orgasm reset arousal. The orgasm reset arousal of a person is usually aroused.
 
 [We want to make it so that every time a person orgasms, it's harder to achieve the next one.
 The chance to succed is attempts : orgasms; the first orgasm is 'free'; the second is 50% at first attempt and 100% at second, third is 1/3 then 2/3, and so on.]
@@ -5632,7 +5755,7 @@ It's still the best summary of classic programming techniques in I7 despite bein
 
 Jim Aikin has a handbook available at http://www.musicwords.net/if/i7hb.htm which is an alternative to Writing with Inform.
 It tackles the same topics in a different fashion and order, and it's aimed at students.
-It's not yet updataded for the very last version of I7 but it should be current enough for most purposes.
+It's not yet updated for the very last version of I7 but it should be current enough for most purposes.
 
 Inside Erin was a magazine dedicated to AIF, and in it's time contained several articles on the topic of writing AIF.
 The Inside Erin newsletter at http://newsletter.aifcommunity.org/index.php?id=writing.html contains a topical overview of these articles.
