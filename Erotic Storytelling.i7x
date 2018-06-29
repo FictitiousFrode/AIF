@@ -3573,7 +3573,7 @@ Carry out debug examining something (this is the debug examine people rule):
 
 Book 4.2 - Story Contents
 
-[Status: In development/Stable-Unfinished
+[Status: In development/Unfinished but stable
 A system for the story author to announce to the player which types of content the story contains, with the possibility of some types being optional based on the player's preferences.]
 
 Part 4.2.1 - Concepts
@@ -3692,7 +3692,7 @@ Part 4.4.1 - Inspirational Amusement
 
 [Status: TODO/Not implemented
 We create a method for entering amusing anectdotes that can be displayed to a victorious player.
-This is inspired by Example 383: Jamaica 1688.]
+Inspiration in  Example 383: Jamaica 1688.]
 
 Book 4.5 - Completion Tracking
 
@@ -4148,12 +4148,10 @@ The dressing consent rule is listed after the default consent rule in the consen
 A consent rule (this is the dressing consent rule):
 	If the noun is a garment (called G):
 		Unless the actor is the player:
-			If the clothing threshold of the actor is the unattainable arousal
-			or the clothing threshold of G is the unattainable arousal:
+			If the clothing threshold of the actor is the unattainable arousal or the clothing threshold of G is the unattainable arousal:
 				Say the uninterested response of the actor;
 				Deny consent;
-			Unless the actor is the clothing threshold of the actor or more
-			and the actor is the clothing threshold of G or more:
+			Unless the actor is the clothing threshold of the actor or more and the actor is the clothing threshold of G or more:
 				Say the unaroused response of the actor;
 				Deny consent;
 	Give consent;
@@ -4961,6 +4959,11 @@ Section 1.7 - Version History
 	* Rearranged fucking actions, added functionality to check for repeated fucking
 	* Examples reworked to conform with Inform 7 standards
 	* Documentation improvements
+	
+2018-07-XX: v1.1 (Release 4)
+
+	* Updated code-documentation
+	* Minor bug fixes
 
 Section 1.8 - Contact Info
 
@@ -5124,7 +5127,7 @@ We therefore create some helper actions that redirect to using the correct nouns
 In total, we have six person related actions; a reworking of the existing kissing action, the new hugging and dancing with actions, and three helper actions that redirect to fucking it with.
 
 Dancing with is a slightly special action; it's valid to use without a noun, implying that a person dances with themself.
-"Dance" therefore turns into "Dance with yourself" for the purpose of responses and consent.
+"Dance" therefore turns into "Dance with yourself" for the purpose of rules such as responses and consent.
 Hugging is a rather simple action, checking that a person does not try to hug oneself.
 Kissing has been briefly covered before; the standard rules of Inform block the action.
 We interfere and redirect attempts to kiss body parts to lick them instead, and allow kissing people while blocking any other types of noun.
@@ -5148,7 +5151,7 @@ Partial coverage also becomes very problematic without impressing an unwanted am
 If a person was wearing a long coat and some trousers, then these would overlap in the crotch and thigh.
 If the crotch and thigh area were the only implemented body parts that the trousers covered, then wearing a coat would effectively deny access to the trousers.
 
-The first version of this framework tried to turn example 242 into a full blown clothing model, but in the end it was better to start from scratch using the cover area model that's been used in TADS.
+The first version of this framework tried to turn example 242 into a full blown clothing model, but in the end it was better to start from scratch using the cover area model that's been previously used in TADS.
 By using cover area to link body parts with garments and defining a depth/clothing level for garments, it's possible to calculate coverage based on what is worn without costly everyone-to-everything relations.
 This approach is less flexible than using relations, but it's more workable even though it results in some oddities.
 For instance, socks are defined as normalwear instead of underwear in order to make them incompatible with pantyhose, which has to be able to be worn over underwear.
@@ -5485,8 +5488,8 @@ Another possibility is to write one after rule for each action, using if stateme
 
 Section 4.5 - Orgasms in Actions
 
-As the story author it's entirely under your control to decide how and when the actors should attain orgasm(s).
-As a support for this the extension provides syntax for checking orgasms, which build on a mechanism where each successive orgasm harder to achieve.
+The story author has complete control in deciding how and when the actors should attain orgasm(s).
+The extension provides some support in the form of syntax for checking orgasms, using a mechanism where each successive orgasm is harder to achieve.
 The formula used to calculate the odds is simply the number of attempts to achieve orgasm divided by the number of the orgasm being tested for.
 This makes the first orgasm 'free' (a 1 in 1 chance), while the second orgasm has a 1 in 2 chance followed by  2 in 2 chance if the first attempt failed, and so on.
 The short example below shows how this can be used in practice:
@@ -5498,7 +5501,7 @@ The short example below shows how this can be used in practice:
 		Else:
 			Say "The normal response for the action should go here.";
 
-It's important to remember that because the check updates the variables involved for each call it's non-deterministic in nature, so you should only call it once for each person and store the result in a local variable.
+It's important to remember that because the check updates the variables involved for each call it becomes non-deterministic by nature, so you should only call it once for each person and store the result in a local variable.
 This is very important when dealing with an action that can result in orgasm for multiple actors:
 
 *:
@@ -5528,9 +5531,9 @@ Chapter 5 - Improving Non-Player Characters
 
 Let's be blunt: Non-Player Characters are hard to get right in Interactive Fiction.
 The common approach (as described at SibylMoon *) is to limit the player's interaction with NPCs to as little as you can get away with.
-Unfortunately that approach doesn't work well for AIF where NPCs interaction can be said to be the main goal of the experience.
+Unfortunately that approach doesn't work well for AIF where NPC interaction can be said to be the main goal of the experience.
 Instead we have to be more careful in the design of our NPCs to make them appear more advanced than they really are.
-SibylMoon (**) list four qualities that increase the illusion of intelligent NPCs: Active, reactive, goal-oriented and randomized.
+SibylMoon (**) lists four qualities that increase the illusion of intelligent NPCs: Active, reactive, goal-oriented and randomized.
 
 All NPCs need not be given the same attention however, it is OK to use the aforementioned methods to avoid interactions for characters that are not the main focus of the story.
 It's also important to take the tone of the story into account, simplistic NPCs can be forgiven (and perhaps are even expected) in a romp-style story where the player's goal is to rack up as many notches as possible.
@@ -6018,8 +6021,7 @@ This can be a great process for learning how to work with your tools, but as a s
 Maintaining forward momentum in the story is hard without a properly defined flow to the story, and it's easy to get lost in all the alternative story branches you can see.
 The easy fix is to decide on the ending and start working backwards, but it can still be challenging to make it back to the start.
 Another issue that's common to both all linear workflows regardless of direction is that the first parts written usually have greater descriptive detail but less mechanical detail, while the opposite is true for the latter stages.
-This is a result of your skills improving with experience, leading to more satisfying mechanics.
-At the same time your focus shifts to 'what else can I add' to 'getting it done'.
+This is a result of your skills improving with experience, leading to more satisfying mechanics, while at the same time your focus shifts from 'what else can I add' to 'getting it done'.
 It's therefore important to return to the early parts later on to ensure some consistency in details across the story.
 
 At the other end is writing out the entire transcript for your story; what should the player type to progress and what are the responses?
