@@ -1,9 +1,7 @@
-Version 3/171226 of Erotic Storytelling by Fictitious Frode begins here.
+Version 3/180626 of Erotic Storytelling by Fictitious Frode begins here.
 "An extension focused on writing Adult Interactive Fiction (AIF) in Inform.
 The main features are a layered clothing with body parts and erotic actions with system for obtaining consent on actions involving others characters.
 Also includes an optional customizable ready-to-use Discrete-Arousal-based Consent and Stimulation systems, semi-automatic improved description generation, and templates for NPC agency and optional story contents."
-
-[TODO: Replace the last few is listed instead rules]
 
 [We use the pause function from Basic Screen Effects.]
 Include Basic Screen Effects by Emily Short.
@@ -157,7 +155,10 @@ Shifting and ripping are two related but separate ways to alter the covered area
 
 A shiftyness is a kind of value. The shiftyness are defined by the Table of Shift.
 The specification of shiftyness is "Shiftyness (which isn't really a word) are the positions that a garment can be shifted to in order to allow (usually) more access to underlying parts.
-Mechanic-wise, it functions similarly to open, with the shiftable property determining whether the player can shift it, and shifted determining if it has been. Shiftyness determines what verbs the player can use to move the garment, and the textual responses.
+They are defined in the Table of Shift which can be expanded to allow new modes of shifting.
+
+Mechanic-wise, it functions similarly to open, with the shiftable property determining whether the player can shift it, and shifted determining if it has been.
+The shiftyness determines what verbs the player can use to move the garment as well as the textual responses.
 Shifting a garment also has the possibility of altering the areas covered (through the list property shifted cover areas), and default cover blocking determines wheter to use the default cover areas or the ripped/shifted cover areas to determine if blocks unwearing."
 
 Table of Shift
@@ -236,14 +237,15 @@ Chapter 1.1.2e - Layering
 [Status: Complete]
 
 A clothing layer is a kind of value. The clothing layers are skinwear, underwear, normalwear, overwear, outerwear.
-The specification of clothing layer is "Clothing layer is used together with the covered areas to determine which garments are compatible with each other. A person can only be wearing one garment for each layer over each cover area."
+The specification of clothing layer is "Clothing layer is used together with the covered areas to determine which garments are compatible with each other.
+A person can only be wearing one garment for each layer over each cover area."
 
 A garment has a clothing layer. A garment is usually normalwear.
 
 Chapter 1.1.2f - Understanding
 
 A garment has some text called wearer's pronoun. [Note: This will be updated at story start with the initiate erotic storytelling rule to match the wearer.]
-Understand the wearer's pronoun property as describing a garment.[ when the thing is enclosed by a person.]
+Understand the wearer's pronoun property as describing a garment.
 
 Does the player mean examining a garment that is worn by player: It is unlikely.
 
@@ -255,7 +257,8 @@ Can re-use reactive crowds and table-based descriptions from outfits extension.]
 Chapter 1.1.3a - Definition
 
 An outfit is a kind of garment.
-The specification of outfit is "An outfit is a special kind of garment, designed to be an alternative to individual garment pieces the player can interact with. It therefore cover almost all the body areas of a person, except hands and head/face."
+The specification of outfit is "An outfit is a special kind of garment, designed to be an alternative to individual garment pieces the player can interact with.
+It therefore covers almost all the body areas of a person, except hands and head/face."
 
 The cover areas of an outfit is usually {shoulder area, arm area, upper torso area, upper back area, lower torso area, lower back area, crotch area, thigh area, leg area, feet area}.
 The clothing layer of an outfit is usually skinwear.
@@ -321,22 +324,16 @@ Chapter 1.2.1a - Determining Decency
 [Status: Complete
 For cover areas and body parts, we calculate the decency; for persons we cache it in a variable.]
 
-Section - Cover Area
-
 To decide which decency is the decency of (C - a cover area):
 	Repeat with N running from 1 to the number of rows in the Table of Coverage:
 		Choose row N in the Table of Coverage;
 		If C is the Cover Area entry, decide on the uncovered decency entry;
-
-Section - Body Part
 
 To decide which decency is the base decency of (P - a body part):
 	Let current be the undefined decency;
 	Repeat with A running through the cover locations of P:
 		If the decency of A is less than current, now current is the decency of A;
 	Decide on current;
-
-Section - Person
 
 To update decency for (P - a person):
 	Now the current decency of P is undefined decency;
@@ -348,6 +345,7 @@ Chapter 1.2.1b - Privacy
 
 [Status: Complete]
 
+[TODO: Verify that we aren't hit by this bug: https://www.intfiction.org/forum/viewtopic.php?f=7&t=25594]
 Check an actor going (this is the check decency before going rule):
 	If the decency threshold of the room gone to is greater than current decency of the actor:
 		If the player is the actor:
@@ -806,20 +804,19 @@ Carry out examining (this is the examining garments rule):
 			Else:
 				Say "[The noun] [are] ripped to shreds.";
 			Now examine text printed is true;
-		Else if noun is worn by someone and noun provides the property shifted and noun is shifted:
-			If noun provides the property shifted description and the shifted description of the noun is not the default value of text:
-				Say "[shifted description of the noun][line break]";
-			Else:
-				Say "[The noun] [are] [describe shifted of the shiftyness] to be more revealing.";
-			Now examine text printed is true;
 		Else if noun is worn by someone:
-			If noun provides the property worn description and the worn description of the noun is not the default value of text:
+			If noun provides the property shifted and noun is shifted:
+				If noun provides the property shifted description and the shifted description of the noun is not the default value of text:
+					Say "[shifted description of the noun][line break]";
+				Else:
+					Say "[The noun] [are] [describe shifted of the shiftyness] to be more revealing.";
+				Now examine text printed is true;
+			Else if noun provides the property worn description and the worn description of the noun is not the default value of text:
 				Say "[worn description of the noun][line break]";
 				Now examine text printed is true;
-		Else:
-			If noun provides the property unworn description and the unworn description of the noun is not the default value of text:
-				Say "[unworn description of the noun][line break]";
-				Now examine text printed is true;
+		Else if noun provides the property unworn description and the unworn description of the noun is not the default value of text:
+			Say "[unworn description of the noun][line break]";
+			Now examine text printed is true;
 
 Part 1.2.4 - Forcing Clothing
 
@@ -2407,7 +2404,8 @@ Check an actor kissing (this is the self kissing rule):
 			Say "[The actor] [don't] get much from that." (B);
 		Stop the action;
 
-The control kissed target rule is listed instead of the block kissing rule in the check kissing rulebook.
+
+The block kissing rule does nothing.
 Check an actor kissing (This is the control kissed target rule):
 	If the noun is a body part:
 		Try the actor licking the noun instead;
